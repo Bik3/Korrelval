@@ -1,0 +1,1526 @@
+<title>Korrelval</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800&family=La+Belle+Aurore&display=swap">
+<style>
+:root{
+  --bg:#E9E5DA; --card:#FBF8F0; --card2:#F2ECDD; --ink:#1D1E1F; --muted:#5F5A50; --line:#D6CDB8;
+  --accent:#E78A01; --accent-ink:#1D1E1F; --accent-edge:#9E5E00; --gold:#CFAB00; --gold-ink:#7A6500;
+  --danger:#C52135; --ok:#3F6E4A; --chip:#ECE5D3; --accent-text:#9E5E00;
+  --hud-bg:rgba(29,30,31,.6); --hud-ink:#F7F7F7; --hud-focus:#CFAB00;
+  --shadow:0 2px 0 rgba(29,30,31,.10),0 18px 44px rgba(29,30,31,.42);
+  --ui:"Nunito","Avenir Next","Segoe UI",system-ui,-apple-system,sans-serif;
+  --hand:"La Belle Aurore","Segoe Script","Bradley Hand","Snell Roundhand",cursive;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#121314; --card:#24221F; --card2:#2D2A26; --ink:#F4EFE3; --muted:#BFB7A6; --line:#48423A;
+  --accent:#F29A1C; --accent-ink:#1D1E1F; --accent-edge:#8E5200; --gold:#E3C431; --gold-ink:#E3C431;
+  --danger:#F0596B; --ok:#8CC79A; --chip:#33302B; --accent-text:#F29A1C;
+  --shadow:0 2px 0 rgba(0,0,0,.3),0 18px 44px rgba(0,0,0,.65);
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#121314; --card:#24221F; --card2:#2D2A26; --ink:#F4EFE3; --muted:#BFB7A6; --line:#48423A;
+  --accent:#F29A1C; --accent-ink:#1D1E1F; --accent-edge:#8E5200; --gold:#E3C431; --gold-ink:#E3C431;
+  --danger:#F0596B; --ok:#8CC79A; --chip:#33302B; --accent-text:#F29A1C;
+  --shadow:0 2px 0 rgba(0,0,0,.3),0 18px 44px rgba(0,0,0,.65);
+  color-scheme:dark}
+html,body{height:100%;margin:0;overflow:hidden;overscroll-behavior:none;touch-action:none}
+body{background:var(--bg);color:var(--ink);font-family:var(--ui);-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none}
+#app{position:fixed;inset:0;overflow:hidden;background:var(--bg)}
+#cv{position:absolute;left:0;top:0;width:100%;height:100%;display:block;touch-action:none;outline:none}
+.screen{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;box-sizing:border-box;
+  padding:max(16px,env(safe-area-inset-top,0px)) 16px max(16px,env(safe-area-inset-bottom,0px));pointer-events:none}
+.card{pointer-events:auto;box-sizing:border-box;width:100%;max-width:384px;max-height:100%;overflow-y:auto;overscroll-behavior:contain;
+  touch-action:pan-y;background:var(--card);color:var(--ink);border-radius:3px;box-shadow:var(--shadow);
+  padding:18px 18px 16px;border-top:6px solid var(--gold);position:relative}
+.card>*+*{margin-top:12px}
+.card h1,.card h2,.card p{margin-bottom:0}
+.card h1{margin-top:2px}
+.kicker{display:flex;align-items:center;gap:8px;font:800 12px/1.2 var(--ui);letter-spacing:.12em;text-transform:uppercase;color:var(--gold-ink);margin:0}
+.kicker canvas{width:26px;height:26px;flex:none}
+.logo{font:800 46px/0.95 var(--ui);letter-spacing:-.025em;margin:0}
+.logo span{color:var(--accent)}
+h2{font:800 26px/1.1 var(--ui);margin:0;letter-spacing:-.01em}
+.lead{font:600 15px/1.4 var(--ui);color:var(--ink);margin:0}
+.muted{color:var(--muted);font:600 14px/1.35 var(--ui);margin:0}
+.hand{font-family:var(--hand);font-weight:400}
+.era{font-size:24px;line-height:1.1;color:var(--gold-ink);margin:0}
+.btn{appearance:none;-webkit-appearance:none;display:inline-flex;align-items:center;justify-content:center;gap:8px;box-sizing:border-box;
+  min-height:46px;padding:6px 14px;border:2px solid var(--ink);background:transparent;color:var(--ink);font:800 15px/1.1 var(--ui);
+  border-radius:3px;cursor:pointer;pointer-events:auto;touch-action:manipulation;text-align:center}
+.btn:hover{background:var(--chip)}
+.btn.primary{display:flex;width:100%;min-height:58px;font-size:22px;background:var(--accent);border-color:var(--accent);color:var(--accent-ink);
+  box-shadow:0 4px 0 var(--accent-edge);margin-bottom:4px}
+.btn.primary:hover{filter:brightness(1.05)}
+.btn.primary:active{transform:translateY(3px);box-shadow:0 1px 0 var(--accent-edge)}
+.btn:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.btn[disabled]{opacity:.42;cursor:not-allowed}
+.btn[aria-pressed="true"]{background:var(--ink);color:var(--card)}
+.row{display:flex;gap:8px}
+.row>.btn{flex:1 1 0;min-width:0;padding-left:8px;padding-right:8px}
+.sect{border-top:1px dashed var(--line);padding-top:10px}
+.sect-h{display:flex;justify-content:space-between;align-items:baseline;gap:8px;font:800 14px/1.2 var(--ui);margin:0 0 8px}
+.sect-h small{font:600 12px/1.2 var(--ui);color:var(--muted);text-align:right}
+.chips{display:grid;grid-template-columns:repeat(6,1fr);gap:5px;align-items:center}
+.chips .hint{grid-column:1/-1}
+.chips .btn{min-height:38px;padding:4px 0;font-size:14px;border-width:1.5px;font-variant-numeric:tabular-nums}
+.btn small{display:block;font:600 11px/1.1 var(--ui);opacity:.75;margin-top:2px}
+#bGezel{flex-direction:column;gap:0}
+.hint{font:600 12px/1.4 var(--ui);color:var(--muted);margin:0}
+.fine{font:600 11.5px/1.4 var(--ui);color:var(--muted);margin:0;border-top:1px solid var(--line);padding-top:8px}
+.stamp{display:inline-block;font:800 21px/1 var(--ui);color:var(--danger);border:3px solid var(--danger);padding:7px 10px 6px;
+  transform:rotate(-3.5deg);letter-spacing:.04em;text-transform:uppercase;border-radius:2px}
+.over-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.over-head .hand{font-size:26px;color:var(--gold-ink)}
+.bon{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;font:600 14px/1.25 var(--ui)}
+.bon td{padding:5px 0;border-bottom:1px dashed var(--line);vertical-align:baseline}
+.bon td:last-child{text-align:right;font-weight:800;padding-left:10px}
+.bon tr.big td{font-size:17px}
+.bon tr.big td:last-child{color:var(--accent-text)}
+.uit{font:600 13px/1.4 var(--ui);color:var(--muted);margin:0}
+.uit b{color:var(--ink)}
+.badges{display:flex;flex-wrap:wrap;gap:6px}
+.badge{display:inline-flex;align-items:center;gap:6px;padding:3px 9px 3px 3px;background:var(--chip);border-radius:20px;font:800 12px/1 var(--ui)}
+.badge canvas{width:24px;height:24px}
+.badge.off{opacity:.38}
+.fact{background:var(--card2);padding:10px 12px;font:600 14px/1.4 var(--ui);border-left:4px solid var(--accent);margin:0}
+.fact b{display:block;font:800 12px/1.2 var(--ui);letter-spacing:.1em;text-transform:uppercase;color:var(--gold-ink);margin-bottom:3px}
+.picker{display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--card2);padding:8px 10px}
+.picker p{margin:0;font:800 13px/1.3 var(--ui)}
+.slots{display:flex;gap:6px}
+.slot{display:flex;flex-direction:column;align-items:center}
+.slot .btn{min-height:26px;width:38px;padding:0;border-width:1.5px}
+.slot .btn svg{width:14px;height:14px}
+.slot span{font:800 22px/1.15 var(--ui);width:38px;text-align:center}
+.slot.sel span{color:var(--accent-text);text-decoration:underline;text-underline-offset:4px}
+textarea.copy{width:100%;box-sizing:border-box;font:600 13px/1.35 var(--ui);background:var(--card2);color:var(--ink);border:1px solid var(--line);padding:8px;resize:none;user-select:text;-webkit-user-select:text}
+.toplist{list-style:none;padding:0;margin:0;counter-reset:n}
+.toplist li{display:flex;gap:10px;align-items:baseline;padding:6px 0;border-bottom:1px dashed var(--line);font:600 14px/1.2 var(--ui);font-variant-numeric:tabular-nums}
+.toplist li::before{counter-increment:n;content:counter(n);font-weight:800;color:var(--gold-ink);width:14px}
+.toplist li b{flex:1}
+.toplist li i{font-style:normal;color:var(--muted);font-size:12px}
+.about p{font:600 14px/1.45 var(--ui);margin:0}
+.about h3{font:800 13px/1.2 var(--ui);letter-spacing:.1em;text-transform:uppercase;color:var(--gold-ink);margin:14px 0 4px}
+.hudbtn{position:absolute;display:flex;align-items:center;justify-content:center;border:0;border-radius:3px;padding:0;
+  background:var(--hud-bg);color:var(--hud-ink);cursor:pointer;pointer-events:auto;touch-action:manipulation}
+.hudbtn svg{width:46%;height:46%}
+.hudbtn:focus-visible{outline:3px solid var(--hud-focus)}
+.toast{position:absolute;left:50%;bottom:max(24px,env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--card);
+  font:800 14px/1.2 var(--ui);padding:10px 14px;border-radius:3px;pointer-events:none;max-width:calc(100% - 32px);box-sizing:border-box;text-align:center}
+@media (max-height:700px){.logo{font-size:38px}.card>*+*{margin-top:9px}.btn.primary{min-height:52px}}
+@media (prefers-reduced-motion:reduce){.btn.primary:active{transform:none}}
+</style>
+<div id="app">
+<canvas id="cv" aria-label="Speelveld: een tarwekorrel valt door de meelfabriek"></canvas>
+<button id="btnPause" class="hudbtn" type="button" aria-label="Pauze" hidden><svg viewBox="0 0 10 10" aria-hidden="true"><rect x="1.5" y="1" width="2.4" height="8" fill="currentColor"/><rect x="6.1" y="1" width="2.4" height="8" fill="currentColor"/></svg></button>
+
+<section id="scrTitle" class="screen" aria-label="Titelscherm">
+  <div class="card">
+    <p class="kicker"><canvas data-ico="aar" width="52" height="52"></canvas><span>Van rosmolen tot Molen B</span></p>
+    <h1 class="logo">Korrel<span>val</span></h1>
+    <p class="lead">Je bent één tarwekorrel in een torenhoge meelfabriek. Glip door de spleet tussen de walsen, door 180 jaar molengeschiedenis.</p>
+    <button class="btn primary" id="bStart" type="button" data-primary>It giet oan!</button>
+    <div class="chips" id="lvlChips" hidden></div>
+    <div class="sect">
+      <p class="sect-h">Nachtploeg <small id="nightNote">eindeloos, één korrel</small></p>
+      <div class="row"><button class="btn" id="bDaily" type="button">Korrel van de dag</button><button class="btn" id="bFree" type="button">Vrije dienst</button></div>
+    </div>
+    <div class="row"><button class="btn" id="bGezel" type="button" aria-pressed="false">Gezel-modus</button><button class="btn" id="bSound" type="button" aria-pressed="true">Geluid aan</button></div>
+    <div class="row"><button class="btn" id="bScores" type="button">Scores</button><button class="btn" id="bAbout" type="button">Over dit spel</button></div>
+    <div class="badges" id="titleBadges"></div>
+    <p class="hint" id="ctlHint">Sturen: pijltjes of A/D, de muis, of sleep met je duim. P pauze, M geluid.</p>
+    <p class="fine">Fan-made door een stagiair, geen officiële uiting van Royal Koopmans.</p>
+  </div>
+</section>
+
+<section id="scrPause" class="screen" aria-label="Pauze" hidden>
+  <div class="card">
+    <h2>Pauze</h2>
+    <p class="muted" id="pauseInfo"></p>
+    <button class="btn primary" id="bResume" type="button" data-primary>Verder</button>
+    <div class="row"><button class="btn" id="bPSound" type="button" aria-pressed="true">Geluid aan</button><button class="btn" id="bPMenu" type="button">Naar menu</button></div>
+    <p class="hint">Spatie of P: verder. Esc: menu.</p>
+  </div>
+</section>
+
+<section id="scrLevel" class="screen" aria-label="Molen klaar" hidden>
+  <div class="card">
+    <p class="kicker">Weegbon</p>
+    <h2 id="lvTitle">Order geladen!</h2>
+    <p class="hand era" id="lvEra"></p>
+    <table class="bon" id="lvBon"></table>
+    <p class="uit" id="lvUit"></p>
+    <div class="badges" id="lvBadges"></div>
+    <p class="fact"><b>Wist je dat?</b><span id="lvFact"></span></p>
+    <button class="btn primary" id="bNext" type="button" data-primary>Volgende molen</button>
+    <div class="row"><button class="btn" id="bLMenu" type="button">Menu</button></div>
+  </div>
+</section>
+
+<section id="scrOver" class="screen" aria-label="Partij afgekeurd" hidden>
+  <div class="card">
+    <div class="over-head"><span class="stamp">Partij afgekeurd</span><span class="hand">Oant moarn</span></div>
+    <p class="muted" id="overSub"></p>
+    <table class="bon" id="overBon"></table>
+    <p class="uit" id="overUit"></p>
+    <div class="badges" id="overBadges"></div>
+    <div class="picker" id="picker" hidden>
+      <p>Top 5!<br><span class="muted">Jouw letters</span></p>
+      <div class="slots" id="slots"></div>
+    </div>
+    <button class="btn primary" id="bAgain" type="button" data-primary>Nog een korrel?</button>
+    <div class="row"><button class="btn" id="bCopy" type="button">Kopieer score</button><button class="btn" id="bOMenu" type="button">Menu</button></div>
+    <textarea class="copy" id="copyBox" rows="3" readonly hidden aria-label="Score om te kopiëren"></textarea>
+    <p class="fact" id="overFactBox" hidden><b>Wist je dat?</b><span id="overFact"></span></p>
+  </div>
+</section>
+
+<section id="scrDone" class="screen" aria-label="Jaarverslag" hidden>
+  <div class="card">
+    <p class="kicker">Jaarverslag 2026</p>
+    <h2>180 jaar, van rosmolen tot Molen B</h2>
+    <p class="muted">Je viel door alle molens van de tijdlijn. Generaties lang draaide hier het vakmanschap; nu draaide jij mee.</p>
+    <table class="bon" id="doneBon"></table>
+    <p class="uit" id="doneUit"></p>
+    <div class="badges" id="doneBadges"></div>
+    <p class="fact"><b>Jubileumjaar</b>In het Urban Tarweveld in de Leeuwarder wijk Middelsee groeit tarwe gewoon bij de stoplichten.</p>
+    <button class="btn primary" id="bDoneNight" type="button" data-primary>Nachtploeg</button>
+    <div class="row"><button class="btn" id="bDoneCopy" type="button">Kopieer score</button><button class="btn" id="bDoneMenu" type="button">Menu</button></div>
+    <textarea class="copy" id="copyBox2" rows="3" readonly hidden aria-label="Score om te kopiëren"></textarea>
+  </div>
+</section>
+
+<section id="scrScores" class="screen" aria-label="Scores" hidden>
+  <div class="card">
+    <h2>Scores</h2>
+    <div class="sect"><p class="sect-h">Nachtploeg top 5 <small id="dailyNote"></small></p><ol class="toplist" id="topList"></ol></div>
+    <div class="sect"><p class="sect-h">Tijdlijn</p><p class="muted" id="campNote"></p></div>
+    <div class="sect"><p class="sect-h">Kernwaarden</p><div class="badges" id="allBadges"></div></div>
+    <div class="sect"><p class="sect-h">Uitmalingen gezien <small>witter = minder uitmaling</small></p><div class="badges" id="allLabels"></div></div>
+    <p class="fine">Bewaar je wachtwoorden in de kluis, niet je highscore.</p>
+    <button class="btn primary" id="bScoresBack" type="button" data-primary>Terug</button>
+  </div>
+</section>
+
+<section id="scrAbout" class="screen" aria-label="Over dit spel" hidden>
+  <div class="card about">
+    <h2>Over Korrelval</h2>
+    <p>Fan-made door een stagiair, geen officiële uiting van Royal Koopmans.</p>
+    <p>Het supermarktmerk Koopmans (bakmixen) is sinds 2000 van Dr. Oetker; dit spel gaat over Royal Koopmans, de meelfabriek in Leeuwarden die aan bakkers en voedingsindustrie levert.</p>
+    <h3>Het spel</h3>
+    <p>Stuur je korrel door de spleet tussen de walsen. Midden door is een perfecte passage. Stenen, bouten en moederkoren haalt de reiniging uit het graan: stenen en metaal mogen nooit op de walsen.</p>
+    <p>Combo-rangen zijn Prémax-mixen met Friese waternamen: Slotermeer, Fluessen, Tjeukemeer, Princenhof en Bonkevaart.</p>
+    <h3>Uitmaling</h3>
+    <p>Short patent circa 45%, long patent circa 65%, straight grade 75-76%, volkoren 100%. Witter = minder uitmaling. In het spel is jouw uitmaling het aandeel perfecte passages.</p>
+    <h3>Cijfers</h3>
+    <p>Krantencijfers zijn afgerond en staan er met circa bij. Eén ton bloem is goed voor circa 1.800 broden.</p>
+    <h3>Besturing</h3>
+    <p>Pijltjes of A/D, de muis, of sleep met je duim (de korrel volgt je beweging). Spatie of Enter: start en verder. P: pauze. M: geluid. Esc: menu.</p>
+    <p class="hint">Gemaakt met Canvas en WebAudio, zonder plaatjes of geluidsbestanden.</p>
+    <button class="btn primary" id="bAboutBack" type="button" data-primary>Terug</button>
+  </div>
+</section>
+<div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+</div>
+<script>
+'use strict';
+(() => {
+// ============================================================
+// 1. CONFIG: alle tuning-getallen op één plek
+// ============================================================
+const CONFIG = {
+  W: 400, H: 720, L: 50, R: 350, GY: 252, HUD: 74,
+  dprMax: 2, step: 1 / 120, dtMax: 0.05, maxSub: 6,
+  grain: { r: 10, hit: 0.8, accel: 1800, vmax: 420, friction: 2800, follow: 17, touchGain: 1.15 },
+  lives: 3, nightLives: 1, invuln: 1.0, dieT: 0.9,
+  shake: { t: 0.12, amp: 6 }, flashT: 0.25,
+  perfect: 0.4,
+  pts: { pass: 10, perfWals: 25, perfPlan: 15, boekweit: 5, nedertarwe: 20, kroon: 100, magneet: 50, water: 25, kiem: 30, siloGoal: 250, siloOther: 50, life: 100, uit: 300 },
+  comboStep: 5, multMax: 5,
+  ranks: [[5, 'Slotermeer'], [10, 'Fluessen'], [15, 'Tjeukemeer'], [20, 'Princenhof'], [25, 'Bonkevaart']],
+  slowmo: { scale: 0.55, dur: 3 }, magnet: { dur: 6 },
+  fair: { dx: 0.7, minGap: 2.6, edge: 6, minShift: 0.6 },
+  hazard: { warn: 1.0, fall: [200, 280], vx: [30, 120], r: 9, moederR: 7, warnY: 86 },
+  intro: { t: 2.2, first: 3.0 },
+  roll: { molen: 50, wals: 40, casing: 0.62 }, plate: 18, pickChance: 0.5,
+  particles: 120, texts: 14,
+  bread: 1800, bag: 25, cell: 2000,
+  gezel: { gap: 1.3, scroll: 0.8 },
+  night: { scroll0: 360, grow: 0.04, scrollMax: 560, int0: 1.1, intMin: 0.8, gap0: 0.2, gapMin: 0.13 },
+  demo: { scroll: 115 },
+  audio: { master: 0.5, voices: 6 },
+};
+const { W, H, L, R } = CONFIG;
+const TAU = Math.PI * 2;
+const F_UI = '"Nunito","Avenir Next","Segoe UI",system-ui,sans-serif';
+const F_HAND = '"La Belle Aurore","Segoe Script","Bradley Hand",cursive';
+
+// ============================================================
+// 2. Inhoud: levels als configrijen, rangen, feiten
+// ============================================================
+const LEVELS = [
+  { year: 1846, short: 'Rosmolen', title: 'Rosmolen, Holwerd', style: 'hout', old: true,
+    pal: { wall: '#3a2817', wall2: '#5a3f26', line: '#C8A878', slab: '#6B4A2B', edge: '#C8A878', pipe: '#4a3320', plate: '#8a6a44' },
+    floors: 12, interval: 2.0, scroll: 170, gap: 0.38, mix: { molen: 6, buil: 2, haz: 2 }, haz: ['steen'], picks: { boekweit: 6, kiem: 1 }, ribs: 0, white: 0,
+    intro: 'Bakkersgezel Uilke Klazes Koopmans leent 1.550 gulden en begint met één rosmolen.', supply: 'Paarden draaien de molenstenen, de buil zeeft.' },
+  { year: 1867, short: 'Friso', title: 'Stoommeelfabriek Friso, Leeuwarden', style: 'steen', old: true, steam: true,
+    pal: { wall: '#2f1813', wall2: '#7A3B2E', line: '#3A3F44', slab: '#3A3F44', edge: '#a8a29a', pipe: '#2e3236', plate: '#7a5634' },
+    floors: 16, interval: 1.8, scroll: 210, gap: 0.32, mix: { molen: 6, buil: 2, haz: 3 }, haz: ['steen', 'bout'], picks: { water: 3, boekweit: 2, kiem: 1 }, ribs: 0, white: 0.12,
+    intro: 'In 1867 nam Koopmans in Leeuwarden een stoommeelfabriek over, aan het Noordvliet.', supply: 'De stoommachine van 2 pk bleek al snel ontoereikend.' },
+  { year: 1920, short: 'N.V.', title: "N.V. Koopmans' Meelfabrieken", style: 'tegel',
+    pal: { wall: '#1f3327', wall2: '#3F5E4A', line: '#EFE6C8', slab: '#cfc4a2', edge: '#EFE6C8', pipe: '#2b4436', plate: '#d9cfb0' },
+    floors: 20, interval: 1.6, scroll: 250, gap: 0.28, mix: { wals: 5, plan: 3, haz: 2 }, haz: ['steen', 'bout'], picks: { nedertarwe: 3, water: 2, kiem: 1 }, ribs: 24, plan: { A: 20, f: 0.5, holes: 1 }, white: 0.3,
+    intro: 'De N.V. groeit. Walsenstoelen en plansichters doen hun intrede: de spleten worden smaller.', supply: 'Grof geribbelde walsen breken de korrel open.' },
+  { year: 1976, short: 'Koninklijk', title: 'Koninklijk', style: 'hout2', crown: true,
+    pal: { wall: '#2a190d', wall2: '#5C3A21', line: '#CFAB00', slab: '#4a2f1a', edge: '#CFAB00', pipe: '#3d2615', plate: '#8a6a3a' },
+    floors: 24, interval: 1.4, scroll: 300, gap: 0.24, mix: { wals: 5, plan: 3, haz: 3 }, haz: ['steen', 'bout', 'bout'], picks: { kroon: 3, magneet: 2, nedertarwe: 2, kiem: 1 }, ribs: 18, plan: { A: 30, f: 0.6, holes: 1 }, white: 0.48,
+    intro: 'Koningin Juliana verleent het predicaat Koninklijk. De molen staat aan het Nieuwe Kanaal.', supply: 'Reiniging: stenen en metaal mogen nooit op de walsen.' },
+  { year: 2008, short: 'Nieuwe molen', title: 'Nieuwe molen', style: 'staal',
+    pal: { wall: '#16212d', wall2: '#4F6D8C', line: '#9FB3C8', slab: '#3c536b', edge: '#9FB3C8', pipe: '#2d4256', plate: '#9FB3C8' },
+    floors: 28, interval: 1.2, scroll: 360, gap: 0.20, mix: { wals: 5, plan: 4, haz: 3 }, haz: ['steen', 'bout', 'moeder'], picks: { water: 2, magneet: 1, nedertarwe: 3, kroon: 1, kiem: 1 }, ribs: 12, plan: { A: 40, f: 0.9, holes: 2 }, white: 0.66,
+    intro: 'Een nieuwe molen: fijner geribbelde walsen en sneller schuddende plansichters.', supply: 'Onkruidzaad zoals moederkoren gaat er in de reiniging uit.' },
+  { year: 2026, short: 'Molen B', title: 'Molen B, 180 jaar', style: 'digi', predict: true,
+    pal: { wall: '#121314', wall2: '#1D1E1F', line: '#6FD3E0', slab: '#2b2d30', edge: '#E78A01', pipe: '#26282a', plate: '#45494d' },
+    floors: 32, interval: 1.0, scroll: 420, gap: 0.16, mix: { wals: 6, plan: 3, haz: 3 }, haz: ['steen', 'bout', 'moeder'], picks: { nedertarwe: 4, water: 2, magneet: 1, kroon: 1, kiem: 1 }, ribs: 0, plan: { A: 36, f: 0.9, holes: 2 }, white: 0.84,
+    intro: 'Jubileumjaar 2026: walsenstoelen van enkele tonnen gaan door een opening in het dak.', supply: null },
+];
+const NIGHT = { year: 2026, short: 'Nachtploeg', title: 'Nachtploeg', style: 'digi', predict: true,
+  pal: { wall: '#0b0c0e', wall2: '#15171a', line: '#6FD3E0', slab: '#26282b', edge: '#E78A01', pipe: '#1c1e21', plate: '#3c4044' },
+  mix: { wals: 5, plan: 3, haz: 3 }, haz: ['steen', 'bout', 'moeder'], picks: { nedertarwe: 3, water: 2, magneet: 1, kroon: 1, kiem: 1 }, ribs: 6, plan: { A: 36, f: 0.9, holes: 2 }, white: 0.92,
+  intro: 'De molen draait volcontinu. Eén korrel, geen einde. Hoe diep kom jij?', supply: null };
+const DEMO = { ...LEVELS[2], mix: { wals: 5, plan: 3 }, picks: { nedertarwe: 1 }, floors: Infinity };
+const RANKS = CONFIG.ranks;
+const SILOS = ['Orion', 'Zuiderkroon', 'Jupiter', 'Saturnus', 'Silverline'];
+const SHIPS = ['Friese tarwe van boeren uit de buurt', 'Zeeuwse Nedertarwe van CZAV', 'Groninger baktarwe van Dollard Tarwe, circa 500 ton', 'een Duits schip met tarwe', 'EKO-tarwe, apart gelost (Skal)'];
+const STEPS = ['Lossen', 'Reinigen', 'Conditioneren', 'Walsen', 'Zeven', 'Silo'];
+const STEP_ICO = ['ship', 'magnet', 'drop', 'rolls', 'sieve', 'silo'];
+const STEP_AT = [0, 0.1, 0.28, 0.45, 0.68, 0.985];
+// Wist-je-dat: [level (6 = Nachtploeg), tekst]; max 120 tekens, krantencijfers met circa.
+const FACTS = [
+  [0, 'Koopmans begon in 1846 met een door paarden aangedreven boekweitmolen in Holwerd.'],
+  [1, 'In 1867 nam Koopmans in Leeuwarden de stoommeelfabriek van Hein Blok Wybrandi over, later Friso genoemd.'],
+  [1, 'De eerste stoommachine in Leeuwarden had 2 pk. Dat bleek al snel te weinig.'],
+  [1, 'Na 1881 spreidde zoon Jan Koopmans het risico met veevoer van gerst en maïs.'],
+  [2, "In 1920 werd het N.V. Koopmans' Meelfabrieken, met de broers Uco, Daan en Jo."],
+  [2, 'Een tarwekorrel passeert in een hoogmaalderij soms wel twintig walsenstoelen.'],
+  [3, 'Koningin Juliana verleende Koopmans in 1976 het predicaat Koninklijk.'],
+  [3, 'Het oudste deel van de loskade aan het Nieuwe Kanaal was uit 1927.'],
+  [3, 'Een meelfabriek is altijd hoog: het maalsel valt via buizen van verdieping naar verdieping.'],
+  [4, 'Uit 1.000 kilo tarwe komt 720 tot 760 kilo witte bloem; de rest is zemel, gries en kiem.'],
+  [4, 'In 1993 nam Koopmans paneermeelmaker LaCo Crumbs over.'],
+  [5, 'Voor Molen B gingen walsenstoelen van circa 3.500 tot 6.000 kilo door een opening in het dak.'],
+  [5, 'Molen B vervangt de molen uit 1967. De molen uit 1965 aan De Merodestraat wordt roggemolen.'],
+  [6, 'Gemiddeld lossen er circa vier graanschepen per week, elk zo\'n 1.000 ton.'],
+  [6, 'De zuiginstallatie haalt circa 120 ton graan per uur uit een schip.'],
+  [6, 'In februari 2024 voer het eerste Nedertarwe-schip op HVO100 naar Leeuwarden.'],
+  [6, 'KIEM (2016) staat voor Koopmans, Innovatie, Expertise en Molenaarschap.'],
+];
+const BADGES = [
+  { id: 'vak', name: 'Vakmanschap', ico: 'aar', desc: '75% of meer perfecte passages in een molen' },
+  { id: 'betr', name: 'Betrouwbaar', ico: 'check', desc: 'een molen zonder hit' },
+  { id: 'ond', name: 'Ondernemend', ico: 'up', desc: 'alle pick-ups van een molen' },
+  { id: 'pas', name: 'Gepassioneerd', ico: 'heart', desc: '100 verdiepingen in de Nachtploeg' },
+  { id: 'mens', name: 'Menselijk', ico: 'people', desc: 'de tijdlijn uitgespeeld als Gezel' },
+  { id: 'elk', name: 'Elke korrel telt', ico: 'grain', desc: 'alle Nedertarwe-korrels van een molen' },
+];
+const UIT = [
+  { id: 'sp', max: 55, name: 'Short patent', note: 'circa 45%' },
+  { id: 'lp', max: 70, name: 'Long patent', note: 'circa 65%' },
+  { id: 'sg', max: 88, name: 'Straight grade', note: '75-76%' },
+  { id: 'vk', max: 101, name: 'Volkoren', note: '100%' },
+];
+const PICK_TIPS = {
+  boekweit: 'Boekweit is geen graan, maar wel glutenvrij.',
+  water: 'Conditioneren: normaal 12 tot 48 uur intrekken. Hier 3 seconden.',
+  nedertarwe: 'Nedertarwe: van boeren met bloemenranden langs de akker.',
+  magneet: 'Magneet: metaal eruit, het mag nooit op de walsen.',
+  kroon: 'Koninklijk sinds 1976.',
+  kiem: 'De kiem gaat apart: de olie maakt meel ranzig.',
+};
+const MONTHS = ['jan', 'feb', 'mrt', 'apr', 'mei', 'jun', 'jul', 'aug', 'sep', 'okt', 'nov', 'dec'];
+
+// ============================================================
+// 3. Hulpjes
+// ============================================================
+const $ = id => document.getElementById(id);
+const clamp = (v, a, b) => v < a ? a : v > b ? b : v;
+const lerp = (a, b, t) => a + (b - a) * t;
+const ease = t => 1 - Math.pow(1 - clamp(t, 0, 1), 3);
+function mulberry32(a) { return function () { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+function hashStr(s) { let h = 2166136261; for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; }
+const NF = (() => { try { return new Intl.NumberFormat('nl-NL', { maximumFractionDigits: 0 }); } catch (e) { return null; } })();
+const fmt = n => { n = Math.round(n); return NF ? NF.format(n) : String(n).replace(/\B(?=(\d{3})+(?!\d))/g, '.'); };
+const fmt1 = n => String(Math.round(n * 10) / 10).replace('.', ',');
+const hitR = () => CONFIG.grain.r * CONFIG.grain.hit;
+function mixHex(a, b, t) { const pa = parseInt(a.slice(1), 16), pb = parseInt(b.slice(1), 16); return `rgb(${Math.round(lerp(pa >> 16, pb >> 16, t))},${Math.round(lerp(pa >> 8 & 255, pb >> 8 & 255, t))},${Math.round(lerp(pa & 255, pb & 255, t))})`; }
+const reduced = (() => { try { return matchMedia('(prefers-reduced-motion: reduce)'); } catch (e) { return { matches: false }; } })();
+function dateKey(d) { d = d || new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; }
+const dayLabel = () => { const d = new Date(); return `${d.getDate()} ${MONTHS[d.getMonth()]}`; };
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+// ============================================================
+// 4. Opslag (localStorage, altijd in try/catch)
+// ============================================================
+const SAVE_KEY = 'korrelval-b-v1';
+const save = { best: 0, maxLvl: 0, night: false, top: [], sound: true, gezel: false, badges: {}, labels: {}, name: 'KOR', daily: {}, campDone: false };
+function loadSave() {
+  try { const raw = localStorage.getItem(SAVE_KEY); if (raw) Object.assign(save, JSON.parse(raw)); } catch (e) { /* privévenster: gewoon doorspelen */ }
+  if (!Array.isArray(save.top)) save.top = [];
+  if (typeof save.name !== 'string' || !/^[A-Z]{3}$/.test(save.name)) save.name = 'KOR';
+  for (const k in save.daily) if (k !== dateKey()) delete save.daily[k];
+}
+function persist() { try { localStorage.setItem(SAVE_KEY, JSON.stringify(save)); } catch (e) { /* geen opslag, geen probleem */ } }
+
+// ============================================================
+// 5. Canvas, schaal, achtergronden en iconen
+// ============================================================
+const app = $('app'), cv = $('cv'), ctx = cv.getContext('2d');
+const V = { cw: W, ch: H, dpr: 1, s: 1, ox: 0, oy: 0 };
+let lbCanvas = null, tiles = {};
+function layout() {
+  const cw = app.clientWidth || innerWidth, ch = app.clientHeight || innerHeight;
+  const dpr = Math.min(window.devicePixelRatio || 1, CONFIG.dprMax);
+  cv.width = Math.max(1, Math.round(cw * dpr)); cv.height = Math.max(1, Math.round(ch * dpr));
+  const s = Math.min(cw / W, ch / H);
+  Object.assign(V, { cw, ch, dpr, s, ox: (cw - W * s) / 2, oy: (ch - H * s) / 2 });
+  const bp = $('btnPause'), bs = Math.round(40 * s);
+  bp.style.width = bp.style.height = bs + 'px';
+  bp.style.left = Math.round(V.ox + (W - 46) * s) + 'px'; bp.style.top = Math.round(V.oy + 6 * s) + 'px';
+  tiles = {};
+  buildLetterbox();
+}
+function buildLetterbox() {
+  const c = document.createElement('canvas'); c.width = cv.width; c.height = cv.height;
+  const g = c.getContext('2d'), k = V.dpr * Math.max(0.8, Math.min(V.s, 1.6));
+  g.fillStyle = '#1b1816'; g.fillRect(0, 0, c.width, c.height);
+  const bw = 44 * k, bh = 18 * k, rnd = mulberry32(7);
+  for (let r = 0, y = 0; y < c.height; r++, y += bh) {
+    for (let x = (r % 2) ? -bw / 2 : 0; x < c.width; x += bw) {
+      const v = 34 + Math.floor(rnd() * 12);
+      g.fillStyle = `rgb(${v + 6},${v - 2},${v - 8})`; g.fillRect(x + 1.5 * k, y + 1.5 * k, bw - 3 * k, bh - 3 * k);
+    }
+  }
+  const fx = V.ox * V.dpr, fy = V.oy * V.dpr, fw = W * V.s * V.dpr, fh = H * V.s * V.dpr;
+  if (fx > 60 * V.dpr) { // gouden korenaren als ornament naast het speelveld op brede schermen
+    for (let y = 120 * k; y < c.height - 60 * k; y += 220 * k) { icon(g, 'aar', fx / 2, y, 34 * k, 'rgba(207,171,0,.22)'); icon(g, 'aar', c.width - fx / 2, y + 110 * k, 34 * k, 'rgba(207,171,0,.22)'); }
+  }
+  g.save(); g.shadowColor = 'rgba(0,0,0,.75)'; g.shadowBlur = 28 * V.dpr; g.fillStyle = '#000'; g.fillRect(fx, fy, fw, fh); g.restore();
+  lbCanvas = c;
+}
+// Achtergrond per tijdperk: één keer naar een offscreen canvas, daarna met modulo gescrold.
+function getTile(style, pal) {
+  const key = style + pal.wall;
+  if (tiles[key]) return tiles[key];
+  const k = V.s * V.dpr, th = 240, c = document.createElement('canvas');
+  c.width = Math.ceil(W * k); c.height = Math.ceil(th * k);
+  const g = c.getContext('2d'); g.scale(k, k);
+  const rnd = mulberry32(hashStr(key));
+  g.fillStyle = pal.wall; g.fillRect(0, 0, W, th);
+  if (style === 'hout' || style === 'hout2') {
+    for (let x = L; x < R; x += 30) {
+      g.globalAlpha = 0.55 + rnd() * 0.3; g.fillStyle = pal.wall2; g.fillRect(x + 1, 0, 28, th); g.globalAlpha = 1;
+      g.strokeStyle = 'rgba(0,0,0,.2)'; g.lineWidth = 1;
+      for (let i = 0; i < 3; i++) { const gx = x + 5 + rnd() * 20; g.beginPath(); g.moveTo(gx, 0); g.bezierCurveTo(gx + 4, 80, gx - 4, 160, gx, th); g.stroke(); }
+      g.fillStyle = 'rgba(0,0,0,.5)'; for (const ny of [22, 142]) { g.fillRect(x + 6, ny, 2, 2); g.fillRect(x + 22, ny, 2, 2); }
+      if (style === 'hout2') { g.fillStyle = pal.line; g.globalAlpha = 0.35; g.fillRect(x, 0, 1, th); g.globalAlpha = 1; }
+    }
+    g.fillStyle = 'rgba(0,0,0,.28)'; g.fillRect(L, 112, R - L, 10);
+  } else if (style === 'steen' || style === 'tegel') {
+    const bw = style === 'steen' ? 34 : 30, bh = style === 'steen' ? 15 : 30;
+    for (let r = 0, y = 0; y < th; r++, y += bh) for (let x = L - (r % 2 && style === 'steen' ? bw / 2 : 0); x < R; x += bw) {
+      g.globalAlpha = 0.45 + rnd() * 0.35; g.fillStyle = pal.wall2; g.fillRect(x + 1, y + 1, bw - 2, bh - 2);
+    }
+    g.globalAlpha = 1;
+    if (style === 'tegel') { g.fillStyle = pal.line; g.globalAlpha = 0.18; g.fillRect(L, 0, R - L, 5); g.fillRect(L, 120, R - L, 5); g.globalAlpha = 1; }
+  } else if (style === 'staal') {
+    for (let y = 0; y < th; y += 120) for (let x = L; x < R; x += 100) {
+      g.fillStyle = pal.wall2; g.globalAlpha = 0.35 + rnd() * 0.2; g.fillRect(x + 2, y + 2, 96, 116); g.globalAlpha = 1;
+      g.fillStyle = 'rgba(255,255,255,.07)'; g.beginPath(); g.moveTo(x + 2, y + 2); g.lineTo(x + 60, y + 2); g.lineTo(x + 2, y + 70); g.fill();
+      g.fillStyle = 'rgba(159,179,200,.45)'; for (const [rx, ry] of [[7, 7], [93, 7], [7, 113], [93, 113]]) g.fillRect(x + rx - 1.5, y + ry - 1.5, 3, 3);
+    }
+  } else {
+    g.strokeStyle = pal.line; g.globalAlpha = 0.09; g.lineWidth = 1;
+    for (let x = L; x <= R; x += 20) { g.beginPath(); g.moveTo(x + 0.5, 0); g.lineTo(x + 0.5, th); g.stroke(); }
+    for (let y = 0; y < th; y += 20) { g.beginPath(); g.moveTo(L, y + 0.5); g.lineTo(R, y + 0.5); g.stroke(); }
+    g.globalAlpha = 0.5;
+    for (let i = 0; i < 7; i++) { g.fillStyle = rnd() < 0.35 ? '#E78A01' : pal.line; const gx = L + 10 + Math.floor(rnd() * 13) * 20, gy = Math.floor(rnd() * 11) * 20 + 6; g.fillRect(gx, gy, 4 + Math.floor(rnd() * 3) * 4, 3); g.globalAlpha = 0.25; g.fillRect(gx, gy + 6, 8, 2); g.globalAlpha = 0.5; }
+    g.globalAlpha = 1;
+  }
+  return (tiles[key] = c);
+}
+// Iconen uit canvas-primitieven (geen emoji, geen plaatjes).
+function icon(g, name, x, y, s, col) {
+  g.save(); g.translate(x, y); g.scale(s / 24, s / 24);
+  g.fillStyle = col; g.strokeStyle = col; g.lineWidth = 2.2; g.lineCap = 'round'; g.lineJoin = 'round';
+  const leaf = (sx, yy) => { g.beginPath(); g.moveTo(sx * 1, yy + 2); g.lineTo(sx * 7, yy - 3); g.lineTo(sx * 7, yy); g.lineTo(sx * 1, yy + 5); g.closePath(); g.fill(); };
+  g.beginPath();
+  switch (name) {
+    case 'aar':
+      g.moveTo(0, 11); g.lineTo(0, -8); g.stroke();
+      for (let i = 0; i < 4; i++) { leaf(-1, -7 + i * 4.4); leaf(1, -7 + i * 4.4); }
+      g.beginPath(); g.ellipse(0, -10, 1.8, 3.2, 0, 0, TAU); g.fill(); break;
+    case 'ship':
+      g.moveTo(-11, 1); g.lineTo(11, 1); g.lineTo(7, 8); g.lineTo(-8, 8); g.closePath(); g.fill();
+      g.fillRect(2, -6, 6, 6); g.fillRect(-7, -2, 7, 3); break;
+    case 'magnet':
+      g.lineWidth = 4.5; g.lineCap = 'butt'; g.arc(0, 0, 7, Math.PI, 0, true); g.moveTo(-7, 0); g.lineTo(-7, -9); g.moveTo(7, 0); g.lineTo(7, -9); g.stroke(); break;
+    case 'drop':
+      g.moveTo(0, -11); g.bezierCurveTo(4, -4, 8, 0, 8, 4); g.arc(0, 4, 8, 0, Math.PI); g.bezierCurveTo(-8, 0, -4, -4, 0, -11); g.fill(); break;
+    case 'rolls':
+      g.arc(-6, 0, 6, 0, TAU); g.moveTo(12, 0); g.arc(6, 0, 6, 0, TAU); g.fill(); break;
+    case 'sieve':
+      g.fillRect(-11, -3, 22, 6); g.fillRect(-11, -9, 2, 6); g.fillRect(9, -9, 2, 6);
+      g.clearRect(-8, -1, 2, 2); g.clearRect(-3, -1, 2, 2); g.clearRect(2, -1, 2, 2); g.clearRect(7, -1, 2, 2); break;
+    case 'silo':
+      g.moveTo(-7, -6); g.lineTo(0, -11); g.lineTo(7, -6); g.closePath(); g.fill(); g.fillRect(-7, -5, 14, 14); break;
+    case 'crown':
+      g.moveTo(-11, 6); g.lineTo(-11, -6); g.lineTo(-8, 0); g.lineTo(-5.5, -8); g.lineTo(-2.7, 0); g.lineTo(0, -10); g.lineTo(2.7, 0); g.lineTo(5.5, -8); g.lineTo(8, 0); g.lineTo(11, -6); g.lineTo(11, 6); g.closePath(); g.fill(); g.fillRect(-11, 7, 22, 3); break;
+    case 'check':
+      g.lineWidth = 3.4; g.moveTo(-8, 0); g.lineTo(-2, 6); g.lineTo(9, -6); g.stroke(); break;
+    case 'up':
+      g.moveTo(0, -10); g.lineTo(8, -1); g.lineTo(3, -1); g.lineTo(3, 9); g.lineTo(-3, 9); g.lineTo(-3, -1); g.lineTo(-8, -1); g.closePath(); g.fill(); break;
+    case 'heart':
+      g.moveTo(0, 9); g.bezierCurveTo(-12, 0, -9, -10, 0, -4); g.bezierCurveTo(9, -10, 12, 0, 0, 9); g.fill(); break;
+    case 'people':
+      g.arc(-5, -5, 3.5, 0, TAU); g.moveTo(8.5, -5); g.arc(5, -5, 3.5, 0, TAU); g.fill();
+      g.beginPath(); g.ellipse(-5, 6, 5.5, 5, 0, Math.PI, 0); g.ellipse(5, 6, 5.5, 5, 0, Math.PI, 0); g.fill(); break;
+    case 'grain':
+      g.ellipse(0, 0, 6, 9, 0.3, 0, TAU); g.fill(); break;
+  }
+  g.restore();
+}
+function badgeCanvas(id, earned) {
+  const b = BADGES.find(q => q.id === id), c = document.createElement('canvas');
+  c.width = c.height = 48; const g = c.getContext('2d');
+  g.fillStyle = earned ? '#CFAB00' : '#9a958a'; g.beginPath(); g.arc(24, 24, 23, 0, TAU); g.fill();
+  g.strokeStyle = 'rgba(29,30,31,.35)'; g.lineWidth = 2; g.beginPath(); g.arc(24, 24, 19, 0, TAU); g.stroke();
+  icon(g, b.ico, 24, 24, 26, '#1D1E1F');
+  return c;
+}
+
+// ============================================================
+// 6. Geluid: WebAudio-synthese, AudioContext pas na eerste tik
+// ============================================================
+const AU = {
+  ctx: null, master: null, noise: null, brown: null, rum: null, voices: 0,
+  ensure() {
+    if (this.ctx) { if (this.ctx.state === 'suspended' && !document.hidden) this.ctx.resume().catch(() => {}); return; }
+    const AC = window.AudioContext || window.webkitAudioContext; if (!AC) return;
+    try { this.ctx = new AC(); } catch (e) { return; }
+    const c = this.ctx, sr = c.sampleRate;
+    this.master = c.createGain(); this.master.gain.value = save.sound ? CONFIG.audio.master : 0; this.master.connect(c.destination);
+    this.noise = c.createBuffer(1, sr, sr); const d = this.noise.getChannelData(0); for (let i = 0; i < sr; i++) d[i] = Math.random() * 2 - 1;
+    this.brown = c.createBuffer(1, sr * 2, sr); const b = this.brown.getChannelData(0); let lastV = 0;
+    for (let i = 0; i < b.length; i++) { lastV = (lastV + 0.02 * (Math.random() * 2 - 1)) / 1.02; b[i] = lastV * 3.5; }
+  },
+  setSound(on) { save.sound = on; persist(); if (this.master) this.master.gain.setTargetAtTime(on ? CONFIG.audio.master : 0, this.ctx.currentTime, 0.02); syncSoundButtons(); },
+  ok(dur) { if (!this.ctx || !save.sound || this.ctx.state !== 'running' || this.voices >= CONFIG.audio.voices) return false; this.voices++; setTimeout(() => { this.voices--; }, dur * 1000 + 40); return true; },
+  tone(f0, f1, dur, type, vol, delay, lp) {
+    delay = delay || 0; if (!this.ok(dur + delay)) return;
+    const c = this.ctx, t = c.currentTime + delay, o = c.createOscillator(), g = c.createGain();
+    o.type = type || 'sine'; o.frequency.setValueAtTime(f0, t); if (f1 !== f0) o.frequency.exponentialRampToValueAtTime(f1, t + dur);
+    g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(vol, t + 0.008); g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+    let node = o; if (lp) { const f = c.createBiquadFilter(); f.type = 'lowpass'; f.frequency.value = lp; o.connect(f); node = f; }
+    node.connect(g); g.connect(this.master); o.start(t); o.stop(t + dur + 0.03);
+  },
+  burst(dur, vol, type, freq, q, delay) {
+    delay = delay || 0; if (!this.ok(dur + delay)) return;
+    const c = this.ctx, t = c.currentTime + delay, s = c.createBufferSource(), f = c.createBiquadFilter(), g = c.createGain();
+    s.buffer = this.noise; f.type = type; f.frequency.value = freq; f.Q.value = q || 1;
+    g.gain.setValueAtTime(vol, t); g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+    s.connect(f); f.connect(g); g.connect(this.master); s.start(t, Math.random() * 0.5); s.stop(t + dur + 0.02);
+  },
+  rumble(on) {
+    if (!this.ctx) return;
+    const c = this.ctx;
+    if (on && !this.rum) {
+      const s = c.createBufferSource(), f = c.createBiquadFilter(), g = c.createGain();
+      s.buffer = this.brown; s.loop = true; f.type = 'lowpass'; f.frequency.value = 160; g.gain.value = 0.0001;
+      s.connect(f); f.connect(g); g.connect(this.master); s.start();
+      g.gain.setTargetAtTime(0.12, c.currentTime, 0.3); this.rum = { s, f, g };
+    } else if (!on && this.rum) {
+      const r = this.rum; this.rum = null; r.g.gain.setTargetAtTime(0.0001, c.currentTime, 0.08); setTimeout(() => { try { r.s.stop(); } catch (e) { /* al gestopt */ } }, 400);
+    }
+  },
+  rumbleSet(cut, vol) { if (this.rum) { const t = this.ctx.currentTime; this.rum.f.frequency.setTargetAtTime(cut, t, 0.1); this.rum.g.gain.setTargetAtTime(vol, t, 0.1); } },
+};
+const SFX = {
+  perfect(step) { const k = Math.pow(2, Math.min(step, 24) / 12); [523.25, 659.25, 783.99].forEach((f, i) => AU.tone(f * k, f * k, 0.07, 'sine', 0.14, i * 0.06)); },
+  hit() { AU.tone(180, 40, 0.15, 'sine', 0.4); AU.burst(0.12, 0.25, 'lowpass', 700); },
+  pick() { AU.tone(400, 900, 0.12, 'triangle', 0.14); },
+  rank() { AU.tone(659.25, 659.25, 0.2, 'triangle', 0.12); AU.tone(987.77, 987.77, 0.26, 'triangle', 0.1, 0.06); },
+  fanfare() { [392, 523.25, 659.25, 783.99].forEach((f, i) => AU.tone(f, f, i === 3 ? 0.4 : 0.14, 'sawtooth', 0.09, i * 0.13, 1800)); },
+  hoof() { AU.tone(1300, 900, 0.03, 'triangle', 0.035); },
+  steam() { AU.burst(0.28, 0.07, 'highpass', 3200); },
+  beep() { AU.tone(1760, 1760, 0.05, 'sine', 0.04); },
+  ratel() { AU.burst(0.04, 0.05, 'bandpass', 900, 2); },
+  silo() { AU.tone(320, 140, 0.25, 'triangle', 0.18); },
+  over() { AU.tone(220, 70, 0.45, 'triangle', 0.22); },
+  click() { AU.tone(900, 700, 0.03, 'square', 0.03); },
+};
+
+// ============================================================
+// 7. Invoer: toetsenbord, muis (volgt met snelheidslimiet), touch (relatief)
+// ============================================================
+const keys = { left: false, right: false };
+const ptr = { id: null, lastX: 0 };
+let inputMode = 'keys';
+function toLogical(cx, cy) { const r = cv.getBoundingClientRect(); return { x: (cx - r.left - V.ox) / V.s, y: (cy - r.top - V.oy) / V.s }; }
+const xLo = () => L + CONFIG.grain.r, xHi = () => R - CONFIG.grain.r;
+cv.addEventListener('pointerdown', e => {
+  AU.ensure();
+  const p = toLogical(e.clientX, e.clientY);
+  if (e.pointerType === 'mouse') { inputMode = 'mouse'; G.tx = clamp(p.x, xLo(), xHi()); return; }
+  ptr.id = e.pointerId; ptr.lastX = p.x; inputMode = 'touch'; G.tx = G.x;
+  try { cv.setPointerCapture(e.pointerId); } catch (err) { /* oudere browsers */ }
+  e.preventDefault();
+});
+cv.addEventListener('pointermove', e => {
+  const p = toLogical(e.clientX, e.clientY);
+  if (e.pointerType === 'mouse') { inputMode = 'mouse'; G.tx = clamp(p.x, xLo(), xHi()); return; }
+  if (e.pointerId !== ptr.id) return;
+  G.tx = clamp(G.tx + (p.x - ptr.lastX) * CONFIG.grain.touchGain, xLo(), xHi());
+  ptr.lastX = p.x; inputMode = 'touch'; e.preventDefault();
+});
+const ptrEnd = e => { if (e.pointerId === ptr.id) { ptr.id = null; try { cv.releasePointerCapture(e.pointerId); } catch (err) { /* al los */ } } };
+cv.addEventListener('pointerup', ptrEnd); cv.addEventListener('pointercancel', ptrEnd);
+document.addEventListener('touchmove', e => { if (e.target === cv) e.preventDefault(); }, { passive: false });
+document.addEventListener('pointerdown', () => AU.ensure(), true);
+
+// ============================================================
+// 8. Wereld, korrel en generator
+// ============================================================
+const G = { x: 200, px: 200, vx: 0, tx: 200, inv: 0, knaks: 0 };
+const Wd = { t: 0, camY: 0, pcam: 0, scroll: 170, len: 1, floors: [], haz: [], sched: [], picks: [], silo: null, ending: 0, complete: false, dying: 0, flash: 0, shakeT: 0, slow: 0, mag: 0, banner: null, tip: null, ambT: 0, steamT: 2, joke: false, sndT: 0 };
+const gen = { rng: Math.random, nextY: 0, count: 0, prevX: 200, prevY: 0, lastHaz: false, done: false, pick: false };
+let run = null, lvS = null, debug = false;
+const S = { screen: 'title' };
+
+function newRun(mode, lvl, seed, daily) {
+  const r = mulberry32(seed >>> 0);
+  return { mode, lvl: lvl || 0, seed: seed >>> 0, daily: !!daily, score: 0, lives: CONFIG.lives, combo: 0, bestCombo: 0, perfects: 0, total: 0, passed: 0, rank: -1,
+    badges: new Set(), seen: new Set(), gezel: mode === 'camp' && save.gezel, cp: null, ship: SHIPS[Math.floor(r() * SHIPS.length)], ploeg: 'ABCDE'[Math.floor(r() * 5)], prevYear: 1800 };
+}
+function lvlCfg() { return run.mode === 'night' ? NIGHT : run.mode === 'demo' ? DEMO : LEVELS[Math.min(run.lvl, LEVELS.length - 1)]; }
+function params(n) {
+  const lv = lvlCfg();
+  if (run.mode === 'night') {
+    const N = CONFIG.night, z = n / 10;
+    return { ...lv, floors: Infinity, scroll: Math.min(N.scrollMax, N.scroll0 * Math.pow(1 + N.grow, z)), interval: Math.max(N.intMin, N.int0 - 0.03 * z), gap: Math.max(N.gapMin, N.gap0 - 0.007 * z) };
+  }
+  if (run.mode === 'demo') return { ...lv, scroll: CONFIG.demo.scroll, interval: 2.4, gap: 0.3 };
+  const gz = run.gezel ? CONFIG.gezel : { gap: 1, scroll: 1 };
+  return { ...lv, scroll: lv.scroll * gz.scroll, gap: lv.gap * gz.gap };
+}
+function resetWorld() {
+  const P = params(0);
+  Object.assign(Wd, { t: 0, camY: 0, pcam: 0, scroll: P.scroll, silo: null, ending: 0, complete: false, dying: 0, flash: 0, shakeT: 0, slow: 0, mag: 0, banner: null, tip: null, ambT: 0, steamT: 2, joke: false, sndT: 0 });
+  Wd.floors.length = 0; Wd.haz.length = 0; Wd.sched.length = 0; Wd.picks.length = 0;
+  Wd.len = P.scroll * (CONFIG.intro.first + (isFinite(P.floors) ? P.floors * P.interval : 1e6));
+  gen.rng = mulberry32((run.seed ^ Math.imul(run.lvl + 1, 0x9E3779B1)) >>> 0);
+  Object.assign(gen, { count: 0, nextY: CONFIG.GY + P.scroll * CONFIG.intro.first, prevX: 200, prevY: CONFIG.GY, lastHaz: false, done: false });
+  Object.assign(G, { x: 200, px: 200, vx: 0, tx: 200, inv: 0, knaks: 0 });
+  for (const p of PARTS) p.on = false;
+  for (const t of TEXTS) t.on = false;
+  lvS = { total: 0, perf: 0, hits: 0, picks: 0, got: 0, ned: 0, nedGot: 0, kg0: run.score, silo: null };
+}
+function pickW(obj, rng) { let sum = 0; for (const k in obj) sum += obj[k]; let r = rng() * sum; for (const k in obj) { r -= obj[k]; if (r <= 0) return k; } return Object.keys(obj)[0]; }
+
+function genSlot() {
+  const n = gen.count, P = params(n);
+  if (n >= P.floors) { Wd.silo = { y: gen.nextY + P.scroll * 0.2, target: Math.floor(gen.rng() * 5), passed: false }; gen.done = true; return; }
+  const spacing = P.scroll * P.interval, y = gen.nextY;
+  let kind = pickW(P.mix, gen.rng);
+  if (kind === 'haz' && (n === 0 || gen.lastHaz)) kind = Object.keys(P.mix).find(k => k !== 'haz');
+  if (kind === 'haz') spawnHazardSlot(P, y); else spawnFloor(kind, P, y, n);
+  gen.lastHaz = kind === 'haz'; gen.count++; gen.nextY += spacing;
+}
+function spawnFloor(kind, P, y, n) {
+  const minGap = CONFIG.fair.minGap * 2 * hitR();
+  const w = clamp(P.gap * (R - L), minGap, (R - L) * 0.6);
+  // eerlijkheid: verschuiving begrensd door wat de korrel in de beschikbare tijd haalt
+  const maxDx = CONFIG.fair.dx * CONFIG.grain.vmax * ((y - gen.prevY) / P.scroll);
+  const lo = L + w / 2 + CONFIG.fair.edge, hi = R - w / 2 - CONFIG.fair.edge;
+  let a = Math.max(lo, gen.prevX - maxDx), b = Math.min(hi, gen.prevX + maxDx);
+  if (a > b) a = b = clamp(gen.prevX, lo, hi);
+  const minShift = Math.min(90, CONFIG.fair.minShift * w);
+  let x = a + gen.rng() * (b - a);
+  for (let i = 0; i < 6 && Math.abs(x - gen.prevX) < minShift; i++) x = a + gen.rng() * (b - a);
+  const f = { kind, y, w, cx: x, R: kind === 'molen' ? CONFIG.roll.molen : CONFIG.roll.wals, ribs: P.ribs || 0, spin: 0.8 + gen.rng() * 0.4,
+    passed: false, hit: false, base: x, A: 0, f: 0, ph: 0, holes: [0], locked: true, dir: gen.rng() < 0.5 ? 1 : -1, seed: gen.rng() * 100, jit: gen.rng(), beeped: false };
+  if (kind === 'plan') {
+    f.A = P.plan.A; f.f = P.plan.f; f.locked = false;
+    if (P.plan.holes === 2 && gen.rng() < 0.7) {
+      const d = w + 50 + gen.rng() * 50, s = x + d <= hi ? 1 : x - d >= lo ? -1 : 0;
+      if (s) f.holes.push(s * d);
+    }
+  }
+  // pick-up op de lijn tussen de vorige en deze spleet: altijd bereikbaar
+  if (n > 0 && !gen.lastHaz && P.picks && gen.rng() < CONFIG.pickChance) {
+    const type = pickW(P.picks, gen.rng);
+    Wd.picks.push({ type, x: clamp((gen.prevX + x) / 2 + (gen.rng() - 0.5) * 30, L + 16, R - 16), y: (gen.prevY + y) / 2, got: false, ph: gen.rng() * TAU });
+    if (run.mode !== 'demo') { lvS.picks++; if (type === 'nedertarwe') lvS.ned++; }
+  }
+  Wd.floors.push(f); gen.prevX = x; gen.prevY = y;
+}
+function spawnHazardSlot(P, y) {
+  const type = P.haz[Math.floor(gen.rng() * P.haz.length)], hz = CONFIG.hazard, r = gen.rng;
+  if (type === 'moeder') { // onkruidzaad drijft traag heen en weer op deze verdieping
+    const A = 40 + r() * 30, w = 0.9 + r() * 0.8, ph = r() * TAU, sp = 120 + r() * 40, base = 200 + (r() - 0.5) * 40;
+    for (const o of [-sp / 2, sp / 2]) Wd.haz.push({ type, anch: true, y: y + (o > 0 ? 18 : -18), base: base + o, A, w, ph, sx: base + o, sy: 0, rot: 0, hit: false, passed: false });
+    return;
+  }
+  const vfall = lerp(hz.fall[0], hz.fall[1], r());
+  const x0 = L + 14 + r() * (R - L - 28), vx = (r() < 0.5 ? -1 : 1) * lerp(hz.vx[0], hz.vx[1], r());
+  const pts = []; for (let i = 0; i < 6; i++) pts.push(0.75 + r() * 0.35);
+  Wd.sched.push({ type, y, x0, vx, vfall, lead: hz.warn + (CONFIG.GY + 30) / vfall, state: 0, tw: 0, pts });
+}
+function holeX(f, t) { return f.A ? f.base + f.A * Math.sin(TAU * f.f * t + f.ph) : f.base; }
+// Plansichter: de fase wordt vastgelegd op basis van het aankomstmoment van de korrel.
+function lockPlate(f, gy) {
+  const tArr = Wd.t + (f.y - gy) / Math.max(1, Wd.scroll);
+  const lo = L + f.w / 2 + 2, hi = R - f.w / 2 - 2;
+  // f.jit is bij het spawnen getrokken: zo blijft de Korrel van de dag voor iedereen dezelfde schacht
+  let A = Math.min(f.A, (hi - lo) / 2), th = f.dir * Math.PI / 2 + (f.jit - 0.5) * 0.9;
+  let base = clamp(f.cx - A * Math.sin(th), lo + A, hi - A);
+  const s = clamp((f.cx - base) / A, -1, 1);
+  th = Math.cos(th) >= 0 ? Math.asin(s) : Math.PI - Math.asin(s);
+  f.A = A; f.base = base; f.ph = th - TAU * f.f * tArr; f.locked = true;
+}
+
+// ---------- botsing: alleen cirkel-cirkel en cirkel-rechthoek ----------
+function hitCirc(cx, cy, r, x, y, rr) { const dx = cx - x, dy = cy - y, s = r + rr; return dx * dx + dy * dy < s * s; }
+function hitRect(cx, cy, r, x0, y0, x1, y1) { if (x1 <= x0) return false; const nx = clamp(cx, x0, x1), ny = clamp(cy, y0, y1), dx = cx - nx, dy = cy - ny; return dx * dx + dy * dy < r * r; }
+function holesAt(f, t) { const c = holeX(f, t); return f.holes.map(o => c + o).sort((p, q) => p - q); }
+function floorHit(f, gx, gy, r) {
+  if (f.kind === 'wals' || f.kind === 'molen') {
+    if (Math.abs(gy - f.y) > f.R + r + 2) return false;
+    const xl = f.cx - f.w / 2 - f.R, xr = f.cx + f.w / 2 + f.R, hh = f.R * CONFIG.roll.casing;
+    return hitCirc(gx, gy, r, xl, f.y, f.R) || hitCirc(gx, gy, r, xr, f.y, f.R) ||
+      hitRect(gx, gy, r, -60, f.y - hh, xl, f.y + hh) || hitRect(gx, gy, r, xr, f.y - hh, W + 60, f.y + hh);
+  }
+  const hp = CONFIG.plate / 2;
+  if (Math.abs(gy - f.y) > hp + r + 2) return false;
+  let x = -60;
+  for (const hx of holesAt(f, Wd.t)) { if (hitRect(gx, gy, r, x, f.y - hp, hx - f.w / 2, f.y + hp)) return true; x = hx + f.w / 2; }
+  return hitRect(gx, gy, r, x, f.y - hp, W + 60, f.y + hp);
+}
+
+// ============================================================
+// 9. Update (vaste stap van 1/120 s)
+// ============================================================
+const PARTS = []; for (let i = 0; i < CONFIG.particles; i++) PARTS.push({ on: false });
+const TEXTS = []; for (let i = 0; i < CONFIG.texts; i++) TEXTS.push({ on: false });
+function part(o) {
+  if (reduced.matches && o.kind !== 'ring' && Math.random() > 0.35) return;
+  const p = PARTS.find(q => !q.on); if (!p) return;
+  Object.assign(p, { on: true, vx: 0, vy: 0, g: 0, rot: 0, vr: 0, size: 2, life: 0.6, color: '#fff', kind: 'dust' }, o); p.max = p.life;
+}
+function say(text, x, y, color, size, opts) { const t = TEXTS.find(q => !q.on) || TEXTS[0]; Object.assign(t, { on: true, text, x, y, color: color || '#F7F7F7', size: size || 18, life: 1.0, vy: -40, font: F_UI, weight: 800 }, opts || {}); t.max = t.life; }
+function tip(text, dur) { Wd.tip = { text, t: 0, dur: dur || 2.6 }; }
+const mult = () => Math.min(CONFIG.multMax, 1 + Math.floor(run.combo / CONFIG.comboStep));
+function vibrate(p) { try { if (navigator.vibrate) navigator.vibrate(p); } catch (e) { /* niet ondersteund */ } }
+
+function comboUp() {
+  run.combo++; run.bestCombo = Math.max(run.bestCombo, run.combo);
+  for (let i = RANKS.length - 1; i >= 0; i--) {
+    if (run.combo === RANKS[i][0]) { run.rank = Math.max(run.rank, i); Wd.banner = { t: 0, name: RANKS[i][1], n: run.combo }; SFX.rank(); break; }
+  }
+}
+function hurt(src) {
+  if (G.inv > 0 || Wd.dying || Wd.ending) return;
+  if (window.__kvTest) { window.__kvTest.push(src + '@' + run.lvl); return; } // zelftest: alleen tellen
+  run.lives--; lvS.hits++; run.combo = 0; G.inv = CONFIG.invuln;
+  Wd.flash = CONFIG.flashT; if (!reduced.matches) Wd.shakeT = CONFIG.shake.t;
+  vibrate([22, 50, 22]); SFX.hit();
+  const gy = Wd.camY + CONFIG.GY;
+  for (let i = 0; i < 8; i++) part({ x: G.x, y: gy, vx: (Math.random() - 0.5) * 260, vy: (Math.random() - 0.7) * 200, g: 500, life: 0.5, size: 2.5, color: i % 2 ? '#C52135' : '#D9A441', kind: 'chip' });
+  if (run.lives <= 0) { Wd.dying = CONFIG.dieT; SFX.over(); }
+}
+function knak(x, y) { // korrel knakt: zemelvlokjes en één kiempje
+  const n = 2 + (Math.random() < 0.5 ? 1 : 0);
+  for (let i = 0; i < n; i++) part({ x, y, vx: (Math.random() < 0.5 ? -1 : 1) * (60 + Math.random() * 90), vy: -60 - Math.random() * 80, g: 420, vr: (Math.random() - 0.5) * 14, life: 0.8, size: 4, color: '#8A5A2B', kind: 'flake' });
+  part({ x, y, vx: (Math.random() - 0.5) * 60, vy: -110, g: 380, life: 0.8, size: 3, color: '#F2C94C', kind: 'kiem' });
+  G.knaks++;
+}
+
+function steer(dt) {
+  const c = CONFIG.grain, dir = (keys.right ? 1 : 0) - (keys.left ? 1 : 0);
+  if (run.mode === 'demo' || window.__kvAuto) autoSteer();
+  else if (dir !== 0) { inputMode = 'keys'; const a = Math.sign(G.vx) === -dir ? c.accel * 2 : c.accel; G.vx = clamp(G.vx + dir * a * dt, -c.vmax, c.vmax); }
+  else if (inputMode === 'mouse' || inputMode === 'touch') G.vx = clamp((G.tx - G.x) * c.follow, -c.vmax, c.vmax);
+  else { const d = c.friction * dt; G.vx = Math.abs(G.vx) <= d ? 0 : G.vx - Math.sign(G.vx) * d; }
+  G.x += G.vx * dt;
+  if (G.x < xLo()) { G.x = xLo(); G.vx = 0; }
+  if (G.x > xHi()) { G.x = xHi(); G.vx = 0; }
+}
+function autoSteer() { // demo op het titelscherm en zelftest: richt op het gat bij aankomst
+  const gy = Wd.camY + CONFIG.GY; let target = G.x;
+  const f = Wd.floors.find(q => q.y > gy - 2);
+  if (f) { const hs = holesAt(f, Wd.t + (f.y - gy) / Math.max(1, Wd.scroll)); target = hs.reduce((a, b) => Math.abs(b - G.x) < Math.abs(a - G.x) ? b : a); }
+  else if (Wd.silo) target = L + 30 + Wd.silo.target * 60;
+  G.vx = clamp((target - G.x) * 10, -CONFIG.grain.vmax, CONFIG.grain.vmax);
+}
+
+function update(dt) {
+  const demo = run.mode === 'demo', lv = lvlCfg();
+  let ts = 1;
+  if (Wd.slow > 0) ts = CONFIG.slowmo.scale;
+  if (Wd.dying) ts = 0.35;
+  if (debug) ts *= 0.5;
+  const wdt = dt * ts;
+  Wd.pcam = Wd.camY; G.px = G.x;
+  Wd.t += wdt;
+  steer(dt);
+  if (Wd.ending) Wd.scroll *= Math.exp(-3 * dt);
+  Wd.camY += Wd.scroll * wdt;
+  const gy = Wd.camY + CONFIG.GY, r = hitR();
+  while (!gen.done && gen.nextY < Wd.camY + H + 260) genSlot();
+  // verdiepingen: walsen, molenstenen, buil, plansichters
+  for (const f of Wd.floors) {
+    if (!f.locked && f.y - Wd.camY < H + Wd.scroll * 1.1) lockPlate(f, gy);
+    if (lv.predict && !f.beeped && f.y - Wd.camY < H + Wd.scroll) { f.beeped = true; if (!demo) SFX.beep(); }
+    if (!demo && !f.passed && floorHit(f, G.x, gy, r)) { if (!f.hit && G.inv <= 0) hurt('floor-' + f.kind); f.hit = true; }
+    if (!f.passed && gy >= f.y) { f.passed = true; if (!demo) floorPassed(f); }
+  }
+  // geplande gevaren van boven: eerst 1 s een waarschuwingsdriehoekje
+  for (let i = Wd.sched.length - 1; i >= 0; i--) {
+    const s = Wd.sched[i];
+    if (Wd.mag > 0 && s.type === 'bout') { Wd.sched.splice(i, 1); continue; }
+    if (s.state === 0 && (s.y - gy) / Math.max(1, Wd.scroll) <= s.lead) { s.state = 1; s.tw = Wd.t; if (!demo && !run.seen.has('haz')) { run.seen.add('haz'); tip('Reiniging: stenen en metaal mogen nooit op de walsen.', 2.6); } }
+    else if (s.state === 1 && Wd.t - s.tw >= CONFIG.hazard.warn) {
+      Wd.haz.push({ type: s.type, sx: s.x0, sy: -24, vx: s.vx, vfall: s.vfall, rot: 0, pts: s.pts, hit: false, passed: false, fling: 0 });
+      Wd.sched.splice(i, 1);
+    }
+  }
+  for (let i = Wd.haz.length - 1; i >= 0; i--) {
+    const h = Wd.haz[i];
+    if (h.anch) {
+      if (!demo && !run.seen.has('moeder') && h.y - gy < 420) { run.seen.add('moeder'); tip('Moederkoren is onkruidzaad: de reiniging haalt het eruit.', 2.6); }
+      h.sx = h.base + h.A * Math.sin(h.w * Wd.t + h.ph); h.rot = Math.cos(h.w * Wd.t + h.ph) * 0.5;
+      if (!demo && !h.hit && !h.passed && hitCirc(G.x, gy, r, h.sx, h.y, CONFIG.hazard.moederR)) { h.hit = true; hurt('moeder'); }
+      if (!h.passed && gy > h.y + 16) { h.passed = true; if (!h.hit && !demo) slotPassed(); }
+      if (h.y < Wd.camY - 40) Wd.haz.splice(i, 1);
+      continue;
+    }
+    const hr = CONFIG.hazard.r;
+    if (Wd.mag > 0 && h.type === 'bout' && !h.fling) { h.fling = 1; h.vx = (h.sx < 200 ? -1 : 1) * 700; h.vfall = -160; }
+    h.sy += h.vfall * wdt; h.sx += h.vx * wdt; h.rot += wdt * (h.vx > 0 ? 3 : -3);
+    if (!h.fling) {
+      if (h.sx < L + hr) { h.sx = L + hr; h.vx = Math.abs(h.vx); }
+      if (h.sx > R - hr) { h.sx = R - hr; h.vx = -Math.abs(h.vx); }
+      if (!demo && !h.hit && !h.passed && hitCirc(G.x, CONFIG.GY, r, h.sx, h.sy, hr * 0.9)) { h.hit = true; hurt(h.type); }
+      if (!h.passed && h.sy > CONFIG.GY + 22) { h.passed = true; if (!h.hit && !demo) slotPassed(); }
+      // voorbij de korrel: de volgende verdieping vangt hem op (reiniging), puur beeld
+      const wy = Wd.camY + h.sy;
+      if (h.passed && Wd.floors.some(f => Math.abs(f.y - wy) < 12)) {
+        for (let k = 0; k < 5; k++) part({ x: h.sx, y: wy, vx: (Math.random() - 0.5) * 120, vy: -40 - Math.random() * 60, g: 300, life: 0.4, size: 2, color: '#9a958a', kind: 'chip' });
+        Wd.haz.splice(i, 1); continue;
+      }
+    }
+    if (h.sy > H + 40 || h.sx < -60 || h.sx > W + 60 || h.sy < -80) Wd.haz.splice(i, 1);
+  }
+  // pick-ups
+  for (const p of Wd.picks) if (!p.got && !demo && hitCirc(G.x, gy, r + 3, p.x, p.y + Math.sin(Wd.t * 3 + p.ph) * 4, 11)) collect(p);
+  while (Wd.picks.length && Wd.picks[0].y < Wd.camY - 60) Wd.picks.shift();
+  while (Wd.floors.length && Wd.floors[0].y < Wd.camY - 140) Wd.floors.shift();
+  // silohal aan het eind van een molen
+  if (Wd.silo && !Wd.silo.passed && gy >= Wd.silo.y - 6 && !demo && !Wd.dying) siloLanded();
+  if (Wd.ending) { Wd.ending += dt; if (Wd.ending > 1.5 && !Wd.complete) { Wd.complete = true; levelComplete(); return; } }
+  // sfeer per tijdperk
+  if (!demo) ambience(wdt, gy, lv);
+  const jf = lv === LEVELS[0] && !Wd.joke && Wd.floors.find(q => q.kind === 'molen');
+  if (jf && jf.y - Wd.camY < H - 120) {
+    Wd.joke = true; const f = jf;
+    part({ x: f.cx - f.w / 2 - f.R + 6, y: f.y - f.R - 6, vx: -90, vy: -230, g: 520, vr: -8, life: 1.3, size: 8, color: '#D9A441', kind: 'grain' });
+    tip('1856: de rosmolen bleek niet geschikt voor tarwe.', 3);
+  }
+  // timers (echte tijd)
+  if (G.inv > 0) G.inv -= dt;
+  if (Wd.flash > 0) Wd.flash -= dt;
+  if (Wd.shakeT > 0) Wd.shakeT -= dt;
+  if (Wd.slow > 0) Wd.slow -= dt;
+  if (Wd.mag > 0) Wd.mag -= dt;
+  if (Wd.banner) { Wd.banner.t += dt; if (Wd.banner.t > 1.7) Wd.banner = null; }
+  if (Wd.tip) { Wd.tip.t += dt; if (Wd.tip.t > Wd.tip.dur) Wd.tip = null; }
+  for (const p of PARTS) if (p.on) { p.life -= wdt; if (p.life <= 0) { p.on = false; continue; } p.vy += p.g * wdt; p.x += p.vx * wdt; p.y += p.vy * wdt; p.rot += p.vr * wdt; }
+  for (const t of TEXTS) if (t.on) { t.life -= dt; t.y += t.vy * dt; if (t.life <= 0) t.on = false; }
+  if (!demo && !Wd.ending && Math.random() < 0.45) part({ x: G.x + (Math.random() - 0.5) * 8, y: gy - 10, vx: (Math.random() - 0.5) * 20, vy: -Wd.scroll * 0.15, life: 0.5, size: 1.2 + Math.random() * 1.3, color: 'rgba(247,247,247,.55)', kind: 'dust' });
+  if (Wd.dying) { Wd.dying -= dt; if (Wd.dying <= 0) { Wd.dying = 0; gameOver(); } }
+}
+function ambience(wdt, gy, lv) {
+  Wd.sndT -= wdt;
+  let near = 1e9, plate = false;
+  for (const f of Wd.floors) { const d = Math.abs(f.y - gy); if (d < near) near = d; if (f.kind === 'plan' && d < 120) plate = true; }
+  const prox = clamp(1 - near / 320, 0, 1);
+  if (Wd.sndT <= 0) { Wd.sndT = 0.125; AU.rumbleSet(120 + run.lvl * 30 + 220 * prox, 0.05 + 0.12 * prox); if (plate) SFX.ratel(); }
+  if (lv === LEVELS[0]) { Wd.ambT -= wdt; if (Wd.ambT <= 0) { Wd.ambT = 0.5; SFX.hoof(); } }
+  if (lv.steam) {
+    Wd.steamT -= wdt;
+    if (Wd.steamT <= 0) { // stoomwolk van de 2 pk-machine: puur sfeer, verbergt kort een stukje schacht
+      Wd.steamT = 2.2 + Math.random() * 1.5; SFX.steam();
+      const y0 = Wd.camY + 340 + Math.random() * 220, fromLeft = Math.random() < 0.5;
+      for (let i = 0; i < 6; i++) part({ x: fromLeft ? L - 10 - i * 14 : R + 10 + i * 14, y: y0 + (Math.random() - 0.5) * 50, vx: (fromLeft ? 1 : -1) * (70 + Math.random() * 40), vy: -10, life: 2.4, size: 22 + Math.random() * 20, color: '#F7F7F7', kind: 'steam' });
+    }
+  }
+}
+function slotPassed() { run.passed++; comboUp(); run.score += CONFIG.pts.pass * mult(); nightTick(); }
+function nightTick() {
+  if (run.mode !== 'night') return;
+  Wd.scroll = params(run.passed).scroll;
+  if (run.passed === 100 && !run.badges.has('pas')) { grant(['pas']); tip('Gepassioneerd: 100 verdiepingen!', 2.4); }
+}
+function floorPassed(f) {
+  run.total++; lvS.total++;
+  if (f.hit) { run.passed++; nightTick(); return; }
+  run.passed++; comboUp(); const m = mult();
+  run.score += CONFIG.pts.pass * m;
+  const gy = Wd.camY + CONFIG.GY, hs = holesAt(f, Wd.t), c = hs.reduce((a, b) => Math.abs(b - G.x) < Math.abs(a - G.x) ? b : a);
+  if (Math.abs(G.x - c) <= f.w * CONFIG.perfect / 2) {
+    const bonus = f.kind === 'plan' || f.kind === 'buil' ? CONFIG.pts.perfPlan : CONFIG.pts.perfWals;
+    run.perfects++; lvS.perf++; run.score += bonus;
+    say('+' + (bonus + CONFIG.pts.pass * m), G.x + 30, CONFIG.GY - 8, '#E78A01', 18);
+    part({ kind: 'ring', x: G.x, y: gy, life: 0.35, size: 10, color: '#E78A01' });
+    knak(G.x, gy); vibrate(15); SFX.perfect(run.combo - 1);
+  } else say('+' + CONFIG.pts.pass * m, G.x + 28, CONFIG.GY - 8, '#E3E1DA', 14);
+  nightTick();
+}
+function collect(p) {
+  p.got = true; lvS.got++;
+  const pts = CONFIG.pts[p.type] || 0;
+  if (p.type === 'nedertarwe') { lvS.nedGot++; comboUp(); }
+  if (p.type === 'water') Wd.slow = CONFIG.slowmo.dur;
+  if (p.type === 'magneet') Wd.mag = CONFIG.magnet.dur;
+  run.score += pts;
+  say('+' + pts, p.x, p.y - Wd.camY - 16, '#CFAB00', 17);
+  for (let i = 0; i < 6; i++) part({ x: p.x, y: p.y, vx: Math.cos(i) * 120, vy: Math.sin(i) * 120, life: 0.4, size: 3, color: '#CFAB00', kind: 'dust' });
+  if (!run.seen.has(p.type) || p.type === 'kiem') { run.seen.add(p.type); tip(PICK_TIPS[p.type], p.type === 'water' ? 3 : 2.4); }
+  SFX.pick(); vibrate(10);
+}
+function siloLanded() {
+  const s = Wd.silo; s.passed = true;
+  const idx = clamp(Math.floor((G.x - L) / 60), 0, 4), goal = idx === s.target;
+  const pts = goal ? CONFIG.pts.siloGoal : CONFIG.pts.siloOther;
+  run.score += pts; lvS.silo = { name: SILOS[idx], goal, pts };
+  say(goal ? 'Order geladen! +' + pts : 'In de silo +' + pts, 200, CONFIG.GY - 40, goal ? '#CFAB00' : '#F7F7F7', 20, { life: 1.5 });
+  SFX.silo(); if (goal) SFX.fanfare();
+  Wd.ending = 0.0001; G.inv = 0;
+}
+
+// ============================================================
+// 10. Tekenen
+// ============================================================
+function render(alpha) {
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  if (lbCanvas) ctx.drawImage(lbCanvas, 0, 0);
+  const k = V.s * V.dpr;
+  ctx.setTransform(k, 0, 0, k, V.ox * V.dpr, V.oy * V.dpr);
+  ctx.save(); ctx.beginPath(); ctx.rect(0, 0, W, H); ctx.clip();
+  const cam = lerp(Wd.pcam, Wd.camY, alpha), gx = lerp(G.px, G.x, alpha), lv = lvlCfg(), pal = lv.pal, demo = run.mode === 'demo';
+  let sx = 0, sy = 0;
+  if (Wd.shakeT > 0) { const a = CONFIG.shake.amp * (Wd.shakeT / CONFIG.shake.t); sx = (Math.random() - 0.5) * 2 * a; sy = (Math.random() - 0.5) * 2 * a; }
+  ctx.save(); ctx.translate(sx, sy);
+  const tile = getTile(lv.style, pal), off = -((cam * 0.5) % 240);
+  for (let y = off; y < H; y += 240) ctx.drawImage(tile, 0, y, W, 240);
+  drawWalls(cam, pal, lv);
+  ctx.save(); ctx.translate(0, -cam);
+  drawChute(lv);
+  if (Wd.silo) drawSilo(Wd.silo, cam);
+  for (const f of Wd.floors) if (f.y - cam > -140 && f.y - cam < H + 140) drawFloor(f, pal);
+  for (const p of Wd.picks) if (!p.got && p.y - cam > -30 && p.y - cam < H + 30) drawPick(p.type, p.x, p.y + Math.sin(Wd.t * 3 + p.ph) * 4, Wd.t + p.ph);
+  for (const h of Wd.haz) if (h.anch) drawHazard('moeder', h.sx, h.y, h.rot, null, 1);
+  drawParticles();
+  ctx.restore();
+  for (const h of Wd.haz) if (!h.anch) drawHazard(h.type, h.sx, h.sy, h.rot, h.pts, h.fling ? 0.5 : 1);
+  if (!demo) drawGrain(gx, CONFIG.GY);
+  ctx.restore();
+  if (lv.predict && !demo) drawPredict(cam);
+  drawWarnings();
+  if (Wd.slow > 0) vignette('rgba(95,168,211,', 0.35 * clamp(Wd.slow, 0, 1));
+  if (run.mode === 'night') { const g = ctx.createRadialGradient(gx, CONFIG.GY, 60, gx, CONFIG.GY, 420); g.addColorStop(0, 'rgba(0,0,0,0)'); g.addColorStop(1, 'rgba(0,0,0,.6)'); ctx.fillStyle = g; ctx.fillRect(0, 0, W, H); }
+  if (Wd.flash > 0) { ctx.strokeStyle = `rgba(197,33,53,${(Wd.flash / CONFIG.flashT) * 0.9})`; ctx.lineWidth = 16; ctx.strokeRect(0, 0, W, H); }
+  if (!demo) { drawHUD(lv); drawSide(); drawBanner(); drawTip(); if (Wd.t < CONFIG.intro.t) drawIntro(lv); else if (lv === LEVELS[0] && lvS.total < 2) drawTutorial(); }
+  drawTexts();
+  if (debug) drawDebug(cam);
+  ctx.restore();
+}
+function vignette(rgb, a) { const g = ctx.createRadialGradient(200, 360, 160, 200, 360, 470); g.addColorStop(0, rgb + '0)'); g.addColorStop(1, rgb + a + ')'); ctx.fillStyle = g; ctx.fillRect(0, 0, W, H); }
+function drawWalls(cam, pal, lv) {
+  ctx.fillStyle = 'rgba(0,0,0,.42)'; ctx.fillRect(0, 0, L, H); ctx.fillRect(R, 0, W - R, H);
+  for (const px of [24, W - 24]) {
+    ctx.fillStyle = pal.pipe; ctx.fillRect(px - 11, 0, 22, H);
+    ctx.fillStyle = 'rgba(255,255,255,.13)'; ctx.fillRect(px - 7, 0, 4, H);
+    ctx.fillStyle = 'rgba(0,0,0,.25)'; ctx.fillRect(px + 6, 0, 5, H);
+    for (let y = -(cam % 160); y < H + 10; y += 160) {
+      ctx.fillStyle = pal.pipe; ctx.fillRect(px - 15, y, 30, 9);
+      ctx.fillStyle = 'rgba(255,255,255,.2)'; ctx.fillRect(px - 15, y, 30, 2);
+      ctx.fillStyle = 'rgba(0,0,0,.45)'; ctx.fillRect(px - 12, y + 4, 2, 2); ctx.fillRect(px + 10, y + 4, 2, 2);
+    }
+  }
+  if (lv.style === 'digi') { ctx.fillStyle = 'rgba(111,211,224,.35)'; ctx.fillRect(L - 1, 0, 1, H); ctx.fillRect(R, 0, 1, H); }
+  ctx.fillStyle = 'rgba(0,0,0,.5)'; ctx.fillRect(L - 3, 0, 3, H); ctx.fillRect(R, 0, 3, H);
+}
+function drawChute(lv) { // zuigbuis (of houten stortkoker in 1846) waaruit de korrel valt
+  if (run.mode === 'demo') return;
+  const y1 = CONFIG.GY - 22; if (y1 - Wd.camY < -10) return;
+  ctx.fillStyle = lv.old ? '#6B4A2B' : '#8d959e'; ctx.fillRect(184, -400, 32, y1 + 400);
+  ctx.fillStyle = 'rgba(255,255,255,.15)'; ctx.fillRect(188, -400, 5, y1 + 400);
+  ctx.fillStyle = lv.old ? '#4a3320' : '#5d646c'; ctx.fillRect(179, y1 - 10, 42, 10);
+}
+function drawFloor(f, pal) {
+  if (f.kind === 'plan' || f.kind === 'buil') return drawPlate(f, pal);
+  const xl = f.cx - f.w / 2 - f.R, xr = f.cx + f.w / 2 + f.R, y = f.y, hh = f.R * CONFIG.roll.casing;
+  for (const [a, b] of [[-10, xl], [xr, W + 10]]) {
+    if (b <= a) continue;
+    ctx.fillStyle = pal.slab; ctx.fillRect(a, y - hh, b - a, hh * 2);
+    ctx.fillStyle = 'rgba(255,255,255,.16)'; ctx.fillRect(a, y - hh, b - a, 3);
+    ctx.fillStyle = 'rgba(0,0,0,.3)'; ctx.fillRect(a, y + hh - 4, b - a, 4);
+    ctx.fillStyle = 'rgba(0,0,0,.35)'; for (let x = a + 12; x < b - 6; x += 26) { ctx.fillRect(x, y - hh + 7, 3, 3); ctx.fillRect(x, y + hh - 11, 3, 3); }
+  }
+  drawRoll(f, xl, y, 1); drawRoll(f, xr, y, -1);
+}
+function drawRoll(f, x, y, dir) {
+  const Rr = f.R, molen = f.kind === 'molen';
+  ctx.save(); ctx.translate(x, y);
+  ctx.fillStyle = molen ? '#968f82' : '#B0B7BF';
+  ctx.beginPath(); ctx.arc(0, 0, Rr, 0, TAU); ctx.fill();
+  ctx.lineWidth = 2; ctx.strokeStyle = 'rgba(0,0,0,.5)'; ctx.stroke();
+  ctx.save(); ctx.rotate(dir * Wd.t * f.spin * (molen ? 1.4 : 5));
+  if (molen) { // molensteen met gebogen scherpselgroeven
+    ctx.strokeStyle = 'rgba(50,45,38,.55)'; ctx.lineWidth = 2;
+    for (let i = 0; i < 8; i++) { const a = i / 8 * TAU; ctx.beginPath(); ctx.moveTo(Math.cos(a) * Rr * 0.22, Math.sin(a) * Rr * 0.22); ctx.quadraticCurveTo(Math.cos(a + 0.5) * Rr * 0.65, Math.sin(a + 0.5) * Rr * 0.65, Math.cos(a + 0.4) * Rr * 0.95, Math.sin(a + 0.4) * Rr * 0.95); ctx.stroke(); }
+    ctx.fillStyle = 'rgba(255,255,255,.12)'; for (let i = 0; i < 9; i++) { const a = f.seed + i * 2.1, d = Rr * (0.3 + (i % 4) * 0.16); ctx.fillRect(Math.cos(a) * d, Math.sin(a) * d, 2, 2); }
+  } else if (f.ribs > 0) { // geribbelde wals: grof in 1920, fijner later
+    ctx.strokeStyle = 'rgba(40,46,54,.6)'; ctx.lineWidth = f.ribs > 20 ? 2 : 1.5;
+    for (let i = 0; i < f.ribs; i++) { const a = i / f.ribs * TAU; ctx.beginPath(); ctx.moveTo(Math.cos(a) * Rr * 0.8, Math.sin(a) * Rr * 0.8); ctx.lineTo(Math.cos(a) * Rr, Math.sin(a) * Rr); ctx.stroke(); }
+  }
+  ctx.restore();
+  if (!molen) { ctx.strokeStyle = 'rgba(255,255,255,.4)'; ctx.lineWidth = 3; ctx.beginPath(); ctx.arc(0, 0, Rr * 0.72, -2.4, -1.2); ctx.stroke(); }
+  ctx.fillStyle = molen ? '#3a3f44' : '#5d646c'; ctx.beginPath(); ctx.arc(0, 0, Rr * 0.17, 0, TAU); ctx.fill();
+  ctx.restore();
+}
+function drawPlate(f, pal) {
+  const buil = f.kind === 'buil', hp = CONFIG.plate / 2, y = f.y;
+  const jit = !buil && !reduced.matches ? Math.sin(Wd.t * TAU * 20 + f.seed) * 2 : 0;
+  const hs = holesAt(f, Wd.t).map(h => h + jit), segs = [];
+  let x = -20; for (const hx of hs) { segs.push([x, hx - f.w / 2]); x = hx + f.w / 2; } segs.push([x, W + 20]);
+  if (!buil) { // ophangstangen: de zeefkast hangt en schudt
+    ctx.strokeStyle = 'rgba(0,0,0,.45)'; ctx.lineWidth = 2;
+    for (const rx of [hs[0] - 100, hs[hs.length - 1] + 100]) { ctx.beginPath(); ctx.moveTo(rx, y - hp); ctx.lineTo(rx + jit * 3, y - 70); ctx.stroke(); }
+  }
+  for (const [a, b] of segs) {
+    if (b <= a) continue;
+    ctx.fillStyle = buil ? pal.slab : pal.plate; ctx.fillRect(a, y - hp, b - a, hp * 2);
+    ctx.fillStyle = 'rgba(255,255,255,.2)'; ctx.fillRect(a, y - hp, b - a, 2);
+    ctx.fillStyle = 'rgba(0,0,0,.35)'; ctx.fillRect(a, y + hp - 3, b - a, 3);
+    if (buil) { ctx.strokeStyle = 'rgba(240,230,200,.35)'; ctx.lineWidth = 1; for (let xx = a + 3; xx < b - 2; xx += 6) { ctx.beginPath(); ctx.moveTo(xx, y - hp + 3); ctx.lineTo(xx + 4, y + hp - 4); ctx.stroke(); } }
+    else { ctx.fillStyle = 'rgba(0,0,0,.42)'; for (let xx = a + 5; xx < b - 4; xx += 8) ctx.fillRect(xx, y - 1.5, 3, 3); }
+  }
+  ctx.fillStyle = buil ? pal.edge : '#E78A01';
+  for (const hx of hs) { ctx.fillRect(hx - f.w / 2 - 3, y - hp, 3, hp * 2); ctx.fillRect(hx + f.w / 2, y - hp, 3, hp * 2); }
+}
+function drawPick(type, x, y, t) {
+  ctx.save(); ctx.translate(x, y);
+  ctx.strokeStyle = 'rgba(207,171,0,.45)'; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.arc(0, 0, 14 + Math.sin(t * 4) * 1.5, 0, TAU); ctx.stroke();
+  if (type === 'boekweit') { // driehoekige boekweitkorrel met lichte rand
+    ctx.fillStyle = '#5a3a22'; ctx.beginPath(); ctx.moveTo(0, -9); ctx.lineTo(8, 7); ctx.lineTo(-8, 7); ctx.closePath(); ctx.fill();
+    ctx.strokeStyle = '#F2E6C8'; ctx.lineWidth = 1.6; ctx.stroke();
+    ctx.fillStyle = '#9a7048'; ctx.beginPath(); ctx.moveTo(0, -9); ctx.lineTo(0, 7); ctx.lineTo(-8, 7); ctx.closePath(); ctx.fill(); }
+  else if (type === 'water') { icon(ctx, 'drop', 0, 0, 22, '#5FA8D3'); ctx.fillStyle = 'rgba(255,255,255,.7)'; ctx.fillRect(-3, 0, 2, 4); }
+  else if (type === 'nedertarwe') {
+    ctx.fillStyle = '#E2B93B'; ctx.beginPath(); ctx.ellipse(-2, 1, 6, 9, 0.2, 0, TAU); ctx.fill(); ctx.strokeStyle = '#8A6A00'; ctx.lineWidth = 1; ctx.stroke();
+    const fl = ['#C52135', '#5FA8D3', '#F7F7F7', '#C52135', '#5FA8D3']; for (let i = 0; i < 5; i++) { ctx.fillStyle = fl[i]; ctx.beginPath(); ctx.arc(7 + Math.cos(i / 5 * TAU) * 3, -7 + Math.sin(i / 5 * TAU) * 3, 1.8, 0, TAU); ctx.fill(); }
+    ctx.fillStyle = '#F2C94C'; ctx.beginPath(); ctx.arc(7, -7, 1.4, 0, TAU); ctx.fill();
+  }
+  else if (type === 'magneet') { icon(ctx, 'magnet', 0, 2, 22, '#C52135'); ctx.fillStyle = '#F7F7F7'; ctx.fillRect(-9.5, -8, 5, 3); ctx.fillRect(4.5, -8, 5, 3); }
+  else if (type === 'kroon') icon(ctx, 'crown', 0, 0, 22, '#CFAB00');
+  else { ctx.fillStyle = '#F2C94C'; ctx.beginPath(); ctx.ellipse(0, 2, 4, 6, 0, 0, TAU); ctx.fill(); ctx.strokeStyle = '#9BC53D'; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(0, -3); ctx.quadraticCurveTo(-2, -9, 4, -10); ctx.stroke(); }
+  ctx.restore();
+}
+function drawHazard(type, x, y, rot, pts, a) {
+  ctx.save(); ctx.translate(x, y); ctx.rotate(rot); ctx.globalAlpha = a;
+  if (type === 'bout') {
+    ctx.fillStyle = '#7d858e'; ctx.fillRect(-3, -2, 6, 13);
+    ctx.fillStyle = 'rgba(0,0,0,.3)'; for (let i = 0; i < 4; i++) ctx.fillRect(-3, 1 + i * 3, 6, 1);
+    ctx.fillStyle = '#B0B7BF'; ctx.beginPath(); for (let i = 0; i < 6; i++) { const q = i / 6 * TAU; ctx.lineTo(Math.cos(q) * 7, -4 + Math.sin(q) * 7); } ctx.closePath(); ctx.fill();
+    ctx.strokeStyle = '#4b5158'; ctx.lineWidth = 1.5; ctx.stroke();
+  } else if (type === 'moeder') { // moederkoren: donkerpaarse langwerpige korrel
+    ctx.fillStyle = 'rgba(197,140,205,.18)'; ctx.beginPath(); ctx.ellipse(0, 0, 9, 17, 0, 0, TAU); ctx.fill();
+    ctx.fillStyle = '#5a2560'; ctx.beginPath(); ctx.ellipse(0, 0, 4.8, 12.5, 0, 0, TAU); ctx.fill();
+    ctx.strokeStyle = '#d3a0d8'; ctx.lineWidth = 1.4; ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(0, -9); ctx.lineTo(0, 9); ctx.stroke();
+  } else {
+    ctx.fillStyle = '#7d7a74'; ctx.beginPath();
+    for (let i = 0; i < pts.length; i++) { const q = i / pts.length * TAU; ctx.lineTo(Math.cos(q) * 10 * pts[i], Math.sin(q) * 10 * pts[i]); }
+    ctx.closePath(); ctx.fill(); ctx.strokeStyle = '#3c3a36'; ctx.lineWidth = 1.5; ctx.stroke();
+    ctx.fillStyle = 'rgba(255,255,255,.25)'; ctx.fillRect(-4, -5, 4, 3);
+  }
+  ctx.restore();
+}
+function drawSilo(s, cam) {
+  const y = s.y; if (y - cam > H + 40) return;
+  ctx.fillStyle = 'rgba(0,0,0,.35)'; ctx.fillRect(L, y - 30, R - L, 520);
+  for (let i = 0; i < 5; i++) {
+    const cx = L + 30 + i * 60, tgt = i === s.target;
+    ctx.fillStyle = tgt ? '#d8c27a' : '#cdc8bd'; ctx.fillRect(cx - 26, y + 14, 52, 210);
+    ctx.fillStyle = 'rgba(0,0,0,.18)'; ctx.fillRect(cx + 12, y + 14, 14, 210);
+    ctx.fillStyle = 'rgba(255,255,255,.3)'; ctx.fillRect(cx - 20, y + 14, 4, 210);
+    ctx.fillStyle = tgt ? '#b89f45' : '#a8a397';
+    ctx.beginPath(); ctx.moveTo(cx - 29, y - 6); ctx.lineTo(cx + 29, y - 6); ctx.lineTo(cx + 26, y + 14); ctx.lineTo(cx - 26, y + 14); ctx.fill();
+    ctx.beginPath(); ctx.moveTo(cx - 26, y + 224); ctx.lineTo(cx + 26, y + 224); ctx.lineTo(cx + 7, y + 252); ctx.lineTo(cx - 7, y + 252); ctx.fill();
+    ctx.fillStyle = '#1D1E1F'; ctx.beginPath(); ctx.ellipse(cx, y - 6, 26, 6, 0, 0, TAU); ctx.fill();
+    ctx.save(); ctx.translate(cx + 3, y + 118); ctx.rotate(-Math.PI / 2); ctx.font = `800 13px ${F_UI}`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillStyle = '#1D1E1F'; ctx.fillText(SILOS[i], 0, 0); ctx.restore();
+    if (tgt) {
+      const p = 0.55 + Math.sin(Wd.t * 6) * 0.35;
+      ctx.strokeStyle = `rgba(207,171,0,${p})`; ctx.lineWidth = 3; ctx.strokeRect(cx - 30, y - 14, 60, 244);
+      ctx.fillStyle = '#CFAB00'; ctx.font = `800 11px ${F_UI}`; ctx.textAlign = 'center'; ctx.fillText('ORDER', cx, y - 20);
+      // bulkwagen met vier cellen wacht onder de silo
+      const by = y + 262; ctx.fillStyle = '#E3E1DA'; ctx.fillRect(cx - 44, by, 88, 34); ctx.fillStyle = '#1D1E1F'; ctx.fillRect(cx + 44, by + 10, 22, 24);
+      ctx.fillStyle = 'rgba(0,0,0,.25)'; for (let c = 1; c < 4; c++) ctx.fillRect(cx - 44 + c * 22, by + 3, 2, 28);
+      ctx.fillStyle = '#E78A01'; ctx.fillRect(cx - 44, by + 30, 110, 4);
+      ctx.fillStyle = '#1D1E1F'; for (const wx of [cx - 28, cx + 20, cx + 54]) { ctx.beginPath(); ctx.arc(wx, by + 38, 7, 0, TAU); ctx.fill(); }
+    }
+  }
+}
+function drawPredict(cam) { // voorspellende storingssignalering: vage oranje omtrek 1 s vooruit
+  for (const f of Wd.floors) {
+    const sy = f.y - cam; if (sy < H - 8 || sy > H + Wd.scroll) continue;
+    const a = 0.25 + 0.6 * (1 - (sy - H) / Wd.scroll), t = Wd.t + (f.y - (Wd.camY + CONFIG.GY)) / Math.max(1, Wd.scroll);
+    ctx.strokeStyle = `rgba(231,138,1,${a})`; ctx.lineWidth = 2; ctx.setLineDash([4, 3]);
+    for (const hx of f.kind === 'plan' ? holesAt(f, t) : [f.cx]) { ctx.strokeRect(hx - f.w / 2, H - 16, f.w, 12); }
+    ctx.setLineDash([]);
+  }
+}
+function drawWarnings() {
+  const y = CONFIG.hazard.warnY;
+  for (const s of Wd.sched) {
+    if (s.state !== 1) continue;
+    const blink = Math.floor((Wd.t - s.tw) * 8) % 2 === 0;
+    ctx.save(); ctx.translate(s.x0, y); ctx.globalAlpha = blink ? 1 : 0.55;
+    ctx.fillStyle = '#E78A01'; ctx.beginPath(); ctx.moveTo(0, -10); ctx.lineTo(11, 9); ctx.lineTo(-11, 9); ctx.closePath(); ctx.fill();
+    ctx.strokeStyle = '#1D1E1F'; ctx.lineWidth = 1; ctx.stroke();
+    ctx.fillStyle = '#1D1E1F'; ctx.fillRect(-1.5, -4, 3, 7); ctx.fillRect(-1.5, 5, 3, 2.5);
+    ctx.restore();
+  }
+}
+function drawGrain(x, y) {
+  if (G.inv > 0 && Math.floor(G.inv * 14) % 2 === 0) return;
+  const lv = lvlCfg(), col = mixHex('#D9A441', '#F7F7F7', clamp((lv.white || 0) + Math.min(G.knaks, 12) * 0.012, 0, 0.96));
+  const sc = (1 - Math.min(G.knaks, 15) * 0.006) * (Wd.ending ? clamp(1 - (Wd.ending - 0.3) / 1.0, 0, 1) : 1);
+  if (sc <= 0) return;
+  ctx.save(); ctx.translate(x, y); ctx.rotate(G.vx / CONFIG.grain.vmax * 0.35); ctx.scale(sc, sc);
+  ctx.fillStyle = col; ctx.beginPath(); ctx.ellipse(0, 0, 9, 12, 0, 0, TAU); ctx.fill();
+  ctx.strokeStyle = 'rgba(70,45,10,.6)'; ctx.lineWidth = 1.5; ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(1, -10); ctx.quadraticCurveTo(4.5, 0, 1, 10); ctx.strokeStyle = 'rgba(110,75,25,.45)'; ctx.stroke();
+  const blink = (Wd.t % 3.1) < 0.12;
+  ctx.fillStyle = '#1D1E1F';
+  if (blink) { ctx.fillRect(-5, -2.8, 3.4, 1.2); ctx.fillRect(1, -2.8, 3.4, 1.2); } else { ctx.beginPath(); ctx.arc(-3.4, -2.4, 1.5, 0, TAU); ctx.arc(2.6, -2.4, 1.5, 0, TAU); ctx.fill(); }
+  ctx.restore();
+}
+function drawParticles() {
+  for (const p of PARTS) {
+    if (!p.on) continue;
+    const a = clamp(p.life / p.max, 0, 1);
+    if (p.kind === 'ring') { ctx.globalAlpha = a; ctx.strokeStyle = p.color; ctx.lineWidth = 3; ctx.beginPath(); ctx.arc(p.x, p.y, p.size + (1 - a) * 26, 0, TAU); ctx.stroke(); }
+    else if (p.kind === 'steam') { ctx.globalAlpha = 0.3 * Math.min(1, a * 2); ctx.fillStyle = p.color; ctx.beginPath(); ctx.arc(p.x, p.y, p.size * (1.4 - a * 0.4), 0, TAU); ctx.fill(); }
+    else if (p.kind === 'flake' || p.kind === 'grain' || p.kind === 'kiem') {
+      ctx.globalAlpha = a; ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot); ctx.fillStyle = p.color;
+      ctx.beginPath(); if (p.kind === 'flake') { ctx.moveTo(-p.size, -1); ctx.lineTo(p.size, -2); ctx.lineTo(p.size - 1, 2); ctx.lineTo(-p.size + 1, 1.5); } else ctx.ellipse(0, 0, p.size * 0.7, p.size, 0, 0, TAU);
+      ctx.fill(); ctx.restore();
+    } else { ctx.globalAlpha = a; ctx.fillStyle = p.color; ctx.fillRect(p.x - p.size / 2, p.y - p.size / 2, p.size, p.size); }
+  }
+  ctx.globalAlpha = 1;
+}
+function drawTexts() {
+  ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  for (const t of TEXTS) {
+    if (!t.on) continue;
+    ctx.globalAlpha = clamp(t.life / t.max * 1.5, 0, 1);
+    ctx.font = `${t.weight} ${t.size}px ${t.font}`;
+    ctx.lineWidth = 4; ctx.strokeStyle = 'rgba(20,20,21,.8)'; ctx.strokeText(t.text, t.x, t.y);
+    ctx.fillStyle = t.color; ctx.fillText(t.text, t.x, t.y);
+  }
+  ctx.globalAlpha = 1;
+}
+function wrapLines(text, maxW) {
+  const words = text.split(' '), lines = []; let line = '';
+  for (const w of words) { const t = line ? line + ' ' + w : w; if (ctx.measureText(t).width > maxW && line) { lines.push(line); line = w; } else line = t; }
+  if (line) lines.push(line); return lines;
+}
+function drawHUD(lv) {
+  const hb = CONFIG.HUD;
+  ctx.fillStyle = 'rgba(22,22,23,.88)'; ctx.fillRect(0, 0, W, hb);
+  ctx.fillStyle = 'rgba(207,171,0,.75)'; ctx.fillRect(0, hb - 2, W, 2);
+  ctx.textBaseline = 'alphabetic'; ctx.textAlign = 'left';
+  ctx.fillStyle = '#F7F7F7'; ctx.font = `800 24px ${F_UI}`;
+  const s = fmt(run.score); ctx.fillText(s, 14, 31);
+  const sw = ctx.measureText(s).width;
+  ctx.font = `600 13px ${F_UI}`; ctx.fillStyle = '#E3E1DA'; ctx.fillText('kg bloem', 20 + sw, 31);
+  const maxL = run.mode === 'night' ? CONFIG.nightLives : CONFIG.lives;
+  for (let i = 0; i < maxL; i++) {
+    const x = 334 - (maxL - 1 - i) * 22, on = i < run.lives;
+    ctx.save(); ctx.translate(x, 23); ctx.rotate(0.25); ctx.beginPath(); ctx.ellipse(0, 0, 6.5, 9, 0, 0, TAU);
+    if (on) { ctx.fillStyle = '#D9A441'; ctx.fill(); ctx.fillStyle = '#1D1E1F'; ctx.fillRect(-3, -2, 1.6, 1.6); ctx.fillRect(1.4, -2, 1.6, 1.6); } else { ctx.strokeStyle = '#C52135'; ctx.lineWidth = 2; ctx.stroke(); }
+    ctx.restore();
+  }
+  if (run.mode === 'night') {
+    const mins = (22 * 60 + run.passed * 5) % 1440, clock = `${String(Math.floor(mins / 60)).padStart(2, '0')}:${String(mins % 60).padStart(2, '0')}`;
+    ctx.font = `800 13px ${F_UI}`; ctx.fillStyle = '#6FD3E0'; ctx.fillText(run.daily ? 'Korrel van de dag' : 'Vrije dienst', 14, 52);
+    ctx.font = `600 11.5px ${F_UI}`; ctx.fillStyle = '#E3E1DA'; ctx.fillText(`volcontinu · ploeg ${run.ploeg} · ${clock}`, 14, 67);
+    ctx.textAlign = 'right'; ctx.font = `800 20px ${F_UI}`; ctx.fillStyle = '#F7F7F7'; ctx.fillText(String(run.passed), W - 14, 62);
+    const nw = ctx.measureText(String(run.passed)).width; ctx.font = `600 11.5px ${F_UI}`; ctx.fillStyle = '#E3E1DA'; ctx.fillText('verdieping', W - 20 - nw, 62);
+    return;
+  }
+  // procesbalk: Lossen > Reinigen > Conditioneren > Walsen > Zeven > Silo
+  const prog = Wd.silo && Wd.silo.passed ? 1 : clamp(Wd.camY / Wd.len, 0, 0.99);
+  let active = 0; STEP_AT.forEach((v, i) => { if (prog >= v) active = i; });
+  const x0 = 30, dx = (W - 60) / 5, yy = 48;
+  ctx.fillStyle = 'rgba(227,225,218,.25)'; ctx.fillRect(x0, yy - 1, W - 60, 2);
+  ctx.fillStyle = '#CFAB00'; ctx.fillRect(x0, yy - 1, (W - 60) * Math.min(1, prog / 0.985), 2);
+  for (let i = 0; i < 6; i++) {
+    const x = x0 + i * dx, col = i === active ? '#E78A01' : i < active ? '#CFAB00' : 'rgba(227,225,218,.62)';
+    ctx.fillStyle = '#161617'; ctx.beginPath(); ctx.arc(x, yy, 10, 0, TAU); ctx.fill();
+    icon(ctx, STEP_ICO[i], x, yy, i === active ? 15 : 12, col);
+  }
+  const name = lv.old && i18nOld[active] ? i18nOld[active] : STEPS[active];
+  ctx.font = `800 10.5px ${F_UI}`; ctx.fillStyle = '#E78A01'; ctx.textAlign = 'center';
+  ctx.fillText(name.toUpperCase(), clamp(x0 + active * dx, 44, W - 50), 69);
+}
+const i18nOld = { 3: 'Malen', 4: 'Builen' };
+function drawSide() { // linkerwand: actieve pick-ups, rechterwand: combo
+  let y = 98;
+  for (const [t, max, ico, col] of [[Wd.slow, CONFIG.slowmo.dur, 'drop', '#5FA8D3'], [Wd.mag, CONFIG.magnet.dur, 'magnet', '#C52135']]) {
+    if (t <= 0) continue;
+    ctx.fillStyle = 'rgba(22,22,23,.8)'; ctx.beginPath(); ctx.arc(25, y, 16, 0, TAU); ctx.fill();
+    ctx.strokeStyle = col; ctx.lineWidth = 3; ctx.beginPath(); ctx.arc(25, y, 14, -Math.PI / 2, -Math.PI / 2 + TAU * clamp(t / max, 0, 1)); ctx.stroke();
+    icon(ctx, ico, 25, y, 16, col); y += 40;
+  }
+  if (run.combo >= 2) {
+    ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
+    ctx.fillStyle = 'rgba(22,22,23,.8)'; ctx.fillRect(R + 4, 84, W - R - 8, 58);
+    ctx.fillStyle = '#F7F7F7'; ctx.font = `800 20px ${F_UI}`; ctx.fillText(String(run.combo), 375, 106);
+    ctx.font = `600 9.5px ${F_UI}`; ctx.fillStyle = '#E3E1DA'; ctx.fillText('COMBO', 375, 119);
+    ctx.font = `800 13px ${F_UI}`; ctx.fillStyle = '#CFAB00'; ctx.fillText('×' + mult(), 375, 136);
+  }
+}
+function drawBanner() {
+  const b = Wd.banner; if (!b) return;
+  // in de HUD-band, zodat de banner nooit een vallende steen verbergt
+  const tin = ease(b.t / 0.25), tout = b.t > 1.4 ? ease((b.t - 1.4) / 0.3) : 0, x = W - W * tin + W * tout, y = 36;
+  ctx.save(); ctx.beginPath(); ctx.rect(0, y, W, CONFIG.HUD - y - 2); ctx.clip();
+  ctx.fillStyle = '#161617'; ctx.fillRect(x, y, W, CONFIG.HUD - y - 2); ctx.fillStyle = '#CFAB00'; ctx.fillRect(x, y + 2, 4, 32);
+  ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
+  ctx.font = `400 27px ${F_HAND}`; ctx.fillStyle = '#CFAB00'; ctx.fillText('Tsjoch!', x + 16, y + 28);
+  ctx.font = `800 15px ${F_UI}`; ctx.fillStyle = '#F7F7F7'; ctx.fillText(b.name, x + 130, y + 18);
+  ctx.font = `600 11.5px ${F_UI}`; ctx.fillStyle = '#E3E1DA'; ctx.fillText(`Prémax-mix · combo ${b.n} · ×${mult()}`, x + 130, y + 32);
+  ctx.restore();
+}
+function drawTip() {
+  const t = Wd.tip; if (!t) return;
+  const a = clamp(Math.min(t.t / 0.2, (t.dur - t.t) / 0.3), 0, 1);
+  ctx.font = `800 13px ${F_UI}`; const lines = wrapLines(t.text, 300), h = 14 + lines.length * 17;
+  ctx.globalAlpha = a; ctx.fillStyle = 'rgba(22,22,23,.9)'; ctx.fillRect(40, H - 24 - h, W - 80, h);
+  ctx.fillStyle = '#E78A01'; ctx.fillRect(40, H - 24 - h, 3, h);
+  ctx.fillStyle = '#F7F7F7'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  lines.forEach((l, i) => ctx.fillText(l, 202, H - 24 - h + 15 + i * 17));
+  ctx.globalAlpha = 1;
+}
+function drawIntro(lv) { // doorrollende jaartal-teller plus tijdperk-titel
+  const t = Wd.t, a = clamp(Math.min(t / 0.15, (CONFIG.intro.t - t) / 0.35), 0, 1);
+  ctx.globalAlpha = a;
+  ctx.fillStyle = 'rgba(22,22,23,.86)'; ctx.fillRect(22, 84, W - 44, 146); ctx.fillStyle = '#CFAB00'; ctx.fillRect(22, 84, W - 44, 3);
+  const from = String(run.prevYear), to = String(lv.year), bw = 30, bh = 40, gap = 5, x0 = 200 - (4 * bw + 3 * gap) / 2, y0 = 96;
+  ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.font = `800 28px ${F_UI}`;
+  for (let i = 0; i < 4; i++) {
+    const a0 = +from[i], b0 = +to[i], d = (b0 - a0 + 10) % 10 + (i >= 2 && from !== to ? 10 : 0);
+    const v = a0 + d * ease((t / 1.2 - i * 0.07) / 0.8), x = x0 + i * (bw + gap);
+    ctx.fillStyle = '#0d0d0e'; ctx.fillRect(x, y0, bw, bh);
+    ctx.save(); ctx.beginPath(); ctx.rect(x, y0, bw, bh); ctx.clip();
+    const fr = v - Math.floor(v), dg = Math.floor(v) % 10;
+    ctx.fillStyle = '#F7F7F7'; ctx.fillText(String(dg), x + bw / 2, y0 + bh / 2 - fr * bh); ctx.fillText(String((dg + 1) % 10), x + bw / 2, y0 + bh / 2 + (1 - fr) * bh);
+    ctx.restore();
+    ctx.fillStyle = 'rgba(255,255,255,.08)'; ctx.fillRect(x, y0, bw, bh / 2);
+  }
+  ctx.font = `400 25px ${F_HAND}`; ctx.fillStyle = '#CFAB00'; ctx.fillText(lv.title, 200, 160);
+  ctx.font = `600 13px ${F_UI}`; ctx.fillStyle = '#F7F7F7';
+  const lines = wrapLines(lv.intro, 330); lines.slice(0, 2).forEach((l, i) => ctx.fillText(l, 200, 186 + i * 17));
+  ctx.font = `800 11.5px ${F_UI}`; ctx.fillStyle = '#E78A01';
+  ctx.fillText(lv.supply || `Aan de loskade: ${run.ship}.`, 200, 219);
+  ctx.globalAlpha = 1;
+}
+function drawTutorial() {
+  ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  ctx.font = `800 14px ${F_UI}`; ctx.lineWidth = 4; ctx.strokeStyle = 'rgba(20,20,21,.85)'; ctx.fillStyle = '#F7F7F7';
+  const l1 = 'Stuur door de spleet. Midden door = perfect.', l2 = inputMode === 'touch' ? 'Sleep met je duim, waar dan ook.' : 'Pijltjes, A/D of de muis.';
+  ctx.strokeText(l1, 200, 300); ctx.fillText(l1, 200, 300);
+  ctx.font = `600 12px ${F_UI}`; ctx.strokeText(l2, 200, 320); ctx.fillText(l2, 200, 320);
+}
+function drawDebug(cam) {
+  ctx.save(); ctx.strokeStyle = '#3f3'; ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.arc(G.x, CONFIG.GY, hitR(), 0, TAU); ctx.stroke();
+  ctx.translate(0, -cam);
+  for (const f of Wd.floors) {
+    if (f.kind === 'wals' || f.kind === 'molen') { const xl = f.cx - f.w / 2 - f.R, xr = f.cx + f.w / 2 + f.R, hh = f.R * CONFIG.roll.casing; ctx.beginPath(); ctx.arc(xl, f.y, f.R, 0, TAU); ctx.moveTo(xr + f.R, f.y); ctx.arc(xr, f.y, f.R, 0, TAU); ctx.stroke(); ctx.strokeRect(-1, f.y - hh, xl + 1, hh * 2); ctx.strokeRect(xr, f.y - hh, W - xr + 1, hh * 2); }
+    else { let x = 0; for (const hx of holesAt(f, Wd.t)) { ctx.strokeRect(x, f.y - CONFIG.plate / 2, hx - f.w / 2 - x, CONFIG.plate); x = hx + f.w / 2; } ctx.strokeRect(x, f.y - CONFIG.plate / 2, W - x, CONFIG.plate); }
+  }
+  for (const h of Wd.haz) if (h.anch) { ctx.beginPath(); ctx.arc(h.sx, h.y, CONFIG.hazard.moederR, 0, TAU); ctx.stroke(); }
+  ctx.restore();
+  for (const h of Wd.haz) if (!h.anch) { ctx.beginPath(); ctx.arc(h.sx, h.sy, CONFIG.hazard.r * 0.9, 0, TAU); ctx.stroke(); }
+  ctx.fillStyle = '#3f3'; ctx.font = `600 11px ${F_UI}`; ctx.textAlign = 'left'; ctx.fillText(`debug · scroll ${Math.round(Wd.scroll)} · 0,5x`, 56, H - 8);
+}
+
+// ============================================================
+// 11. Schermen (DOM-overlays, één state machine)
+// ============================================================
+const SCR = { title: $('scrTitle'), pause: $('scrPause'), level: $('scrLevel'), over: $('scrOver'), done: $('scrDone'), scores: $('scrScores'), about: $('scrAbout') };
+function show(name) {
+  S.screen = name;
+  for (const k in SCR) SCR[k].hidden = k !== name;
+  $('btnPause').hidden = name !== 'play';
+  keys.left = keys.right = false;
+  AU.rumble(name === 'play');
+  if (name === 'play') { if (document.activeElement && document.activeElement.blur) document.activeElement.blur(); return; }
+  const card = SCR[name] && SCR[name].querySelector('.card'); if (card) card.scrollTop = 0;
+  const b = SCR[name] && SCR[name].querySelector('[data-primary]');
+  if (b && (lastKey || hoverDevice())) try { b.focus({ preventScroll: true }); } catch (e) { b.focus(); }
+}
+let toastT = 0, lastKey = false;
+const hoverDevice = () => { try { return matchMedia('(hover: hover) and (pointer: fine)').matches; } catch (e) { return false; } };
+addEventListener('pointerdown', () => { lastKey = false; }, true);
+function toast(msg) { const t = $('toast'); t.textContent = msg; t.hidden = false; clearTimeout(toastT); toastT = setTimeout(() => { t.hidden = true; }, 2600); }
+function grant(ids) { for (const id of ids) { run.badges.add(id); save.badges[id] = 1; } persist(); }
+function uitLabel(pct) { return UIT.find(u => pct < u.max) || UIT[UIT.length - 1]; }
+function uitHTML(perf, total) {
+  if (!total) return 'Nog geen passages gemeten.';
+  const pct = Math.round(perf / total * 100), u = uitLabel(pct); save.labels[u.id] = 1; persist();
+  return `Jouw uitmaling: <b>${pct}%</b> (${perf} van ${total} perfect): <b>${u.name}</b>, ${u.note}. Witter = minder uitmaling.`;
+}
+function bonRows(kg) {
+  return `<tr class="big"><td>Bloem</td><td>${fmt(kg)} kg</td></tr><tr><td>Zakken van 25 kg</td><td>${fmt(Math.floor(kg / CONFIG.bag))}</td></tr>` +
+    `<tr><td>Bulkcellen van 2 ton</td><td>${fmt1(kg / CONFIG.cell)}</td></tr><tr><td>Goed voor</td><td>circa ${fmt(Math.round(kg / 1000 * CONFIG.bread / 10) * 10)} broden</td></tr>`;
+}
+function fillBadges(el, ids) {
+  el.innerHTML = '';
+  for (const id of ids) { const b = BADGES.find(q => q.id === id); const s = document.createElement('span'); s.className = 'badge'; s.title = b.desc; s.appendChild(badgeCanvas(id, true)); s.appendChild(document.createTextNode(b.name)); el.appendChild(s); }
+  el.hidden = !ids.length;
+}
+function shareLine() {
+  const kg = run.score, br = fmt(Math.round(kg / 1000 * CONFIG.bread / 10) * 10), uit = run.total ? Math.round(run.perfects / run.total * 100) + '% uitmaling' : '';
+  const rank = run.rank >= 0 ? `combo ${RANKS[run.rank][1]}, ` : '';
+  const head = run.mode === 'night' ? `Korrelval Nachtploeg ${dayLabel()}${run.daily ? ' (Korrel van de dag)' : ''}: ${fmt(kg)} kg bloem, ${run.passed} verdiepingen`
+    : S.screen === 'done' ? `Korrelval, van 1846 tot 2026: ${fmt(kg)} kg bloem` : `Korrelval ${lvlCfg().year} ${lvlCfg().short}: ${fmt(kg)} kg bloem`;
+  return `${head}, goed voor circa ${br} broden, ${rank}${uit}`.replace(/, $/, '');
+}
+async function copyScore(boxId) {
+  const text = shareLine(); let ok = false;
+  try { if (navigator.clipboard && window.isSecureContext) { await navigator.clipboard.writeText(text); ok = true; } } catch (e) { ok = false; }
+  if (ok) { toast('Gekopieerd. Plak hem in Teams.'); return; }
+  const box = $(boxId); box.hidden = false; box.value = text; try { box.focus(); box.select(); } catch (e) { /* ok */ }
+  toast('Kopiëren lukte niet: selecteer de tekst.');
+}
+
+function startDemo() { run = newRun('demo', 0, 20261846); resetWorld(); show('title'); refreshTitle(); }
+function startCampaign(lvl) { run = newRun('camp', lvl || 0, Math.random() * 4294967296); run.prevYear = lvl ? LEVELS[lvl - 1].year : 1800; startLevel(); }
+function startNight(daily) {
+  if (!save.night) return;
+  const seed = daily ? hashStr('korrelval-' + dateKey()) : Math.random() * 4294967296;
+  run = newRun('night', 0, seed, daily); run.prevYear = 1846; run.lives = CONFIG.nightLives; startLevel();
+}
+function startLevel() {
+  run.cp = { score: run.score, perfects: run.perfects, total: run.total, bestCombo: run.bestCombo, rank: run.rank };
+  run.lives = run.mode === 'night' ? CONFIG.nightLives : CONFIG.lives; run.combo = 0;
+  resetWorld(); show('play');
+}
+function retry() {
+  if (!run || run.mode === 'demo') return startCampaign(0);
+  if (run.mode === 'night') return startNight(run.daily);
+  Object.assign(run, run.cp); run.seed = (run.seed + 0x51ED) >>> 0; run.prevYear = run.lvl ? LEVELS[run.lvl - 1].year : 1800;
+  startLevel();
+}
+function levelComplete() {
+  const lv = lvlCfg(), pct = lvS.total ? lvS.perf / lvS.total : 0;
+  const lifeB = run.lives * CONFIG.pts.life, uitB = Math.round(pct * CONFIG.pts.uit), kgLevel = run.score - lvS.kg0;
+  run.score += lifeB + uitB;
+  const earned = [];
+  if (lvS.hits === 0) earned.push('betr');
+  if (lvS.total && pct >= 0.75) earned.push('vak');
+  if (lvS.picks > 0 && lvS.got >= lvS.picks) earned.push('ond');
+  if (lvS.ned > 0 && lvS.nedGot >= lvS.ned) earned.push('elk');
+  grant(earned);
+  const last = run.lvl >= LEVELS.length - 1;
+  save.maxLvl = Math.max(save.maxLvl, last ? run.lvl : run.lvl + 1);
+  const unlocked = !save.night; save.night = true; persist();
+  $('lvTitle').textContent = lvS.silo && lvS.silo.goal ? 'Order geladen!' : 'In de silo';
+  $('lvEra').textContent = `${lv.year} · ${lv.title}`;
+  $('lvBon').innerHTML = `<tr><td>Deze molen</td><td>+${fmt(kgLevel)} kg</td></tr>` +
+    (lvS.silo ? `<tr><td>Silo ${esc(lvS.silo.name)}${lvS.silo.goal ? ' (bulkwagen)' : ''}</td><td>+${lvS.silo.pts}</td></tr>` : '') +
+    `<tr><td>Korrels over: ${run.lives}</td><td>+${lifeB}</td></tr><tr><td>Uitmalingsbonus</td><td>+${uitB}</td></tr>` +
+    `<tr class="big"><td>Totaal</td><td>${fmt(run.score)} kg</td></tr><tr><td>Zakken van 25 kg</td><td>${fmt(Math.floor(run.score / CONFIG.bag))}</td></tr>`;
+  $('lvUit').innerHTML = uitHTML(lvS.perf, lvS.total) + (unlocked ? ' <b>De Nachtploeg is nu open.</b>' : '');
+  fillBadges($('lvBadges'), earned);
+  const pool = FACTS.filter(f => f[0] === run.lvl); $('lvFact').textContent = pool[Math.floor(Math.random() * pool.length)][1];
+  $('bNext').textContent = last ? 'Naar het jaarverslag' : `Volgende molen: ${LEVELS[run.lvl + 1].year}`;
+  show('level'); SFX.fanfare();
+}
+function nextLevel() {
+  if (run.lvl >= LEVELS.length - 1) return showDone();
+  run.prevYear = lvlCfg().year; run.lvl++; startLevel();
+}
+function showDone() {
+  save.campDone = true; save.best = Math.max(save.best, run.score);
+  if (run.gezel) grant(['mens']);
+  persist();
+  $('doneBon').innerHTML = bonRows(run.score) + `<tr><td>Beste combo</td><td>${run.bestCombo}${run.rank >= 0 ? ' · ' + RANKS[run.rank][1] : ''}</td></tr>`;
+  $('doneUit').innerHTML = uitHTML(run.perfects, run.total);
+  fillBadges($('doneBadges'), [...run.badges]);
+  $('copyBox2').hidden = true;
+  show('done');
+}
+let pickerEntry = null, pickerSlot = 0;
+function gameOver() {
+  const night = run.mode === 'night', lv = lvlCfg();
+  $('overSub').textContent = night ? `Nachtploeg · ${run.daily ? 'Korrel van de dag, ' + dayLabel() : 'vrije dienst'} · ${run.passed} verdiepingen` : `${lv.year} · ${lv.title}: probeer deze molen nog eens`;
+  $('overBon').innerHTML = bonRows(run.score) + `<tr><td>Beste combo</td><td>${run.bestCombo}${run.rank >= 0 ? ' · ' + RANKS[run.rank][1] : ''}</td></tr>`;
+  $('overUit').innerHTML = uitHTML(run.perfects, run.total);
+  fillBadges($('overBadges'), [...run.badges]);
+  $('copyBox').hidden = true;
+  pickerEntry = null; $('picker').hidden = true;
+  if (night) {
+    const k = dateKey(); if (run.daily) save.daily[k] = Math.max(save.daily[k] || 0, run.score);
+    const entry = { n: save.name, s: run.score, f: run.passed, d: dayLabel(), daily: run.daily };
+    if (run.score > 0) { save.top.push(entry); save.top.sort((a, b) => b.s - a.s); save.top = save.top.slice(0, 5); if (save.top.includes(entry)) { pickerEntry = entry; buildPicker(); } }
+    const pool = FACTS.filter(f => f[0] === 6 || Math.random() < 0.2); $('overFact').textContent = pool[Math.floor(Math.random() * pool.length)][1];
+  } else save.best = Math.max(save.best, run.score);
+  $('overFactBox').hidden = !night;
+  persist();
+  show('over');
+}
+function buildPicker() {
+  const el = $('slots'); el.innerHTML = ''; pickerSlot = 0;
+  const chev = d => `<svg viewBox="0 0 10 10" aria-hidden="true"><path d="${d ? 'M1 3l4 4 4-4' : 'M1 7l4-4 4 4'}" fill="none" stroke="currentColor" stroke-width="2"/></svg>`;
+  for (let i = 0; i < 3; i++) {
+    const s = document.createElement('div'); s.className = 'slot' + (i === 0 ? ' sel' : '');
+    s.innerHTML = `<button class="btn" type="button" aria-label="Letter ${i + 1} omhoog">${chev(0)}</button><span aria-live="polite">${save.name[i]}</span><button class="btn" type="button" aria-label="Letter ${i + 1} omlaag">${chev(1)}</button>`;
+    const [up, , down] = s.children;
+    up.onclick = () => shiftLetter(i, -1); down.onclick = () => shiftLetter(i, 1);
+    el.appendChild(s);
+  }
+  $('picker').hidden = false;
+}
+function shiftLetter(i, d) {
+  const n = save.name.split(''); n[i] = String.fromCharCode(65 + ((n[i].charCodeAt(0) - 65 + d + 26) % 26)); save.name = n.join('');
+  if (pickerEntry) pickerEntry.n = save.name;
+  persist(); pickerSlot = i;
+  [...$('slots').children].forEach((s, j) => { s.children[1].textContent = save.name[j]; s.classList.toggle('sel', j === i); });
+}
+function pause() { if (S.screen !== 'play') return; const lv = lvlCfg(); $('pauseInfo').textContent = run.mode === 'night' ? `Nachtploeg · verdieping ${run.passed}` : `${lv.year} · ${lv.title}`; show('pause'); }
+function resume() { if (S.screen === 'pause') show('play'); }
+function toMenu() { startDemo(); }
+function syncSoundButtons() { for (const id of ['bSound', 'bPSound']) { const b = $(id); b.textContent = save.sound ? 'Geluid aan' : 'Geluid uit'; b.setAttribute('aria-pressed', String(save.sound)); } }
+function refreshTitle() {
+  const gz = $('bGezel'); gz.setAttribute('aria-pressed', String(save.gezel));
+  gz.innerHTML = `${save.gezel ? 'Gezel: aan' : 'Gezel-modus'}<small>ruimere spleten, tragere val</small>`;
+  syncSoundButtons();
+  $('bDaily').disabled = $('bFree').disabled = !save.night;
+  const best = save.daily[dateKey()];
+  $('nightNote').textContent = save.night ? (best ? `vandaag jouw beste: ${fmt(best)} kg` : 'eindeloos, één korrel, zelfde schacht voor iedereen') : 'open na de eerste molen (1846)';
+  const chips = $('lvlChips'); chips.innerHTML = '';
+  if (save.maxLvl > 0) {
+    const lab = document.createElement('span'); lab.className = 'hint'; lab.textContent = 'Verder vanaf'; chips.appendChild(lab);
+    LEVELS.forEach((lv, i) => { if (i > save.maxLvl) return; const b = document.createElement('button'); b.type = 'button'; b.className = 'btn'; b.textContent = lv.year; b.setAttribute('aria-label', `Start bij ${lv.year}, ${lv.title}`); b.onclick = () => startCampaign(i); chips.appendChild(b); });
+  }
+  chips.hidden = save.maxLvl <= 0;
+  const got = BADGES.filter(b => save.badges[b.id]).map(b => b.id); fillBadges($('titleBadges'), got);
+  if (UIT.every(u => save.labels[u.id])) { const s = document.createElement('span'); s.className = 'badge'; s.style.paddingLeft = '9px'; s.textContent = 'Alle vier uitmalingen gezien'; $('titleBadges').appendChild(s); $('titleBadges').hidden = false; }
+}
+function showScores() {
+  const ol = $('topList');
+  ol.innerHTML = save.top.length ? save.top.map(e => `<li><b>${esc(e.n)}</b><span>${fmt(e.s)} kg</span><i>${e.f} verd. · ${esc(e.d)}${e.daily ? ' · dag' : ''}</i></li>`).join('') : '<li><b>Nog leeg.</b><i>Speel de Nachtploeg</i></li>';
+  const best = save.daily[dateKey()]; $('dailyNote').textContent = best ? `Korrel van de dag: ${fmt(best)} kg` : '';
+  $('campNote').textContent = save.best || save.maxLvl ? `Beste score: ${fmt(save.best)} kg bloem. Bereikt: ${LEVELS[save.maxLvl].year}${save.campDone ? ', tijdlijn uitgespeeld.' : '.'}` : 'Nog geen molen gehaald.';
+  const ab = $('allBadges'); ab.innerHTML = '';
+  for (const b of BADGES) { const s = document.createElement('span'); s.className = 'badge' + (save.badges[b.id] ? '' : ' off'); s.title = b.desc; s.appendChild(badgeCanvas(b.id, !!save.badges[b.id])); s.appendChild(document.createTextNode(b.name)); ab.appendChild(s); }
+  $('allLabels').innerHTML = UIT.map(u => `<span class="badge${save.labels[u.id] ? '' : ' off'}" style="padding-left:9px">${u.name} <small>${u.note}</small></span>`).join('');
+  show('scores');
+}
+
+$('bStart').onclick = () => startCampaign(0);
+$('bDaily').onclick = () => startNight(true);
+$('bFree').onclick = () => startNight(false);
+$('bGezel').onclick = () => { save.gezel = !save.gezel; persist(); refreshTitle(); };
+$('bSound').onclick = $('bPSound').onclick = () => { AU.ensure(); AU.setSound(!save.sound); };
+$('bScores').onclick = showScores;
+$('bAbout').onclick = () => show('about');
+$('bScoresBack').onclick = $('bAboutBack').onclick = () => { show('title'); refreshTitle(); };
+$('bAgain').onclick = retry;
+$('bOMenu').onclick = $('bLMenu').onclick = $('bPMenu').onclick = $('bDoneMenu').onclick = toMenu;
+$('bResume').onclick = resume;
+$('btnPause').onclick = pause;
+$('bNext').onclick = nextLevel;
+$('bCopy').onclick = () => copyScore('copyBox');
+$('bDoneCopy').onclick = () => copyScore('copyBox2');
+$('bDoneNight').onclick = () => startNight(true);
+document.querySelectorAll('canvas[data-ico]').forEach(c => { const g = c.getContext('2d'); icon(g, c.dataset.ico, c.width / 2, c.height / 2, c.width * 0.9, '#CFAB00'); });
+
+function primary() { const b = SCR[S.screen] && SCR[S.screen].querySelector('[data-primary]'); if (b && !b.disabled) b.click(); }
+addEventListener('keydown', e => {
+  AU.ensure(); lastKey = true;
+  const k = e.key;
+  if (S.screen === 'over' && pickerEntry && (k === 'ArrowUp' || k === 'ArrowDown' || k === 'ArrowLeft' || k === 'ArrowRight')) {
+    e.preventDefault();
+    if (k === 'ArrowLeft' || k === 'ArrowRight') { pickerSlot = (pickerSlot + (k === 'ArrowRight' ? 1 : 2)) % 3; [...$('slots').children].forEach((s, j) => s.classList.toggle('sel', j === pickerSlot)); }
+    else shiftLetter(pickerSlot, k === 'ArrowUp' ? -1 : 1);
+    return;
+  }
+  if (k === 'ArrowLeft' || k === 'a' || k === 'A') { keys.left = true; if (S.screen === 'play') e.preventDefault(); return; }
+  if (k === 'ArrowRight' || k === 'd' || k === 'D') { keys.right = true; if (S.screen === 'play') e.preventDefault(); return; }
+  if (e.repeat) return;
+  if (k === ' ' || k === 'Enter') { if (e.target && (e.target.tagName === 'BUTTON' || e.target.tagName === 'TEXTAREA')) return; if (S.screen !== 'play') { e.preventDefault(); primary(); } return; }
+  if (k === 'p' || k === 'P') { if (S.screen === 'play') pause(); else if (S.screen === 'pause') resume(); return; }
+  if (k === 'm' || k === 'M') { AU.setSound(!save.sound); return; }
+  if (k === 'Escape') { if (S.screen === 'play') pause(); else if (S.screen === 'scores' || S.screen === 'about') { show('title'); refreshTitle(); } else if (S.screen !== 'title') toMenu(); return; }
+  if ((k === '`' || e.code === 'Backquote') && S.screen === 'play') debug = !debug;
+});
+addEventListener('keyup', e => {
+  const k = e.key;
+  if (k === 'ArrowLeft' || k === 'a' || k === 'A') keys.left = false;
+  if (k === 'ArrowRight' || k === 'd' || k === 'D') keys.right = false;
+});
+addEventListener('blur', () => { keys.left = keys.right = false; });
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) { if (S.screen === 'play') pause(); if (AU.ctx) AU.ctx.suspend().catch(() => {}); }
+  else if (AU.ctx) AU.ctx.resume().catch(() => {});
+});
+
+// ============================================================
+// 12. Lus en start (met hot-reload haak)
+// ============================================================
+let last = 0, acc = 0;
+function frame(ts) {
+  const fast = window.__kvFast || 1; // alleen voor de zelftest
+  const dt = Math.min((ts - (last || ts)) / 1000, CONFIG.dtMax) * fast; last = ts;
+  const running = S.screen === 'play' || (run.mode === 'demo' && (S.screen === 'title' || S.screen === 'scores' || S.screen === 'about'));
+  if (running) {
+    acc += dt; let n = 0;
+    while (acc >= CONFIG.step && n < CONFIG.maxSub * fast) {
+      update(CONFIG.step); acc -= CONFIG.step; n++;
+      if (S.screen !== 'play' && run.mode !== 'demo') { acc = 0; break; } // game-over of levelkaart: wereld bevriest
+    }
+    if (n >= CONFIG.maxSub * fast) acc = 0;
+  } else { Wd.pcam = Wd.camY; G.px = G.x; acc = 0; }
+  render(running ? clamp(acc / CONFIG.step, 0, 1) : 1);
+  requestAnimationFrame(frame);
+}
+function start(data) {
+  loadSave();
+  layout();
+  addEventListener('resize', layout);
+  if (window.visualViewport) visualViewport.addEventListener('resize', layout);
+  startDemo();
+  if (data && typeof data.screen === 'string' && data.screen === 'about') show('about');
+  requestAnimationFrame(frame);
+}
+window.claude?.hot?.snapshot?.(() => ({ screen: S.screen, lvl: run && run.lvl }));
+window.__korrelval = { state: () => ({ screen: S.screen, mode: run.mode, lvl: run.lvl, score: run.score, lives: run.lives, combo: run.combo, x: G.x, passed: run.passed, total: run.total, perfects: run.perfects, hits: lvS.hits, t: Wd.t }), floors: () => Wd.floors.map(f => `${f.kind}:${Math.round(f.y)}:${Math.round(f.cx)}:${f.holes.length}`) };
+window.claude?.hot?.ready ? window.claude.hot.ready(start) : start(window.claude?.hot?.data ?? {});
+})();
+</script>
