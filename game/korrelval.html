@@ -3,7 +3,7 @@
 <style>
 :root{
   --bg:#E9E5DA; --card:#FBF8F0; --card2:#F2ECDD; --ink:#1D1E1F; --muted:#5F5A50; --line:#D6CDB8;
-  --accent:#E78A01; --accent-ink:#1D1E1F; --accent-edge:#9E5E00; --gold:#CFAB00; --gold-ink:#7A6500;
+  --accent:#E78A01; --accent-ink:#1D1E1F; --accent-edge:#9E5E00; --gold:#CFAB00; --gold-ink:#7A6500; --gold-soft:#F5EBC6;
   --danger:#C52135; --ok:#3F6E4A; --chip:#ECE5D3; --accent-text:#9E5E00;
   --hud-bg:rgba(29,30,31,.6); --hud-ink:#F7F7F7; --hud-focus:#CFAB00;
   --shadow:0 2px 0 rgba(29,30,31,.10),0 18px 44px rgba(29,30,31,.42);
@@ -13,13 +13,13 @@
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
   --bg:#121314; --card:#24221F; --card2:#2D2A26; --ink:#F4EFE3; --muted:#BFB7A6; --line:#48423A;
-  --accent:#F29A1C; --accent-ink:#1D1E1F; --accent-edge:#8E5200; --gold:#E3C431; --gold-ink:#E3C431;
+  --accent:#F29A1C; --accent-ink:#1D1E1F; --accent-edge:#8E5200; --gold:#E3C431; --gold-ink:#E3C431; --gold-soft:#3A3421;
   --danger:#F0596B; --ok:#8CC79A; --chip:#33302B; --accent-text:#F29A1C;
   --shadow:0 2px 0 rgba(0,0,0,.3),0 18px 44px rgba(0,0,0,.65);
   color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#121314; --card:#24221F; --card2:#2D2A26; --ink:#F4EFE3; --muted:#BFB7A6; --line:#48423A;
-  --accent:#F29A1C; --accent-ink:#1D1E1F; --accent-edge:#8E5200; --gold:#E3C431; --gold-ink:#E3C431;
+  --accent:#F29A1C; --accent-ink:#1D1E1F; --accent-edge:#8E5200; --gold:#E3C431; --gold-ink:#E3C431; --gold-soft:#3A3421;
   --danger:#F0596B; --ok:#8CC79A; --chip:#33302B; --accent-text:#F29A1C;
   --shadow:0 2px 0 rgba(0,0,0,.3),0 18px 44px rgba(0,0,0,.65);
   color-scheme:dark}
@@ -92,6 +92,13 @@ h2{font:800 calc(26px*var(--s,1))/1.1 var(--ui);margin:0;letter-spacing:-.01em}
 .badge.tap{cursor:pointer}
 .fact{background:var(--card2);padding:calc(10px*var(--s,1)) 12px;font:600 calc(14px*var(--s,1))/1.4 var(--ui);border-left:4px solid var(--accent);margin:0}
 .fact b{display:block;font:800 12px/1.2 var(--ui);letter-spacing:.1em;text-transform:uppercase;color:var(--gold-ink);margin-bottom:3px}
+/* Te moeilijk?: zelfde vorm als Wist je dat?, maar met goud als accent */
+.easy{background:var(--gold-soft);padding:calc(10px*var(--s,1)) 12px;border-left:4px solid var(--gold)}
+.easy b{display:block;font:800 12px/1.2 var(--ui);letter-spacing:.1em;text-transform:uppercase;color:var(--gold-ink);margin-bottom:3px}
+.easy p{margin:0;font:600 calc(14px*var(--s,1))/1.4 var(--ui)}
+.easy .btn{width:100%;margin-top:calc(8px*var(--s,1));min-height:44px}
+#scrOver.tight1 #overBon tr:not(.big){display:none}
+#scrOver.tight2 #overBadges{display:none}
 .picker{display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--card2);padding:8px 10px}
 .picker p{margin:0;font:800 13px/1.3 var(--ui)}
 .slots{display:flex;gap:6px}
@@ -186,6 +193,7 @@ textarea.copy{width:100%;box-sizing:border-box;font:600 13px/1.35 var(--ui);back
       <p>Top 5!<br><span class="muted">Jouw letters</span></p>
       <div class="slots" id="slots"></div>
     </div>
+    <div class="easy" id="easyBox" hidden><b>Te moeilijk?</b><p>Probeer de Gezel-modus: ruimere spleten en een tragere val. Je kunt hem op het titelscherm weer uitzetten.</p><button class="btn" id="bEasy" type="button">Probeer de Gezel-modus</button></div>
     <button class="btn primary" id="bAgain" type="button" data-primary>Nog een korrel?</button>
     <div class="row"><button class="btn" id="bCopy" type="button">Kopieer score</button><button class="btn" id="bOMenu" type="button">Menu</button></div>
     <textarea class="copy" id="copyBox" rows="3" readonly hidden aria-label="Score om te kopiëren"></textarea>
@@ -260,8 +268,10 @@ const CONFIG = {
   slowmo: { scale: 0.55, dur: 3 }, magnet: { dur: 6 },
   fair: { dx: 0.7, minGap: 2.6, edge: 6, minShift: 0.6 },
   hazard: { warn: 1.0, fall: [200, 280], vx: [0, 50], r: 9, moederR: 7, warnY: 86 },
-  // molen 1 en 2 (eerste kennismaking) krijgen een langere introband om de geschiedenis te kunnen lezen
-  intro: { t: 2.2, first: 3.0, tLong: 3.0, firstLong: 3.8 },
+  // molen 1 en 2 (eerste kennismaking) krijgen een langere introband om de geschiedenis te kunnen lezen.
+  // wait: de band blijft staan tot de speler tikt of een toets indrukt (false = oude gedrag: band verdwijnt na t of tLong).
+  // Na het wegtikken komt de eerste verdieping net onder de schermrand (below px) binnen, minstens first - t seconden voor de korrel.
+  intro: { t: 2.2, first: 3.0, tLong: 3.0, firstLong: 3.8, wait: true, fade: 0.35, below: 72, minWait: 0.3 },
   // mijlpalen in kg bloem (alleen getallen uit het bronmateriaal: zak 25 kg, bulkcel 2 ton, 1.800 broden per ton)
   milestones: [[25, 'Eén zak van 25 kg!'], [1000, 'Een ton bloem: goed voor circa 1.800 broden!'], [2000, 'Eén bulkcel van 2 ton vol!'], [10000, 'Tien ton bloem: circa 18.000 broden!']],
   roll: { molen: 50, wals: 40, casing: 0.62 }, plate: 18, pickChance: 0.5,
@@ -413,6 +423,7 @@ function layout() {
   const land = isCoarse() && cw > ch && ch < 600;
   $('rotate').hidden = !land;
   if (land) pause();
+  if (S.screen === 'over') fitOver();
 }
 // Letterbox één keer op een eigen canvas onder het speelveld; #cv tekent alleen nog het veld zelf.
 function buildLetterbox() {
@@ -602,6 +613,8 @@ function toLogical(cx, cy) { const r = cv.getBoundingClientRect(); return { x: (
 const xLo = () => L + CONFIG.grain.r, xHi = () => R - CONFIG.grain.r;
 cv.addEventListener('pointerdown', e => {
   AU.ensure();
+  // wachtende introband: deze tik start alleen het spel; hij stuurt niet en wordt geen sleepbeweging
+  if (introWaiting()) { e.preventDefault(); dismissIntro(); return; }
   const p = toLogical(e.clientX, e.clientY);
   if (e.pointerType === 'mouse') { inputMode = 'mouse'; G.tx = clamp(p.x, xLo(), xHi()); return; }
   ptr.id = e.pointerId; ptr.lastX = p.x; inputMode = 'touch'; G.tx = G.x;
@@ -609,6 +622,7 @@ cv.addEventListener('pointerdown', e => {
   e.preventDefault();
 });
 cv.addEventListener('pointermove', e => {
+  if (introWaiting()) return; // tijdens het lezen beweegt de korrel niet mee met de muis
   const p = toLogical(e.clientX, e.clientY);
   if (e.pointerType === 'mouse') { inputMode = 'mouse'; G.tx = clamp(p.x, xLo(), xHi()); return; }
   if (e.pointerId !== ptr.id) return;
@@ -631,9 +645,11 @@ const G = { x: 200, px: 200, vx: 0, tx: 200, inv: 0, knaks: 0 };
 const Wd = {
   t: 0, camY: 0, pcam: 0, scroll: 170, len: 1, floors: [], haz: [], sched: [], picks: [], steam: [], jg: null, silo: null,
   ending: 0, complete: false, dying: 0, flash: 0, shakeT: 0, slow: 0, mag: 0, banner: null, tip: null, ambT: 0, steamT: 2, joke: false, sndT: 0,
+  intro: null, it: 0, io: 0, iw: false, // introband: null | 'wait' (wacht op tik) | 'auto' (oude gedrag) | 'out' (vervaagt); it = bandklok, io = vervagen, iw = band wachtte
 };
 const gen = { rng: Math.random, nextY: 0, count: 0, prevX: 200, prevY: 0, lastHaz: false, done: false, pick: false, molen: 0 };
 let run = null, lvS = null, debug = false;
+let nightFails = 0; // Nachtploeg-partijen achter elkaar met minder dan 15 verdiepingen (alleen deze sessie)
 const S = { screen: 'title' };
 
 function newRun(mode, lvl, seed, daily) {
@@ -641,7 +657,9 @@ function newRun(mode, lvl, seed, daily) {
   return {
     mode, lvl: lvl || 0, startLvl: lvl || 0, seed: seed >>> 0, daily: !!daily,
     score: 0, lives: CONFIG.lives, combo: 0, bestCombo: 0, perfects: 0, total: 0, passed: 0, rank: -1,
-    badges: new Set(), seen: new Set(), facts: new Set(), ms: 0, gezel: mode === 'camp' && save.gezel, cp: null,
+    badges: new Set(), seen: new Set(), facts: new Set(), ms: 0, gezel: mode !== 'demo' && save.gezel, cp: null,
+    // gezelFrom: molen vanaf waar Gezel aan stond (Menselijk vraagt Gezel vanaf 1846); deathsInLevel: game-overs op rij in deze molen
+    gezelFrom: mode !== 'demo' && save.gezel ? (lvl || 0) : Infinity, deathsInLevel: 0,
     ship: SHIPS[Math.floor(r() * SHIPS.length)], ploeg: 'ABCDE'[Math.floor(r() * 5)], prevYear: 1800,
   };
 }
@@ -649,31 +667,42 @@ function lvlCfg() { return run.mode === 'night' ? NIGHT : run.mode === 'demo' ? 
 const introLong = () => run.mode === 'camp' && run.lvl <= 1;
 const introT = () => introLong() ? CONFIG.intro.tLong : CONFIG.intro.t;
 const introFirst = () => introLong() ? CONFIG.intro.firstLong : CONFIG.intro.first;
+// Na het wegtikken van de wachtende band: de eerste verdieping begint net onder de schermrand (niet uit het niets
+// midden in beeld), en komt nooit eerder dan de oude marge (first - t, 0,8 s) bij de korrel.
+const introLead = P => Math.max(introFirst() - introT(), (H + CONFIG.intro.below - CONFIG.GY) / P.scroll);
+const introWaiting = () => S.screen === 'play' && run && run.mode !== 'demo' && Wd.intro === 'wait';
+function dismissIntro() {
+  if (Wd.intro !== 'wait' || Wd.it < CONFIG.intro.minWait) return; // minWait: een dubbeltik op de startknop slaat de tekst niet over
+  Wd.intro = 'out'; Wd.io = 0;
+  G.tx = G.x; G.vx = 0; ptr.id = null; keys.left = keys.right = false; // de starttik telt niet als stuurbeweging
+}
 function params(n) {
   const lv = lvlCfg();
+  if (run.mode === 'demo') return { ...lv, scroll: CONFIG.demo.scroll, interval: 2.4, gap: 0.3 };
+  const gz = run.gezel ? CONFIG.gezel : { gap: 1, scroll: 1 }; // Gezel geldt ook in de Nachtploeg
   if (run.mode === 'night') {
     const N = CONFIG.night, z = n / 10;
     return {
       ...lv, floors: Infinity,
-      scroll: Math.min(N.scrollMax, N.scroll0 * Math.pow(1 + N.grow, z)),
+      scroll: Math.min(N.scrollMax, N.scroll0 * Math.pow(1 + N.grow, z)) * gz.scroll,
       interval: Math.max(N.intMin, N.int0 - 0.03 * z),
-      gap: Math.max(N.gapMin, N.gap0 - 0.007 * z),
+      gap: Math.max(N.gapMin, N.gap0 - 0.007 * z) * gz.gap,
     };
   }
-  if (run.mode === 'demo') return { ...lv, scroll: CONFIG.demo.scroll, interval: 2.4, gap: 0.3 };
-  const gz = run.gezel ? CONFIG.gezel : { gap: 1, scroll: 1 };
   return { ...lv, scroll: lv.scroll * gz.scroll, gap: lv.gap * gz.gap };
 }
-function resetWorld() {
-  const P = params(0);
+// intro: true = introband tonen (start vanaf titel, Volgende molen, Nachtploeg); false = meteen spelen (Nog een korrel?, demo)
+function resetWorld(intro) {
+  const P = params(0), wait = !!intro && CONFIG.intro.wait, lead = wait ? introLead(P) : introFirst();
   Object.assign(Wd, {
     t: 0, camY: 0, pcam: 0, scroll: P.scroll, silo: null, jg: null, ending: 0, complete: false, dying: 0, flash: 0,
     shakeT: 0, slow: 0, mag: 0, banner: null, tip: null, ambT: 0, steamT: 2, joke: false, sndT: 0,
+    intro: intro ? (wait ? 'wait' : 'auto') : null, it: 0, io: 0, iw: wait,
   });
   Wd.floors.length = 0; Wd.haz.length = 0; Wd.sched.length = 0; Wd.picks.length = 0; Wd.steam.length = 0;
-  Wd.len = P.scroll * (introFirst() + (isFinite(P.floors) ? P.floors * P.interval : 1e6));
+  Wd.len = P.scroll * (lead + (isFinite(P.floors) ? P.floors * P.interval : 1e6));
   gen.rng = mulberry32((run.seed ^ Math.imul(run.lvl + 1, 0x9E3779B1)) >>> 0);
-  Object.assign(gen, { count: 0, nextY: CONFIG.GY + P.scroll * introFirst(), prevX: 200, prevY: CONFIG.GY, lastHaz: false, done: false, molen: 0 });
+  Object.assign(gen, { count: 0, nextY: CONFIG.GY + P.scroll * lead, prevX: 200, prevY: CONFIG.GY, lastHaz: false, done: false, molen: 0 });
   Object.assign(G, { x: 200, px: 200, vx: 0, tx: 200, inv: 0, knaks: 0 });
   for (const p of PARTS) p.on = false;
   for (const t of TEXTS) t.on = false;
@@ -834,6 +863,12 @@ function update(dt) {
   if (debug) ts *= 0.5;
   const wdt = dt * ts;
   Wd.pcam = Wd.camY; G.px = G.x;
+  if (Wd.intro) { // introband: eigen klok voor de jaarteller; bij 'wait' staat de wereld stil tot de speler tikt
+    Wd.it += dt;
+    if (Wd.intro === 'auto' && Wd.it >= introT() - CONFIG.intro.fade) { Wd.intro = 'out'; Wd.io = 0; }
+    else if (Wd.intro === 'out') { Wd.io += dt; if (Wd.io >= CONFIG.intro.fade) Wd.intro = null; }
+    if (Wd.intro === 'wait') return; // geen scroll, geen nieuwe verdiepingen of stenen, niet sturen
+  }
   Wd.t += wdt;
   steer(dt);
   if (Wd.ending) Wd.scroll *= Math.exp(-3 * dt);
@@ -1035,7 +1070,8 @@ function render(alpha) {
   if (Wd.jg) drawJokeGrain(Wd.jg);
   ctx.restore();
   for (const h of Wd.haz) if (!h.anch) drawHazard(h.type, h.sx, h.sy, h.rot, h.pts, h.fling ? 0.5 : 1);
-  if (!demo) drawGrain(gx, CONFIG.GY);
+  // wachtend op de start dobbert de korrel zacht onder de stortkoker
+  if (!demo) drawGrain(gx, CONFIG.GY + (Wd.intro === 'wait' && !reduced.matches ? Math.sin(Wd.it * 2.4) * 2 : 0));
   ctx.restore();
   drawWarnings();
   if (Wd.slow > 0) vignette('rgba(95,168,211,', 0.35 * clamp(Wd.slow, 0, 1));
@@ -1044,7 +1080,7 @@ function render(alpha) {
   if (Wd.flash > 0) { ctx.strokeStyle = `rgba(197,33,53,${(Wd.flash / CONFIG.flashT) * 0.9})`; ctx.lineWidth = 16; ctx.strokeRect(0, 0, W, H); }
   if (!demo) {
     drawHUD(lv); drawSide(); drawBanner(); drawTip();
-    if (Wd.t < introT()) drawIntro(lv); else if (tutorialOn(lv)) drawTutorial();
+    if (Wd.intro) drawIntro(lv); else if (tutorialOn(lv)) drawTutorial();
   }
   drawTexts();
   // achter een kaart (pauze, weegbon, game-over, jaarverslag) het veld dimmen; de titeldemo blijft helder
@@ -1249,7 +1285,7 @@ function drawGrain(x, y) {
   ctx.fillStyle = col; ctx.beginPath(); ctx.ellipse(0, 0, 9, 12, 0, 0, TAU); ctx.fill();
   ctx.strokeStyle = 'rgba(70,45,10,.6)'; ctx.lineWidth = 1.5; ctx.stroke();
   ctx.beginPath(); ctx.moveTo(1, -10); ctx.quadraticCurveTo(4.5, 0, 1, 10); ctx.strokeStyle = 'rgba(110,75,25,.45)'; ctx.stroke();
-  const blink = (Wd.t % 3.1) < 0.12;
+  const blink = ((Wd.t + Wd.it) % 3.1) < 0.12; // Wd.it: ook knipperen terwijl de wereld op de start wacht
   ctx.fillStyle = '#1D1E1F';
   if (blink) { ctx.fillRect(-5, -2.8, 3.4, 1.2); ctx.fillRect(1, -2.8, 3.4, 1.2); } else { ctx.beginPath(); ctx.arc(-3.4, -2.4, 1.5, 0, TAU); ctx.arc(2.6, -2.4, 1.5, 0, TAU); ctx.fill(); }
   ctx.restore();
@@ -1365,12 +1401,13 @@ function drawTip() {
   lines.forEach((l, i) => ctx.fillText(l, 202, H - 24 - h + 15 + i * 17));
   ctx.globalAlpha = 1;
 }
-function drawIntro(lv) { // doorrollende jaartal-teller plus tijdperk-titel
-  const t = Wd.t, a = clamp(Math.min(t / 0.15, (introT() - t) / 0.35), 0, 1);
+function drawIntro(lv) { // doorrollende jaartal-teller plus tijdperk-titel; bij 'wait' onderin de startvraag
+  const t = Wd.it, a = clamp(Math.min(t / 0.15, Wd.intro === 'out' ? 1 - Wd.io / CONFIG.intro.fade : 1), 0, 1);
+  const top = 80, bandH = Wd.iw ? 156 : 132; // band eindigt boven de korrel (GY 252)
   ctx.globalAlpha = a;
-  ctx.fillStyle = 'rgba(22,22,23,.86)'; ctx.fillRect(22, 84, W - 44, 146); ctx.fillStyle = '#CFAB00'; ctx.fillRect(22, 84, W - 44, 3);
-  const from = String(run.prevYear), to = String(lv.year), bw = 30, bh = 40, gap = 5, x0 = 200 - (4 * bw + 3 * gap) / 2, y0 = 96;
-  ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.font = `800 28px ${F_UI}`;
+  ctx.fillStyle = 'rgba(22,22,23,.88)'; ctx.fillRect(22, top, W - 44, bandH); ctx.fillStyle = '#CFAB00'; ctx.fillRect(22, top, W - 44, 3);
+  const from = String(run.prevYear), to = String(lv.year), bw = 28, bh = 36, gap = 5, x0 = 200 - (4 * bw + 3 * gap) / 2, y0 = 90;
+  ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.font = `800 26px ${F_UI}`;
   for (let i = 0; i < 4; i++) {
     const a0 = +from[i], b0 = +to[i], d = (b0 - a0 + 10) % 10 + (i >= 2 && from !== to ? 10 : 0);
     const v = a0 + d * ease((t / 1.2 - i * 0.07) / 0.8), x = x0 + i * (bw + gap);
@@ -1382,11 +1419,18 @@ function drawIntro(lv) { // doorrollende jaartal-teller plus tijdperk-titel
     ctx.fillStyle = 'rgba(255,255,255,.08)'; ctx.fillRect(x, y0, bw, bh / 2);
   }
   // maxWidth als vangnet: een te lange regel wordt iets smaller in plaats van uit het paneel te steken
-  ctx.font = `400 25px ${F_HAND}`; ctx.fillStyle = '#CFAB00'; ctx.fillText(lv.title, 200, 160, 330);
+  ctx.font = `400 25px ${F_HAND}`; ctx.fillStyle = '#CFAB00'; ctx.fillText(lv.title, 200, 147, 330);
   ctx.font = `600 13px ${F_UI}`; ctx.fillStyle = '#F7F7F7';
-  const lines = wrapLines(lv.intro, 330); lines.slice(0, 2).forEach((l, i) => ctx.fillText(l, 200, 186 + i * 17));
+  const lines = wrapLines(lv.intro, 330); lines.slice(0, 2).forEach((l, i) => ctx.fillText(l, 200, 169 + i * 16));
   ctx.font = `800 11.5px ${F_UI}`; ctx.fillStyle = '#E78A01';
-  ctx.fillText(lv.supply || `Aan de loskade: ${run.ship}.`, 200, 219, 330);
+  ctx.fillText(lv.supply || `Aan de loskade: ${run.ship}.`, 200, 201, 330);
+  if (Wd.iw) { // startvraag in een goudgetinte strook, zacht pulserend (niet bij verminderde beweging)
+    const sy = top + bandH - 23, pulse = reduced.matches ? 1 : 0.62 + 0.38 * (0.5 + 0.5 * Math.cos(t * 3.4));
+    ctx.fillStyle = 'rgba(207,171,0,.2)'; ctx.fillRect(22, sy, W - 44, 23);
+    ctx.globalAlpha = a * clamp((t - 0.3) / 0.4, 0, 1) * pulse;
+    ctx.font = `800 12.5px ${F_UI}`; ctx.fillStyle = '#F2D35B';
+    ctx.fillText(hintTouch ? 'Tik om te beginnen' : 'Tik of druk op spatie om te beginnen', 200, sy + 12, 330);
+  }
   ctx.globalAlpha = 1;
 }
 function drawTutorial() { // boven de korrel (de spleten komen van onderen), na de introband
@@ -1477,7 +1521,7 @@ function shareLine() {
   const head = run.mode === 'night'
     ? `Korrelval Nachtploeg ${dayLabel()}${run.daily ? ' (Korrel van de dag)' : ''}, ${save.name}: ${fmt(kg)} kg bloem, ${fl(run.passed, ' ')}`
     : S.screen === 'done' ? `Korrelval, van ${LEVELS[run.startLvl].year} tot 2026: ${fmt(kg)} kg bloem` : `Korrelval ${lvlCfg().year} ${lvlCfg().short}: ${fmt(kg)} kg bloem`;
-  return `${head}, goed voor circa ${br} broden, ${rank}${uit}`.replace(/, $/, '');
+  return `${head}${run.gezel ? ' (Gezel)' : ''}, goed voor circa ${br} broden, ${rank}${uit}`.replace(/, $/, '');
 }
 async function copyScore(boxId) {
   const text = shareLine(), box = $(boxId); let ok = false;
@@ -1490,27 +1534,37 @@ async function copyScore(boxId) {
 }
 
 function startDemo() { run = newRun('demo', 0, 20261846); resetWorld(); show('title'); refreshTitle(); }
-function startCampaign(lvl) { run = newRun('camp', lvl || 0, Math.random() * 4294967296); run.prevYear = lvl ? LEVELS[lvl - 1].year : 1800; startLevel(); }
-function startNight(daily) {
+function startCampaign(lvl) { run = newRun('camp', lvl || 0, Math.random() * 4294967296); run.prevYear = lvl ? LEVELS[lvl - 1].year : 1800; startLevel(true); }
+// quick: Nog een korrel? in de Nachtploeg, zonder introband
+function startNight(daily, quick) {
   if (!save.night) return;
   const seed = daily ? hashStr('korrelval-' + dateKey()) : Math.random() * 4294967296;
-  run = newRun('night', 0, seed, daily); run.prevYear = 1846; run.lives = CONFIG.nightLives; startLevel();
+  run = newRun('night', 0, seed, daily); run.prevYear = 1846; run.lives = CONFIG.nightLives; startLevel(!quick);
 }
-function startLevel() {
+// intro: introband tonen (titel, Volgende molen, Nachtploeg); niet bij Nog een korrel?, zodat opnieuw proberen snel blijft
+function startLevel(intro) {
   run.cp = { score: run.score, perfects: run.perfects, total: run.total, bestCombo: run.bestCombo, rank: run.rank };
   run.lives = run.mode === 'night' ? CONFIG.nightLives : CONFIG.lives; run.combo = 0;
-  resetWorld(); show('play');
+  resetWorld(intro); show('play');
 }
 function retry() {
   if (!run || run.mode === 'demo') return startCampaign(0);
-  if (run.mode === 'night') return startNight(run.daily);
+  if (run.mode === 'night') return startNight(run.daily, true);
   Object.assign(run, run.cp); run.seed = (run.seed + 0x51ED) >>> 0; run.prevYear = run.lvl ? LEVELS[run.lvl - 1].year : 1800;
-  startLevel();
+  startLevel(false);
+}
+// Te moeilijk? > Probeer de Gezel-modus: zelfde als de knop op het titelscherm, daarna meteen opnieuw (zonder introband)
+function tryGezel() {
+  save.gezel = true; persist(); refreshTitle();
+  $('easyBox').hidden = true; SCR.over.classList.remove('easy-on');
+  nightFails = 0;
+  if (run.mode === 'camp') { run.gezel = true; run.gezelFrom = Math.min(run.gezelFrom, run.lvl); run.deathsInLevel = 0; }
+  retry(); // Nachtploeg: nieuwe run, die neemt Gezel over uit save
 }
 function levelComplete() {
   const lv = lvlCfg(), pct = lvS.total ? lvS.perf / lvS.total : 0;
   const lifeB = run.lives * CONFIG.pts.life, uitB = Math.round(pct * CONFIG.pts.uit), kgLevel = run.score - lvS.kg0;
-  run.score += lifeB + uitB;
+  run.score += lifeB + uitB; run.deathsInLevel = 0;
   save.best = Math.max(save.best, run.score); // ook bewaren als je na de weegbon naar het menu gaat
   const earned = [];
   if (lvS.hits === 0) earned.push('betr');
@@ -1535,13 +1589,15 @@ function levelComplete() {
 }
 function nextLevel() {
   if (run.lvl >= LEVELS.length - 1) return showDone();
-  run.prevYear = lvlCfg().year; run.lvl++; startLevel();
+  run.prevYear = lvlCfg().year; run.lvl++; startLevel(true);
 }
 function showDone() {
   const full = run.startLvl === 0; // alleen een run vanaf 1846 telt als hele tijdlijn
   if (full) save.campDone = true;
   save.best = Math.max(save.best, run.score);
-  if (run.gezel && full) grant(['mens']);
+  // Menselijk: Gezel vanaf 1846. Wie onderweg via Te moeilijk? overstapt, telt alleen als dat al in molen 1 was
+  // (die molen begint dan opnieuw, dus de hele tijdlijn is als Gezel gespeeld).
+  if (run.gezel && full && run.gezelFrom === 0) grant(['mens']);
   persist();
   $('doneNote').textContent = (full ? 'Je viel door alle molens van de tijdlijn.' : `Je viel van ${LEVELS[run.startLvl].year} tot Molen B.`) +
     ' Generaties lang draaiden hier de molens op vakmanschap; jij draaide een rondje mee.';
@@ -1562,13 +1618,26 @@ function gameOver() {
   pickerEntry = null; $('picker').hidden = true;
   if (night) {
     const k = dateKey(); if (run.daily) save.daily[k] = Math.max(save.daily[k] || 0, run.score);
-    const entry = { n: save.name, s: run.score, f: run.passed, d: dayLabel(), daily: run.daily };
+    const entry = { n: save.name, s: run.score, f: run.passed, d: dayLabel(), daily: run.daily, g: run.gezel ? 1 : 0 };
     if (run.score > 0) { save.top.push(entry); save.top.sort((a, b) => b.s - a.s); save.top = save.top.slice(0, 5); if (save.top.includes(entry)) { pickerEntry = entry; buildPicker(); } }
     $('overFact').textContent = pickFact(Math.random() < 0.6 ? 6 : -1); // meestal een Nachtploeg-kaartje, soms een ander
   } else save.best = Math.max(save.best, run.score);
-  $('overFactBox').hidden = !night;
+  // Te moeilijk?: na 3, 6, 9 ... game-overs op rij (molen: in deze molen; Nachtploeg: partijen onder 15 verdiepingen)
+  let fails;
+  if (night) fails = nightFails = run.passed < 15 ? nightFails + 1 : 0;
+  else fails = ++run.deathsInLevel;
+  const easy = !run.gezel && fails >= 3 && fails % 3 === 0;
+  $('easyBox').hidden = !easy; SCR.over.classList.toggle('easy-on', easy);
+  $('overFactBox').hidden = !night || easy; // geen ruimte voor beide kaartjes op een kleine telefoon
   persist();
-  show('over');
+  show('over'); fitOver();
+}
+// Met het Te moeilijk?-kader moet de kaart zonder scrollen passen: eerst de bon inkorten tot de regel Bloem, dan de badgerij weg.
+function fitOver() {
+  const sec = SCR.over, c = sec.querySelector('.card');
+  sec.classList.remove('tight1', 'tight2');
+  if (sec.hidden || !sec.classList.contains('easy-on')) return;
+  for (const k of ['tight1', 'tight2']) if (c.scrollHeight > c.clientHeight + 1) sec.classList.add(k);
 }
 function buildPicker() {
   const el = $('slots'); el.innerHTML = ''; pickerSlot = 0;
@@ -1589,7 +1658,8 @@ function shiftLetter(i, d) {
   [...$('slots').children].forEach((s, j) => { s.children[1].textContent = save.name[j]; s.classList.toggle('sel', j === i); });
 }
 function pause() { if (S.screen !== 'play') return; const lv = lvlCfg(); $('pauseInfo').textContent = run.mode === 'night' ? `Nachtploeg · verdieping ${run.passed}` : `${lv.year} · ${lv.title}`; show('pause'); }
-function resume() { if (S.screen === 'pause') { G.inv = Math.max(G.inv, 0.6); show('play'); } } // korte adempauze na Verder
+// korte adempauze na Verder; een wachtende introband blijft gewoon wachten (de wereld stond toch al stil)
+function resume() { if (S.screen === 'pause') { if (Wd.intro !== 'wait') G.inv = Math.max(G.inv, 0.6); show('play'); } }
 function toMenu() { startDemo(); }
 function syncSoundButtons() { for (const id of ['bSound', 'bPSound']) { const b = $(id); b.textContent = save.sound ? 'Geluid aan' : 'Geluid uit'; b.setAttribute('aria-pressed', String(save.sound)); } }
 function refreshTitle() {
@@ -1618,7 +1688,7 @@ function refreshTitle() {
 function showScores() {
   const ol = $('topList');
   ol.innerHTML = save.top.length
-    ? save.top.map(e => `<li><b>${esc(e.n)}</b><span>${fmt(e.s)} kg</span><i>${e.f} verd. · ${esc(e.d)}${e.daily ? ' · van de dag' : ''}</i></li>`).join('')
+    ? save.top.map(e => `<li><b>${esc(e.n)}</b><span>${fmt(e.s)} kg</span><i>${e.f} verd. · ${esc(e.d)}${e.daily ? ' · van de dag' : ''}${e.g ? ' · Gezel' : ''}</i></li>`).join('')
     : '<li class="empty"><b>Nog leeg.</b><i>Speel de Nachtploeg</i></li>';
   const best = save.daily[dateKey()]; $('dailyNote').textContent = best ? `Korrel van de dag: ${fmt(best)} kg` : '';
   $('campNote').textContent = save.best || save.maxLvl ? `Beste score: ${fmt(save.best)} kg bloem. Bereikt: ${LEVELS[save.maxLvl].year}${save.campDone ? ', tijdlijn uitgespeeld.' : '.'}` : 'Nog geen molen gehaald.';
@@ -1637,6 +1707,7 @@ $('bScores').onclick = showScores;
 $('bAbout').onclick = () => show('about');
 $('bScoresBack').onclick = $('bAboutBack').onclick = () => { show('title'); refreshTitle(); };
 $('bAgain').onclick = retry;
+$('bEasy').onclick = tryGezel;
 $('bOMenu').onclick = $('bLMenu').onclick = $('bPMenu').onclick = $('bDoneMenu').onclick = toMenu;
 $('bResume').onclick = resume;
 $('btnPause').onclick = pause;
@@ -1655,6 +1726,10 @@ addEventListener('keydown', e => {
     if (k === 'ArrowLeft' || k === 'ArrowRight') { pickerSlot = (pickerSlot + (k === 'ArrowRight' ? 1 : 2)) % 3; [...$('slots').children].forEach((s, j) => s.classList.toggle('sel', j === pickerSlot)); }
     else shiftLetter(pickerSlot, k === 'ArrowUp' ? -1 : 1);
     return;
+  }
+  // wachtende introband: spatie, Enter, een pijltje (of A/D) start het spel; die toets stuurt zelf nog niet
+  if (introWaiting() && (k === ' ' || k === 'Enter' || k.startsWith('Arrow') || /^[ad]$/i.test(k))) {
+    e.preventDefault(); if (!e.repeat) dismissIntro(); return;
   }
   if (k === 'ArrowLeft' || k === 'a' || k === 'A') { keys.left = true; if (S.screen === 'play') e.preventDefault(); return; }
   if (k === 'ArrowRight' || k === 'd' || k === 'D') { keys.right = true; if (S.screen === 'play') e.preventDefault(); return; }
@@ -1716,7 +1791,7 @@ function start(data) {
   requestAnimationFrame(frame);
 }
 window.claude?.hot?.snapshot?.(() => ({ screen: S.screen, lvl: run && run.lvl }));
-window.__korrelval = { state: () => ({ screen: S.screen, mode: run.mode, lvl: run.lvl, score: run.score, lives: run.lives, combo: run.combo, x: G.x, passed: run.passed, total: run.total, perfects: run.perfects, hits: lvS.hits, t: Wd.t }), floors: () => Wd.floors.map(f => `${f.kind}:${Math.round(f.y)}:${Math.round(f.cx)}:${f.holes.length}`) };
+window.__korrelval = { state: () => ({ screen: S.screen, mode: run.mode, lvl: run.lvl, score: run.score, lives: run.lives, combo: run.combo, x: G.x, passed: run.passed, total: run.total, perfects: run.perfects, hits: lvS.hits, t: Wd.t, intro: Wd.intro, camY: Wd.camY, nFloors: Wd.floors.length + Wd.sched.length + Wd.haz.length, gezel: run.gezel }), floors: () => Wd.floors.map(f => `${f.kind}:${Math.round(f.y)}:${Math.round(f.cx)}:${f.holes.length}`) };
 window.claude?.hot?.ready ? window.claude.hot.ready(start) : start(window.claude?.hot?.data ?? {});
 })();
 </script>
