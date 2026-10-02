@@ -1,0 +1,1777 @@
+{
+  "meta": {
+    "company": "Royal Koopmans (Koopmans Koninklijke Meelfabrieken B.V., Leeuwarden)",
+    "compiled": "2026-10-02",
+    "language": "nl",
+    "note": "Samengesteld uit zes researchbestanden; alleen feiten met confidence high/medium zijn als spelfeit gebruikt. Zie 'avoid' voor wat het spel nooit als Royal Koopmans-feit mag stellen."
+  },
+  "places": [
+    {
+      "name": "Holwerd",
+      "desc": "Fries terpdorp aan de Waddenkust waar Uilke Klazes Koopmans in 1846 een rosmolen voor boekweit kocht; het startpunt van het bedrijf.",
+      "source": "https://www.royalkoopmans.com/nl/over-royal-koopmans/de-geschiedenis-van-koopmans"
+    },
+    {
+      "name": "Leeuwarden",
+      "desc": "Friese hoofdstad waarheen Koopmans verhuisde omdat hier grotere graanschepen konden aanleggen; na Harlingen de grootste industriehaven van Fryslân (1,5 miljoen ton per jaar).",
+      "source": "https://www.leeuwarden.nl/en/water-sports/beroepsvaart/"
+    },
+    {
+      "name": "Noordvliet / Het Vliet",
+      "desc": "Historische locatie van de Stoommeelfabriek Friso en de graanopslagpanden die Jan Koopmans aankocht.",
+      "source": "https://www.royalkoopmans.com/nl/over-royal-koopmans/de-geschiedenis-van-koopmans"
+    },
+    {
+      "name": "De Merodestraat 3",
+      "desc": "Het huidige fabrieksterrein (8937 AA Leeuwarden): hoofdkantoor, meelmolen en foodcoatingfabriek onder één dak; eerste gebouw 1929-1930, hoogste silo 1981.",
+      "source": "https://www.royalkoopmans.com/en/koopmans-foodcoatings/about-koopmans-food-ingredients/meet-our-team"
+    },
+    {
+      "name": "Nieuwe Kanaal / loskade",
+      "desc": "Het water langs de fabriek waar graanschepen aanmeren; de 100 meter lange kade (oudste deel 1927) werd in 2024-2025 vervangen door een damwand met 14 buispalen.",
+      "source": "https://www.deboerendegroot.nl/wat-hebben-wij-gedaan/vervangen-loskade-royal-koopmans-meelfabriek/"
+    },
+    {
+      "name": "KIEM Innovatiecentrum",
+      "desc": "Open proefbakkerij en vergaderruimte in het historische pand van Koopmans Meel, geopend 23 juni 2016; KIEM staat voor Koopmans, Innovatie, Expertise en Molenaarschap.",
+      "source": "https://www.bakkersinbedrijf.nl/nieuws/koopmans-kiem-broedplaats-duurzame-graanconcepten"
+    },
+    {
+      "name": "Middelsee",
+      "desc": "Nieuwbouwwijk in Leeuwarden waar in oktober 2025 het eerste Urban Tarweveld van Nederland is ingezaaid en op 24 april 2026 geopend als 180-jarig jubileumcadeau aan de stad.",
+      "source": "https://www.omropfryslan.nl/nl/nieuws/18405555/urban-tarweveld-in-leeuwarden-eten-verbouwen-bij-de-stoplichten"
+    },
+    {
+      "name": "De Zwette / Zwettestraat",
+      "desc": "Bedrijventerrein in Leeuwarden met het Kooiker Logistiek-warehouse (1.000 m2 extra, 7 docks) waar sinds 2024 de voorraad ligt; een elektrische truck pendelt naar de fabriek.",
+      "source": "https://ondernemendleeuwarden.nl/elektrische-pendel-voor-royal-koopmans/"
+    },
+    {
+      "name": "Heerenveen",
+      "desc": "Tot 2024 de plek waar de voorraad van Royal Koopmans lag, voordat die naar Leeuwarden verhuisde.",
+      "source": "https://logimerce.nl/news/2718/kooiker-logistiek-breidt-uit-voor-nieuwe-klant-royal-koopmans"
+    },
+    {
+      "name": "Zeeland / CZAV",
+      "desc": "Thuisbasis van coöperatie CZAV, de graancollecteur waarmee Nedertarwe is ontwikkeld; de eerste Nedertarwe-telers zaten in Zeeland en op de Zuid-Hollandse eilanden.",
+      "source": "https://www.bakkersinbedrijf.nl/nieuws/royal-koopmans-presenteert-nedertarwe-graan-van-hollandse-bodem"
+    },
+    {
+      "name": "Oldambt / Dollard",
+      "desc": "Groningse kleistreek van vereniging Dollard Tarwe (1984); in februari 2025 kwam na veertig jaar weer een schip met 500 ton Groninger baktarwe naar Leeuwarden.",
+      "source": "https://akkerwijzer.nl/artikel/1215642-na-veertig-jaar-eerste-lading-groninger-baktarwe-per-schip-naar-maalbedrijf-koopmans"
+    },
+    {
+      "name": "Noord-Friesland / Westhoek",
+      "desc": "Eerste lokale supply base (project Pure Oorsprong, 2012); de tarwe voor De Fryske Bôle (2014) kwam van maatschap Jensma uit Westhoek.",
+      "source": "https://www.bakkersinbedrijf.nl/nieuws/koopmans-introduceert-bole-echt-fries-brood"
+    },
+    {
+      "name": "Duitsland",
+      "desc": "Herkomst van het deel van de tarwe dat niet uit Nederland komt; Duitse tarwe arriveert per schip en heeft vaker meer dan 12% eiwit.",
+      "source": "https://www.royalkoopmans.com/meel/over-koopmans-meel/actueel-bij-meel/interview-laten-we-vooral-met-positieve-energie-inspireren-en-geinspireerd-worden"
+    },
+    {
+      "name": "Terschelling",
+      "desc": "Waddeneiland waarvan cranberrysap wordt gebruikt in een speciaal Koopmans-meel voor zuurdesembrood.",
+      "source": "https://www.eiwittrends.nl/royal-koopmans-uitblinken-in-innovatie/"
+    },
+    {
+      "name": "Heenvliet",
+      "desc": "Zuid-Hollands dorp waar de Voskamp-winkel in februari 2026 de 100ste Nedertarwe-winkel van Nederland werd, met graan van akkers op minder dan een kilometer afstand.",
+      "source": "https://www.rodi.nl/rozenburg/partnerbijdrage/110043/van-akker-tot-bakker-voskamp-winkel-heenvliet-is-100ste-nedertarwe-winkel-van-nederland"
+    },
+    {
+      "name": "Wijngaard De Frysling",
+      "desc": "Friese wijngaard waar het 180-jarig jubileum met ketenpartners werd gevierd en waarvan de wijn bij de graandiners werd geschonken.",
+      "source": "https://www.bakkerswereld.nl/onderwerp/royal-koopmans"
+    },
+    {
+      "name": "Frankfurt",
+      "desc": "Stad van de vakbeurs Fi Europe, waar Koopmans Food Coatings B.V. in november 2026 op stand 41B62 staat.",
+      "source": "https://www.ingredientsnetwork.com/47/company/26/79/68/exhibitor267968-629.html"
+    },
+    {
+      "name": "Dubai",
+      "desc": "Stad van Gulfood Manufacturing, waar Royal Koopmans in 2025 exposeerde met zijn ingrediëntentak.",
+      "source": "https://www.gulfoodmanufacturing.com/exhibitors/royal-koopmans"
+    },
+    {
+      "name": "Woudmansstraat, Leeuwarden",
+      "desc": "Productielocatie van Dr. Oetker Nederland waar de consumentenbakmixen van het merk Koopmans worden gemaakt; NIET Royal Koopmans.",
+      "source": "https://drimble.nl/bedrijf/leeuwarden/19924453/dr-oetker-nederland-bv.html"
+    },
+    {
+      "name": "Amersfoort",
+      "desc": "Consumentencontact van het Dr. Oetker-merk Koopmans (Netwerklaan 38); NIET Royal Koopmans.",
+      "source": "https://www.koopmans.com/contact/"
+    }
+  ],
+  "people": [
+    {
+      "name": "Uilke Klazes Koopmans",
+      "role": "Oprichter (1820-1898); bakkersgezel die in 1846 met 1.550 gulden familiegeld een rosmolen in Holwerd kocht",
+      "era": "1846-1881",
+      "source": "https://www.omropfryslan.nl/nl/nieuws/17743602/friese-bedrijven-die-de-wereld-veroveren-nog-altijd-een-beetje-van-ons"
+    },
+    {
+      "name": "Hein Blok Wybrandi",
+      "role": "Koopman van wie Koopmans in 1867 de Leeuwarder Stoommeelfabriek (2 pk) overnam",
+      "era": "1867",
+      "source": "https://nl.wikipedia.org/wiki/Koopmans_Koninklijke_Meelfabrieken"
+    },
+    {
+      "name": "Jan Koopmans",
+      "role": "Zoon van de oprichter; nam in 1881 over, spreidde risico met veevoer en kocht graanopslag aan het Vliet",
+      "era": "1881-1920",
+      "source": "https://www.royalkoopmans.com/nl/over-royal-koopmans/de-geschiedenis-van-koopmans"
+    },
+    {
+      "name": "Uco, Daan en Jo Koopmans",
+      "role": "Broers van de derde generatie; ontwikkelden na 1920 consumentenproducten en de eerste reclameacties; Uco pleitte in 1932 voor betere inlandse tarwe",
+      "era": "1920-1950",
+      "source": "https://www.royalkoopmans.com/over-royal-koopmans/de-geschiedenis-van-koopmans"
+    },
+    {
+      "name": "Koningin Juliana",
+      "role": "Verleende in 1976 het predicaat Koninklijk",
+      "era": "1976",
+      "source": "https://www.leeuwarden.nl/wp-content/uploads/import/bijlage_gem.onderscheidingen_predicatenlijst.pdf"
+    },
+    {
+      "name": "Jan Willem Eyssen",
+      "role": "Interim-directeur (Custom Management) vóór 2011",
+      "era": "2010-2011",
+      "source": "https://www.bakkersinbedrijf.nl/nieuws/nieuwe-algemeen-directeur-koopmans-leeuwarden"
+    },
+    {
+      "name": "Dirk Lodewijk",
+      "role": "CEO / algemeen directeur sinds 1 maart 2011; architect van de B2B-koers en Nedertarwe; voorzitter IFFI; BNR Impact Pluim",
+      "era": "2011-heden",
+      "source": "https://www.bakkersinbedrijf.nl/nieuws/nieuwe-algemeen-directeur-koopmans-leeuwarden"
+    },
+    {
+      "name": "Kees Dekker",
+      "role": "CFO (ex-SVP Finance SHV, ex-CFO Nutreco)",
+      "era": "heden",
+      "source": "https://www.ebbinge.nl/artikelen/4139-het-leiderschap-van-kees-dekker-cfo-bij-royal-koopmans"
+    },
+    {
+      "name": "Annemarie Jorna",
+      "role": "COO; lid Raad van Toezicht NPAL; deelde de hijsklus van de walsenstoelen voor Molen B",
+      "era": "heden",
+      "source": "https://mtsprout.nl/ranglijst/next-leadership-50-2021/annemarie-jorna-coo-bij-royal-koopmans"
+    },
+    {
+      "name": "Bas Dolman",
+      "role": "Commercial Director Koopmans Food Ingredients, zes jaar; vertrek aangekondigd in 2026",
+      "era": "2020-2026",
+      "source": "https://www.linkedin.com/company/koopmans-foodcoatings"
+    },
+    {
+      "name": "Bauke Wierda",
+      "role": "Manager Sourcing (inkoop); gezicht van de lokale tarwe-inkoop en het Urban Tarweveld (ook gespeld Bouke)",
+      "era": "heden",
+      "source": "https://akkerwijzer.nl/artikel/1215642-na-veertig-jaar-eerste-lading-groninger-baktarwe-per-schip-naar-maalbedrijf-koopmans"
+    },
+    {
+      "name": "Jildou van der Schaaf",
+      "role": "HR-manager; vitaliteitsprogramma 'vitaal per kwartaal'",
+      "era": "heden",
+      "source": "https://www.royalkoopmans.com/meel/over-koopmans-meel/actueel-bij-meel/duurzame-inspanning-loont-hoe-we-duurzame-vooruitgang-in-de-food-agri-keten-versnellen"
+    },
+    {
+      "name": "Kiki de' Liguori Carino",
+      "role": "Manager duurzaamheid sinds 1 juli 2024; CSRD en Net-0 2040",
+      "era": "2024-heden",
+      "source": "https://www.royalkoopmans.com/meel/over-koopmans-meel/actueel-bij-meel/interview-laten-we-vooral-met-positieve-energie-inspireren-en-geinspireerd-worden"
+    },
+    {
+      "name": "Willem Jan Leunissen",
+      "role": "Manager Foodcoatings",
+      "era": "heden",
+      "source": "https://www.royalkoopmans.com/en/koopmans-foodcoatings/about-koopmans-food-ingredients"
+    },
+    {
+      "name": "Ype Salverda",
+      "role": "QA-manager Koopmans Meel",
+      "era": "heden",
+      "source": "https://www.royalkoopmans.com/meel/over-koopmans-meel/kwaliteit"
+    },
+    {
+      "name": "Wietse Schiere",
+      "role": "Meester Boulanger; ontwikkelde Nedertarwe mee en adviseert bakkers",
+      "era": "heden",
+      "source": "https://www.royalkoopmans.com/meel/kennisbank/baktechniek-2"
+    },
+    {
+      "name": "Cees de Haan",
+      "role": "Senior Bakkerij & Procestechnoloog",
+      "era": "heden",
+      "source": "https://www.royalkoopmans.com/meel/kennisbank/baktechniek-2"
+    },
+    {
+      "name": "Piet Reitsma",
+      "role": "Bakker/technoloog",
+      "era": "heden",
+      "source": "https://www.royalkoopmans.com/meel/kennisbank/baktechniek-2"
+    },
+    {
+      "name": "Tjetske Koets",
+      "role": "Verantwoordelijk voor marketing en communicatie",
+      "era": "heden",
+      "source": "https://www.adformatie.nl/merkstrategie/royal-koopmans-van-gezichtsloos-meel-naar-nedertarwe"
+    },
+    {
+      "name": "Steven van Roggen",
+      "role": "Familiecommissaris: de ene commissaris die altijd uit de familiekring komt",
+      "era": "heden",
+      "source": "https://www.royalkoopmans.com/en/about-royal-koopmans/family-business"
+    },
+    {
+      "name": "Teo Wams",
+      "role": "Directeur natuurbeheer Natuurmonumenten; tekende op 4 april 2024 het Nedertarwe-partnerschap",
+      "era": "2024",
+      "source": "https://www.royalkoopmans.com/meel/over-koopmans-meel/actueel-bij-meel/ceo-dirk-lodewijk-en-directeur-natuurbeheer-van-natuurmonumenten-teo-wams-tekenen-samenwerkings-voor-nog-gezondere-boterham"
+    },
+    {
+      "name": "Jurriaan Visser",
+      "role": "Collecteur CZAV; sprak bij de digitale lancering van Nedertarwe (18 januari 2022)",
+      "era": "2022",
+      "source": "https://www.royalkoopmans.com/meel/over-koopmans-meel/actueel-bij-meel/met-een-digitaal-event-is-nedertarwe-officieel-gelanceerd-voor-de-ambachtelijke-bakker"
+    },
+    {
+      "name": "Wouter Vijfvinkel",
+      "role": "Nedertarwe-teler bij de lancering in 2022",
+      "era": "2022",
+      "source": "https://www.royalkoopmans.com/meel/over-koopmans-meel/actueel-bij-meel/met-een-digitaal-event-is-nedertarwe-officieel-gelanceerd-voor-de-ambachtelijke-bakker"
+    },
+    {
+      "name": "Aalt Dijkhuizen",
+      "role": "Juryvoorzitter Agribusiness Award 2025",
+      "era": "2025",
+      "source": "https://en.boerenbusiness.nl/artikel/10911823/nedertarwe-winnaar-van-agribusiness-award"
+    },
+    {
+      "name": "Niels Onkenhout",
+      "role": "Juryvoorzitter Koning Willem I Prijs 2024: noemde Koopmans 'echt een bedrijf in transitie'",
+      "era": "2024",
+      "source": "https://www.omropfryslan.nl/nl/nieuws/16443936/dansen-in-de-meelfabriek-koopmans-is-finalist-voor-koning-willem-i-prijs"
+    },
+    {
+      "name": "Evert Stellingwerf",
+      "role": "Wethouder Leeuwarden; opende 24 april 2026 het Urban Tarweveld",
+      "era": "2026",
+      "source": "https://www.royalkoopmans.com/actueel/opening-urban-tarweveld"
+    },
+    {
+      "name": "Sybrand Buma",
+      "role": "Burgemeester Leeuwarden; reed in 2024 mee met de elektrische pendeltruck",
+      "era": "2024",
+      "source": "https://ondernemendleeuwarden.nl/elektrische-pendel-voor-royal-koopmans/"
+    },
+    {
+      "name": "Minister Wiersma (LVVN)",
+      "role": "Bracht op 29 september 2025 een werkbezoek aan Royal Koopmans",
+      "era": "2025",
+      "source": "https://www.rijksoverheid.nl/actueel/agenda/2025/09/29/agenda-minister-wiersma-week-40"
+    },
+    {
+      "name": "Ben Koks",
+      "role": "Agro-ecoloog; ketenpartner Nedertarwe en workshopleider bij het Urban Tarweveld",
+      "era": "2026",
+      "source": "https://www.omropfryslan.nl/nl/nieuws/18405555/urban-tarweveld-in-leeuwarden-eten-verbouwen-bij-de-stoplichten"
+    },
+    {
+      "name": "Haya Ahmad",
+      "role": "15-jarige scholier die in juni 2023 een dag COO was bij 'Baas van Morgen'",
+      "era": "2023",
+      "source": "https://www.omropfryslan.nl/nl/nieuws/1210734/kinderen-voor-een-dag-de-baas-van-een-bedrijf-bij-project-baas-van-morgen"
+    },
+    {
+      "name": "René Visser en Jorne Hornstra",
+      "role": "Directie Kooiker Logistiek (warehousepartner), niet van Koopmans",
+      "era": "2024",
+      "source": "https://www.royalkoopmans.com/meel/over-koopmans-meel/actueel-bij-meel/royal-koopmans-en-kooiker-logistiek-bundelen-krachten-voor-verdere-professionalisering-en-verduurzaming"
+    }
+  ],
+  "products": [
+    {
+      "name": "Orion",
+      "type": "tarwebloem",
+      "desc": "Bakkersbloem uit het Koopmans Meel-assortiment, genoemd naar een sterrenbeeld.",
+      "source": "https://www.royalkoopmans.com/meel/assortiment"
+    },
+    {
+      "name": "Zuiderkroon",
+      "type": "tarwebloem",
+      "desc": "Bakkersbloem; net als Orion, Jupiter en Saturnus een naam uit de sterrenhemel.",
+      "source": "https://www.royalkoopmans.com/meel/assortiment"
+    },
+    {
+      "name": "Jupiter",
+      "type": "tarwebloem",
+      "desc": "Bakkersbloem met planeetnaam.",
+      "source": "https://www.royalkoopmans.com/meel/assortiment"
+    },
+    {
+      "name": "Saturnus",
+      "type": "tarwebloem",
+      "desc": "Bakkersbloem met planeetnaam.",
+      "source": "https://www.royalkoopmans.com/meel/assortiment"
+    },
+    {
+      "name": "Silverline / Goldline / Springline",
+      "type": "tarwebloem",
+      "desc": "Drie 'line'-bloemsoorten uit het broodassortiment.",
+      "source": "https://www.royalkoopmans.com/meel/assortiment"
+    },
+    {
+      "name": "Zweeds Wittebrood",
+      "type": "tarwebloem",
+      "desc": "Bloem voor zacht Zweeds wittebrood.",
+      "source": "https://www.royalkoopmans.com/meel/assortiment"
+    },
+    {
+      "name": "Puur Lokaal Bloem",
+      "type": "tarwebloem",
+      "desc": "Bloem van 100% Hollands graan.",
+      "source": "https://www.royalkoopmans.com/meel/assortiment"
+    },
+    {
+      "name": "Artisanaal T65",
+      "type": "tarwebloem",
+      "desc": "Bloem van Frans type T65 voor ambachtelijk brood en stokbrood.",
+      "source": "https://www.royalkoopmans.com/meel/assortiment"
+    },
+    {
+      "name": "Farina L'Oro Bianco",
+      "type": "tarwebloem",
+      "desc": "Pizzabloem met Italiaanse naam.",
+      "source": "https://www.royalkoopmans.com/meel/assortiment"
+    },
+    {
+      "name": "Eko Wit",
+      "type": "tarwebloem",
+      "desc": "Biologische witte bloem (Skal-gecertificeerd).",
+      "source": "https://www.royalkoopmans.com/meel/assortiment"
+    },
+    {
+      "name": "Prémax Slotermeer",
+      "type": "Prémax bakkersmix",
+      "desc": "Ambachtelijke bakkersmix van tarwe met zaden en pitten; draagt de naam van een Fries meer.",
+      "source": "https://www.royalkoopmans.com/meel/bijzonder-bakken/premax-ambachtelijke-bakkersmixen"
+    },
+    {
+      "name": "Prémax Fluessen",
+      "type": "Prémax bakkersmix",
+      "desc": "Bakkersmix genoemd naar het Friese meer De Fluessen.",
+      "source": "https://www.royalkoopmans.com/meel/bijzonder-bakken/premax-ambachtelijke-bakkersmixen"
+    },
+    {
+      "name": "Prémax Tjeukemeer",
+      "type": "Prémax bakkersmix",
+      "desc": "Bakkersmix genoemd naar het grootste meer van Friesland.",
+      "source": "https://www.royalkoopmans.com/meel/bijzonder-bakken/premax-ambachtelijke-bakkersmixen"
+    },
+    {
+      "name": "Prémax Bonkevaart",
+      "type": "Prémax bakkersmix",
+      "desc": "Bakkersmix genoemd naar de Leeuwarder vaart die bekend is als finish van de Elfstedentocht.",
+      "source": "https://www.royalkoopmans.com/meel/bijzonder-bakken/premax-ambachtelijke-bakkersmixen"
+    },
+    {
+      "name": "Prémax Princenhof",
+      "type": "Prémax bakkersmix",
+      "desc": "Bakkersmix genoemd naar het Friese merengebied De Alde Feanen/Princenhof.",
+      "source": "https://www.royalkoopmans.com/meel/bijzonder-bakken/premax-ambachtelijke-bakkersmixen"
+    },
+    {
+      "name": "Prémax Markermeer / Maas & Waal",
+      "type": "Prémax bakkersmix",
+      "desc": "Prémax-mixen met namen van wateren buiten Friesland.",
+      "source": "https://www.royalkoopmans.com/meel/bijzonder-bakken/premax-ambachtelijke-bakkersmixen"
+    },
+    {
+      "name": "Prémax Meergranen Robuust / Puur Oorsprong / Hoog Eiwit / Haver",
+      "type": "Prémax bakkersmix",
+      "desc": "Overige Prémax-varianten; Puur Oorsprong verwijst naar het Friese lokale-tarweproject uit 2012.",
+      "source": "https://www.royalkoopmans.com/meel/bijzonder-bakken/premax-ambachtelijke-bakkersmixen"
+    },
+    {
+      "name": "Nedertarwe Bloem / Volkorenmeel / Banketbloem",
+      "type": "Nedertarwe",
+      "desc": "Meel van duurzaam geteelde Nederlandse baktarwe zonder broodverbetermiddelen of E-nummers, exclusief voor de ambachtelijke bakker.",
+      "source": "https://www.royalkoopmans.com/meel/bijzonder-bakken/wat-is-nedertarwe"
+    },
+    {
+      "name": "100% Volkoren Artisanaal T150",
+      "type": "volkorenmeel",
+      "desc": "Volkorenmeel met 100% Volkoren-certificaat; uitmalingsgraad 100%.",
+      "source": "https://www.royalkoopmans.com/meel/bijzonder-bakken/100-volkoren"
+    },
+    {
+      "name": "Vergheten Graenen",
+      "type": "melange",
+      "desc": "Melange van emmer, khorasan, rotkorn en rogge, gelanceerd op 18 juli 2022 als 'nieuwe generatie brood'.",
+      "source": "https://www.royalkoopmans.com/meel/over-koopmans-meel/actueel-bij-meel/nieuw-vergheten-granen-de-nieuwe-generatie-brood-voor-een-onderscheidend-assortiment"
+    },
+    {
+      "name": "Stuifarme Strooibloem (Top, Premium, Excellent)",
+      "type": "strooibloem",
+      "desc": "Strooibloem die minder meelstof geeft in de bakkerij.",
+      "source": "https://www.royalkoopmans.com/meel/bijzonder-bakken/stuifarme-strooibloem"
+    },
+    {
+      "name": "Oliebollenmix Patent Premium",
+      "type": "bakkersmix",
+      "desc": "Verbeterde professionele oliebollenmix (7 september 2023); niet te verwarren met de Dr. Oetker-oliebollenmix uit de supermarkt.",
+      "source": "https://www.royalkoopmans.com/meel/over-koopmans-meel/actueel-bij-meel/nieuw-vergheten-granen-de-nieuwe-generatie-brood-voor-een-onderscheidend-assortiment"
+    },
+    {
+      "name": "Cranberrymeel Terschelling",
+      "type": "speciaalmeel",
+      "desc": "Meel met cranberrysap van Terschelling voor zuurdesembrood.",
+      "source": "https://www.eiwittrends.nl/royal-koopmans-uitblinken-in-innovatie/"
+    },
+    {
+      "name": "De Fryske Bôle",
+      "type": "historisch broodconcept",
+      "desc": "Echt Fries brood (2014) van tarwe uit Westhoek, met honing en roomboter, 2,50 euro bij ruim dertig Friese Echte Bakkers.",
+      "source": "https://www.bakkersinbedrijf.nl/nieuws/koopmans-introduceert-bole-echt-fries-brood"
+    },
+    {
+      "name": "Paneermeel (breadcrumbs)",
+      "type": "foodcoating",
+      "desc": "Ruim honderd varianten in wit, geel, bruin, oranje en bio; gemaakt door speciaal brood te bakken, te drogen en te vermalen.",
+      "source": "https://www.royalkoopmans.com/en/koopmans-foodcoatings/about-koopmans-food-ingredients/breadcrumbs"
+    },
+    {
+      "name": "Koopmans AirCrumbs",
+      "type": "foodcoating",
+      "desc": "Extra luchtig, 100% clean label paneermeel.",
+      "source": "https://www.royalkoopmans.com/en/koopmans-foodcoatings/innovative-foodsolutions"
+    },
+    {
+      "name": "Koopmans Bind-it",
+      "type": "bindoplossing",
+      "desc": "Clean label bindsysteem op tarwebasis; finalist Innovation Award 2019; ook voor vis en vegan.",
+      "source": "https://www.royalkoopmans.com/en/koopmans-foodcoatings/innovative-foodsolutions/koopmans-bind-it"
+    },
+    {
+      "name": "Koopmans Senses",
+      "type": "foodcoating",
+      "desc": "Drielaags multisensorisch coatingsysteem (beeldmerk 2021) met varianten Exciting, Crunchy Wild Style en Specials.",
+      "source": "https://www.royalkoopmans.com/en/koopmans-foodcoatings/innovative-foodsolutions/koopmans-senses-a-revolution-in-taste-2"
+    },
+    {
+      "name": "Koopmans FryLess Oven System",
+      "type": "foodcoating",
+      "desc": "Coating voor krokante, vetarme oven- en airfryerproducten.",
+      "source": "https://www.royalkoopmans.com/en/koopmans-foodcoatings/innovative-foodsolutions"
+    },
+    {
+      "name": "Veagan",
+      "type": "totaalconcept",
+      "desc": "Binding en coating voor vegetarische en vegan producten.",
+      "source": "https://www.royalkoopmans.com/food-ingredients"
+    },
+    {
+      "name": "Cheese Solutions",
+      "type": "foodcoating",
+      "desc": "Coatingoplossingen voor kaasproducten, getoond op Fi Europe 2026.",
+      "source": "https://www.ingredientsnetwork.com/47/company/26/79/68/exhibitor267968-629.html"
+    },
+    {
+      "name": "Coated Crumb Particle (octrooi 2019)",
+      "type": "octrooi",
+      "desc": "Gepatenteerd gecoat paneermeeldeeltje voor het coaten van voedingsmiddelen.",
+      "source": "https://www.northdata.com/Koopmans%20Koninklijke%20Meelfabrieken%20B%C2%B7V%C2%B7,%20Leeuwarden,%20NL/_c6329689618"
+    }
+  ],
+  "process_steps": [
+    {
+      "step": 1,
+      "name": "Aanvoer per schip",
+      "desc": "Gemiddeld vier grote schepen per week meren aan de loskade; een schip vervoert circa 1.000 ton graan en wordt in één werkdag gelost.",
+      "numbers": {
+        "schepen_per_week": 4,
+        "ton_per_schip": 1000
+      },
+      "source": "https://friesland.headliner.nl/item/iedereen-kent-de-meelfabriek-van-royal-koopmans-in-leeuwarden-maar-wat-gebeurt-daar-nou-eigenlijk-lc-113115",
+      "confidence": "medium"
+    },
+    {
+      "step": 2,
+      "name": "Lossen met zuiginstallatie",
+      "desc": "Een pneumatische zuiginstallatie zuigt het graan uit het schip met 120 ton per uur de silo's in.",
+      "numbers": {
+        "ton_per_uur": 120
+      },
+      "source": "https://friesland.headliner.nl/item/iedereen-kent-de-meelfabriek-van-royal-koopmans-in-leeuwarden-maar-wat-gebeurt-daar-nou-eigenlijk-lc-113115",
+      "confidence": "medium"
+    },
+    {
+      "step": 3,
+      "name": "Opslag in silo's",
+      "desc": "Graan wordt per partij opgeslagen; sommige silo's en kades zijn meer dan honderd jaar oud, de hoogste silo dateert van 1981. Vocht boven 14% geeft schimmelrisico.",
+      "numbers": {
+        "max_vocht_pct": 14
+      },
+      "source": "https://www.cimbria.com/en/about/news/safe-grain-storage/",
+      "confidence": "medium"
+    },
+    {
+      "step": 4,
+      "name": "Reinigen (schonen)",
+      "desc": "Aspirateurs, schijvenseparatoren, schuurmachines en magneten halen onkruidzaden, gerst, haver, kaf, stof, stenen en metaal eruit; stenen en metaal mogen nooit op de walsen komen.",
+      "numbers": {
+        "voorbeeld_afval_pct": 5
+      },
+      "source": "https://www.kpmanalytics.com/blog/preparing-wheat-for-milling",
+      "confidence": "high"
+    },
+    {
+      "step": 5,
+      "name": "Conditioneren (bevochtigen)",
+      "desc": "Water (ca. 2-2,5%) wordt toegevoegd en trekt 12 tot 48 uur in, zodat de zemel taai wordt en schoon van het endosperm loslaat; harde tarwe heeft langer nodig.",
+      "numbers": {
+        "uren_min": 12,
+        "uren_max": 48,
+        "water_pct": "2-2,5"
+      },
+      "source": "https://www.kpmanalytics.com/blog/preparing-wheat-for-milling",
+      "confidence": "high"
+    },
+    {
+      "step": 6,
+      "name": "Breken op walsenstoelen",
+      "desc": "Koppels tegengesteld draaiende stalen walsen; de eerste zijn grof geribbeld en breken de zemel los, elke volgende staat fijner en dichter (spleet enkele millimeters), de laatste zijn bijna glad. Een korrel passeert soms twintig walsenstoelen. De nieuwe walsenstoelen voor Molen B wegen 3.500-6.000 kg.",
+      "numbers": {
+        "max_passages": 20,
+        "walsenstoel_kg": "3500-6000"
+      },
+      "source": "https://broodsmakelijk.nl/hoogmaalderij",
+      "confidence": "high"
+    },
+    {
+      "step": 7,
+      "name": "Zeven in plansichters",
+      "desc": "Grote, hevig schuddende zeefkasten met gestapelde zeven (grofste bovenin) splitsen het maalsel in maalstromen; omdat alles via buizen naar beneden valt, is een meelfabriek altijd een hoog gebouw met veel verdiepingen.",
+      "numbers": {},
+      "source": "https://broodsmakelijk.nl/hoogmaalderij",
+      "confidence": "high"
+    },
+    {
+      "step": 8,
+      "name": "Griesputs en uitmalen",
+      "desc": "Griesputsen zuiveren de griezen; gladde walsen malen het endosperm uit tot bloem. De tarwekiem wordt apart afgescheiden omdat de olie het meel ranzig maakt.",
+      "numbers": {},
+      "source": "https://broodsmakelijk.nl/hoogmaalderij",
+      "confidence": "high"
+    },
+    {
+      "step": 9,
+      "name": "Uitmalingsgraad",
+      "desc": "Efficiënte molens halen 72-76% witte bloem uit schone tarwe (720-760 kg per ton); volkorenmeel is 100%. De korrel bestaat uit 83% endosperm, 14,5% zemel en 2,5% kiem.",
+      "numbers": {
+        "uitmaling_pct_min": 72,
+        "uitmaling_pct_max": 76,
+        "volkoren_pct": 100
+      },
+      "source": "https://asbe.org/article/extraction-rate/",
+      "confidence": "high"
+    },
+    {
+      "step": 10,
+      "name": "Mengen (melangeren)",
+      "desc": "Maalstromen worden samengesteld tot een bloemsoort (bijv. Orion of Zuiderkroon); ascorbinezuur en/of moutmeel houden de bakaard constant ondanks wisselende graanpartijen. In 2026 komt er een nieuwe menghal.",
+      "numbers": {},
+      "source": "https://broodsmakelijk.nl/hoogmaalderij",
+      "confidence": "high"
+    },
+    {
+      "step": 11,
+      "name": "Kwaliteitscontrole",
+      "desc": "Eiwitgehalte, Zeleny-sedimentatiewaarde, valgetal (Hagberg), glutenindex en W-waarde (alveograaf) bepalen de bakwaarde; voor Nederland telt het broodvolume het zwaarst.",
+      "numbers": {
+        "eiwit_pct_nl_norm": "11,5"
+      },
+      "source": "https://edepot.wur.nl/653903",
+      "confidence": "high"
+    },
+    {
+      "step": 12,
+      "name": "Bijproducten",
+      "desc": "Zemelen, gries en kortmeel gaan naar de veevoederindustrie; met de Rijksuniversiteit Groningen wordt onderzocht of uit tarwegries plantaardig eiwit te winnen is.",
+      "numbers": {},
+      "source": "https://www.acm.nl/sites/default/files/documents/2018-02/goedkeuring-dossche-meneba.pdf",
+      "confidence": "high"
+    },
+    {
+      "step": 13,
+      "name": "Expeditie: bulk",
+      "desc": "Bulkwagens met cellen van minimaal 2 ton per cel brengen in één rit verschillende bloemsoorten naar meerdere bakkerijen; 65-70% van de kleinere bakkerijen kiest bulk. Laden 500 kg/min, lossen met 1,3 bar door slangen tot 80 meter.",
+      "numbers": {
+        "cel_ton_min": 2,
+        "laden_kg_per_min": 500,
+        "los_druk_bar": "1,3"
+      },
+      "source": "https://www.acm.nl/sites/default/files/documents/2018-02/goedkeuring-dossche-meneba.pdf",
+      "confidence": "high"
+    },
+    {
+      "step": 14,
+      "name": "Expeditie: zakgoed",
+      "desc": "Zakken van 25 kg, vooral via de groothandel naar kleinere afnemers en voor niche-meelsoorten; voorraad ligt bij Kooiker Logistiek, uitgaand transport door AB Texel.",
+      "numbers": {
+        "zak_kg": 25
+      },
+      "source": "https://www.acm.nl/sites/default/files/documents/2018-02/goedkeuring-dossche-meneba.pdf",
+      "confidence": "high"
+    },
+    {
+      "step": 15,
+      "name": "Paneermeellijn (Food Ingredients)",
+      "desc": "Op hetzelfde terrein wordt speciaal brood gebakken, gedroogd en vermalen tot paneermeel; technieken: malen, mengen, agglomereren, verhitten en bakken.",
+      "numbers": {
+        "paneermeel_varianten": 100
+      },
+      "source": "https://www.royalkoopmans.com/en/koopmans-foodcoatings/about-koopmans-food-ingredients",
+      "confidence": "high"
+    }
+  ],
+  "numbers": [
+    {
+      "label": "Oprichtingsjaar",
+      "value": "1846",
+      "source": "https://www.royalkoopmans.com/nl/over-royal-koopmans/de-geschiedenis-van-koopmans",
+      "confidence": "high"
+    },
+    {
+      "label": "Startkapitaal",
+      "value": "1.550 gulden",
+      "source": "https://www.royalkoopmans.com/nl/over-royal-koopmans/de-geschiedenis-van-koopmans",
+      "confidence": "high"
+    },
+    {
+      "label": "Vermogen eerste stoommachine (1867)",
+      "value": "2 pk (1,5 kW)",
+      "source": "https://nl.wikipedia.org/wiki/Koopmans_Koninklijke_Meelfabrieken",
+      "confidence": "high"
+    },
+    {
+      "label": "Predicaat Koninklijk",
+      "value": "1976",
+      "source": "https://www.leeuwarden.nl/wp-content/uploads/import/bijlage_gem.onderscheidingen_predicatenlijst.pdf",
+      "confidence": "high"
+    },
+    {
+      "label": "Naam Royal Koopmans sinds",
+      "value": "10 oktober 2019",
+      "source": "https://www.royalkoopmans.com/actueel/nieuwe-naam-nieuwe-website-royal-koopmans",
+      "confidence": "high"
+    },
+    {
+      "label": "Jubileum 2026",
+      "value": "180 jaar",
+      "source": "https://www.royalkoopmans.com/",
+      "confidence": "high"
+    },
+    {
+      "label": "Graan per jaar",
+      "value": "ca. 212.000 ton (eigen site: ruim 200.000 ton)",
+      "source": "https://friesland.headliner.nl/item/elke-graankorrel-telt-voor-meelfabriek-royal-koopmans-uit-leeuwarden-dat-is-toch-een-gaaf-verhaal-lc-113111",
+      "confidence": "medium"
+    },
+    {
+      "label": "Meel en bloem per jaar",
+      "value": "ruim 165.000 ton, goed voor bijna 300 miljoen broden",
+      "source": "https://friesland.headliner.nl/item/elke-graankorrel-telt-voor-meelfabriek-royal-koopmans-uit-leeuwarden-dat-is-toch-een-gaaf-verhaal-lc-113111",
+      "confidence": "medium"
+    },
+    {
+      "label": "Nederlandse tarwe",
+      "value": "meer dan 100.000 ton per jaar; 65-70% van het graan (2025-2026)",
+      "source": "https://akkerwijzer.nl/artikel/1215642-na-veertig-jaar-eerste-lading-groninger-baktarwe-per-schip-naar-maalbedrijf-koopmans",
+      "confidence": "medium"
+    },
+    {
+      "label": "Nedertarwe-volume",
+      "value": "25.000 ton (2026), 35.000 ton verwacht",
+      "source": "https://www.bakkersinbedrijf.nl/nieuws/pop-up-graandiners-tussen-de-tarwe",
+      "confidence": "high"
+    },
+    {
+      "label": "Nedertarwe-telers",
+      "value": "12 (2021) -> 41 (2022) -> >100 (2025) -> >150 (2026)",
+      "source": "https://www.bakkersinbedrijf.nl/nieuws/pop-up-graandiners-tussen-de-tarwe",
+      "confidence": "high"
+    },
+    {
+      "label": "Nedertarwe-winkels",
+      "value": "ruim 60 bakkerijen (okt 2024); 100ste winkel (feb 2026)",
+      "source": "https://www.rodi.nl/rozenburg/partnerbijdrage/110043/van-akker-tot-bakker-voskamp-winkel-heenvliet-is-100ste-nedertarwe-winkel-van-nederland",
+      "confidence": "high"
+    },
+    {
+      "label": "Meerprijs teler",
+      "value": "20 euro per ton",
+      "source": "https://www.bakkersinbedrijf.nl/nieuws/pop-up-graandiners-tussen-de-tarwe",
+      "confidence": "high"
+    },
+    {
+      "label": "Bloemenranden",
+      "value": "minimaal 3% van het areaal",
+      "source": "https://akkerwijzer.nl/artikel/461578-graansector-maakt-werk-van-nederlandse-baktarwe",
+      "confidence": "high"
+    },
+    {
+      "label": "CO2-besparing Nedertarwe-keten",
+      "value": "7%",
+      "source": "https://www.bakkersinbedrijf.nl/nieuws/pop-up-graandiners-tussen-de-tarwe",
+      "confidence": "high"
+    },
+    {
+      "label": "Meerprijs consument",
+      "value": "21 cent per brood",
+      "source": "https://www.royalkoopmans.com/meel/over-koopmans-meel/actueel-bij-meel/duurzaam-succes-hoge-kwaliteit-nederlandse-baktarwe-ondanks-extreem-weer",
+      "confidence": "high"
+    },
+    {
+      "label": "Nederlands brood van Nederlandse tarwe (2024)",
+      "value": "slechts 5%",
+      "source": "https://www.royalkoopmans.com/meel/over-koopmans-meel/actueel-bij-meel/ceo-dirk-lodewijk-en-directeur-natuurbeheer-van-natuurmonumenten-teo-wams-tekenen-samenwerkings-voor-nog-gezondere-boterham",
+      "confidence": "high"
+    },
+    {
+      "label": "Omzet 2021",
+      "value": "ca. 85 miljoen euro",
+      "source": "https://www.eiwittrends.nl/royal-koopmans-uitblinken-in-innovatie/",
+      "confidence": "high"
+    },
+    {
+      "label": "Omzet 2024",
+      "value": "125.099.000 euro",
+      "source": "https://www.liza.nl/nl/01006828/koopmans-koninklijke-meelfabrieken-b-v-",
+      "confidence": "high"
+    },
+    {
+      "label": "Nettowinst 2024",
+      "value": "10.757.000 euro (2014: 1,2 miljoen)",
+      "source": "https://www.liza.nl/nl/01006828/koopmans-koninklijke-meelfabrieken-b-v-",
+      "confidence": "high"
+    },
+    {
+      "label": "Medewerkers",
+      "value": "ca. 160-170 (2025-2026); bronnen variëren 125-170",
+      "source": "https://www.royalkoopmans.com/en/working-at-koopmans",
+      "confidence": "medium"
+    },
+    {
+      "label": "Aandeelhouders",
+      "value": "circa 180-200+ familieleden uit meerdere families",
+      "source": "https://www.royalkoopmans.com/en/about-royal-koopmans/family-business",
+      "confidence": "high"
+    },
+    {
+      "label": "Producten",
+      "value": "ruim 500 (Meel); ruim 100 paneermeelvarianten (KFI)",
+      "source": "https://friesland.headliner.nl/item/elke-graankorrel-telt-voor-meelfabriek-royal-koopmans-uit-leeuwarden-dat-is-toch-een-gaaf-verhaal-lc-113111",
+      "confidence": "medium"
+    },
+    {
+      "label": "Afnemers",
+      "value": "meer dan 600 (2021)",
+      "source": "https://www.eiwittrends.nl/royal-koopmans-uitblinken-in-innovatie/",
+      "confidence": "high"
+    },
+    {
+      "label": "Landen (Food Ingredients)",
+      "value": "meer dan 30",
+      "source": "https://www.omropfryslan.nl/nl/nieuws/16443936/dansen-in-de-meelfabriek-koopmans-is-finalist-voor-koning-willem-i-prijs",
+      "confidence": "medium"
+    },
+    {
+      "label": "Export ingrediëntenvolume buiten Benelux",
+      "value": "ca. 35% (2021)",
+      "source": "https://www.eiwittrends.nl/royal-koopmans-uitblinken-in-innovatie/",
+      "confidence": "high"
+    },
+    {
+      "label": "Marktaandeel Nederlandse meelmarkt",
+      "value": "ca. 5-10% (ACM 2018)",
+      "source": "https://www.acm.nl/sites/default/files/documents/2018-02/goedkeuring-dossche-meneba.pdf",
+      "confidence": "high"
+    },
+    {
+      "label": "Masterplan investering",
+      "value": "ruim 20 miljoen euro",
+      "source": "https://friesland.headliner.nl/item/iedereen-kent-de-meelfabriek-van-royal-koopmans-in-leeuwarden-maar-wat-gebeurt-daar-nou-eigenlijk-lc-113115",
+      "confidence": "medium"
+    },
+    {
+      "label": "Loskade vervangen",
+      "value": "100 meter, 14 buispalen, oudste deel 1927",
+      "source": "https://www.deboerendegroot.nl/wat-hebben-wij-gedaan/vervangen-loskade-royal-koopmans-meelfabriek/",
+      "confidence": "high"
+    },
+    {
+      "label": "Schepen per week",
+      "value": "ca. 4, elk ca. 1.000 ton",
+      "source": "https://friesland.headliner.nl/item/iedereen-kent-de-meelfabriek-van-royal-koopmans-in-leeuwarden-maar-wat-gebeurt-daar-nou-eigenlijk-lc-113115",
+      "confidence": "medium"
+    },
+    {
+      "label": "Zuiginstallatie",
+      "value": "120 ton per uur",
+      "source": "https://friesland.headliner.nl/item/iedereen-kent-de-meelfabriek-van-royal-koopmans-in-leeuwarden-maar-wat-gebeurt-daar-nou-eigenlijk-lc-113115",
+      "confidence": "medium"
+    },
+    {
+      "label": "Eerste Dollard-schip",
+      "value": "500 ton Groninger baktarwe (19 feb 2025); 12.000 ton gepland voor 2025",
+      "source": "https://akkerwijzer.nl/artikel/1215642-na-veertig-jaar-eerste-lading-groninger-baktarwe-per-schip-naar-maalbedrijf-koopmans",
+      "confidence": "high"
+    },
+    {
+      "label": "HVO100-schip",
+      "value": "meer dan 85% minder CO2 dan diesel (22 feb 2024)",
+      "source": "https://www.royalkoopmans.com/meel/over-koopmans-meel/actueel-bij-meel/royal-koopmans-leidt-de-weg-naar-duurzaamheid-met-het-eerste-nedertarwe-schip-op-hvo100-biobrandstof",
+      "confidence": "high"
+    },
+    {
+      "label": "Elektrische pendel",
+      "value": "30.000 kg CO2 besparing per jaar",
+      "source": "https://ondernemendleeuwarden.nl/elektrische-pendel-voor-royal-koopmans/",
+      "confidence": "high"
+    },
+    {
+      "label": "Kooiker-warehouse",
+      "value": "ca. 1.000 m2 extra, 7 docks",
+      "source": "https://logimerce.nl/news/2718/kooiker-logistiek-breidt-uit-voor-nieuwe-klant-royal-koopmans",
+      "confidence": "high"
+    },
+    {
+      "label": "LED-verlichting Foodcoatings",
+      "value": "17.000 kWh besparing per jaar",
+      "source": "https://www.uniquelights.nl/projecten/royal-koopmans/",
+      "confidence": "medium"
+    },
+    {
+      "label": "Klimaatdoelen",
+      "value": "55% minder CO2 in 2030 (t.o.v. 2023), Net-0 in 2040",
+      "source": "https://www.royalkoopmans.com/duurzaamheid/schone-energie-koopmans-op-weg-naar-net-0",
+      "confidence": "high"
+    },
+    {
+      "label": "Groene stroom",
+      "value": "100% Nederlandse groene stroom (zonneparken Groningen en Zeeland)",
+      "source": "https://www.royalkoopmans.com/duurzaamheid/schone-energie-koopmans-op-weg-naar-net-0",
+      "confidence": "high"
+    },
+    {
+      "label": "Innovatieprijs 2023 stemmen",
+      "value": "836 van ruim 2.500 publieksstemmen",
+      "source": "https://www.royalkoopmans.com/meel/over-koopmans-meel/actueel-bij-meel/royal-koopmans-wint-met-nedertarwe-de-innovatieprijs-2023",
+      "confidence": "high"
+    },
+    {
+      "label": "Graandiners 2026",
+      "value": "ruim 320 bezoekers, elke avond uitverkocht",
+      "source": "https://www.bakkerswereld.nl/onderwerp/royal-koopmans",
+      "confidence": "high"
+    },
+    {
+      "label": "Cao 2026-2027",
+      "value": "+4,5% (2026), +3,5% (2027), minimumuurloon 16,74 euro",
+      "source": "https://www.fnv.nl/getmedia/7946ec04-7fef-4de2-95e4-5d627d5dd8e8/4-koopmans-koninklijke-meelfabrieken-cao-01-01-2026-tm-31-12-2027-v08012026.pdf?ext=.pdf",
+      "confidence": "high"
+    },
+    {
+      "label": "Haven Leeuwarden",
+      "value": "1,5 miljoen ton per jaar; havengeld 13,11 euro per 100 ton per 7 dagen",
+      "source": "https://www.leeuwarden.nl/en/water-sports/beroepsvaart/",
+      "confidence": "high"
+    },
+    {
+      "label": "LinkedIn-volgers Koopmans Meel",
+      "value": "ca. 5.037",
+      "source": "https://www.linkedin.com/company/koopmans-meel",
+      "confidence": "high"
+    }
+  ],
+  "baked_goods": [
+    {
+      "name": "Fries suikerbrood (Fryske sûkerbôle)",
+      "fact": "Wittebrood met tot 40% meegebakken parelsuiker en kaneel; vroeger cadeau voor een moeder die een meisje kreeg (bij een jongen: krentencake).",
+      "source": "https://nl.wikipedia.org/wiki/Fries_suikerbrood"
+    },
+    {
+      "name": "Oranjekoek",
+      "fact": "Friese plaatkoek met sinaasappelsnippers en roze glazuur; oudste recept uit 1753, de grootste ooit (117,5 m2) bakten de bakkers van Sneek in 2006.",
+      "source": "https://nl.wikipedia.org/wiki/Oranjekoek"
+    },
+    {
+      "name": "Fryske dúmkes",
+      "fact": "Duimgrote koekjes met anijs, gember en hazelnoot; de bakker drukt het deeg met zijn duim plat, vandaar de naam.",
+      "source": "https://nl.wikipedia.org/wiki/Fryske_d%C3%BAmkes"
+    },
+    {
+      "name": "Fries roggebrood",
+      "fact": "Gebroken rogge zonder gist of desem, 15 tot 24 uur 'gegaard' op lage temperatuur in plaats van gebakken; daardoor zoeter dan Brabants roggebrood.",
+      "source": "https://nl.wikipedia.org/wiki/Roggebrood"
+    },
+    {
+      "name": "Poffertjes",
+      "fact": "Traditioneel half tarwebloem, half boekweitmeel met gist; eerste vermelding op een Amsterdamse kermis in 1734.",
+      "source": "https://nl.wikipedia.org/wiki/Poffertjes"
+    },
+    {
+      "name": "Boekweitpannenkoek",
+      "fact": "Boekweit is geen graan maar familie van de duizendknoop en glutenvrij; Koopmans begon er in 1846 mee, omdat Friezen het gebruikten voor pannenkoeken en pap.",
+      "source": "https://www.maxvandaag.nl/sessies/themas/eten-drinken/terug-van-weggeweest-boekweit-is-glutenvrij-voedzaam-en-veelzijdig/"
+    },
+    {
+      "name": "Potstro (boekweitpap)",
+      "fact": "Friese pap van karnemelk en boekweitmeel met stroop en spek, ook 'luienwijvenkost' genoemd.",
+      "source": "https://www.maxvandaag.nl/sessies/themas/eten-drinken/friese-specialiteiten-van-janny-van-der-heijden/"
+    },
+    {
+      "name": "Tijgerbrood",
+      "fact": "De korst is een papje van rijstebloem dat niet meerekt en scheurt tijdens het rijzen; in de VS heet het 'Dutch crunch'. Oudste advertentie uit 1901.",
+      "source": "https://nl.wikipedia.org/wiki/Tijgerbrood"
+    },
+    {
+      "name": "Oliebollen",
+      "fact": "Koopmans Meel levert bakkers de Oliebollenmix Patent Premium (2023) en geeft KIEM-masterclasses oliebollen; de supermarkt-oliebollenmix is van Dr. Oetker.",
+      "source": "https://www.royalkoopmans.com/meel/over-koopmans-meel/actueel-bij-meel/nieuw-vergheten-granen-de-nieuwe-generatie-brood-voor-een-onderscheidend-assortiment"
+    },
+    {
+      "name": "Nedertarwe-brood",
+      "fact": "Gebakken van puur meel met alleen water, gist en zout, zonder broodverbetermiddel; consumenten betalen er 21 cent extra voor.",
+      "source": "https://www.eiwittrends.nl/royal-koopmans-uitblinken-in-innovatie/"
+    },
+    {
+      "name": "De Fryske Bôle",
+      "fact": "Fries brood uit 2014 van tarwe uit Westhoek met honing en roomboter, 2,50 euro bij Echte Bakkers in Friesland.",
+      "source": "https://www.bakkersinbedrijf.nl/nieuws/koopmans-introduceert-bole-echt-fries-brood"
+    },
+    {
+      "name": "Zuurdesembrood met cranberry",
+      "fact": "Koopmans maakt meel met cranberrysap van Terschelling speciaal voor zuurdesembrood.",
+      "source": "https://www.eiwittrends.nl/royal-koopmans-uitblinken-in-innovatie/"
+    },
+    {
+      "name": "Keallepoat, sûkerlatte, spekkoek, drabbelkoeken",
+      "fact": "Typisch Friese bakkerswaren: kalfspoot-koek, suikerlat, koek met sukade en gefrituurde drabbelkoeken.",
+      "source": "https://www.maxvandaag.nl/sessies/themas/eten-drinken/friese-specialiteiten-van-janny-van-der-heijden/"
+    },
+    {
+      "name": "Kypmantsje",
+      "fact": "In IJlst heruitgevonden Fries koekje.",
+      "source": "https://www.maxvandaag.nl/sessies/themas/eten-drinken/friese-specialiteiten-van-janny-van-der-heijden/"
+    },
+    {
+      "name": "Brood met Vergheten Graenen",
+      "fact": "Brood van emmer, khorasan, rotkorn en rogge, door Koopmans in 2022 gelanceerd als 'nieuwe generatie brood'.",
+      "source": "https://www.royalkoopmans.com/meel/over-koopmans-meel/actueel-bij-meel/nieuw-vergheten-granen-de-nieuwe-generatie-brood-voor-een-onderscheidend-assortiment"
+    },
+    {
+      "name": "Pizza",
+      "fact": "Voor pizzabodems levert Koopmans Meel de bloem Farina L'Oro Bianco.",
+      "source": "https://www.royalkoopmans.com/meel/assortiment"
+    }
+  ],
+  "hazards": [
+    {
+      "name": "Meelstofexplosie",
+      "desc": "Drie voorwaarden: brandbaar stof, zuurstof en een ontstekingsbron. Onderste explosiegrens voor meel en bloem is ca. 60 g/m3 (je ziet elkaar op een meter niet meer). Druk bij explosie 7-9 bar; 0,14 bar verwoest al huizen, 3-4 bar is dodelijk.",
+      "thresholds": {
+        "explosiegrens_g_m3": 60,
+        "druk_bar": "7-9",
+        "dodelijk_bar": "3-4"
+      },
+      "source": "https://www.nbc.nl/media/1bqan4pm/atex-handleiding-ambachtelijke-bakkerij_new.pdf",
+      "confidence": "high"
+    },
+    {
+      "name": "Stoflaag",
+      "desc": "Een laag van minder dan 1 mm is bij opwervelen al explosief; stof op meer dan 5% van de oppervlakken is gevaarlijk. Een stoflaag tot 5 mm op een motor kan gaan branden. Max. oppervlaktetemperatuur apparatuur: 200 graden C.",
+      "thresholds": {
+        "stoflaag_mm": 1,
+        "oppervlak_pct": 5,
+        "max_temp_c": 200
+      },
+      "source": "https://nl.wikipedia.org/wiki/Stofexplosie",
+      "confidence": "high"
+    },
+    {
+      "name": "ATEX-zonering",
+      "desc": "Binnenkant van silo en vulleiding is zone 21; zoneren buiten de installatie is verplicht bij meer dan 50 kg stof. Silo's moeten geaard zijn tegen stortkegelontladingen.",
+      "thresholds": {
+        "stof_buiten_kg": 50,
+        "zones": "20/21/22"
+      },
+      "source": "https://www.nbc.nl/media/1bqan4pm/atex-handleiding-ambachtelijke-bakkerij_new.pdf",
+      "confidence": "high"
+    },
+    {
+      "name": "Graanklander (korenworm)",
+      "desc": "Kever van 3-5 mm; wijfje legt één ei per korrel, larve komt na ca. 30 dagen bij 25-27 graden C uit; één wijfje kan in drie generaties 250.000 nakomelingen geven. Sterft onder -10 en boven 40 graden C; opsporen door zeven of met microfoons op monsters tot 10 kg. Remedie: 'Geen korrel!' achterlaten.",
+      "thresholds": {
+        "grootte_mm": "3-5",
+        "cyclus_dagen": 30,
+        "temp_optimum_c": "25-27",
+        "dood_onder_c": -10,
+        "dood_boven_c": 40
+      },
+      "source": "https://www.akkerwijzer.nl/artikel/85798-graanklander-bestrijden-vraagt-goede-hygiene",
+      "confidence": "high"
+    },
+    {
+      "name": "Schimmel en broei",
+      "desc": "Schimmel ontwikkelt zich in opgeslagen graan vanaf 14% vocht; insecten, mijten en broei zijn de grootste opslagrisico's; volgens de FAO komt meer dan 80% van de naoogstverliezen door kevers.",
+      "thresholds": {
+        "vocht_pct": 14
+      },
+      "source": "https://www.cimbria.com/en/about/news/safe-grain-storage/",
+      "confidence": "medium"
+    },
+    {
+      "name": "Laag valgetal (gekiemde tarwe)",
+      "desc": "Het Hagberg-valgetal meet op 7 gram meel de alfa-amylase; bij kieming kan die duizendvoudig toenemen. Te veel amylase geeft kleverige kruim die de snijmachines van bakkers verstoort. In het natte jaar 2012 haalden 8 van 19 rassen geen valgetal van 200.",
+      "thresholds": {
+        "monster_g": 7,
+        "grens_valgetal": 200
+      },
+      "source": "https://ahdb.org.uk/hagberg-falling-number-and-breadmaking-quality",
+      "confidence": "high"
+    },
+    {
+      "name": "Stenen en metaal",
+      "desc": "Mogen nooit op de walsen komen; magneten, schijvenseparatoren en schuurmachines halen ze eruit. 1 ton tarwe met 5% onzuiverheden is 5% afval betaald tegen tarweprijs.",
+      "thresholds": {
+        "onzuiverheden_voorbeeld_pct": 5
+      },
+      "source": "https://www.kpmanalytics.com/blog/preparing-wheat-for-milling",
+      "confidence": "high"
+    },
+    {
+      "name": "Moederkoren (ergot)",
+      "desc": "Giftig onkruidzaad dat bij onvoldoende reiniging in het meel komt; in Europa gereguleerd.",
+      "thresholds": {},
+      "source": "https://www.kpmanalytics.com/blog/preparing-wheat-for-milling",
+      "confidence": "high"
+    },
+    {
+      "name": "Te laag eiwit",
+      "desc": "Nederlands brood vraagt tarwe met minstens 11,5% eiwit; in het Nederlandse zeeklimaat is 10-12% normaal, 14% onhaalbaar. Gespreide stikstofgift verhoogt het eiwit.",
+      "thresholds": {
+        "eiwit_min_pct": "11,5"
+      },
+      "source": "https://www.akkerwijzer.nl/artikel/1191713-kansen-voor-nederlandse-baktarwe-bemestingsproeven-bieden-perspectief",
+      "confidence": "high"
+    },
+    {
+      "name": "Beschadigd zetmeel",
+      "desc": "Ontstaat als de korrel te hard tussen de walsen wordt verkleind; neemt veel water op en geeft plakkerig deeg.",
+      "thresholds": {},
+      "source": "https://www.kpmanalytics.com/blog/the-flour-balance-behind-stickiness-in-baked-products",
+      "confidence": "high"
+    },
+    {
+      "name": "Ranzige kiem",
+      "desc": "De olie in de tarwekiem maakt meel bij lang bewaren ranzig; daarom wordt de kiem apart afgescheiden.",
+      "thresholds": {},
+      "source": "https://broodsmakelijk.nl/hoogmaalderij",
+      "confidence": "high"
+    },
+    {
+      "name": "Te hoge uitmaling",
+      "desc": "Meer zemeldeeltjes in de bloem verstoren het glutennetwerk, verlagen het broodvolume, verhogen asgehalte en microbiële belasting en verkorten de houdbaarheid.",
+      "thresholds": {
+        "witte_bloem_pct": "72-76"
+      },
+      "source": "https://asbe.org/article/extraction-rate/",
+      "confidence": "high"
+    },
+    {
+      "name": "Nat oogstjaar",
+      "desc": "Natte zomers (2012, 2024) geven laag hectolitergewicht, laag eiwit en hoge amylase-activiteit; in 2024 kwam Nedertarwe toch van hoge kwaliteit binnen.",
+      "thresholds": {
+        "hectoliter_voorbeeld_kg": "74,4"
+      },
+      "source": "https://www.royalkoopmans.com/meel/over-koopmans-meel/actueel-bij-meel/duurzaam-succes-hoge-kwaliteit-nederlandse-baktarwe-ondanks-extreem-weer",
+      "confidence": "high"
+    },
+    {
+      "name": "Naamsverwarring in de media",
+      "desc": "In december 2021 werd een Dr. Oetker-oliebollenmix zonder gist aan Royal Koopmans toegeschreven; de Leeuwarder Courant moest rectificeren.",
+      "thresholds": {},
+      "source": "https://www.royalkoopmans.com/meel/over-koopmans-meel/actueel-bij-meel/geen-problemen-met-de-oliebollenmix",
+      "confidence": "high"
+    },
+    {
+      "name": "Prijsexplosie graanmarkt",
+      "desc": "Oorlog in Oekraïne (2022) en het Midden-Oosten (2026) joegen de tarweprijs op; Koopmans koopt geen tarwe uit Rusland/Oekraïne en heeft via CZAV aanvoerzekerheid.",
+      "thresholds": {},
+      "source": "https://www.royalkoopmans.com/meel/over-koopmans-meel/actueel-bij-meel/situatie-in-oekraine-zet-tarwemarkt-onder-druk---voldoende-voorraad-maar-sterke-prijsstijgingen",
+      "confidence": "high"
+    },
+    {
+      "name": "Netcongestie",
+      "desc": "Volledige elektrificatie van de fabriek kan door netcongestie pas vanaf 2032.",
+      "thresholds": {
+        "jaar": 2032
+      },
+      "source": "https://www.royalkoopmans.com/duurzaamheid/schone-energie-koopmans-op-weg-naar-net-0",
+      "confidence": "high"
+    }
+  ],
+  "quiz_questions": [
+    {
+      "q": "In welk jaar werd Koopmans opgericht?",
+      "a": "1846",
+      "wrong": [
+        "1856",
+        "1876",
+        "1901"
+      ],
+      "source": "https://www.royalkoopmans.com/nl/over-royal-koopmans/de-geschiedenis-van-koopmans",
+      "confidence": "high"
+    },
+    {
+      "q": "In welk Fries dorp begon Uilke Klazes Koopmans zijn molen?",
+      "a": "Holwerd",
+      "wrong": [
+        "Dokkum",
+        "Franeker",
+        "Harlingen"
+      ],
+      "source": "https://www.royalkoopmans.com/nl/over-royal-koopmans/de-geschiedenis-van-koopmans",
+      "confidence": "high"
+    },
+    {
+      "q": "Welk gewas maalde de allereerste Koopmans-molen?",
+      "a": "Boekweit",
+      "wrong": [
+        "Tarwe",
+        "Rogge",
+        "Gerst"
+      ],
+      "source": "https://www.royalkoopmans.com/nl/over-royal-koopmans/de-geschiedenis-van-koopmans",
+      "confidence": "high"
+    },
+    {
+      "q": "Waardoor werd de eerste molen van Koopmans aangedreven?",
+      "a": "Door paarden (een rosmolen)",
+      "wrong": [
+        "Door wind",
+        "Door stoom",
+        "Door waterkracht"
+      ],
+      "source": "https://www.royalkoopmans.com/nl/over-royal-koopmans/de-geschiedenis-van-koopmans",
+      "confidence": "high"
+    },
+    {
+      "q": "Hoeveel gulden familiegeld gebruikte Uilke Klazes Koopmans om zijn eerste molen te kopen?",
+      "a": "1.550 gulden",
+      "wrong": [
+        "155 gulden",
+        "15.500 gulden",
+        "5.000 gulden"
+      ],
+      "source": "https://www.royalkoopmans.com/nl/over-royal-koopmans/de-geschiedenis-van-koopmans",
+      "confidence": "high"
+    },
+    {
+      "q": "Waarom verhuisde Koopmans van Holwerd naar Leeuwarden?",
+      "a": "Omdat grotere graanschepen daar konden aanleggen",
+      "wrong": [
+        "Omdat Holwerd overstroomde",
+        "Omdat de koning dat eiste",
+        "Omdat er in Leeuwarden meer boekweit groeide"
+      ],
+      "source": "https://nl.wikipedia.org/wiki/Koopmans_Koninklijke_Meelfabrieken",
+      "confidence": "high"
+    },
+    {
+      "q": "Hoeveel pk had de stoommachine van de in 1867 overgenomen Leeuwarder stoommeelfabriek?",
+      "a": "2 pk",
+      "wrong": [
+        "20 pk",
+        "200 pk",
+        "50 pk"
+      ],
+      "source": "https://nl.wikipedia.org/wiki/Koopmans_Koninklijke_Meelfabrieken",
+      "confidence": "high"
+    },
+    {
+      "q": "In welk jaar kreeg Koopmans het predicaat Koninklijk?",
+      "a": "1976",
+      "wrong": [
+        "1946",
+        "1996",
+        "2019"
+      ],
+      "source": "https://www.leeuwarden.nl/wp-content/uploads/import/bijlage_gem.onderscheidingen_predicatenlijst.pdf",
+      "confidence": "high"
+    },
+    {
+      "q": "Sinds wanneer treedt het bedrijf naar buiten onder de naam Royal Koopmans?",
+      "a": "Oktober 2019",
+      "wrong": [
+        "1976",
+        "2000",
+        "2011"
+      ],
+      "source": "https://www.bakkerswereld.nl/nieuws/nieuws/2019/10/royal-koopmans-alle-divisies-onder-een-naam-10154558",
+      "confidence": "high"
+    },
+    {
+      "q": "Aan welk bedrijf verkocht Koopmans in 2000 zijn consumentenbakmixen (het supermarktmerk Koopmans)?",
+      "a": "Dr. Oetker",
+      "wrong": [
+        "Unilever",
+        "Meneba",
+        "Van Diermen Masterbakers"
+      ],
+      "source": "https://www.eiwittrends.nl/royal-koopmans-uitblinken-in-innovatie/",
+      "confidence": "high"
+    },
+    {
+      "q": "Aan welke straat in Leeuwarden staat de fabriek van Royal Koopmans?",
+      "a": "De Merodestraat",
+      "wrong": [
+        "Woudmansstraat",
+        "Harlingertrekweg",
+        "Zwettestraat"
+      ],
+      "source": "https://www.royalkoopmans.com/en/koopmans-foodcoatings/about-koopmans-food-ingredients/meet-our-team",
+      "confidence": "high"
+    },
+    {
+      "q": "Hoe heten de twee huidige bedrijfsonderdelen van Royal Koopmans?",
+      "a": "Koopmans Meel en Koopmans Food Ingredients",
+      "wrong": [
+        "Koopmans Bakmix en Koopmans Retail",
+        "Koopmans Veevoer en Koopmans Brood",
+        "Koopmans Logistiek en Koopmans Energie"
+      ],
+      "source": "https://www.royalkoopmans.com/over-royal-koopmans",
+      "confidence": "high"
+    },
+    {
+      "q": "Welk paneermeelbedrijf nam Koopmans in 1993 over?",
+      "a": "LaCo Crumbs",
+      "wrong": [
+        "Meneba",
+        "Kruidvat Crumbs",
+        "Waddenmolen"
+      ],
+      "source": "https://www.royalkoopmans.com/en/about-royal-koopmans/the-history-of-koopmans",
+      "confidence": "high"
+    },
+    {
+      "q": "Waar staat de afkorting KIEM van het innovatiecentrum voor?",
+      "a": "Koopmans, Innovatie, Expertise en Molenaarschap",
+      "wrong": [
+        "Koopmans Internationaal Export Management",
+        "Kwaliteit, Innovatie, Energie en Meel",
+        "Koopmans Instituut voor Eiwit en Meel"
+      ],
+      "source": "https://www.bakkersinbedrijf.nl/nieuws/koopmans-kiem-broedplaats-duurzame-graanconcepten",
+      "confidence": "high"
+    },
+    {
+      "q": "In welk jaar werd het KIEM Innovatiecentrum geopend?",
+      "a": "2016",
+      "wrong": [
+        "2008",
+        "2019",
+        "2021"
+      ],
+      "source": "https://www.bakkersinbedrijf.nl/nieuws/koopmans-kiem-broedplaats-duurzame-graanconcepten",
+      "confidence": "high"
+    },
+    {
+      "q": "Wat is de payoff van Royal Koopmans?",
+      "a": "Wij halen alles uit graan",
+      "wrong": [
+        "Dan ben je thuis",
+        "Elke dag vers",
+        "Van boer tot bord"
+      ],
+      "source": "https://www.royalkoopmans.com/",
+      "confidence": "high"
+    },
+    {
+      "q": "Welke kleur heeft de kroon in het logo van Royal Koopmans?",
+      "a": "Goud",
+      "wrong": [
+        "Rood",
+        "Blauw",
+        "Groen"
+      ],
+      "source": "https://www.royalkoopmans.com/compiled/images/79b8a27-46e3e1e.svg",
+      "confidence": "high"
+    },
+    {
+      "q": "Wat is Nedertarwe?",
+      "a": "Het Koopmans-merk voor duurzaam geteelde Nederlandse baktarwe, exclusief voor ambachtelijke bakkers",
+      "wrong": [
+        "Een Duitse tarwesoort",
+        "Een pannenkoekmix uit de supermarkt",
+        "Een biologisch roggemeel"
+      ],
+      "source": "https://www.bakkersinbedrijf.nl/nieuws/royal-koopmans-presenteert-nedertarwe-graan-van-hollandse-bodem",
+      "confidence": "high"
+    },
+    {
+      "q": "Met welke Zeeuwse coöperatie ontwikkelde Royal Koopmans Nedertarwe?",
+      "a": "CZAV",
+      "wrong": [
+        "FrieslandCampina",
+        "Agrifirm",
+        "Royal Cosun"
+      ],
+      "source": "https://www.bakkersinbedrijf.nl/nieuws/royal-koopmans-presenteert-nedertarwe-graan-van-hollandse-bodem",
+      "confidence": "high"
+    },
+    {
+      "q": "Welk percentage van hun akkers moeten Nedertarwe-telers minimaal als bloemenrand inzaaien?",
+      "a": "Minimaal 3%",
+      "wrong": [
+        "Minimaal 1%",
+        "Minimaal 10%",
+        "Minimaal 25%"
+      ],
+      "source": "https://akkerwijzer.nl/artikel/461578-graansector-maakt-werk-van-nederlandse-baktarwe",
+      "confidence": "high"
+    },
+    {
+      "q": "Welke prijs won Royal Koopmans op 4 februari 2025 met Nedertarwe?",
+      "a": "De Agribusiness Award van ABN AMRO en Boerenbusiness",
+      "wrong": [
+        "De Koning Willem I Prijs",
+        "De Gouden Korenaar",
+        "De Friese Ondernemersprijs"
+      ],
+      "source": "https://en.boerenbusiness.nl/artikel/10911823/nedertarwe-winnaar-van-agribusiness-award",
+      "confidence": "high"
+    },
+    {
+      "q": "Wat legde Royal Koopmans in oktober 2025 aan in de Leeuwarder wijk Middelsee?",
+      "a": "Het eerste Urban Tarweveld van Nederland",
+      "wrong": [
+        "Een zonnepark",
+        "Een nieuwe meelsilo",
+        "Een aardappelveld"
+      ],
+      "source": "https://www.royalkoopmans.com/meel/over-koopmans-meel/actueel-bij-meel/eerste-urban-tarweveld-in-leeuwarden-nedertarwe-brengt-natuur-mens-en-stad-samen-in-wijk-middelsee",
+      "confidence": "high"
+    },
+    {
+      "q": "Op welke brandstof voer in februari 2024 het eerste Nedertarwe-schip naar Leeuwarden?",
+      "a": "HVO100 (biobrandstof)",
+      "wrong": [
+        "LNG",
+        "Waterstof",
+        "Steenkool"
+      ],
+      "source": "https://www.royalkoopmans.com/meel/over-koopmans-meel/actueel-bij-meel/royal-koopmans-leidt-de-weg-naar-duurzaamheid-met-het-eerste-nedertarwe-schip-op-hvo100-biobrandstof",
+      "confidence": "high"
+    },
+    {
+      "q": "Uit welke streek kwam in februari 2025 na veertig jaar weer een schip baktarwe naar Koopmans?",
+      "a": "Het Groningse Oldambt (vereniging Dollard Tarwe)",
+      "wrong": [
+        "Oekraïne",
+        "Flevoland",
+        "Normandië"
+      ],
+      "source": "https://akkerwijzer.nl/artikel/1215642-na-veertig-jaar-eerste-lading-groninger-baktarwe-per-schip-naar-maalbedrijf-koopmans",
+      "confidence": "high"
+    },
+    {
+      "q": "Hoeveel ton graan vervoert een gemiddeld graanschip dat bij Koopmans lost?",
+      "a": "Circa 1.000 ton",
+      "wrong": [
+        "Circa 100 ton",
+        "Circa 10.000 ton",
+        "Circa 50 ton"
+      ],
+      "source": "https://friesland.headliner.nl/item/iedereen-kent-de-meelfabriek-van-royal-koopmans-in-leeuwarden-maar-wat-gebeurt-daar-nou-eigenlijk-lc-113115",
+      "confidence": "medium"
+    },
+    {
+      "q": "Hoeveel ton per uur zuigt de losinstallatie van Koopmans uit een schip?",
+      "a": "120 ton per uur",
+      "wrong": [
+        "12 ton per uur",
+        "1.200 ton per uur",
+        "600 ton per uur"
+      ],
+      "source": "https://friesland.headliner.nl/item/iedereen-kent-de-meelfabriek-van-royal-koopmans-in-leeuwarden-maar-wat-gebeurt-daar-nou-eigenlijk-lc-113115",
+      "confidence": "medium"
+    },
+    {
+      "q": "Hoe lang moet het water bij het conditioneren van tarwe intrekken voordat er gemalen wordt?",
+      "a": "12 tot 48 uur",
+      "wrong": [
+        "5 minuten",
+        "1 tot 2 uur",
+        "Een week"
+      ],
+      "source": "https://www.kpmanalytics.com/blog/preparing-wheat-for-milling",
+      "confidence": "high"
+    },
+    {
+      "q": "Hoe heet de schuddende zeefkast die het maalsel in fracties verdeelt?",
+      "a": "Plansichter",
+      "wrong": [
+        "Walsenstoel",
+        "Aspirateur",
+        "Rosmolen"
+      ],
+      "source": "https://broodsmakelijk.nl/hoogmaalderij",
+      "confidence": "high"
+    },
+    {
+      "q": "Hoeveel procent witte bloem haalt een efficiënte molen uit een ton schone tarwe?",
+      "a": "72 tot 76 procent",
+      "wrong": [
+        "50 procent",
+        "90 procent",
+        "100 procent"
+      ],
+      "source": "https://asbe.org/article/extraction-rate/",
+      "confidence": "high"
+    },
+    {
+      "q": "Hoeveel kilo zit er in een standaard zak bakkersbloem (zakgoed)?",
+      "a": "25 kg",
+      "wrong": [
+        "10 kg",
+        "50 kg",
+        "100 kg"
+      ],
+      "source": "https://www.acm.nl/sites/default/files/documents/2018-02/goedkeuring-dossche-meneba.pdf",
+      "confidence": "high"
+    },
+    {
+      "q": "Hoe groot is minimaal één cel van een gecompartimenteerde bulkwagen voor meel?",
+      "a": "2 ton",
+      "wrong": [
+        "200 kg",
+        "500 kg",
+        "10 ton"
+      ],
+      "source": "https://www.acm.nl/sites/default/files/documents/2018-02/goedkeuring-dossche-meneba.pdf",
+      "confidence": "high"
+    },
+    {
+      "q": "Welke Zwitserse molenbouwer bouwt de nieuwe molen van Royal Koopmans?",
+      "a": "Bühler",
+      "wrong": [
+        "Siemens",
+        "Nestlé",
+        "ABB"
+      ],
+      "source": "https://friesland.headliner.nl/item/elke-graankorrel-telt-voor-meelfabriek-royal-koopmans-uit-leeuwarden-dat-is-toch-een-gaaf-verhaal-lc-113111",
+      "confidence": "medium"
+    },
+    {
+      "q": "Wat is de onderste explosiegrens van meelstof in de lucht?",
+      "a": "Circa 60 gram per kubieke meter",
+      "wrong": [
+        "Circa 6 gram per kubieke meter",
+        "Circa 600 gram per kubieke meter",
+        "Circa 6 kilo per kubieke meter"
+      ],
+      "source": "https://www.nbc.nl/media/1bqan4pm/atex-handleiding-ambachtelijke-bakkerij_new.pdf",
+      "confidence": "high"
+    },
+    {
+      "q": "Welke test meet de alfa-amylase-activiteit (kieming) van meel?",
+      "a": "Het valgetal van Hagberg",
+      "wrong": [
+        "De Zeleny-test",
+        "De W-waarde",
+        "De pH-meting"
+      ],
+      "source": "https://ahdb.org.uk/hagberg-falling-number-and-breadmaking-quality",
+      "confidence": "high"
+    },
+    {
+      "q": "Wie is sinds 2011 CEO van Royal Koopmans?",
+      "a": "Dirk Lodewijk",
+      "wrong": [
+        "Kees Dekker",
+        "Annemarie Jorna",
+        "Uilke Koopmans"
+      ],
+      "source": "https://www.bakkersinbedrijf.nl/nieuws/nieuwe-algemeen-directeur-koopmans-leeuwarden",
+      "confidence": "high"
+    },
+    {
+      "q": "Wie is eigenaar van Royal Koopmans?",
+      "a": "Circa tweehonderd aandeelhouders uit meerdere families, zonder externe investeerder",
+      "wrong": [
+        "Dr. Oetker",
+        "Een beursgenoteerd concern",
+        "De gemeente Leeuwarden"
+      ],
+      "source": "https://www.royalkoopmans.com/en/about-royal-koopmans/family-business",
+      "confidence": "high"
+    },
+    {
+      "q": "In welk jaar wil Royal Koopmans Net-0 (CO2-neutrale eigen operaties) bereiken?",
+      "a": "2040",
+      "wrong": [
+        "2030",
+        "2050",
+        "2026"
+      ],
+      "source": "https://www.royalkoopmans.com/duurzaamheid/schone-energie-koopmans-op-weg-naar-net-0",
+      "confidence": "high"
+    },
+    {
+      "q": "Welke vier granen zitten in de melange Vergheten Graenen?",
+      "a": "Emmer, khorasan, rotkorn en rogge",
+      "wrong": [
+        "Tarwe, gerst, haver en maïs",
+        "Spelt, quinoa, rijst en boekweit",
+        "Rogge, gerst, teff en sorghum"
+      ],
+      "source": "https://www.royalkoopmans.com/meel/over-koopmans-meel/actueel-bij-meel/nieuw-vergheten-granen-de-nieuwe-generatie-brood-voor-een-onderscheidend-assortiment",
+      "confidence": "high"
+    },
+    {
+      "q": "Hoe wordt paneermeel gemaakt bij Koopmans Food Ingredients?",
+      "a": "Speciaal brood bakken, drogen en vermalen",
+      "wrong": [
+        "Tarwekorrels roosteren en pletten",
+        "Aardappelzetmeel persen",
+        "Rijst poffen en breken"
+      ],
+      "source": "https://www.royalkoopmans.com/en/koopmans-foodcoatings/about-koopmans-food-ingredients",
+      "confidence": "high"
+    },
+    {
+      "q": "Hoeveel procent van het Nederlandse brood was volgens Koopmans in 2024 van Nederlandse tarwe gemaakt?",
+      "a": "Slechts 5 procent",
+      "wrong": [
+        "25 procent",
+        "50 procent",
+        "95 procent"
+      ],
+      "source": "https://www.royalkoopmans.com/meel/over-koopmans-meel/actueel-bij-meel/ceo-dirk-lodewijk-en-directeur-natuurbeheer-van-natuurmonumenten-teo-wams-tekenen-samenwerkings-voor-nog-gezondere-boterham",
+      "confidence": "high"
+    }
+  ],
+  "one_liners": [
+    {
+      "text": "Koopmans begon in 1846 met een door paarden aangedreven boekweitmolen in Holwerd.",
+      "source": "https://www.royalkoopmans.com/nl/over-royal-koopmans/de-geschiedenis-van-koopmans"
+    },
+    {
+      "text": "Startkapitaal in 1846: 1.550 gulden, geleend van de familie.",
+      "source": "https://www.royalkoopmans.com/nl/over-royal-koopmans/de-geschiedenis-van-koopmans"
+    },
+    {
+      "text": "De eerste stoommachine in Leeuwarden had 2 pk. Dat bleek al snel te weinig.",
+      "source": "https://nl.wikipedia.org/wiki/Koopmans_Koninklijke_Meelfabrieken"
+    },
+    {
+      "text": "Koningin Juliana verleende Koopmans in 1976 het predicaat Koninklijk.",
+      "source": "https://www.leeuwarden.nl/wp-content/uploads/import/bijlage_gem.onderscheidingen_predicatenlijst.pdf"
+    },
+    {
+      "text": "Royal Koopmans maalt ruim 200.000 ton graan per jaar: genoeg voor bijna 300 miljoen broden.",
+      "source": "https://friesland.headliner.nl/item/elke-graankorrel-telt-voor-meelfabriek-royal-koopmans-uit-leeuwarden-dat-is-toch-een-gaaf-verhaal-lc-113111"
+    },
+    {
+      "text": "Gemiddeld lossen bij Koopmans vier graanschepen per week, elk zo'n 1.000 ton.",
+      "source": "https://friesland.headliner.nl/item/iedereen-kent-de-meelfabriek-van-royal-koopmans-in-leeuwarden-maar-wat-gebeurt-daar-nou-eigenlijk-lc-113115"
+    },
+    {
+      "text": "De zuiginstallatie haalt 120 ton graan per uur uit een schip.",
+      "source": "https://friesland.headliner.nl/item/iedereen-kent-de-meelfabriek-van-royal-koopmans-in-leeuwarden-maar-wat-gebeurt-daar-nou-eigenlijk-lc-113115"
+    },
+    {
+      "text": "Een tarwekorrel passeert in een hoogmaalderij soms wel twintig walsenstoelen.",
+      "source": "https://broodsmakelijk.nl/hoogmaalderij"
+    },
+    {
+      "text": "Uit 1.000 kilo tarwe komt 720 tot 760 kilo witte bloem; de rest is zemel, gries en kiem.",
+      "source": "https://asbe.org/article/extraction-rate/"
+    },
+    {
+      "text": "Een meelfabriek is altijd hoog: het maalsel valt via buizen van verdieping naar verdieping.",
+      "source": "https://broodsmakelijk.nl/hoogmaalderij"
+    },
+    {
+      "text": "Voor Molen B werden walsenstoelen van 3.500 tot 6.000 kilo door een gat in het dak gehesen.",
+      "source": "https://www.linkedin.com/in/annemariejorna/"
+    },
+    {
+      "text": "Meelstof is explosief vanaf 60 gram per kubieke meter: dan zie je elkaar op een meter niet meer.",
+      "source": "https://www.nbc.nl/media/1bqan4pm/atex-handleiding-ambachtelijke-bakkerij_new.pdf"
+    },
+    {
+      "text": "Eén graanklander-wijfje kan in drie generaties 250.000 nakomelingen krijgen.",
+      "source": "https://www.akkerwijzer.nl/artikel/85798-graanklander-bestrijden-vraagt-goede-hygiene"
+    },
+    {
+      "text": "KIEM staat voor Koopmans, Innovatie, Expertise en Molenaarschap.",
+      "source": "https://www.bakkersinbedrijf.nl/nieuws/koopmans-kiem-broedplaats-duurzame-graanconcepten"
+    },
+    {
+      "text": "Het logo: een zwart woordmerk met een gouden kroon. Geen korenaar te bekennen.",
+      "source": "https://www.royalkoopmans.com/compiled/images/79b8a27-46e3e1e.svg"
+    },
+    {
+      "text": "Nedertarwe-brood bevat alleen meel, water, gist en zout. Geen E-nummers.",
+      "source": "https://www.eiwittrends.nl/royal-koopmans-uitblinken-in-innovatie/"
+    },
+    {
+      "text": "Nedertarwe groeide van 12 telers in 2021 naar meer dan 150 in 2026.",
+      "source": "https://www.bakkersinbedrijf.nl/nieuws/pop-up-graandiners-tussen-de-tarwe"
+    },
+    {
+      "text": "Nedertarwe-boeren zaaien minimaal 3% van hun land in met bloemenranden.",
+      "source": "https://akkerwijzer.nl/artikel/461578-graansector-maakt-werk-van-nederlandse-baktarwe"
+    },
+    {
+      "text": "Consumenten betalen graag 21 cent extra voor een Nedertarwe-brood.",
+      "source": "https://www.royalkoopmans.com/meel/over-koopmans-meel/actueel-bij-meel/duurzaam-succes-hoge-kwaliteit-nederlandse-baktarwe-ondanks-extreem-weer"
+    },
+    {
+      "text": "In februari 2024 voer het eerste graanschip op HVO100 naar Leeuwarden: 85% minder CO2.",
+      "source": "https://www.royalkoopmans.com/meel/over-koopmans-meel/actueel-bij-meel/royal-koopmans-leidt-de-weg-naar-duurzaamheid-met-het-eerste-nedertarwe-schip-op-hvo100-biobrandstof"
+    },
+    {
+      "text": "Na veertig jaar kwam in 2025 weer een schip Groninger baktarwe naar Leeuwarden: 500 ton.",
+      "source": "https://akkerwijzer.nl/artikel/1215642-na-veertig-jaar-eerste-lading-groninger-baktarwe-per-schip-naar-maalbedrijf-koopmans"
+    },
+    {
+      "text": "Slechts 5% van het Nederlandse brood werd in 2024 van Nederlandse tarwe gebakken.",
+      "source": "https://www.royalkoopmans.com/meel/over-koopmans-meel/actueel-bij-meel/ceo-dirk-lodewijk-en-directeur-natuurbeheer-van-natuurmonumenten-teo-wams-tekenen-samenwerkings-voor-nog-gezondere-boterham"
+    },
+    {
+      "text": "Het eerste Urban Tarweveld van Nederland ligt in de Leeuwarder wijk Middelsee, bij de stoplichten.",
+      "source": "https://www.omropfryslan.nl/nl/nieuws/18405555/urban-tarweveld-in-leeuwarden-eten-verbouwen-bij-de-stoplichten"
+    },
+    {
+      "text": "Koopmans maakt ook meel met cranberrysap van Terschelling, voor zuurdesembrood.",
+      "source": "https://www.eiwittrends.nl/royal-koopmans-uitblinken-in-innovatie/"
+    },
+    {
+      "text": "Paneermeel ontstaat door brood te bakken, te drogen en weer te vermalen. In vijf kleuren.",
+      "source": "https://www.royalkoopmans.com/en/koopmans-foodcoatings/about-koopmans-food-ingredients/breadcrumbs"
+    },
+    {
+      "text": "In 2024 dansten medewerkers op het binnenplein: finalist Koning Willem I Prijs.",
+      "source": "https://www.omropfryslan.nl/nl/nieuws/16443936/dansen-in-de-meelfabriek-koopmans-is-finalist-voor-koning-willem-i-prijs"
+    },
+    {
+      "text": "De molens draaien op 100% Nederlandse groene stroom van zonneparken in Groningen en Zeeland.",
+      "source": "https://www.royalkoopmans.com/duurzaamheid/schone-energie-koopmans-op-weg-naar-net-0"
+    },
+    {
+      "text": "Boekweit is geen graan maar familie van de duizendknoop, en dus glutenvrij.",
+      "source": "https://www.maxvandaag.nl/sessies/themas/eten-drinken/terug-van-weggeweest-boekweit-is-glutenvrij-voedzaam-en-veelzijdig/"
+    },
+    {
+      "text": "Fries roggebrood wordt niet gebakken maar 15 tot 24 uur 'gegaard'.",
+      "source": "https://nl.wikipedia.org/wiki/Roggebrood"
+    },
+    {
+      "text": "Fryske dúmkes heten zo omdat de bakker het deeg met zijn duim platdrukt.",
+      "source": "https://nl.wikipedia.org/wiki/Fryske_d%C3%BAmkes"
+    }
+  ],
+  "visual_identity": {
+    "colors": {
+      "oranje_accent": "#E78A01",
+      "goud_kroon": "#CFAB00",
+      "goud_web": "#C5AA20",
+      "zwart_logo": "#1D1D1B",
+      "antraciet": "#1D1E1F",
+      "donkerrood_secundair": "#C52135",
+      "lichtgrijs": "#F7F7F7",
+      "zandgrijs": "#E3E1DA",
+      "wit": "#FFFFFF"
+    },
+    "logo": "Zwart (#1D1D1B) woordmerk 'koopmans' in kleine letters, daarboven een gouden (#CFAB00) kroon van drie bogen met drie bolletjes, daaronder een gouden beugel-/banderollijn. Geen korenaar. Ook als volledig witte variant. Bestandsnaam Logo_Koopmans_RGB.",
+    "logo_source": "https://www.royalkoopmans.com/compiled/images/79b8a27-46e3e1e.svg",
+    "fonts": "Avenir Next (schreefloos, hoofdfont) en La Belle Aurore (handschriftfont voor accenten). Vrije alternatieven met vergelijkbaar karakter: Nunito Sans / Montserrat en een handschriftfont als Caveat.",
+    "fonts_source": "https://www.royalkoopmans.com/compiled/css/app_css-bf8ae26.css",
+    "imagery": [
+      "Tarweveld met bloeiende akkerrand (phacelia, klaprozen) onder een Hollandse wolkenlucht",
+      "Goud-antraciet jubileumlabel '180 YEARS' met kroon",
+      "Desembrood, stokbrood meergranen, croissants, oliebollen, stollen, ontbijtkoek",
+      "Paneermeel in kleuren: wit, geel, bruin, oranje",
+      "Portretten van specialisten (Meester Boulanger, technologen) en CEO Dirk Lodewijk",
+      "Het Urban Tarweveld in de wijk Middelsee",
+      "Een bus vol bakkers in een Nedertarwe-veld met boer en collecteur",
+      "Graanschip aan de loskade, silo's en walsenstoelen",
+      "Gevelbordje 'Ik ben Nedertarwe-bakker'"
+    ],
+    "slogans": [
+      "Pioniers in graan sinds 1846",
+      "Wij halen alles uit graan",
+      "Puur vanuit de Oorsprong",
+      "Elke graankorrel telt",
+      "Samen duurzame waarde uit graan creëren",
+      "We brengen duurzaamheid in beweging",
+      "Groei door verbinding (jubileum 2026)",
+      "The specialist in grain based food solutions",
+      "Pure enrichment (Koopmans Foodcoatings, 2016)",
+      "Niet de grootste of goedkoopste, maar de beste partner"
+    ],
+    "kernwaarden": [
+      "Vakmanschap",
+      "Ondernemend",
+      "Gepassioneerd",
+      "Betrouwbaar",
+      "Menselijk"
+    ],
+    "nedertarwe_pijlers": [
+      "Bijzonder Duurzaam",
+      "Bijzonder Hollands",
+      "Bijzonder Eerlijk",
+      "Bijzonder Smaakvol"
+    ]
+  },
+  "tone": "Warm, nuchter en Fries: trots op herkomst en ambacht zonder borstklopperij. Verbinding is het sleutelwoord (boer-collecteur-molenaar-bakker-burger, stad en platteland). Spreek over 'graan' en 'de korrel', over 'pioniers' en 'molenaarschap'. Humor mag droog en zelfbewust zijn, nooit cynisch. Vermijd supermarkt- en huis-tuin-en-keukentoon (dat is Dr. Oetker); Royal Koopmans spreekt vakmensen aan. Intern: 'betrokken, energiek en ondernemend', platte organisatie, korte lijnen, gezellige borrels. Gebruik Nederlandse termen (walsenstoel, plansichter, uitmaling, bulkwagen) en strooi met een Fries woord (bôle, sûkerbôle, dúmkes).",
+  "avoid": [
+    "De pannenkoek-, poffertjes-, cake-, oliebollen- en appeltaartmixen van 'Koopmans' in de supermarkt zijn sinds 2000 van Dr. Oetker, niet van Royal Koopmans.",
+    "De slogan 'Dan ben je thuis', de rood-gele ruitjes, de schudfles, Pannenkoekmeel Kabouter en de Nationale Pannenkoekdag horen bij het Dr. Oetker-merk Koopmans.",
+    "Koopmans Professioneel (horecamixen, De Lekkerste Pannenkoek op de Horecava) is Dr. Oetker, niet Royal Koopmans.",
+    "De oliebollenmix zonder gist (december 2021) was een Dr. Oetker-product; Royal Koopmans had er niets mee te maken.",
+    "SC Cambuur wordt gesponsord door NelfKoopmans (verffabrikant uit Marrum), niet door Royal Koopmans; er is geen bewijs voor enige sportsponsoring.",
+    "'Koopman International' (Amsterdam) en 'Koopmans Verf' zijn andere bedrijven.",
+    "Noem geen exact jaar voor de verhuizing naar Leeuwarden (1856 vs 1867 in bronnen); zeg 'in de jaren 1860' of gebruik 1867 alleen voor de overname van de stoommeelfabriek.",
+    "Noem geen exact medewerkersaantal (bronnen: 98-170); zeg 'ongeveer 160'.",
+    "Noem geen exact aantal aandeelhouders (180, 195 of ruim 200); zeg 'circa tweehonderd'.",
+    "Zeg niet 'volledig B2B sinds 2011' of 'sinds 2014' als hard feit; de koers startte in 2011, de laatste retailtak ging in 2014 weg.",
+    "Noem geen exacte lanceerdatum van Nedertarwe als 'de' datum: aangekondigd november 2021, officieel gelanceerd 18 januari 2022.",
+    "Beweer niet dat Molen B op een specifieke datum (3 juli 2026 / eind 2026 / 2027) in bedrijf is; dat is niet bevestigd.",
+    "Zeg niet dat Nedertarwe 20-25% van het graanvolume is; 25.000 van ca. 200.000 ton is ruim 10%.",
+    "Noem geen generatie-nummer (zesde vs zevende generatie verschilt per bron).",
+    "Noem Uilke Klazes Koopmans geen 'bakkerszoon' als feit; 'bakkersgezel' is beter onderbouwd.",
+    "De bouwjaren van het complex (1929-1930, silo 1981, uitbreiding 2005) komen van een laag-betrouwbare bron; gebruik ze niet als quizantwoord.",
+    "Minne Dijkstra als vroegere directeur is laag-betrouwbaar; gebruik niet.",
+    "Brovitesse en Eco-Select zijn verouderde productnamen die niet meer op de site staan.",
+    "Het Wurktiid TV-fragment ('300 mensen, pannenkoekmix') beschrijft de situatie van vóór 2000; niet als huidig feit gebruiken.",
+    "Royal Koopmans heeft geen productielocaties buiten Leeuwarden; het Kooiker-warehouse is extern en ligt ook in Leeuwarden.",
+    "Royal Koopmans is geen beursgenoteerd bedrijf en heeft geen externe investeerder; de BV-naam is nog altijd Koopmans Koninklijke Meelfabrieken B.V.",
+    "Koopmans won de Koning Willem I Prijs 2024 NIET (finalist; winnaar Grootbedrijf was Royal Cosun).",
+    "De 40 meter silohoogte uit het researchmateriaal is van Meelfabriek Latenstein (Rotterdam), niet van Koopmans.",
+    "Het Duitse silowagen-voorbeeld (12,5 ton, 500 kg/min) is een algemene illustratie, geen Koopmans-cijfer.",
+    "Jorne Hornstra en René Visser werken bij Kooiker Logistiek, niet bij Koopmans."
+  ]
+}

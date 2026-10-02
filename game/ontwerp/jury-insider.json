@@ -1,0 +1,112 @@
+{
+  "juror": "insider",
+  "scores": [
+    {
+      "key": "arcade",
+      "title": "Korrelval",
+      "fun": 8,
+      "koopmans_fit": 7,
+      "feasibility": 9,
+      "replay": 7,
+      "total": 31,
+      "comment": "Sterkste idee: je bent zelf de korrel ('Elke graankorrel telt') en valt door 180 jaar Koopmans-molens, van de rosmolen in Holwerd tot Molen B. Het spel heeft vakwoorden die collega's herkennen ('Partij afgekeurd', 'Schip gelost: 37%', 'Nachtploeg') en scoort in zakken van 25 kg en bulkcellen. Iedere collega, bakker of familie-aandeelhouder snapt het binnen 30 seconden en er zit niets in om je voor te schamen. Grootste zwakte: Koopmans blijft vooral decor (bakkers, de Nedertarwe-keten en de kernwaarden spelen niet mee), en het eindlabel 'Patentbloem bij >75%' klopt vaktechnisch niet: het is precies andersom."
+    },
+    {
+      "key": "puzzel",
+      "title": "Maalstroom",
+      "fun": 6,
+      "koopmans_fit": 8,
+      "feasibility": 7,
+      "replay": 6,
+      "total": 27,
+      "comment": "Sterkste idee: de molen is zelf de puzzel, met regels die elke molenaar herkent: eerst reinigen, de zemel gaat opzij naar veevoer, EKO komt apart binnen (Skal) en zaden mogen alleen in de nieuwe menghal. De uitmaling klopt (45/65/75%) en de molens van 1965 en 1967 aan De Merodestraat zijn een echte insidersknipoog. Zwakte: rustig buizen draaien mist spanning en is na één keer oplossen uitgespeeld, en walsenstoelen en plansichters in 1846 en 1867 zijn anachronistisch."
+    },
+    {
+      "key": "tycoon",
+      "title": "Elke Korrel Telt (tycoon)",
+      "fun": 7,
+      "koopmans_fit": 9,
+      "feasibility": 6,
+      "replay": 8,
+      "total": 30,
+      "comment": "Sterkste idee: dit is mijn werkweek. Schepen aan de loskade, Friese, Zeeuwse, Groninger en Duitse tarwe, bestelkaarten van bakkers met het Nedertarwe-gevelbordje, bulkwagencellen tegenover zakgoed, een Betrouwbaar-streak, oogstweken 31-36 en Molen B die door het dak gaat. Zwakte: vijf systemen op een telefoonscherm zijn riskant om in één keer goed te bouwen en te balanceren. Verder past nettowinst als hoofdscore, met 'Koninklijk' als winstrang en 'de aandeelhoudersvergadering grijpt in' als game-over, slecht bij 'niet de grootste of goedkoopste, maar de beste partner'."
+    },
+    {
+      "key": "verhaal",
+      "title": "De Tijdmolenaar",
+      "fun": 6,
+      "koopmans_fit": 8,
+      "feasibility": 5,
+      "replay": 4,
+      "total": 23,
+      "comment": "Sterkste idee: de rijkste en meest kloppende geschiedenis (Hein Blok Wybrandi, het Noordvliet, Jan en de veevoertak, Uco, Daan en Jo, LaCo, KIEM). Vooral de plansichter-sorteerronde maakt het verschil met Dr. Oetker eindelijk speelbaar. Zwakte: in de kern blijft het een bedrijfsquiz met verhaalpanelen die je na twee runs uit je hoofd kent. Drie dingen laten collega's ineenkrimpen: een stofwolk in de molen als tijdmachine en als timer, een citaat van de huidige CEO in een scène uit 2000, en een wachtwoordbriefje in de controlekamer van Molen B."
+    },
+    {
+      "key": "fysica",
+      "title": "Elke Korrel Telt (physics)",
+      "fun": 6,
+      "koopmans_fit": 5,
+      "feasibility": 5,
+      "replay": 6,
+      "total": 22,
+      "comment": "Sterkste idee: je ziet de korrel echt breken in wit endosperm, bruine zemel en een geel kiempje (83/14,5/2,5%) en stuurt de stukjes door B- en C-walsen, schuddende plansichters, een steenuitlezer en een magneet. Zwakte: 'houd de stofmeter onder de explosiegrens' maakt van een meelstofexplosie een spelmechaniek, iets waar geen molenaar om lacht. Orion en Zuiderkroon krijgen verzonnen en zelfs omgekeerde kwaliteitsrangen, kantelen met 15 brokjes tegelijk wordt snel chaos, en bakkers en geschiedenis ontbreken."
+    },
+    {
+      "key": "wildcard",
+      "title": "Graanskûtsje",
+      "fun": 7,
+      "koopmans_fit": 5,
+      "feasibility": 7,
+      "replay": 7,
+      "total": 26,
+      "comment": "Sterkste idee: de Prémax-namen worden vaarwater, en elke etappe eindigt aan de vernieuwde loskade met 14 buispalen en 120 t/u. Het Friese sfeertje is heerlijk (bruggeld in het klompje, 'Tsjoch!', sûkerbôle als proviand). Zwakte: het voelt als Friesland en niet als Koopmans, want de molen en de bakkers zijn alleen eindpunt. Een skûtsje met 1.000 ton is voor iedere Fries lachwekkend, het spel tekent het woordmerk met kroon na, en het maakt van Springline, Silverline en Goldline brons, zilver en goud."
+    }
+  ],
+  "best_key": "arcade",
+  "runner_up_key": "tycoon",
+  "ideas_to_graft": [
+    "Uit tycoon: maak van de silo-finish een echte bakkersbestelling. De goud oplichtende silo krijgt een orderkaart ('Bakkerij: 6 t Nedertarwe Bloem, bulk', met het gevelbordje 'Ik ben Nedertarwe-bakker'). Landen vult één cel van een gecompartimenteerde bulkwagen (min. 2 t per cel) of een pallet zakgoed van 25 kg voor de groothandel. Zo komen de bakkers in beeld zonder dat er echte namen nodig zijn.",
+    "Uit tycoon: eindbadges naar alle vijf kernwaarden uit het Waardenhuis. Vakmanschap (≥80% perfecte passages), Betrouwbaar (level zonder hit), Ondernemend (alle pick-ups van een level), Gepassioneerd (100 verdiepingen in Nachtploeg) en Menselijk (Gezel-modus uitgespeeld of een dagscore met een collega vergeleken).",
+    "Uit tycoon: wissel het schip in de levelintro per run tussen de echte aanvoerstromen uit de oogstberichten. Dat zijn Friese tarwe, Zeeuwse Nedertarwe (CZAV), Groninger baktarwe van Dollard Tarwe (500 t, februari 2025, na veertig jaar), een Duits schip (eind augustus) en EKO-tarwe (Skal, tweede helft oktober). De HUD toont dan bijvoorbeeld 'Week 31 · Schip gelost: 37%'.",
+    "Uit tycoon: een Nedertarwe-meter in het eindscherm (aandeel gepakte gouden korrels tegenover het echte doel van circa 10% in 2026, 'Op weg naar 100% Nedertarwe'), met de Agribusiness Award (4 februari 2025) en de Innovatieprijs 2023 als ontgrendelbare kaartjes.",
+    "Uit puzzel: vervang het foute eindlabel door de juiste uitmalingstrappen. Dat zijn short patent (circa 45%), long patent (circa 65%), straight grade (75-76%) en volkoren (100%), met 'witter = minder uitmaling' als uitleg.",
+    "Uit puzzel: een EKO-variant van level 5 of 6. Groene, vierkante EKO-korrels mogen niet door dezelfde spleet als gangbare korrels ('EKO komt apart binnen, Skal'). Bij het menghal-finaletje van 2026 maken pick-ups met zaden en pitten van je bloem een Prémax (bloem + zaden).",
+    "Uit puzzel: noem in Nachtploeg of in een wist-je-dat de molens van 1965 en 1967 aan De Merodestraat (1967 wordt vervangen door Molen B, 1965 wordt de roggemolen), met een roggekorrel als zeldzame bonus. Neem ook 'het oudste deel van de loskade was uit 1927' op.",
+    "Uit verhaal: de overgangskaartjes tussen levels krijgen de echte familiegeschiedenis. Denk aan Hein Blok Wybrandi en Stoommeelfabriek Friso aan het Noordvliet (1867), zoon Jan die na 1881 met veevoer van gerst en maïs het risico spreidde, de graancrisis (56 meelfabrieken dicht tussen 1880 en 1900, Koopmans bleef) en de broers Uco, Daan en Jo (1920).",
+    "Uit verhaal: een grap in level 1. Een tarwekorrel stuitert van de molenstenen met '1856: de rosmolen bleek niet geschikt voor tarwe'. Is de eerste bonus boekweit, dan staat er 'boekweit voor pannenkoeken, brood en pap'.",
+    "Uit verhaal: het eindscherm volgt jouw korrel door de keten boer, collecteur, molenaar, Meester Boulanger, bakker en consument (alleen als rollen, geen namen). Het eindigt bij 'een topbrood van puur meel met alleen water, gist en zout' (Nedertarwe, zonder broodverbetermiddelen), plus een één-regelkaartje over KIEM (Koopmans, Innovatie, Expertise en Molenaarschap, 2016).",
+    "Uit fysica: een geel kiempje als zeldzame pick-up met de uitleg 'de kiem gaat apart, de olie maakt meel ranzig', en de verhouding 83% endosperm, 14,5% zemel en 2,5% kiem op de resultaatkaart. Gebruik ook het woord 'steenuitlezer' naast de magneet in het reinigingslevel.",
+    "Uit wildcard: het eerste Nedertarwe-schip op HVO100 (februari 2024, met CZAV en NPRC) als intro van een level, en Friese pop-ups zoals 'Tsjoch!' bij een perfecte passage en 'It giet oan!' op de startknop. Laat de broodomrekening op het eindscherm ook in sûkerbôlen zien.",
+    "Uit tycoon en wildcard: laat de Nachtploeg-HUD een volcontinu-klok tonen met een wisselende ploegletter (vijfploegendienst), en noem in level 6 dat de molens op 100% Nederlandse groene stroom draaien (zonneparken in Groningen en Zeeland)."
+  ],
+  "fact_concerns": [
+    "Arcade, eindlabel 'Patentbloem (nul zemelen, >75%)': dit is vaktechnisch omgekeerd. Patentbloem is een selectie van de witste maalstromen bij een lage uitmaling (short patent circa 45%, long patent circa 65%). Bij 75-76% spreek je van straight grade, en volkoren is 100%.",
+    "Fysica, 'Orion = patentbloem (3-5 passages, meeste punten), Zuiderkroon = 1-2 passages': dit verzint specificaties en een kwaliteitsrangorde voor echte producten, en het draait de techniek om. De bloem uit de eerste passages is juist de beste, en meer passages geven meer beschadigd zetmeel. Volgens de site is Orion 'brood met een grijze tint', Zuiderkroon 'minder ascorbinezuur', Jupiter 'zeer rustige bakaard' en Silverline 'meer kracht'. Gebruik daarom geen rangorde, of gebruik fictieve klassen.",
+    "Tycoon, 'Jupiter vereist ≥12% eiwit': dit is een verzonnen productspecificatie bij een echte merknaam. Als iemand daar later naar vraagt, krijgt de klantenservice het op haar bord. Als er al een 'krachtige' bloem nodig is, noemt de site Silverline ('meer kracht'). Beter is een neutrale klasse als 'hoog-eiwitbloem'.",
+    "Wildcard, medailles Springline (brons), Silverline (zilver) en Goldline (goud): dit zijn drie echte bakkersbloemen voor verschillende toepassingen (Springline voor feestbrood, Goldline voor vruchtenbrood, Silverline voor meer kracht), geen kwaliteitstreden. Kies andere medaillenamen.",
+    "Wildcard, een skûtsje met 1.000 ton lading: een skûtsje is een klein Fries vrachtzeilschip met een laadvermogen van enkele tientallen tonnen. De schepen van circa 1.000 ton aan de loskade zijn moderne motorvrachtschepen (binnenvaart, zoals de NPRC-coöperatie). Laat het skûtsje dus kleine historische vrachten varen, of vaar met een modern binnenvaartschip.",
+    "Wildcard, het lowercase woordmerk 'koopmans' met gouden kroon (drie bogen, drie bolletjes) en de gouden beugellijn op het titelscherm en in de skyline: dat is een reproductie van het echte logo. Doe dit niet. Let op: álle concepten tekenen een gouden kroon van drie bogen met drie bolletjes, en dat is precies de logokroon (Maalstroom zegt zelfs 'the crown from the logo'). Gebruik een duidelijk ander kroontje of een korenaar (het logo heeft geen korenaar).",
+    "Fysica en verhaal gamificeren meelstof. Fysica belooft 'houd de stofmeter onder de explosiegrens' (60 g/m³ uit de ATEX-handleiding, met een nudge die stof oplaadt). Verhaal gebruikt 'een stofwolk in de molen' als tijdmachine, als baas-timer en als fail-state ('Stofwolk!'). Een stofexplosie geeft 7-9 bar, en vanaf 3-4 bar is die dodelijk. Gebruik dus neutrale storingen ('aspiratie', 'storing') en een cosmetisch bloemwolkje zonder explosie- of gevaarframe.",
+    "Fysica, de tip 'Probeer eens Stuifarme Strooibloem' bij een vollopende explosiemeter: Stuifarme Strooibloem is een bakkerijproduct tegen fijnstof en grondstoffenallergie bij bakkers ('Weg met meelstof!'), geen middel tegen stofexplosies in de molen. Ook de Strooibloem-pick-up van de arcade ('veegt de nevel weg') moet zo uitgelegd worden.",
+    "Bijna alle concepten zeggen dat de Prémax-mixen 'naar Friese meren' zijn genoemd. Dat klopt maar deels. De lijst bevat ook Markermeer en IJsselmeer (geen Friese meren in strikte zin, en de arcade gebruikt Markermeer als combo-rang), Maas & Waal, en de Bonkevaart, die een vaart is en geen meer. Zeg liever 'veel Prémax-mixen dragen Friese waternamen'.",
+    "Arcade: 'level 2-6 in Leeuwarden aan het Nieuwe Kanaal'. Stoommeelfabriek Friso (1867) stond aan het Noordvliet, met graanopslag aan het Vliet. Het complex aan De Merodestraat aan het Nieuwe Kanaal dateert pas van circa 1929-1930 (lage betrouwbaarheid). Level 2 hoort dus aan het Noordvliet te spelen.",
+    "Arcade en puzzel: walsenstoelen in 1846 en 1867 en een plansichter in 1867 zijn anachronistisch. De rosmolen in Holwerd maalde met molenstenen en builde de boekweit, en de plansichter is pas eind jaren 1880 uitgevonden. Gebruik in de vroege levels molenstenen en een buil.",
+    "Verhuisjaar naar Leeuwarden: de wildcard noemt 1867 als vaststaand. De bronnen verschillen (koopmans.com zegt 1856, Wikipedia zegt 1867 met de overname van de stoommeelfabriek van Hein Blok Wybrandi, en royalkoopmans.com noemt 1876-1900). Zeg dus 'in 1867 nam Koopmans in Leeuwarden een stoommeelfabriek over', zonder verhuisjaar.",
+    "Verhaal (etage 5) en wildcard (etappe 5) halen twee schepen door elkaar. Het eerste Nedertarwe-schip op HVO100 (februari 2024) kwam via CZAV uit Zeeland. Het schip van 500 ton Groninger baktarwe (februari 2025) kwam van Dollard Tarwe en was geen Nedertarwe en geen 1.000 ton. De Groninger Nedertarwe-telers leveren pas sinds oogst 2026.",
+    "Tycoon 'consumenten betalen echt 21 cent extra per brood' en verhaal 'klanten betalen 21 cent extra': volgens de bron bleken consumenten bereid 21 cent extra te betalen. Dat is een uitkomst van onderzoek, geen vaste toeslag.",
+    "Tycoon, 'groeiend naar 25% (25.000 t van ca. 200.000 t)': dat rekent niet. 25.000 t van 200.000 t is 12,5%. Voor 2026 noemt de bron circa 10% van het volume onder Nedertarwe, binnen circa 65-70% Nederlandse tarwe.",
+    "Tycoon, Matif-piek '+40% voor één week': de stijging in maart 2026 was echt, maar volgens de CEO lag de prijs nog onder het niveau van zomer 2025. Maak het een fictief, kleiner effect, of noem het geen echt event.",
+    "Tycoon: een zonnepark-contract als optionele upgrade suggereert dat Koopmans nog geen groene stroom gebruikt. De molens draaien al op 100% Nederlandse groene stroom (zonneparken in Groningen en Zeeland). Netcongestie remt alleen de volledige elektrificatie (pas vanaf 2032) en legt de productie niet stil.",
+    "Tycoon (en in mindere mate arcade): een graanklander in de eigen silo die de voorraad onverkoopbaar maakt, of die over de zeefplaat van Molen B loopt, wekt de indruk van ongedierte in een FSSC 22000-gecertificeerde molen. Laat de klander alleen bij de ontvangst opduiken ('partij afgekeurd bij ontvangst') en niet in de fabriek.",
+    "Tycoon: de rang 'Koninklijk' bij ≥ €3 mln nettowinst en 'het jaarverslag verdient het predicaat Koninklijk' kloppen niet. Het predicaat is in 1976 door koningin Juliana verleend en wordt niet met winst verdiend. Zet ook de familie-aandeelhouders (circa 180-200) niet als strafmechanisme in ('de aandeelhoudersvergadering grijpt in').",
+    "Tycoon (rol 'Meester Boulanger' als personage): bij Koopmans is dat de titel van één echte collega, die aan Nedertarwe en de Prémax-receptenboeken verbonden is. Als personage verwijst het dus naar een echt persoon. Gebruik 'de bakkersadviseur'.",
+    "Verhaal: het citaat 'een vuist te maken tegen retailers' komt van de huidige CEO (in functie sinds 2011), die er in interviews op terugkijkt. Het is geen uitspraak uit 2000. Parafraseer zonder citaat of naam.",
+    "Verhaal (briefje 'ww: Zuiderkroon1846' op een monitor in de controlekamer van Molen B) en tycoon ('de molen-PC's zijn eindelijk veilig'): deze grappen suggereren echte beveiligingsfouten bij Koopmans. IT en de directie zouden daar niet om lachen. Houd het bij een neutrale knipoog, zoals 'kluis: ok' in de arcade.",
+    "Verhaal, sorteerronde 'oliebollenmix naar Dr. Oetker': Royal Koopmans heeft zelf de B2B-productgroep Oliebollen (Oliebollenmix Patent en Patent Premium, verbeterd in 2023, gebruikt door een oliebollenkampioen). In 2021 moest de LC al een foute koppeling met de Oetker-terugroepactie rectificeren. Het item moet dus duidelijk 'consumenten-oliebollenmix (supermarkt)' heten.",
+    "Verhaal: quizvragen met een hard antwoord op getallen met middelmatige betrouwbaarheid (120 t/u, circa vier schepen per week, circa 1.000 t per schip, 212.000 t) en op 'beroep van Uilke = bakkersgezel' zijn riskant. Bronnen noemen hem bakkerszoon, bakkersknecht of bakkersgezel. Toon deze als 'circa' en vraag ze niet als harde quizvraag.",
+    "Arcade, wist-je-dat 'zeven generaties': de LinkedIn-post uit 2026 zegt 7 generaties, maar de eigen site spreekt van een zesde generatie aandeelhouders die zich aandient. Schrijf 'generaties lang' (verhaal vermijdt dit terecht).",
+    "Gewicht en startdatum van Molen B: de walsenstoelen wegen volgens een LinkedIn-fragment van de COO 3.500-6.000 kg, maar een LC-fragment spreekt van 'walsen van meer dan acht ton'. De startdatum varieert tussen 3 juli 2026, eind 2026 en medio 2027. Gebruik 'circa' en 'in het jubileumjaar', zonder exacte datum.",
+    "Broodomrekening: puzzel rekent met circa 1.415 broden per ton graan, tycoon en verhaal met circa 1.800 broden per ton bloem. Beide komen uit dezelfde LC-cijfers (212.000 t graan, 165.000 t bloem, bijna 300 miljoen broden), maar kies in het spel één noemer en vermeld 'circa'.",
+    "Wildcard, de Elfstedentocht-finishboog als decor en 'It giet oan!': dat mag als Fries sfeertje, maar zonder naam of logo van de Vereniging De Friesche Elf Steden. Koopmans sponsort de Elfstedentocht niet, net zo min als SC Cambuur (dat is verffabrikant NelfKoopmans uit Marrum). Ook de rangschikking 'Dekknecht, Schipper, Collecteur, Molenaar' zet ketenpartners zoals CZAV en FarmPlus onder de molenaar, terwijl de keten om verbinding draait en niet om rang."
+  ]
+}

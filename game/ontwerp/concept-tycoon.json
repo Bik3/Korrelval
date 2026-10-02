@@ -1,0 +1,166 @@
+{
+  "title": "Elke Korrel Telt",
+  "pitch": "Jij runt zes oogstweken lang de meelfabriek aan De Merodestraat in Leeuwarden: koop tarwe van Friese, Zeeuwse en Groninger telers of uit Duitse schepen, los met 120 ton per uur, reinig, conditioneer, maal en lever op tijd aan bakkers met de bulkwagen. Bouw ondertussen Molen B, overleef natte oogsten, graanklanders en netcongestie, en laat je Nedertarwe-aandeel groeien tot het jaarverslag het predicaat 'Koninklijk' verdient.",
+  "genre": "Tycoon / management, verticale 'gravity pipeline' (Mini Motorways-stijl flow + Overcooked-light storingen + roguelite 1-uit-3 upgrade-draft tussen de weken). Realtime, geen idle-wachttijd; 1 run = 6 weken van ~75 s + 5 upgrade-schermen.",
+  "core_loop": {
+    "summary": "Het scherm is een dwarsdoorsnede van de hoogmaalderij: schip bovenaan de kade, bulkwagen onderaan de expeditie. Graan valt als korrels van boven naar beneden door vier verdiepingen. De speler houdt de stroom gaande en matcht inkoop (boven) met bestellingen (onder).",
+    "every_10_seconds": [
+      "KADE (boven): een scheepsaanbod verschijnt ca. elke 15 s met een 12 s-timer: herkomst (Friese tarwe / Zeeuwse Nedertarwe via CZAV / Groninger Dollard Tarwe / Duits schip), tonnage (500-1000 t), prijs per ton, eiwit %, vocht %, Nedertarwe-badge. Tik 'Koop' of 'Laat gaan'. Gekocht schip meert aan en wordt met de zuiginstallatie (120 t/u, na upgrade 180 t/u) automatisch gelost in de ruwe silo 'Gangbaar' of 'Nedertarwe' (apart gehouden voor traceerbaarheid). Vol = graan blijft in het schip wachten (liggeld-tikker).",
+      "VERDIEPINGEN (midden): Reinigen -> Conditioneren -> Walsenstoelen -> Plansichter draaien automatisch op hun t/u. Elke 8-20 s springt een rood storingslampje aan op een verdieping: houd 1 s ingedrukt om te fixen (Overcooked-light). Negeer je 'Reinigen' > 5 s, dan passeert een steen en blokkeert de walsenstoel langer (4 s houden). Een bult in de pijp toont de bottleneck (bijv. de conditioneercel die nog 'rust').",
+      "RECEPT (onder de molen): vier productsilo's Orion / Zuiderkroon / Jupiter / Nedertarwe Bloem. Tik er een aan om de molen om te stellen (3 s stilstand). Jupiter vereist een gemiddeld eiwit >= 12% in de Gangbaar-silo (gewogen gemiddelde van wat je kocht; Duits graan trekt het omhoog, Fries omlaag); anders wordt de output als Orion weggeschreven met de toast 'Eiwit te laag'. Nedertarwe Bloem maalt alleen uit de Nedertarwe-silo. Uitmaling 75%: 1000 t tarwe = 750 t bloem + 250 t zemelen/gries (automatisch verkocht als veevoer).",
+      "EXPEDITIE (onderaan): 3-4 bestelkaarten met bakkerij, product, tonnage, prijs en deadline-balk. Als de productsilo genoeg heeft: tik de kaart -> bloem gaat in een cel van de gecompartimenteerde bulkwagen (3 cellen). Tik 'Rijden' om te vertrekken (truck rijdt 8 s langs de Oldehove-skyline). Wacht je tot 3 cellen vol zijn, dan krijg je een 'Combinatierit'-bonus; te laat leveren kost een boete en je 'Betrouwbaar'-streak. Zakgoed-orders (25 kg zakken via groothandel) tellen als 1 cel.",
+      "HUD: weekklok (Week 31 . di 14:00; 1 week = 168 speeluren in 75 s), kas in EUR, Nedertarwe-meter (huidig % vs weekdoel), storingsteller. Geld tikt zichtbaar binnen bij elke levering."
+    ],
+    "decision_tension": "Goedkoop Fries graan vs duurder Duits (eiwit voor Jupiter) vs Nedertarwe (+EUR 20/t voor de teler, maar premium-bakkers en de meter). Nu rijden of wachten op een volle bulkwagen. Omstellen van recept kost 3 s stilstand, dus plan je productie op de orderwachtrij.",
+    "cadence_target": "Minstens 1 beslissing of tik per 5-8 s; nooit meer dan 3 dingen tegelijk die aandacht vragen."
+  },
+  "progression": {
+    "run_length": "6 weken x ~75 s speeltijd + 5 upgrade-schermen x ~10 s + jaarverslag = 8-9 minuten. Weken heten Week 31 t/m 36 (oogst 2026: in week 31 komt de eerste Nederlandse tarwe echt aan wal in Leeuwarden).",
+    "weeks": [
+      {"week": 31, "title": "Eerste schepen", "new": "Alleen Friese tarwe-schepen, alleen Orion-orders, 1 bulkwagen, geen events. Coach-balloons van 'de molenaar' leggen in 3 regels kade, storing en rijden uit.", "orders_per_week": 6, "deadline_s": 40},
+      {"week": 32, "title": "Zeeuwse Nedertarwe", "new": "Nedertarwe-schepen van CZAV verschijnen (+EUR 20/t). Nedertarwe Bloem-orders van 'Nedertarwe-bakkers' (+15% prijs, gevelbordje op de kaart). Zuiderkroon-orders. Eerste event: Natte oogst.", "orders_per_week": 8, "deadline_s": 36, "nedertarwe_target_pct": 10},
+      {"week": 33, "title": "Het eerste Duitse schip", "new": "Duitse schepen (12,5% eiwit, duurder) -> Jupiter-orders worden mogelijk. Zakgoed-orders (25 kg zakken) via de groothandel. Event: Graanklander.", "orders_per_week": 10, "deadline_s": 32, "nedertarwe_target_pct": 15},
+      {"week": 34, "title": "Dollard Tarwe", "new": "Groninger schepen van 500 t ('na veertig jaar weer Groninger baktarwe per schip'). Events: Netcongestie en Matif-piek (tarwe +40%). Twee bestellingen kunnen tegelijk urgent zijn.", "orders_per_week": 12, "deadline_s": 28, "nedertarwe_target_pct": 20},
+      {"week": 35, "title": "Prémax-seizoen", "new": "Premium-orders Prémax Slotermeer / Tjeukemeer / Fluessen (vereisen Orion-bloem + de upgrade 'Zaden & pitten-menghal'). Industriële bakkerij-orders van 300-600 t die een hele bulkwagen vullen. Alle events actief.", "orders_per_week": 13, "deadline_s": 25, "nedertarwe_target_pct": 25},
+      {"week": 36, "title": "Molen B gaat live", "new": "Als je Molen B hebt gekocht, hijst een kraan in de intro de laatste walsenstoel door het dak en draait de molen op volle kracht. Event 'Werkbezoek van de minister': bonus als de Nedertarwe-meter op doel staat. Hoogste orderdruk, daarna het Jaarverslag.", "orders_per_week": 14, "deadline_s": 22, "nedertarwe_target_pct": 25}
+    ],
+    "difficulty_curve": "Orderfrequentie van 1 per 12 s naar 1 per 5,5 s; deadlines van 40 s naar 22 s; events van 0 naar 1 per 20 s; aanbodvenster van 12 s naar 9 s. Scheepsgrootte en molencapaciteit groeien alleen via upgrades, dus zonder investeren loop je in week 34-35 vast (gewenst leermoment).",
+    "upgrade_draft": {
+      "rule": "Na elke week krijg je 3 willekeurige kaarten uit de pool, koop er 1 (of sla over om kas te sparen). Dit geeft replay-variatie met minimale UI.",
+      "pool": [
+        "Molen B fase 1 en 2 (Bühler-walsenstoelen van 3.500-6.000 kg door het dak gehesen): maalcapaciteit +50% per fase, extra kolom draaiende walsen in beeld",
+        "Zuiginstallatie 180 t/u: schepen lossen 50% sneller",
+        "Nieuwe loskade (100 m, 14 buispalen): twee schepen tegelijk aan de kade, aanbod blijft 50% langer staan",
+        "Extra conditioneercel: buffer x2, rusttijd -20%",
+        "Tweede bulkwagen (vervoerder AB Texel): twee ritten tegelijk",
+        "Elektrische pendel naar het Kooiker-magazijn aan de Zwettestraat: zakgoed-orders worden zonder bulkwagen afgehandeld (30.000 kg CO2 bespaard, tekst in de kaart)",
+        "Zonnepark-contract (100% Nederlandse groene stroom): immuun voor netcongestie",
+        "Nedertarwe-telers werven (+40% ingezaaid): Nedertarwe-schepen 2x zo vaak, meer premium-orders",
+        "KIEM-sessie voor bakkers: deadlines +25% (bakkers die je kent, wachten op je)",
+        "Voorspellende storingssignalering: storingen herstellen zichzelf na 2 s",
+        "Zaden & pitten-menghal: ontgrendelt Prémax-orders",
+        "Easter egg (zeldzame kaart): 'Wachtwoordkluis' - 'Stagiair Bikkel zet een Vaultwarden op; de molen-PC's zijn eindelijk veilig.' Effect: 1 gratis storingsfix per week. Eén regel, geen verdere verwijzing."
+      ]
+    },
+    "difficulty_modes": "Gezel (deadlines +30%, events x0,5), Molenaar (standaard), Pionier (events x1,5, Matif-prijzen volatiel, aanbodvenster 8 s). Highscore per modus.",
+    "replay": "Highscore + badges in localStorage; upgrade-draft en event-volgorde zijn random (seed getoond, deelbaar); eindrang motiveert 'nog één run'."
+  },
+  "koopmans_tie_in": {
+    "locatie_en_logistiek": [
+      "Fabriek aan De Merodestraat 3, Leeuwarden, aan het Nieuwe Kanaal; de loskade van 100 m (oudste deel 1927, vervangen 2024-2025 met 14 buispalen) is het bovenste speelveld en een upgrade-kaart",
+      "Zuiginstallatie 120 t/u lost een schip van ca. 1.000 t in één werkdag; gemiddeld ca. 4 schepen per week - dit is letterlijk de pacing van een speelweek",
+      "Groninger schip van 500 t Dollard Tarwe ('na veertig jaar', februari 2025) als eigen scheepstype; Duitse schepen voor het restant; EKO-tarwe komt apart (optioneel als week 36-schip)",
+      "Oogstbericht 2026: eerste Nederlandse tarwe in week 31 aan wal, eind juli eerste schepen gelost, eind augustus eerste Duitse schip - de weeknummers en volgorde van het spel",
+      "Expeditie: bulkwagen met gecompartimenteerde cellen (min. 2 t per cel, meerdere bakkerijen per rit) en 25 kg zakgoed via de groothandel; 65-70% van de bakkers neemt bulk; uitgaand transport AB Texel; Kooiker-magazijn Zwettestraat met elektrische pendel",
+      "Volcontinu vijfploegendienst (bedrijfs-cao): de klok loopt 24/7 door, dus de molen stopt nooit"
+    ],
+    "proces_stappen_als_verdiepingen": [
+      "Reinigen: aspirateur, zeven en magneten halen onkruidzaad, kaf, stenen en metaal eruit - 'stenen en metaal mogen nooit op de walsen' wordt de storingscascade",
+      "Conditioneren: water toevoegen, 12-48 uur rusten zodat de zemel taai wordt; in het spel een buffer met rusttijd, harde Duitse tarwe rust langer",
+      "Walsenstoelen: koppels tegengesteld draaiende walsen, geribbeld (breken) naar glad (uitmalen); Molen B voegt een kolom toe",
+      "Plansichter: hevig schuddende zeefkast met gestapelde zeven die maalstromen scheidt - geanimeerd als trillende doos",
+      "Uitmalingsgraad 75%: 1 t tarwe = ca. 750 kg bloem + zemelen/gries naar veevoer (historisch ook een Koopmans-tak)",
+      "Eiwitgehalte als primaire bakwaarde-parameter: Nederlandse tarwe 10-12%, Duitse >12%; gewogen silo-eiwit bepaalt of je Jupiter kunt maken"
+    ],
+    "producten": [
+      "Tarwebloem Orion, Zuiderkroon, Jupiter (en Saturnus als naam in de order-pool) - productspecificaties in het spel zijn gamified en worden in het colofon als 'spelabstractie' gelabeld",
+      "Nedertarwe Bloem (zonder broodverbetermiddelen, 100% uit de Nedertarwe-silo), Nedertarwe Volkorenmeel als order-variant",
+      "Prémax ambachtelijke bakkersmixen genoemd naar Friese meren: Slotermeer, Tjeukemeer, Fluessen (premium-orders week 35+)",
+      "Zakgoed 25 kg met het aantal zakken op de kaart ('40 t = 1.600 zakken')",
+      "Uitsluitend B2B-klanten: ambachtelijke bakkerijen, industriële broodfabrieken, groothandel. Geen supermarktproducten - colofon vermeldt expliciet dat het supermarktmerk Koopmans sinds 2000 van Dr. Oetker is en dat dit spel over Royal Koopmans (bakkers en industrie) gaat"
+    ],
+    "nedertarwe_meter": [
+      "Nedertarwe = duurzaam geteelde Nederlandse baktarwe met CZAV (Zeeland), later telers in Groningen; +EUR 20/t voor de teler, 3% bloemenranden (bloemetjes-icoon op de kaart)",
+      "Doel-percentages volgen de echte cijfers: 10% van het volume in 2026, groeiend naar 25% (25.000 t van ca. 200.000 t); strategienaam 'Op weg naar 100% Nedertarwe' als eindtekst",
+      "Nedertarwe-bakkers betalen +15% (consumenten betalen echt 21 cent extra per brood) en hebben een gevelbordje-icoon",
+      "Badge 'Agribusiness Award' bij >= 25% aandeel (echt gewonnen 4 februari 2025); 'Werkbezoek van de minister' als positief event (echt werkbezoek september 2025)"
+    ],
+    "events_uit_de_werkelijkheid": [
+      "Natte oogst (2024 was het natste jaar ooit, toch goede kwaliteit): vocht 16% -> conditioneren x1,5, deel van de output lager valgetal",
+      "Graanklander: 3-5 mm kevertje dat in 30 dagen een partij onverkoopbaar maakt; bestrijding = 'Geen korrel!' schoonmaken (5x tikken)",
+      "Netcongestie: volledige elektrificatie kan pas vanaf 2032; machines 20 s op 60% tenzij zonnepark-contract (molens draaien echt op 100% groene stroom van zonneparken in Groningen en Zeeland)",
+      "Matif-piek: tarweprijs stijgt door onrust in het Midden-Oosten (maart 2026), tarwe +40% voor één week",
+      "Steen op de walsen: gevolg van genegeerde reiniging"
+    ],
+    "cijfers_en_historie_in_hud_en_eindscherm": [
+      "Jaarverslag rekent bloem om naar broden: ca. 1.800 broden per ton bloem (212.000 t graan = bijna 300 miljoen broden; 165.000 t meel)",
+      "Laadscherm/colofon: 'Pioniers in graan sinds 1846' - rosmolen in Holwerd gekocht voor 1.550 gulden; 1867 Stoommeelfabriek Friso in Leeuwarden met een stoommachine van 2 pk; predicaat Koninklijk 1976; 180 jaar in 2026 'Groei door verbinding'; ca. 160 medewerkers; masterplan ruim EUR 20 mln met Molen B van Bühler naast de molen uit 2008",
+      "Kernwaarden als badges: Betrouwbaar (95% op tijd), Vakmanschap (0 downgrades), Ondernemend (alle upgrades), Elke Korrel Telt (afval < 2%)",
+      "Rollen in plaats van echte namen: 'de molenaar', 'inkoop', 'Meester Boulanger' - geen medewerkersnamen in het spel"
+    ],
+    "never": [
+      "Geen Cambuur-sponsoring (dat is verffabrikant NelfKoopmans)",
+      "Geen pannenkoekmix, oliebollenmix of supermarktverpakking als Royal Koopmans-product",
+      "Geen exacte opleverdatum van Molen B claimen (bronnen verschillen); het spel zegt alleen 'gaat live in het jubileumjaar'"
+    ]
+  },
+  "controls": {
+    "touch_portrait": "Alles is tikbaar met hit-areas van minimaal 48 px. Tik 'Koop'/'Laat gaan' op de scheepskaart; tik en houd 1 s op een storingslampje (ring vult zich); tik productsilo = recept omstellen; tik orderkaart = laden in bulkwagen-cel; tik 'Rijden'; tik klander 5x; swipe horizontaal op de orderstrip bij meer dan 3 kaarten. Pauze/mute als knoppen in de HUD. Geen drag-and-drop nodig, geen multitouch. Canvas 400x780 logische punten, geschaald op devicePixelRatio; viewport-fit=cover en overscroll-behavior: none.",
+    "desktop_mouse": "Zelfde speelveld in portret, gecentreerd en geschaald naar vensterhoogte, met links/rechts een rustige akkerrand-achtergrond en een legenda met sneltoetsen. Klik = tik; klik en vasthouden = storing fixen; muiswiel over de orderstrip scrollt.",
+    "keyboard": "K = koop schip, L = laat gaan, 1-4 = recept Orion/Zuiderkroon/Jupiter/Nedertarwe, Q/W/E/R = fix storing op verdieping 1-4 (vasthouden), A/S/D/F = laad order 1-4 in de bulkwagen, Spatie of Enter = Rijden, P = pauze, M = mute, Esc = menu. Upgrade-draft: 1-3 kiest kaart, Enter bevestigt, 0 = overslaan.",
+    "accessibility": "Kleur nooit het enige signaal (storing = rood lampje + moersleutel-icoon + puls); deadline als balk + seconden; teksten >= 13 px; eenvoudige 'rustige modus' (events x0,5) via Gezel."
+  },
+  "scoring": {
+    "primary": "Nettowinst in EUR aan het einde van week 36 = omzet bloem + veevoer-bijproducten - inkoop tarwe - liggeld - boetes - upgrades. Grote getallen, tycoon-gevoel: 'Nettowinst EUR 2,4 mln'.",
+    "multipliers": "Betrouwbaar-streak: elke 5 leveringen op tijd verhoogt de omzetfactor met 0,1 (max 1,5); één te late levering reset naar 1,0. Combinatierit (3 cellen) = +10% op die rit. Nedertarwe-meter op of boven weekdoel = +5% omzet die week.",
+    "penalties": "Te laat: order vervalt, -20% van de orderwaarde als boete. Schip wacht met vol silo: liggeld per speeluur (echt havengeld-idee). Downgrade Jupiter->Orion: lagere prijs. Klander niet opgeruimd: -10% silo-inhoud per 2 s.",
+    "ranks": "Nettowinst < EUR 0,8 mln: Bakkersgezel; < EUR 1,8 mln: Molenaar; < EUR 3,0 mln: Pionier in graan; >= EUR 3,0 mln: Koninklijk (grenzen tunable per moeilijkheid).",
+    "badges": "Agribusiness Award (Nedertarwe >= 25%), Betrouwbaar (>= 95% op tijd), Elke Korrel Telt (< 2% graan verloren), Vakmanschap (0 downgrades), Molen B (beide fases gebouwd), Groei door verbinding (alle 6 weken gehaald zonder faillissement).",
+    "jaarverslag_screen": "Toont omzet, inkoop, nettowinst, ton gemalen, ton bloem, 'goed voor X broden', Nedertarwe-%, leveringen op tijd %, storingen gefixt, schepen gelost; vergelijk met je highscore; knop 'Nog een oogstjaar' en 'Deel seed'.",
+    "fail_state": "Kas onder EUR -500k aan het einde van een week = 'De aandeelhoudersvergadering grijpt in' (zacht game over met jaarverslag). Anders speel je altijd door tot week 36."
+  },
+  "visual_direction": {
+    "palette": {
+      "goud": "#CFAB00",
+      "oranje_accent": "#E78A01",
+      "antraciet": "#1D1E1F",
+      "donkerrood_alarm": "#C52135",
+      "lichtgrijs_ui": "#F7F7F7",
+      "zand_ui": "#E3E1DA",
+      "tarwe_geel": "#E8C66B",
+      "bloem_wit": "#FBF7EE",
+      "zemel_bruin": "#8B5A2B",
+      "kanaal_blauw": "#4F7FA3",
+      "friese_lucht": "#CFE3F0",
+      "bloemenrand_groen": "#6FA35B",
+      "klaproos": "#D9442B",
+      "nedertarwe_teal": "#2E7D7B"
+    },
+    "layout_portrait_400x780": "0-110 lucht + Nieuwe Kanaal met kade en schip (aanbodkaart als overlay); 110-200 twee ruwe silo's (Gangbaar / Nedertarwe) met vulniveau, tonnage en eiwit %; 200-560 de molentoren met vier verdiepingen (Reinigen, Conditioneren, Walsenstoelen, Plansichter) verbonden door verticale pijpen waar gele korrelpuntjes doorheen vallen en onderaan witte bloempuntjes; 560-620 vier productsilo's als trechters met vulbalk en gouden rand op het actieve recept; 620-720 expeditie met bulkwagen (3 cellen zichtbaar als vakjes) op een weg met Leeuwarder skyline-silhouet (scheve Oldehove, Achmeatoren); 720-780 orderstrip met kaarten. HUD-balk bovenop met weekklok, kas, Nedertarwe-meter.",
+    "shapes_and_procedural_drawing": "Platte vectorstijl, alleen Canvas 2D primitieven: roundRect voor verdiepingen en kaarten; walsen = paren cirkels met een draaiende streep (rotatie uit tijd) en ribbel-tandjes op de eerste stoel; plansichter = rechthoek met 4 horizontale zeeflijnen die 2 px heen en weer trilt (sin(t*40)); conditioneercel = cilinder met druppel-icoon en een cirkelvormige rusttimer; graan = pool van max 180 deeltjes (3 px cirkels) die langs de pijp-paden vallen, kleur geel boven en wit onder de walsen; schip = polygon romp + stuurhut, zakt zichtbaar als hij leeg raakt, zuigbuis als quadratische curve; bulkwagen = cabine-rechthoek + afgeronde tank met 2 scheidingslijnen, wielen als cirkels; wolken als 3 overlappende cirkels; Oldehove als 6 graden gekantelde rechthoek. Pijpen en gebouwcasco worden één keer naar een offscreen canvas getekend en elke frame geblit. Alarm = rode ring met puls (scale 1.0-1.15) en moersleutel uit drie lijnen. Een eenvoudige gouden kroon (drie bogen, drie bolletjes) als UI-accent in de titel; geen exacte reproductie van het logo, wel de huisstijlkleuren.",
+    "typography": "Google Fonts: 'Nunito' (600/800) voor UI en cijfers (dicht bij het Avenir Next-gevoel van de huisstijl) en 'La Belle Aurore' voor accenten zoals 'Pioniers in graan sinds 1846' op het titelscherm en de weekkop. Tabular numbers voor de kas via font-variant-numeric.",
+    "menus": "Titel, upgrade-draft, jaarverslag en pauze zijn DOM-overlays (HTML/CSS) over het canvas: makkelijke tekstomloop, grote knoppen, dark/light volgt prefers-color-scheme met de palette-tokens op :root.",
+    "feel": "Warm en nuchter-Fries: zandkleurige kaarten, antraciet toren, goud als beloning, rood alleen voor alarm. Humor in kaarttekst (klander: 'Hij is klein, bruin en heeft vier lichte vlekjes. Geen korrel!'), nooit in de mond van echte personen."
+  },
+  "sound": {
+    "engine": "WebAudio, alles gesynthetiseerd, ontgrendeld op de eerste tik (autoplay-policy), mute-knop onthouden in localStorage.",
+    "layers": [
+      "Molenrumoer: bruine ruis door een lowpass (180-400 Hz), gain evenredig met de actuele maalcapaciteit; valt stil bij omstellen of netcongestie",
+      "Korrels: korte pink-noise bursts (40 ms) bij start van lossen",
+      "Scheepshoorn: sawtooth 110 Hz + 165 Hz, 600 ms met envelope, bij aanmeren",
+      "Kassa-tik: sine 880 -> 1320 Hz, 90 ms, per geleverde order; combinatierit speelt een drieklank",
+      "Bulkwagen: tweetonige square-claxon (330/440 Hz) bij vertrek, licht LFO-geruis tijdens de rit",
+      "Storing: triangle 220 Hz pulserend om de 500 ms tot gefixt; steen op de walsen = korte noise-crunch",
+      "Klander: hoog knisperend 'getik' (random sine 2-4 kHz, 20 ms) zolang hij er zit",
+      "Upgrade: oplopend arpeggio in C-majeur (sine), Molen B krijgt een extra lage toon",
+      "Weekwissel: zachte klokslag (sine 523 Hz met lange decay)"
+    ],
+    "scope_note": "Ca. 120 regels; alle klanken via één helper beep(type, freq, dur, gain)."
+  },
+  "feasibility": "Eén HTML-bestand: één <canvas> voor het speelveld plus drie DOM-overlays (titel, upgrade-draft, jaarverslag). Eén requestAnimationFrame-loop met vaste dt-stap; toestand als plain objects: ships[], silos{gangbaar,nedertarwe}, floors[4] met {rate, buffer, jam}, productSilos[4], orders[], truck{cells[], busyUntil}, events[], upgrades{}. Geen physics, geen pathfinding, geen assets: alles procedureel met roundRect/arc/lineTo. Deeltjes zijn puur cosmetisch (max 180) en koppelen aan de werkelijke flow-waarde, zodat de simulatie zelf uit ~15 getallen per tick bestaat. Geschatte omvang: strings/data (producten, herkomsten, bakkerijnamen, events, upgrade-kaarten) 250 regels, simulatie 350, rendering 450, input/responsive 120, DOM-menus 250, audio 120, save/score 80, CSS 150 = ca. 1.800 regels. Alle balanswaarden in één CONFIG-object bovenin zodat Bikkel in 3 testruns kan tunen. Werkt offline, geen build-stap, Google Fonts met system-ui fallback.",
+  "risks": [
+    "Scope creep: cellen + recepten + eiwitgemiddelde + events + draft zijn vijf systemen; snijvolgorde als het te veel wordt: eerst Prémax/menghal, dan tweede bulkwagen, dan liggeld, dan Pionier-modus. De kern (schip -> toren -> recept -> order) moet in de eerste 600 regels staan en al leuk zijn.",
+    "Economische balans in één zitting: cijfers (prijzen, ordergrootte, upgradekosten) staan in CONFIG en moeten in 3 playtests worden afgestemd; zonder tuning is een run te makkelijk of loopt week 34 vast.",
+    "Te veel tekst op 400 px: Dutch woorden als 'Conditioneren' zijn lang; gebruik iconen + korte labels en toon details alleen in een tooltip/kaart.",
+    "Storingen kunnen whack-a-mole worden: cap op 1 actieve storing tegelijk, minimaal 6 s tussen storingen, en 'Voorspellende storingssignalering' als uitlaatklep.",
+    "Automatische flow kan de speler passief maken: orderwachtrij en recept-omstellen moeten dwingen tot keuzes; cadence-check in de playtest (>= 1 tik per 8 s).",
+    "Productspecificaties van Orion/Zuiderkroon/Jupiter zijn in het echt onbekend; de eiwit-eisen zijn een spelabstractie en worden zo gelabeld in het colofon om geen onjuiste claims te doen.",
+    "Feiten met middelmatige betrouwbaarheid (120 t/u, 4 schepen per week, Molen B-datum) komen uit krantenfragmenten: gebruik als sfeer, niet als harde bedrijfsclaim; geen opleverdatum noemen.",
+    "Merk en personen: fan-game van een stagiair, geen officieel product; gebruik huisstijlkleuren maar niet het exacte logo; geen namen van medewerkers; verplichte colofonregel over Dr. Oetker/supermarktmerk en 'niet officieel'.",
+    "Performance op oudere telefoons: deeltjes beperken, casco naar offscreen canvas, geen shadowBlur, DPR cap op 2.",
+    "Audio: autoplay-policy vereist ontgrendeling op eerste tik; alles moet ook zonder geluid leesbaar zijn.",
+    "Touch-precisie: 'Laat gaan' en 'Koop' ver uit elkaar zetten en een silo-vol-waarschuwing tonen vóór de koop, zodat een misklik geen EUR 200k kost.",
+    "Replaywaarde hangt af van de draft-pool: minimaal 10 kaarten nodig, anders voelen runs identiek."
+  ],
+  "unique_hook": "Zwaartekracht-tycoon op je telefoon: een echte hoogmaalderij is een hoog gebouw waar het graan van boven naar beneden valt, en een telefoon in portret is precies die toren. Het schip meert bovenaan aan het Nieuwe Kanaal, de bulkwagen rijdt onderaan de Oldehove voorbij, en elke gele korrel die je door Reinigen, Conditioneren, Walsenstoelen en Plansichter ziet vallen komt aan het einde terug als 'goed voor 4,3 miljoen broden' in je jaarverslag - terwijl een kraan tussen de weken letterlijk Molen B door het dak hijst."
+}

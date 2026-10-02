@@ -1,0 +1,80 @@
+{
+  "juror": "engineer",
+  "scores": [
+    {
+      "key": "arcade",
+      "title": "Korrelval",
+      "fun": 8,
+      "koopmans_fit": 8,
+      "feasibility": 9,
+      "replay": 8,
+      "total": 33,
+      "comment": "Sterkste idee: jij bent de korrel en valt met één-as besturing door 180 jaar Koopmans-molens; de kern (scrollende schacht, walsparen met spleet, cirkelbotsing, drie levens, 'Nog een korrel?') is in 400-500 regels speelbaar en leuk, en de moeilijkheid zit in drie getallen per level (scroll, spleet, interval) die je in minuten tunet. Zwakte: zes tijdperk-achtergronden en zeven bijzondere obstakeltypes (takelwals, aspirateur, stoomwolken) lokken scope creep uit, en de generator moet hard garanderen dat elke spleet bij 420 px/s haalbaar is."
+    },
+    {
+      "key": "puzzel",
+      "title": "Maalstroom",
+      "fun": 6,
+      "koopmans_fit": 9,
+      "feasibility": 7,
+      "replay": 6,
+      "total": 28,
+      "comment": "Sterkste idee: de echte procesvolgorde (reinigen, conditioneren, walsen, zeven, EKO apart, zaden alleen in de menger) wordt puzzelregel, met tik-om-te-draaien als de meest robuuste touch-besturing van alle zes en de slimme truc 'opgelost bord husselen' die oplosbaarheid garandeert. Zwakte: de flow-solver met splitsende en mengende stromen plus vijftien handgemaakte ASCII-levels is veel randgevallen- en contentwerk, en zonder sterk leveldesign wordt het 'draai de bocht terug'-routine."
+    },
+    {
+      "key": "tycoon",
+      "title": "Elke Korrel Telt (tycoon)",
+      "fun": 6,
+      "koopmans_fit": 9,
+      "feasibility": 4,
+      "replay": 7,
+      "total": 26,
+      "comment": "Sterkste idee: de telefoon als hoogmaalderij met het schip boven en de bulkwagen onder, plus inkoopkeuzes (eiwit voor Jupiter, Nedertarwe-meter) die echte bedrijfsdilemma's spelen. Zwakte: vijf systemen die allemaal tegelijk moeten kloppen (inkoop, storingen, recepten met gewogen eiwit, orders met bulkcellen, events plus draft) en een economie die pas na veel testruns in balans is; op 400 px dreigt een tekstrijk dashboard waar één verkeerd getal de hele run breekt."
+    },
+    {
+      "key": "verhaal",
+      "title": "De Tijdmolenaar",
+      "fun": 5,
+      "koopmans_fit": 8,
+      "feasibility": 4,
+      "replay": 3,
+      "total": 20,
+      "comment": "Sterkste idee: elke verdieping is een tijdperk en de molen zelf is de quizbaas (It Hynder, de Graanklander, Molen B), met vijf herbruikbare mini-engines. Zwakte: zes ondiepe mini-games plus quiz-engine, verhaalpanelen en scene-manager zijn veel losse systemen die elk apart gepolijst moeten worden, de kern is pas leuk als meerdere engines af zijn, quizvragen verliezen na één run hun waarde, en etage 4 speelt zich af op het merkgevoelige Dr. Oetker-terrein."
+    },
+    {
+      "key": "fysica",
+      "title": "Elke Korrel Telt (fysica)",
+      "fun": 6,
+      "koopmans_fit": 9,
+      "feasibility": 3,
+      "replay": 5,
+      "total": 23,
+      "comment": "Sterkste idee: de korrel knakt zichtbaar in wit endosperm, bruine zemel en een geel kiempje die je naar de echte silo's sorteert; het meest leerzame beeld van het maalproces van alle zes. Zwakte: zelfgeschreven fysica met kantelende en schuddende zeefdekken, splitsende lichamen en gat-op-straal-logica is de grootste tuningval van de zes; met 8-15 brokjes tegelijk onder één kantel-as voelt het snel willekeurig, en het is pas leuk na veel playtests."
+    },
+    {
+      "key": "wildcard",
+      "title": "Graanskûtsje",
+      "fun": 7,
+      "koopmans_fit": 6,
+      "feasibility": 5,
+      "replay": 6,
+      "total": 24,
+      "comment": "Sterkste idee: de Prémax-meren letterlijk bezeilen en bruggeld in het klompje van de brugwachter mikken; vol Friese charme, met een sterke afmeerfinale aan de echte loskade. Zwakte: zeilfysica met windpolaire, dode hoek en opkruisen in een smal portretscherm vraagt veel tuning en voelt voor niet-zeilers onlogisch ('waarom sta ik stil?'), en het maalproces zelf komt nauwelijks in beeld, want dit is een logistiekspel."
+    }
+  ],
+  "best_key": "arcade",
+  "runner_up_key": "puzzel",
+  "ideas_to_graft": [
+    "Uit fysica: laat de korrel bij elke walspassage zichtbaar 'knakken'. 2-3 bruine zemelvlokjes schieten als deeltjes uit de bestaande pool weg en de korrel wordt een paar procent kleiner en witter. Geen fysica, ca. 20 regels, en 'van korrel tot bloem' is dan per passage te zien in plaats van alleen per level.",
+    "Uit fysica: toon altijd (niet alleen in Molen B) 1 s vooraf een klein waarschuwingsdriehoekje aan de bovenrand waar een steen of bout binnenkomt. Dat is goedkope eerlijkheid en voorkomt 'dat zag ik niet aankomen'.",
+    "Uit puzzel: gebruik de 15 Molenaarsweetjes als kant-en-klare data-array voor de Wist-je-dat-kaartjes, en vervang de generieke voortgangsbalk door een smalle procesbalk in de HUD (Lossen > Reinigen > Conditioneren > Walsen > Zeven > Silo) waarvan de iconen oplichten terwijl je door het level zakt.",
+    "Uit wildcard: zet de dagelijkse seed standaard aan in Nachtploeg (datum als seed voor een mulberry32-RNG, label 'Korrel van de dag'), zodat collega's dezelfde run vergelijken. Voeg Friese microcopy toe: startknop 'It giet oan!', perfecte passage 'Tsjoch!', game-over-ondertitel 'Oant moarn'. Plus navigator.vibrate(15) bij een hit, met feature-detectie.",
+    "Uit verhaal: een knop 'Kopieer score' die een deelbare regel op het klembord zet ('Korrelval, Nachtploeg 2 okt: 3.450 kg bloem, goed voor ca. 6.200 broden'), met try/catch en een fallback naar een selecteerbaar tekstveld. Gebruik daarnaast de doorrollende jaartal-teller (kilometerteller-stijl) als goedkope levelintro.",
+    "Uit tycoon: maak het eindscherm een mini-jaarverslag met kernwaarde-badges die alleen bestaande stats gebruiken: Betrouwbaar (level zonder hit), Vakmanschap (75% of meer perfecte passages), Elke Korrel Telt (alle Nedertarwe-korrels gepakt), plus 'goed voor X broden'."
+  ],
+  "build_warnings": [
+    "Onhaalbare of oneerlijke spawns. Bij 420 px/s en een spleet van 16% is één slecht geplaatst walspaar een gegarandeerde hit. Beperk in de generator de verschuiving van het gatmidden per verdieping tot |dx| <= 0,7 x vmax x (verticale afstand / scrollsnelheid). Houd de spleet minimaal 2,6x de korrelhitbox (die een cirkel is, geen ellips). Bereken bij plansichters de gatpositie op het moment dat de korrel aankomt (fase van de sinus), niet bij het spawnen. Bouw een debugtoets in (bv. ` voor 0,5x scroll en hitboxweergave) en test elk level één keer met maximale stuursnelheid.",
+    "Touch-mapping en stuurgevoel. Gebruik pointer events met setPointerCapture, reken coördinaten via getBoundingClientRect om naar het logische 400x720-veld (de letterbox en devicePixelRatio zijn de klassieke offset-bugs) en stuur relatief: de korrel beweegt met de vinger-delta, begrensd door vmax, en springt nooit naar de absolute x waar de duim neerkomt. Zet touch-action:none en overscroll-behavior:none op html en body, en preventDefault op touchmove. Geef DOM-overlays pointer-events:none behalve op de knoppen zelf, zodat ze geen canvas-input opeten. Luister naar resize en visualViewport, want de adresbalk van iOS Safari verandert de hoogte.",
+    "Scope creep voordat de kern leuk is, en een fysicastap die ontspoort. Mijlpaal 1 (tot 600 regels) bevat alleen de schacht, walsparen en stenen, de cirkelbotsing met 80%-hitbox, levens met 1 s onkwetsbaarheid, score en combo, game-over met 'Nog een korrel?' (één tik), toetsenbord, muis en touch. Pas daarna komen levels als configrijen met drie gedeelde paletten (hout/staal/digitaal), plansichter, pick-ups, audio en localStorage. Bij tijdnood schrappen: takelwals, aspirateur, stoomwolken, klander-gedrag en zes unieke achtergronden. Begrens dt op 0,05 s, laat de accumulator maximaal 4 substappen doen en pauzeer bij visibilitychange; anders telt een tabwissel of framepiek als een onterechte hit ('Partij afgekeurd')."
+  ]
+}

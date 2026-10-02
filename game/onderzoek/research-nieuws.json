@@ -1,0 +1,225 @@
+{
+  "facts": [
+    {
+      "fact": "In 2025 meldde de Leeuwarder Courant dat Royal Koopmans aan De Merodestraat in Leeuwarden ruim 20 miljoen euro investeert in een 'masterplan': de molen uit 1967 wordt vervangen door een nieuwe molen naast de molen uit 2008, die op 3 juli 2026 operationeel moet zijn (exacte publicatiedatum artikel niet verifieerbaar, site blokkeert bots).",
+      "source": "https://friesland.headliner.nl/item/iedereen-kent-de-meelfabriek-van-royal-koopmans-in-leeuwarden-maar-wat-gebeurt-daar-nou-eigenlijk-lc-113115",
+      "confidence": "medium"
+    },
+    {
+      "fact": "Volgens hetzelfde LC-artikel (2025) worden walsen van meer dan acht ton aangevoerd en bouwt de Zwitserse molenbouwer Bühler de installatie; de molen uit 1965 wordt omgebouwd tot roggemolen, het bedrijf telt circa 160 medewerkers en de nieuwe molens zijn vergaand gedigitaliseerd met voorspellende storingssignalering.",
+      "source": "https://friesland.headliner.nl/item/elke-graankorrel-telt-voor-meelfabriek-royal-koopmans-uit-leeuwarden-dat-is-toch-een-gaaf-verhaal-lc-113111",
+      "confidence": "medium"
+    },
+    {
+      "fact": "Begin 2026 deelde COO Annemarie Jorna op LinkedIn dat voor de nieuwe 'Molen B' walsenstoelen van 3.500 tot 6.000 kg door een opening in het dak zijn gehesen; in het jubileumjaar 2026 (180 jaar) gaat Molen B live en worden ook een nieuwe expeditie en een nieuwe menghal gebouwd (alleen via zoekfragment, LinkedIn niet direct leesbaar).",
+      "source": "https://www.linkedin.com/in/annemariejorna/",
+      "confidence": "medium"
+    },
+    {
+      "fact": "Van mei 2024 tot februari 2025 verving De Boer & De Groot in opdracht van Royal Koopmans Meel B.V. circa 100 meter loskade (aanmeerplek voor graanschepen) aan de meelfabriek in Leeuwarden; het oudste deel dateerde uit 1927, de nieuwe kade is een vrijstaande damwand (AZ44-700) met 14 buispalen en een nieuwe betonvloer.",
+      "source": "https://www.deboerendegroot.nl/wat-hebben-wij-gedaan/vervangen-loskade-royal-koopmans-meelfabriek/",
+      "confidence": "high"
+    },
+    {
+      "fact": "Op 29 augustus 2024 publiceerde Royal Koopmans een vacature Project Engineer (32-40 uur, standplaats Leeuwarden) voor de afdeling Continuous Improvement & Projects, gericht op 'uitbreidings- en vervangingsinvesteringen', rapporterend aan de Manager CI & Projects; op 26 augustus 2024 volgde een vacature Commercieel Medewerker Binnendienst.",
+      "source": "https://www.royalkoopmans.com/meel/over-koopmans-meel/actueel-bij-meel/vacature-project-engineer",
+      "confidence": "high"
+    },
+    {
+      "fact": "Op 1 december 2023 meldde Logimerce dat Kooiker Logistiek zijn warehouse in Leeuwarden met circa 1.000 m² en 7 docks uitbreidt voor nieuwe klant Royal Koopmans (klant per januari 2024); de voorraad van Royal Koopmans verhuist van Heerenveen naar Leeuwarden (afgerond rond juni 2024), het uitgaande transport blijft bij AB Texel.",
+      "source": "https://logimerce.nl/news/2718/kooiker-logistiek-breidt-uit-voor-nieuwe-klant-royal-koopmans",
+      "confidence": "high"
+    },
+    {
+      "fact": "Op 19 september 2024 berichtte Ondernemend Leeuwarden dat Royal Koopmans in de zomer van 2024 zijn magazijn van Heerenveen naar Kooiker Warehousing op bedrijventerrein De Zwette verplaatste en dat de pendel vanaf De Merodestraat met een gezamenlijk gefinancierde elektrische truck rijdt (30.000 kg CO2-reductie per jaar); burgemeester Sybrand Buma reed mee en hoorde over het KIEM Innovatiecentrum (Koopmans, Innovatie, Expertise en Molenaarschap).",
+      "source": "https://ondernemendleeuwarden.nl/elektrische-pendel-voor-royal-koopmans/",
+      "confidence": "high"
+    },
+    {
+      "fact": "Op 2 december 2024 maakten Royal Koopmans en Kooiker Logistiek hun samenwerking officieel bekend, met een volledig elektrische vrachtauto voor de pendeldienst en een BRC/SKAL/AEO-gecertificeerd warehouse met RF-barcodescanning; Koopmans bedankte René Visser en Jorne Hornstra van Kooiker.",
+      "source": "https://www.royalkoopmans.com/meel/over-koopmans-meel/actueel-bij-meel/royal-koopmans-en-kooiker-logistiek-bundelen-krachten-voor-verdere-professionalisering-en-verduurzaming",
+      "confidence": "high"
+    },
+    {
+      "fact": "Op 22 februari 2024 lanceerde Royal Koopmans het eerste Nedertarwe-schip op HVO100-biobrandstof (meer dan 85% CO2-reductie t.o.v. diesel), samen met REINPLUS FIWADO Bunker (VARO Energy), binnenvaartcoöperatie NPRC, graancollecteur CZAV en VOF Sympathie Shipping.",
+      "source": "https://www.royalkoopmans.com/meel/over-koopmans-meel/actueel-bij-meel/royal-koopmans-leidt-de-weg-naar-duurzaamheid-met-het-eerste-nedertarwe-schip-op-hvo100-biobrandstof",
+      "confidence": "high"
+    },
+    {
+      "fact": "In een interview van 18 april 2025 zei duurzaamheidsmanager Kiki de' Liguori Carino (in dienst sinds 1 juli 2024) dat 65% van het graan van Royal Koopmans van Nederlandse bodem komt en de rest uit Duitsland, dat het bedrijf de eigen operaties in 2040 CO2-neutraal wil hebben en vrijwillig doorgaat met CSRD-implementatie ondanks het Omnibuspakket.",
+      "source": "https://www.royalkoopmans.com/meel/over-koopmans-meel/actueel-bij-meel/interview-laten-we-vooral-met-positieve-energie-inspireren-en-geinspireerd-worden",
+      "confidence": "high"
+    },
+    {
+      "fact": "Op 24 april 2025 lichtte Royal Koopmans zijn duurzaamheidsaanpak toe (regeneratieve teelt met Natuurmonumenten en graancollecteur FarmPlus, CO2-neutrale operaties in 2040) en HR-manager Jildou van der Schaaf het vitaliteitsprogramma 'vitaal per kwartaal'.",
+      "source": "https://www.royalkoopmans.com/meel/over-koopmans-meel/actueel-bij-meel/duurzame-inspanning-loont-hoe-we-duurzame-vooruitgang-in-de-food-agri-keten-versnellen",
+      "confidence": "high"
+    },
+    {
+      "fact": "Unique Lights verving (ongedateerd, na 2021 gezien 'meer dan 175 jaar') de verlichting op de verdieping van Koopmans Foodcoatings (voorheen LaCo Crumbs) in de meelfabriek door dimbare Dialight-LED-armaturen, goed voor 17.000 kWh energiebesparing per jaar met terugverdientijd 5-7 jaar.",
+      "source": "https://www.uniquelights.nl/projecten/royal-koopmans/",
+      "confidence": "medium"
+    },
+    {
+      "fact": "Op 28 april 2025 meldde Royal Koopmans deelnemer te zijn van productiviteitsnetwerk NPAL (220 deelnemers/105 bedrijven), waarbij COO Annemarie Jorna lid is van de Raad van Toezicht van NPAL.",
+      "source": "https://www.royalkoopmans.com/meel/over-koopmans-meel/actueel-bij-meel/durven-te-delen-om-met-elkaar-beter-te-worden---het-npal-kompas-als-routekaart-voor-productiviteitverbetering",
+      "confidence": "high"
+    },
+    {
+      "fact": "Op 3 november 2021 kondigde Royal Koopmans de lancering (8 november 2021) van Nedertarwe aan, duurzaam geteeld graan van Hollandse bodem; op 18 januari 2022 volgde de officiële digitale lancering voor ambachtelijke bakkers met collecteur CZAV (Jurriaan Visser) en teler Wouter Vijfvinkel.",
+      "source": "https://www.royalkoopmans.com/meel/over-koopmans-meel/actueel-bij-meel/met-een-digitaal-event-is-nedertarwe-officieel-gelanceerd-voor-de-ambachtelijke-bakker",
+      "confidence": "high"
+    },
+    {
+      "fact": "Op 3 maart 2022 verklaarde sourcing manager Bauke Wierda dat Royal Koopmans geen tarwe uit Rusland/Oekraïne betrekt, het grootste deel van Nederlandse bodem komt en een deel uit Duitsland, en dat de samenwerking met CZAV 100% aanvoerzekerheid geeft ondanks de prijsexplosie door de oorlog.",
+      "source": "https://www.royalkoopmans.com/meel/over-koopmans-meel/actueel-bij-meel/situatie-in-oekraine-zet-tarwemarkt-onder-druk---voldoende-voorraad-maar-sterke-prijsstijgingen",
+      "confidence": "high"
+    },
+    {
+      "fact": "Op 29 juni 2022 vertelde CEO Dirk Lodewijk aan ABN AMRO dat Royal Koopmans 60% tarwe van Nederlandse bodem gebruikt en dat aandeel naar 70% en uiteindelijk circa 90% wil brengen (percentages uit zoekfragment, artikelkop geverifieerd).",
+      "source": "https://www.abnamro.nl/nl/zakelijk/insights/sectoren-en-trends/ondernemersverhalen/food/met-nedertarwe-voegt-royal-koopmans-waarde-toe-in-de-hele-keten.html",
+      "confidence": "medium"
+    },
+    {
+      "fact": "Op 16 november 2023 won Nedertarwe de 'Kop boven het graanveld' Innovatieprijs 2023 van het Nederlands Bakkerij Centrum (Innovatiestoel plus 2.000 euro), met 836 van ruim 2.500 publieksstemmen; de uitreiking was in Leeuwarden.",
+      "source": "https://www.royalkoopmans.com/meel/over-koopmans-meel/actueel-bij-meel/royal-koopmans-wint-met-nedertarwe-de-innovatieprijs-2023",
+      "confidence": "high"
+    },
+    {
+      "fact": "Op 4 april 2024 tekenden CEO Dirk Lodewijk en Teo Wams (directeur natuurbeheer Natuurmonumenten) een strategisch partnerschap tussen Royal Koopmans en 'Rotterdam de boer op!' rond Nedertarwe; Koopmans stelde dat nog slechts 5% van het Nederlandse brood van Nederlandse tarwe is gemaakt.",
+      "source": "https://www.royalkoopmans.com/meel/over-koopmans-meel/actueel-bij-meel/ceo-dirk-lodewijk-en-directeur-natuurbeheer-van-natuurmonumenten-teo-wams-tekenen-samenwerkings-voor-nog-gezondere-boterham",
+      "confidence": "high"
+    },
+    {
+      "fact": "Op 24 september 2024 meldde Royal Koopmans dat ondanks het natste jaar ooit opnieuw Nederlandse baktarwe en Nedertarwe van hoge kwaliteit is geoogst, in samenwerking met CZAV en Natuurmonumenten.",
+      "source": "https://www.royalkoopmans.com/meel/over-koopmans-meel/actueel-bij-meel/duurzaam-succes-hoge-kwaliteit-nederlandse-baktarwe-ondanks-extreem-weer",
+      "confidence": "high"
+    },
+    {
+      "fact": "Op 4 februari 2025 won Royal Koopmans met Nedertarwe de Agribusiness Award 2025 (ABN AMRO/Boerenbusiness), uitgereikt tijdens 'Insights Live' op het ABN AMRO Open; jury onder leiding van Aalt Dijkhuizen, 33 inzendingen, Nedertarwe telt inmiddels meer dan honderd telers.",
+      "source": "https://www.abnamro.nl/nl/zakelijk/insights/sectoren-en-trends/ondernemersverhalen/agrarisch/nedertarwe-winnaar-van-agribusiness-awards.html",
+      "confidence": "high"
+    },
+    {
+      "fact": "Op 19 februari 2025 vertrok na veertig jaar het eerste schip met 500 ton Groninger baktarwe van vereniging Dollard Tarwe (Oldambt) naar Royal Koopmans in Leeuwarden; voor seizoen 2025 staat 12.000 ton (20-25 scheepsladingen) gepland en Koopmans verwerkt jaarlijks circa 200.000 ton tarwe, waarvan ruim 100.000 ton uit Nederland.",
+      "source": "https://akkerwijzer.nl/artikel/1215642-na-veertig-jaar-eerste-lading-groninger-baktarwe-per-schip-naar-maalbedrijf-koopmans",
+      "confidence": "high"
+    },
+    {
+      "fact": "Op 28 november 2025 meldde Boerenbusiness dat voor oogst 2026 40% meer Nedertarwe wordt ingezaaid, ondanks tarweprijzen onder 200 euro per ton.",
+      "source": "https://en.boerenbusiness.nl/video/10914657/awardwinnende-nedertarwe-breidt-flink-uit",
+      "confidence": "high"
+    },
+    {
+      "fact": "Op 29 september 2025 bracht minister Wiersma (LVVN) een werkbezoek aan Royal Koopmans in Leeuwarden, met ontvangst door CEO Dirk Lodewijk, toelichting op Nedertarwe door ketenpartners en een rondleiding door de Food Ingredients-fabriek.",
+      "source": "https://www.rijksoverheid.nl/actueel/agenda/2025/09/29/agenda-minister-wiersma-week-40",
+      "confidence": "high"
+    },
+    {
+      "fact": "Op 15 april 2021 vierde Royal Koopmans zijn 175-jarig bestaan ('pioniers in graan sinds 1846'); Bakkerswereld publiceerde hierover het (betaalde) artikel 'Royal Koopmans bestaat 175 jaar'.",
+      "source": "https://www.bakkerswereld.nl/61030/royal-koopmans-bestaat-175-jaar",
+      "confidence": "high"
+    },
+    {
+      "fact": "Op 20 oktober 2025 zaaide Royal Koopmans met de gemeente Leeuwarden, Hoogland BV en NHL Stenden-studenten het eerste 'urban tarweveld' (Nedertarwe) in de wijk Middelsee in; manager sourcing Bauke Wierda noemde het een cadeau in aanloop naar het 180-jarig jubileum in 2026.",
+      "source": "https://www.royalkoopmans.com/meel/over-koopmans-meel/actueel-bij-meel/eerste-urban-tarweveld-in-leeuwarden-nedertarwe-brengt-natuur-mens-en-stad-samen-in-wijk-middelsee",
+      "confidence": "high"
+    },
+    {
+      "fact": "Op 23/24 april 2026 opende wethouder Evert Stellingwerf het Urban Tarweveld in Middelsee als 180-jarig jubileumcadeau van Royal Koopmans aan Leeuwarden, met workshops met agro-ecoloog Ben Koks, een audiotour en een pop-up diner; na de oogst gaan er bouwpalen de grond in.",
+      "source": "https://www.omropfryslan.nl/nl/nieuws/18405555/urban-tarweveld-in-leeuwarden-eten-verbouwen-bij-de-stoplichten",
+      "confidence": "high"
+    },
+    {
+      "fact": "Op 17 april 2024 werd Royal Koopmans een van de drie finalisten voor de Koning Willem I Prijs 2024 in de categorie Grootbedrijf (finale 16 mei 2024 in Zwolle); Omrop Fryslân filmde dansende medewerkers op het binnenplein en noteerde dat het 177-jarige familiebedrijf in dertig landen actief is.",
+      "source": "https://www.omropfryslan.nl/nl/nieuws/16443936/dansen-in-de-meelfabriek-koopmans-is-finalist-voor-koning-willem-i-prijs",
+      "confidence": "high"
+    },
+    {
+      "fact": "Op 16 mei 2024 won Royal Koopmans de Koning Willem I Prijs 2024 niet: de prijzen gingen naar Fairphone, Royal Cosun en Lagemaat Sloopwerken.",
+      "source": "https://ioplus.nl/archive/nl/fairphone-royal-cosun-en-lagemaat-sloopwerken-winnen-koning-willem-i-prijs-2024/",
+      "confidence": "medium"
+    },
+    {
+      "fact": "Op 10 maart 2026 zei CEO Dirk Lodewijk tegen Omrop Fryslân dat de tarweprijs (Matif) steeg door de oorlog in het Midden-Oosten (VS/Israël versus Iran) zonder directe verklaring, dat ook de Leeuwarder meelfabriek de prijsstijging voelt ondanks grotendeels Nederlandse tarwe, maar dat de prijs nog onder het niveau van zomer 2025 ligt.",
+      "source": "https://www.omropfryslan.nl/nl/nieuws/18277322/naast-olie-en-gas-wordt-ook-tarwe-duurder-geen-verklaring-voor",
+      "confidence": "high"
+    },
+    {
+      "fact": "Op 2 september 2025 noemde Omrop Fryslân Koopmans in een overzicht 'Van Achmea tot Koopmans: deze Friese bedrijven veroverden de wereld'.",
+      "source": "https://www.omropfryslan.nl/nl/nieuws/17743602/van-achmea-tot-koopmans-deze-friese-bedrijven-veroverden-de-wereld",
+      "confidence": "high"
+    },
+    {
+      "fact": "Op 21 oktober 2024 verscheen in ING's TF Magazine een dubbelinterview met Dirk Lodewijk en Plukon-CEO Kees Kraijenoord, waarin Lodewijk vertelt dat hij in 2011 bij Koopmans kwam, een zuivere B2B-strategie ontwikkelde, onderdelen verkocht en dat het familiebedrijf ruim tweehonderd aandeelhouders heeft.",
+      "source": "https://www.royalkoopmans.com/meel/over-koopmans-meel/actueel-bij-meel/artikel-het-grote-belang-van-een-ketenbenadering-volgens-ceo-plukon-food-group-kees-kraijenoord-en-dirk-lodewijk",
+      "confidence": "high"
+    },
+    {
+      "fact": "Volgens KvK-gegevens (via Company.info, peildatum 28 september 2026) is D. Lodewijk sinds 2011 algemeen directeur van Koopmans Koninklijke Meelfabrieken B.V. en registreerde de KvK op 7 juli 2026 een wijziging in het management van Royal Koopmans (aard van de wijziging niet openbaar).",
+      "source": "https://companyinfo.nl/organisatieprofiel/vervaardiging-van-maalderijproducten/royal-koopmans-leeuwarden-01006828-000019911173",
+      "confidence": "medium"
+    },
+    {
+      "fact": "Op 13 februari 2024 maakte Royal Koopmans bekend dat CEO Dirk Lodewijk de nieuwe voorzitter is van ingrediëntennetwerk IFFI (Ingredients For Food Innovators), als opvolger van Ruud Peerbooms (Corbion); hij werd voorgesteld op het IFFI-congres van 21 september 2023.",
+      "source": "https://www.royalkoopmans.com/meel/over-koopmans-meel/actueel-bij-meel/dirk-lodewijk-nieuwe-voorzitter-van-iffi-netwerk-voor-producenten-van-voedselingredienten",
+      "confidence": "high"
+    },
+    {
+      "fact": "Annemarie Jorna is COO van Royal Koopmans (genoemd in MT/Sprout Next Leadership 50 in 2021 en in Koopmans-nieuws van 28 april 2025); Kiki de' Liguori Carino is sinds 1 juli 2024 manager duurzaamheid en Jildou van der Schaaf is HR-manager.",
+      "source": "https://mtsprout.nl/ranglijst/next-leadership-50-2021/annemarie-jorna-coo-bij-royal-koopmans",
+      "confidence": "medium"
+    },
+    {
+      "fact": "De cao Koopmans Koninklijke Meelfabrieken B.V. 1 januari 2026 t/m 31 december 2027 (met FNV en CNV) bevat loonsverhogingen van 4,5% in 2026 en 3,5% in 2027, een minimumuurloon van 16,74 euro per 1 januari 2026, een inflatieclausule bij afwijking van 2 procentpunten en een 80/90/100-regeling; eerdere cao's liepen 2022-2023 en 2024-2025.",
+      "source": "https://www.fnv.nl/getmedia/7946ec04-7fef-4de2-95e4-5d627d5dd8e8/4-koopmans-koninklijke-meelfabrieken-cao-01-01-2026-tm-31-12-2027-v08012026.pdf?ext=.pdf",
+      "confidence": "high"
+    },
+    {
+      "fact": "Op 29 oktober 2025 vond de eerste cao-onderhandelingsronde bij Royal Koopmans in Leeuwarden plaats 'in goede sfeer'; op 24 november 2025 stemden CNV- en FNV-leden over het onderhandelingsresultaat (geen stakingen gevonden voor 2022-2026).",
+      "source": "https://www.cnv.nl/voeding/voeding/cao-koopmans/nieuws/eerste-cao-ronde-bij-royal-koopmans-2025-10-30/",
+      "confidence": "medium"
+    },
+    {
+      "fact": "Op 18 juli 2022 introduceerde Koopmans Meel 'Vergheten Graenen' (emmer, khorasan, rotkorn en rogge) als nieuwe generatie brood voor bakkers; op 7 september 2023 volgde de verbeterde Oliebollenmix Patent Premium.",
+      "source": "https://www.royalkoopmans.com/meel/over-koopmans-meel/actueel-bij-meel/nieuw-vergheten-granen-de-nieuwe-generatie-brood-voor-een-onderscheidend-assortiment",
+      "confidence": "high"
+    },
+    {
+      "fact": "Op 2 december 2024 publiceerde Koopmans Food Ingredients een artikel in Eiwit Trends over het belang van een goede coating voor 'vleesvervangers 2.0'; de divisie (paneermeel, batters, bindmiddelen) is volgens Omrop Fryslân (17 april 2024) in dertig landen actief.",
+      "source": "https://www.royalkoopmans.com/foodingredients/over-food-ingredients/actueel",
+      "confidence": "high"
+    },
+    {
+      "fact": "Koopmans Food Coatings B.V. staat als exposant (stand 41B62) op Fi Europe 2026, 17-19 november 2026 in Frankfurt, met onder meer Koopmans AirCrumbs, Bind-it voor vis en vegan, Cheese Solutions en biologische graanoplossingen.",
+      "source": "https://www.ingredientsnetwork.com/47/company/26/79/68/exhibitor267968-629.html",
+      "confidence": "high"
+    },
+    {
+      "fact": "Op 6 juli 2026 meldde Royal Koopmans in zijn oogstbericht dat de eerste tarwe van oogst 2026 in week 31 in Leeuwarden aan wal komt en dat ook de nieuwe Groninger Nedertarwe-telers tevreden zijn; op 26 augustus 2026 volgde dat eind juli de eerste Nederlandse schepen zijn gelost, het eerste Duitse schip is ontvangen en EKO-tarwe pas in de tweede helft van oktober wordt verwacht.",
+      "source": "https://www.royalkoopmans.com/meel/over-koopmans-meel/actueel-bij-meel/oogstbericht---laatste-update",
+      "confidence": "high"
+    },
+    {
+      "fact": "Op 29 december 2021 verklaarde Royal Koopmans dat de landelijk gemelde oliebollenmix zonder gist het consumentenmerk Koopmans van Dr. Oetker betrof en niet de professionele mix van Royal Koopmans; de Leeuwarder Courant rectificeerde de foutieve koppeling.",
+      "source": "https://www.royalkoopmans.com/meel/over-koopmans-meel/actueel-bij-meel/geen-problemen-met-de-oliebollenmix",
+      "confidence": "high"
+    },
+    {
+      "fact": "Royal Koopmans (Koopmans Meel B.V. en Koopmans Food Ingredients B.V., beide op De Merodestraat 3) presenteert zich op WRK.frl (geraadpleegd oktober 2026) als familiebedrijf met twee fabrieken op één terrein in Leeuwarden en één openstaande vacature; medewerkersprofielen op de eigen site noemen functies als Monteur EI&A, Proces Operator en Team Lead Customer Service.",
+      "source": "https://www.wrk.frl/bedrijven/royal-koopmans/",
+      "confidence": "high"
+    }
+  ],
+  "open_questions": [
+    "Exacte publicatiedatum en volledige inhoud van de twee Leeuwarder Courant-artikelen (headliner lc-113111 en lc-113115) over het 20-miljoen-masterplan: site blokkeert geautomatiseerde toegang; is de nieuwe molen daadwerkelijk op 3 juli 2026 in bedrijf gegaan en is er een officiële opening geweest?",
+    "Welke managementwijziging registreerde de KvK op 7 juli 2026 (Company.info-melding)? Vertrek/aantreden van een bestuurder?",
+    "Precieze omzet en personeelsomvang 2023-2025 (jaarrekeningen achter betaalmuur; LC noemt ~160 medewerkers, companydata.com ~104 voor Koopmans Meel B.V.).",
+    "Details van de nieuwe expeditie en menghal (bouwer, vergunning, kosten) en eventuele zonnepanelen/warmtepomp/elektrificatie van het maalproces: geen openbare bron gevonden behalve de doelstelling 'CO2-neutrale operaties in 2040'.",
+    "Uitkomst cao-stemming 24 november 2025 (CNV-pagina's niet bereikbaar via proxy); FNV-pdf bevestigt wel dat de cao 2026-2027 is afgesloten.",
+    "Artikelen in Friesch Dagblad, Foodlog, VMT en recente Bakkerswereld-stukken (2022-2026): niet gevonden/achter betaalmuur.",
+    "Geen enkele bron gevonden voor brand, staking, stofexplosie of productrecall bij Royal Koopmans in 2022-2026; alleen de Dr. Oetker-verwarring van december 2021.",
+    "Architect Heldoorn Ruedisulj vermeldt een project 'Nieuwe Molen Koopmans Meel' maar de site was onbereikbaar (DNS-fout); details over hoogte/bouwkundige uitvoering ontbreken."
+  ],
+  "notes": "Onderzoek uitgevoerd 2 oktober 2026 met WebSearch (ca. 45 queries NL/EN, standard+extended) en curl via proxy. WebFetch was voor de meeste Nederlandse domeinen egress-geblokkeerd; curl werkte wel voor royalkoopmans.com, omropfryslan.nl, akkerwijzer.nl, boerenbusiness.nl, abnamro.nl, deboerendegroot.nl, logimerce.nl, ondernemendleeuwarden.nl, companyinfo.nl, fnv.nl (pdf) en rijksoverheid.nl. Niet leesbaar: headliner.nl (IP-block), mtsprout.nl/indeed/dnb (Cloudflare), linkedin.com, cnv.nl (timeout), bakkerswereld.nl en ensie.nl (betaalmuur), heldoornruedisulj.nl (DNS). Feiten met confidence 'medium' berusten op zoekfragmenten of op bronnen die slechts gedeeltelijk gelezen konden worden; niets is uit geheugen aangevuld. Let op: 'Jorne Hornstra' is directeur bij Kooiker Logistiek, niet bij Koopmans. Dirk Lodewijk wordt afwisselend CEO en algemeen directeur genoemd (in functie sinds 2011)."
+}

@@ -1,0 +1,160 @@
+{
+  "title": "Graanskûtsje",
+  "pitch": "Jij bent schipper van het skûtsje 'Uilke Klazes' en zeilt ladingen van 1.000 ton tarwe over de Friese meren (Slotermeer, Fluessen, Tjeukemeer, Princenhof, Bonkevaart: precies de namen van de Prémax-bakkersmixen) naar de loskade van Royal Koopmans in Leeuwarden, dwars door wind, regenbuien en bruggen waar je het bruggeld in het klompje van de brugwachter moet mikken. Hou de lading droog (onder 14% vocht), meer precies af aan de 14 buispalen en laat de zuiginstallatie met 120 ton per uur lossen, want de molen die 212.000 ton per jaar vermaalt staat nooit stil.",
+  "genre": "Top-down zeil-/bezorg-arcade met echte skûtsjesilen-tactiek (windhoek, overstag, kloeten), bruggeld-timing en een eindeloze 'Oogstseizoen'-modus. Niet een racer tegen anderen, maar een cargo-run tegen wind, water en vocht.",
+  "core_loop": "Elke ~10 seconden: (1) je leest de windpijl bovenin en de donkere 'windvlagen' (rimpelvlekken) op het water; (2) je stuurt met links/rechts zodat het bruine gaffelzeil vol staat (zeil kleurt warm goudbruin en bolt op als het trekt; het klappert grijs als je 'in de wind' ligt binnen ±35°, dan stop je en moet je met de actieknop 'kloeten': de bemanning duwt je met de vaarboom weer op gang); (3) je neemt precies één hindernis: een boei op de juiste kant ronden (+50 'Boei gerond'), een brug waarbij de brugwachter een klompje aan een hengel laat zwaaien en jij op het juiste moment de actieknop tikt om het bruggeld erin te mikken (+100 'Tsjoch!' en de brug gaat open; mis = brug blijft dicht, je moet 3 s afremmen en wachten), of een regenwolk waarvan de schaduw over het dek drijft: tik actie voor 'Dekkleed erover!' (6 s dicht, maar de eerste 1,5 s kun je niet sturen omdat de bemanning bezig is) of accepteer dat het vochtpercentage van je lading stijgt; (4) je houdt de vochtmeter (start 13,0%, rood boven 14,0%) en de stopwatch in de gaten. Aan het einde van elke etappe: afmeren bij de Koopmans-kade (de wind uit het zeil laten lopen door op te loeven, binnen de 100 m kade stoppen en op actie tikken voor 'Touw om de buispaal'; precisie geeft 0-300 punten), daarna een 8-seconden time-lapse waarin de zuiginstallatie het ruim leegzuigt (120 t/u, 'in één werkdag gelost') en de silo volloopt terwijl de score wordt opgeteld.",
+  "progression": {
+    "campagne_duur": "Vijf etappes van 60-100 seconden (totaal circa 6-7 minuten), elke etappe introduceert precies één nieuwe mechaniek met een kaart van één regel. Daarna ontgrendelt de eindeloze modus 'Oogstseizoen' voor replay.",
+    "etappes": [
+      {
+        "nr": 1,
+        "naam": "Slotermeer",
+        "lengte_s": "~60",
+        "nieuw": "Sturen op de wind, boeien ronden",
+        "wind": "Constante halve wind (90°), geen vlagen",
+        "hindernissen": "3 boeien, brede meeroever",
+        "lading": "1.000 ton Friese baktarwe uit Noord-Friesland (de eerste lokale supply base, project Pure Oorsprong 2012)",
+        "wordt": "Tarwebloem Orion",
+        "weetje": "In 1846 leende bakkersgezel Uilke Klazes Koopmans 1.550 gulden en kocht een rosmolen in Holwerd."
+      },
+      {
+        "nr": 2,
+        "naam": "Fluessen",
+        "lengte_s": "~75",
+        "nieuw": "Bruggen en bruggeld in het klompje",
+        "wind": "Draait langzaam ±30°",
+        "hindernissen": "2 bruggen (waaronder de smalle doorgang bij Galamadammen), 4 boeien",
+        "lading": "1.000 ton Zeeuwse Nedertarwe van coöperatie CZAV",
+        "wordt": "Tarwebloem Zuiderkroon",
+        "weetje": "Omdat grote schepen Holwerd niet konden bereiken, verhuisde Koopmans in 1867 naar Leeuwarden: Stoommeelfabriek Friso, stoommachine van 2 pk."
+      },
+      {
+        "nr": 3,
+        "naam": "Tjeukemeer",
+        "lengte_s": "~80",
+        "nieuw": "Regenwolken en het dekkleed; windvlagen (donkere plekken geven +25% snelheid)",
+        "wind": "Vlagerig, puffs zichtbaar op het water",
+        "hindernissen": "3 regenwolken, 2 bruggen, 1 ondiepte (zandbank) bij Echtenerbrug",
+        "lading": "1.000 ton Duitse tarwe (via Lemmer; de rest van het graan komt per schip uit Duitsland)",
+        "wordt": "Tarwebloem Jupiter",
+        "weetje": "Boven 14% vocht kan graan gaan schimmelen en krijgt de graanklander zijn kans: één wijfje geeft in drie generaties 250.000 nakomelingen."
+      },
+      {
+        "nr": 4,
+        "naam": "Princenhof",
+        "lengte_s": "~90",
+        "nieuw": "Smalle, kronkelende vaarten door de Alde Feanen met rietoevers en tegenliggers (sloepen, een pontje)",
+        "wind": "Onstabiel door het riet, één korte opkruiser (overstag gaan)",
+        "hindernissen": "3 bruggen, 2 wolken, 4 tegenliggers, oevers vol bloemenranden (phacelia en klaprozen) die bonus geven als je er netjes langs zeilt",
+        "lading": "1.000 ton rogge voor de roggemolen (de molen uit 1965 wordt omgebouwd tot roggemolen)",
+        "wordt": "Roggemeel voor Fries roggebrood (15 uur gegaard, zonder gist of desem)",
+        "weetje": "Nedertarwe-telers leggen minimaal 3% bloemenranden aan en krijgen 20 euro per ton meerprijs."
+      },
+      {
+        "nr": 5,
+        "naam": "Bonkevaart",
+        "lengte_s": "~100",
+        "nieuw": "Finale: lange opkruiser tegen de wind in, moderne binnenvaart als tegenligger, en de afmeer-minigame aan de vernieuwde loskade",
+        "wind": "Tegenwind op het laatste rechte stuk, dan halve wind de haven in",
+        "hindernissen": "Alles gecombineerd, 2 grote binnenvaartschepen, Elfstedentocht-finishboog over de Bonkevaart als decor",
+        "lading": "1.000 ton Groninger Nedertarwe (oogst 2026, eerste schepen in week 31; na veertig jaar weer Groninger baktarwe per schip)",
+        "wordt": "Nedertarwe Bloem, zonder broodverbetermiddelen of E-nummers",
+        "weetje": "Bij Koopmans lossen gemiddeld vier schepen per week; de 100 meter loskade is in 2024-2025 vernieuwd met 14 buispalen."
+      }
+    ],
+    "medailles": "Per etappe drie medailles naar echte Koopmans-bloemnamen: Springline (brons), Silverline (zilver), Goldline (goud), op basis van score. Campagne-eindrang volgt de echte Nedertarwe-keten: Dekknecht, Schipper, Collecteur, Molenaar, Pionier in graan.",
+    "oogstseizoen_endless": "Na de campagne: willekeurig aaneengeregen segmenten (meer, vaart, brug, bui) met een silo-meter bovenin. De silo start op 2.000 ton en loopt leeg met 10 ton/s (+1 ton/s per gelost schip); elk afgemeerd schip voegt 1.000 ton × kwaliteitsfactor toe. Vier schepen = één week. Lege silo = 'De molen staat stil' = game over. Ladingen rouleren (Friese baktarwe, Nedertarwe, Duitse tarwe, rogge, EKO-tarwe met Skal-certificaat die apart in oktober komt). Highscore in ton gemalen en weken volgehouden, lokaal top-5 met drieletternaam in localStorage.",
+    "moeilijkheidscurve": "Windvariatie 0 → ±30° → vlagerig → onstabiel → tegenwind; hindernisdichtheid 1 per 20 s → 1 per 7 s; klompje-slingersnelheid stijgt per etappe; regenwolken worden groter en sneller; afmeerzone krimpt van 60% naar 35% van de kadelengte; in Oogstseizoen groeit de silo-afname per schip."
+  },
+  "koopmans_tie_in": {
+    "oprichtingsverhaal": "Het schip heet 'Uilke Klazes' naar de oprichter (1846, rosmolen in Holwerd voor 1.550 gulden). De intro vertelt dat Koopmans in 1867 juist naar Leeuwarden verhuisde omdat daar grotere schepen konden lossen; het spel is dus letterlijk het verhaal van de aanvoer over water.",
+    "premax_meren": "De vijf etappes dragen de namen van de Prémax ambachtelijke bakkersmixen die naar Friese wateren zijn genoemd: Slotermeer, Fluessen, Tjeukemeer, Princenhof en Bonkevaart. Dit zijn echte skûtsjesilen-locaties en de Bonkevaart is de Elfstedentocht-finish in Leeuwarden.",
+    "loskade_en_lossen": "Eindpunt is de echte loskade aan De Merodestraat 3 aan het Nieuwe Kanaal: 100 meter, vernieuwd mei 2024-februari 2025, 14 buispalen (afmeer-minigame), zuiginstallatie van 120 ton per uur, een schip van circa 1.000 ton in één werkdag gelost, gemiddeld vier schepen per week. De skyline toont het complex met de hoogste silo (1981) en in de finale een hijskraan die walsenstoelen van 3.500-6.000 kg door het dak van 'Molen B' hijst (jubileumjaar 2026, 180 jaar, thema 'Groei door verbinding').",
+    "graan_en_herkomst": "Ladingen zijn echte aanvoerstromen: Friese baktarwe (Pure Oorsprong/Fryske Bôle 2012), Zeeuwse Nedertarwe van CZAV, Duitse tarwe per schip, rogge voor de roggemolen (molen 1965), Groninger Nedertarwe (eerste schip Dollard Tarwe februari 2025, oogst 2026 eerste schepen week 31), EKO-tarwe (Skal) in oktober. Het Oogstseizoen verwijst naar de oogstberichten.",
+    "bloemnamen": "Elke gelost lading 'wordt' een echte Koopmans-bloem: Orion, Zuiderkroon, Jupiter, roggemeel, Nedertarwe Bloem; medailles heten Springline, Silverline, Goldline. Nooit consumentenproducten, geen pannenkoekenmix: de eindtekst zegt uitdrukkelijk 'voor ambachtelijke en industriële bakkers in heel Nederland'.",
+    "molenproces_en_kwaliteit": "Vochtmechaniek is gebaseerd op de 14%-grens voor schimmel en de graanklander-feiten; de silo-meter in Oogstseizoen verwijst naar 212.000 ton graan per jaar (bijna 300 miljoen broden) en 165.000 ton meel en bloem; de time-lapse toont de stappen graanontvangst → silo → reinigen → bevochtigen (12-48 uur) → walsenstoelen als iconen op de fabriekswand.",
+    "nedertarwe_en_duurzaamheid": "Bloemenranden (minimaal 3%) langs de oevers in Princenhof geven bonus; de weetjes noemen 20 euro per ton meerprijs, meer dan 150 telers, 25.000 ton, Agribusiness Award 2025 en Innovatieprijs 2023. Het eerste Nedertarwe-schip op HVO100 (februari 2024) wordt in etappe 2 genoemd met de knipoog 'jij vaart op wind, nog schoner'.",
+    "huisstijl": "Kleuren uit de echte stylesheet (goud #CFAB00, oranje #E78A01, antraciet #1D1E1F, rood #C52135), het lowercase woordmerk 'koopmans' met gouden kroon van drie bogen en drie bolletjes, payoff 'Pioniers in graan sinds 1846' en 'Wij halen alles uit graan' op het titelscherm.",
+    "friese_charme": "Startknop 'It giet oan!', bonus-popups 'Tsjoch!', de brugwachter met klompje aan de hengel, pompeblêden-vlag in de mast, Fries roggebrood, oranjekoek en sûkerbôle als 'bemanningsproviand' die je in de pauze-tekst ziet, en de eindtekst 'Oant moarn, skipper'.",
+    "easter_egg": "Vijf keer tikken op de gouden kroon op het titelscherm toont een klein kluisje: 'Havenmeester Bikkel bewaart zijn wachtwoorden tegenwoordig in Vaultwarden. Het bruggeld nog steeds in een klompje.'"
+  },
+  "controls": {
+    "toetsenbord_muis": "Pijltjes links/rechts of A/D = roer (sturen; het zeil trimt automatisch naar de goede kant). Spatie of Enter = actieknop (bruggeld werpen bij een brug, dekkleed bij een wolk, kloeten als je in de wind ligt, touw om de buispaal bij het afmeren). M = geluid aan/uit, P of Esc = pauze. Muis: ingedrukt houden op de linker- of rechterhelft van het canvas stuurt, klikken op de actieknop (of klikken op de boot) = actie; de hele UI (menu's, kaarten) is klikbaar.",
+    "touch": "Portretmodus. Duimzones: linker onderhelft van het scherm ingedrukt houden = roer links, rechter onderhelft = roer rechts; beide tegelijk = zeil losgooien (afremmen, handig voor het afmeren). Grote ronde actieknop (72 px) onderaan in het midden met contextlabel ('Bruggeld!', 'Dekkleed!', 'Kloeten!', 'Afmeren!') die oplicht wanneer de actie relevant is. Geen tilt-besturing, geen veegbewegingen nodig. Knoppen voor pauze en geluid 48 px rechtsboven. Canvas gebruikt de volledige viewport met 16 px veilige marge; haptische tik via navigator.vibrate(15) bij bonus (optioneel).",
+    "toegankelijkheid": "Alle acties zitten op één knop; de windpijl en de zeilkleur geven dubbele feedback (vorm en kleur); tekstgrootte minimaal 14 px op 400 px breedte."
+  },
+  "scoring": {
+    "per_etappe": [
+      "Lading: 1.000 ton × kwaliteitsfactor (1,00 bij vocht ≤ 14,0%; lineair naar 0,25 bij 16,0% = 'onverkoopbaar, naar het veevoer')",
+      "Tijdbonus: (partijd − jouw tijd) × 10, minimaal 0",
+      "Bruggeld in één keer raak: +100 per brug ('Tsjoch!')",
+      "Boei aan de juiste kant gerond: +50; verkeerde kant: −50",
+      "Bloemenrand-bonus (etappe 4 en endless): +25 per netjes gepasseerde oever",
+      "Afmeren: 0-300 naar precisie (midden van de 14 buispalen = 300)",
+      "Droge lading bij aankomst (vocht < 14%): +250",
+      "Aan de grond of aanvaring: geen puntenaftrek, maar 1,5-3 s tijdverlies en het vocht stijgt +0,2% (buiswater)"
+    ],
+    "medailles": "Springline ≥ 900, Silverline ≥ 1.400, Goldline ≥ 1.900 per etappe (partijden gekalibreerd zodat een vlotte eerste run zilver haalt).",
+    "oogstseizoen": "Score = totaal ton gemalen (som van 1.000 × kwaliteitsfactor per schip) met weekteller; game over bij lege silo. Lokale top-5 met drieletternaam, opgeslagen in localStorage (try/catch, werkt ook zonder opslag).",
+    "replay_prikkels": "Per-etappe medailles herhaalbaar via etappekeuze, campagne-eindrang, dagelijkse 'windzaad' (datum als seed voor Oogstseizoen zodat collega's dezelfde dag dezelfde zee hebben en scores kunnen vergelijken)."
+  },
+  "visual_direction": {
+    "perspectief": "Top-down vogelvlucht, verticaal scrollend (de boot vaart omhoog, camera volgt). Logische breedte 400 eenheden, hoogte volgt de viewport (minimaal 600); op desktop een gecentreerde kolom van maximaal 480 × 900 px met een decoratieve achtergrond (verloop van tarwegoud naar luchtblauw met een bloemenrand onderaan).",
+    "palet": {
+      "koopmans_goud": "#CFAB00",
+      "koopmans_oranje": "#E78A01",
+      "antraciet": "#1D1E1F",
+      "koopmans_rood": "#C52135",
+      "licht": "#F7F7F7",
+      "zand": "#E3E1DA",
+      "water_diep": "#2B5F7E",
+      "water_licht": "#3C7A9E",
+      "windvlaag": "#234B63",
+      "riet": "#7A8F3A",
+      "oever_gras": "#9CB356",
+      "tarwe": "#D9B64E",
+      "zeil_getaand": "#5A3A26",
+      "romp": "#2A2420",
+      "berghout": "#C52135",
+      "fries_blauw": "#0A4A8C",
+      "pompeblad_rood": "#C8102E",
+      "klompje": "#E0B84A",
+      "regenwolk": "rgba(60,70,80,0.55)",
+      "phacelia_paars": "#8A6FC9",
+      "klaproos": "#D7342B"
+    },
+    "vormen_en_tekenwijze": "Alles procedureel in Canvas 2D: water als twee lagen lopende sinus-rimpels (lijnen met lage alpha) plus zachte donkere ellipsen voor windvlagen; oevers als polygoonstroken met korte rietstreepjes en in etappe 4 stippen in paars en rood voor bloemenranden; het skûtsje als een platte, brede romp (afgeronde zeshoek met ronde kop en platte kont, kenmerkend voor een skûtsje) met twee zwaarden (leeboards) aan de zijkanten, een roer achter, een gaffelzeil als vierhoek die om de mast roteert naar de windhoek en bolt (quadratic curve) als hij trekt, een fok als driehoek, en een wimpel met pompeblêden-vlag (blauw-wit met rode blaadjes) die de windrichting toont; de brug als donkere balk met een opening, een brugwachter (bolletje + rechthoek + petje) met een lijn en een slingerend klompje (afgerond geel vormpje); boeien als rode/groene cirkels met vlaggetje; regenwolken als samengestelde translucente cirkels met vallende streepjes; tegenliggers als kleine sloepen en in de finale lange grijze binnenvaartschepen met 'NPRC'-achtige kleurband; de Koopmans-skyline als rechthoeken in antraciet en zand met de hoogste silo, een hijskraan en het lowercase woordmerk met gouden kroon (drie bogen, drie bolletjes) direct getekend op het canvas.",
+    "typografie": "Google Fonts: 'Nunito' (schreefloos, als vervanger van het Avenir Next van de website) voor UI en HUD; 'La Belle Aurore' (het handschriftfont dat de website zelf voor accenten gebruikt) voor etappenamen, 'Tsjoch!' en 'It giet oan!'.",
+    "hud": "Bovenin een smalle balk: windroos met pijl en windkracht (Bft 3-6), vochtmeter als dunne gouden/rode balk met percentage, stopwatch, score. Onderin het actiewiel. Popups als korte gouden tekstballonnen die 0,8 s omhoog drijven.",
+    "sfeer": "Hollandse wolkenlucht als schaduwspel op het water, warm goud bij de kade, humor in de kleine figuurtjes (de brugwachter zwaait met het klompje, bemanning op het dek rent heen en weer bij het dekkleed)."
+  },
+  "sound": {
+    "engine": "WebAudio-synthese, geen bestanden. Eén AudioContext die bij de eerste tik/klik wordt gestart (iOS-vereiste). Mute-knop, voorkeur in localStorage.",
+    "lagen": [
+      "Wind: witte ruis door een lowpass-filter waarvan de cutoff (300-1800 Hz) en gain met windkracht en vlagen meebewegen",
+      "Water: bruine ruis met langzame amplitude-LFO (0,4 Hz) voor klotsen langs de romp, harder bij hogere snelheid",
+      "Zeil klappert bij luffen: korte ruis-bursts op 6 Hz zolang je in de wind ligt",
+      "Brugbel: twee sinusdingen (880 en 988 Hz) met exponentieel verval wanneer de brug begint te openen",
+      "Klompje: pluk op een driehoeksgolf (660 Hz, 90 ms) bij raak bruggeld; dof 'plons' (lowpass ruis 120 ms) bij missen",
+      "Regen: hoogdoorlaatruis die aanzwelt zodra een wolkschaduw dichterbij komt",
+      "Dekkleed: korte 'flap' (ruisburst + 150 Hz sinus)",
+      "Afmeerhoorn: zaagtand 110 Hz met vibrato, 600 ms, bij geslaagd afmeren",
+      "Zuiginstallatie: zoemend filtered-noise met stijgende toonhoogte tijdens de los-time-lapse, eindigt in een korte gouden jingle",
+      "Titeljingle en 'Tsjoch!': pentatonische melodie van vijf noten op een zachte sinus/driehoek-mix, licht Fries-folky door een gepunteerd ritme"
+    ],
+    "omvang": "Circa 150 regels code; alle geluiden zijn optioneel en het spel is volledig speelbaar zonder geluid."
+  },
+  "feasibility": "Eén HTML-bestand van circa 1.900-2.300 regels: canvas-gameloop met requestAnimationFrame en vaste dt-cap (~300 regels), bootfysica met windpolaire (dode hoek ±35°, piek rond 100°, 0,8 bij voor-de-wind; roersnelheid schaalt met snelheid) in ~120 regels, baangeneratie uit een datatabel per etappe (segmenttypen: meer, vaart, brug, boeienveld, wolk, zandbank, tegenligger) ~250 regels, entiteiten met simpele cirkel/rechthoek-botsing ~350 regels, afmeren en los-time-lapse ~150 regels, DOM-overlays voor titel, etappekaart, pauze, resultaat en highscore in HTML/CSS ~300 regels, audio ~150 regels, Nederlandse strings plus weetjes als één array ~150 regels, input (keyboard, pointer, touch-zones) ~100 regels. Geen externe afbeeldingen of audio; alleen twee Google Fonts met systeemfallback. Alle tekening is vectorvormen en verlopen, dus scherp op elke DPI en licht genoeg voor oudere telefoons (minder dan 60 entiteiten tegelijk, geen schaduw-blur). Staat (voortgang, medailles, highscores, mute) in localStorage met try/catch, met nette fallback als opslag ontbreekt. Een ervaren engineer kan dit in één lange zit bouwen omdat alle mechanieken varianten zijn van 'positie, snelheid, timer, cirkelbotsing' en één enkele actieknop.",
+  "risks": [
+    "Zeilfysica kan voor niet-zeilers onduidelijk voelen (waarom sta ik stil?). Mitigatie: ruime polaire, duidelijke zeilkleur en 'in de wind'-prompt met kloeten-knop, etappe 1 met constante halve wind en zonder hindernissen.",
+    "Opstapeling van mechanieken (boeien, bruggeld, dekkleed, afmeren) kan overweldigen. Mitigatie: strikt één nieuwe mechaniek per etappe met een kaart van één regel en een optionele 'opnieuw uitleggen'-knop in het pauzemenu.",
+    "Opkruisen (tegen de wind in) op een smal portret-canvas kan frustreren. Mitigatie: tegenwindstukken alleen op brede meersegmenten en kort houden (etappe 4 kort, etappe 5 langer); canvas scrolt verticaal zodat zigzaggen natuurlijk voelt.",
+    "Historische en geografische vrijheden (een zeilend skûtsje dat levert aan de kade van 2025; meren in een handige volgorde). Mitigatie: expliciet gekaderd als knipoog in de intro ('een eerbetoon aan 1867, toen graan nog per zeilschip kwam') en een 'vrije interpretatie'-regel op het weetjesscherm.",
+    "Audio-autoplay op iOS en Android vereist een gebaar. Mitigatie: AudioContext starten bij de eerste tik; spel volledig speelbaar zonder geluid.",
+    "Enkele getallen (vier schepen per week, 120 t/u, 1.000 ton, 212.000 ton) komen uit Leeuwarder Courant-snippets met middelmatige zekerheid. Mitigatie: 'circa' en 'gemiddeld' gebruiken in alle teksten en het weetjesscherm als bron 'Leeuwarder Courant 2025' noemen.",
+    "Prestaties op oude telefoons door waterrimpels en veel lijnen. Mitigatie: rimpels als twee pre-gerenderde offscreen-tegels die verschoven worden, entiteitenlimiet, geen filters of blur.",
+    "Scope-creep in de Oogstseizoen-modus. Mitigatie: zelfde engine met willekeurige segmentketen en één extra silo-meter; geen nieuwe entiteiten.",
+    "Verwarring met het Dr. Oetker-consumentenmerk of met verffabrikant NelfKoopmans/Cambuur. Mitigatie: nergens pannenkoeken- of bakmix noemen, geen sponsorlogo's; de eindtekst benoemt 'bloem en meel voor ambachtelijke en industriële bakkers'."
+  ],
+  "unique_hook": "Het is het enige spel waarin je de Prémax-mixen letterlijk kunt bezeilen: de bakkersmixen van Koopmans heten Slotermeer, Fluessen, Tjeukemeer, Princenhof en Bonkevaart, en dat zijn precies de Friese wateren waar het skûtsjesilen plaatsvindt en waar de Elfstedentocht finisht. Je zeilt dus het oprichtingsverhaal van 1867 (naar Leeuwarden, want daar konden grotere schepen lossen) opnieuw, mikt bruggeld in het klompje van de brugwachter en eindigt elke etappe aan de echte, in 2025 vernieuwde loskade met 14 buispalen waar 120 ton per uur de silo in verdwijnt. Startknop: 'It giet oan!'."
+}

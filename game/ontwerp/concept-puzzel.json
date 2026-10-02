@@ -1,0 +1,120 @@
+{
+  "title": "Maalstroom",
+  "pitch": "Je bent molenaar aan De Merodestraat in Leeuwarden: draai de buizen, walsenstoelen en plansichters zo dat elke graankorrel van het schip aan de loskade via de juiste verdiepingen in de juiste silo belandt. Begin in 1846 bij de rosmolen van Holwerd en groei in vijftien rustige puzzels mee naar Molen B van 2026, zonder dat er één korrel verloren gaat, want elke graankorrel telt.",
+  "genre": "Calm turn-based rotation/flow puzzle (Pipe Mania x Infinity Loop) with ordered process stations, multiple stream types and a procedurally generated endless mode. No timer in the campaign; a 3-minute 'Nachtdienst' shift mode for high scores.",
+  "core_loop": "Every ~10 seconds the player: (1) reads the live flow preview, in which golden grain particles fall from the inlet at the top of the mill cross-section through the pipes until they spill, hit a wrong station or reach a silo; (2) taps/clicks one tile to rotate it 90 degrees (buis recht, buis bocht, reiniging, conditionering, walsenstoel, plansichter, menger); (3) the flow is instantly re-solved and re-animated, red markers show the current problem ('Stof! open buis', 'Steen op de wals!', 'Zemel in de Orion', 'Vermenging EKO/regulier'), silo fill meters rise for correctly routed grain; (4) when every inlet's grain is fully delivered to the right silos with no spills, the level completes: the silo empties into a bulkwagen with 2 t cells (or 25 kg bags for small lots), the uitmalingsgraad and crowns are shown and the next ship moors at the quay. A level takes 20 to 60 seconds and 4 to 14 rotations.",
+  "progression": {
+    "structure": "15 campaign levels in 5 historical eras (3 levels each), ~8-10 minutes total, followed by the unlockable endless 'Nachtdienst' mode. Each level is a solved board authored as an ASCII map that the game scrambles by randomly rotating every rotatable tile; par = number of tiles whose rotation differs from the authored solution. Win is checked on flow outcome, not on matching the author's layout, so alternative routes count.",
+    "eras": [
+      {
+        "era": "1846 Holwerd - Rosmolen",
+        "levels": "1-3",
+        "grid": "4 wide x 6 tall",
+        "introduces": "Rotating pipes (recht 2 states, bocht 4 states); one inlet 'Boekweit' at the top; mandatory order Reiniging -> Walsenstoel -> silo 'Boekweitmeel'. Tutorial text: 'In 1846 deed een paard dit werk: breken, zeven, mengen. Het principe is nooit veranderd.'",
+        "par": "3-5 moves, ~20 s each"
+      },
+      {
+        "era": "1867 Leeuwarden - Stoommeelfabriek Friso",
+        "levels": "4-6",
+        "grid": "5 x 7",
+        "introduces": "Plansichter (1 in, 2 out: fijn rechtdoor = BLOEM, grof opzij = ZEMEL); second silo 'Zemelen -> veevoer'; wrong product into a silo blocks completion. Flavor: the 2 pk steam engine 'bleek al snel ontoereikend'.",
+        "par": "5-7 moves, ~30 s"
+      },
+      {
+        "era": "1965-1967 De Merodestraat - Twee molens",
+        "levels": "7-9",
+        "grid": "5 x 8",
+        "introduces": "Conditionering tile (must come between Reiniging and the first Walsenstoel: 'droge tarwe maalt slecht'); locked 'kolom' tiles that cannot be rotated; second passage: the ZEMEL/gries stream may be routed through another Walsenstoel + Plansichter to raise uitmaling from 45% to 65% (optional, costs extra moves; this is the first real trade-off). Silo names: 'Orion', 'Zuiderkroon'.",
+        "par": "7-9 moves, ~40 s"
+      },
+      {
+        "era": "2008 - De nieuwe molen",
+        "levels": "10-12",
+        "grid": "6 x 8",
+        "introduces": "Second inlet 'EKO-tarwe' (green-tinted stream). Two streams may never share a tile ('Vermenging! EKO komt apart binnen - Skal'). Two bloem silos: 'Jupiter' and 'Eko Wit'; one shared veevoer silo. Decoy pipes that are not needed appear (unused pipes are allowed, spills are not).",
+        "par": "8-11 moves, ~50 s"
+      },
+      {
+        "era": "2026 - Molen B (Buhler, 180 jaar)",
+        "levels": "13-15",
+        "grid": "6 x 9",
+        "introduces": "Third inlet 'Zaden & pitten' (lake-blue stream) and the Menger tile (2 in, 1 out) - the only tile where joining streams is legal: BLOEM + ZADEN -> PREMAX, delivered to silos named after the Frisian lakes: 'Premax Slotermeer', 'Premax Tjeukemeer', 'Premax Fluessen'. Third passage available (uitmaling 75%, 'straight grade'). Level 15 has all three inlets, two kolom tiles and three passages: the finale.",
+        "par": "10-14 moves, ~60 s"
+      }
+    ],
+    "endless_mode": "'Nachtdienst' (unlocked after level 9, fully after 15): procedurally generated boards. Generator carves a random tree from each inlet downward through the grid (DFS with downward bias), places Reiniging/Conditionering on the first straight segments, a Walsenstoel before every Plansichter, Plansichters at branch points, silos at the leaves on the bottom row, fills 15-25% of remaining cells with decoy pipes, then scrambles. One shift lasts 3:00 ('volcontinue vijfploegendienst' flavor); each solved board = one ship of 1.000 t. High score in localStorage.",
+    "difficulty_curve": "Grid grows 4x6 -> 6x9; tile vocabulary grows one concept per era; constraints stack (order, separation, legal merging); decoys and locked tiles arrive mid-game; optional extra passages let good players chase higher uitmaling and 'Meesterknecht' under-par bonuses while casual players can still finish every level. Between eras a one-card 'Molenaarsweetje' with a real fact gives a breather."
+  },
+  "koopmans_tie_in": {
+    "place": "The whole screen is a cross-section of a hoogmaalderij: a tall building because the maalsel falls floor by floor via pipes from walsenstoel to plansichter. Top edge: the loskade at the Nieuwe Kanaal with a moored ship and the zuiginstallatie label 'Schip 1.000 t - 120 t/u - gelost in 1 werkdag'. Address shown on the title card: 'De Merodestraat 3, Leeuwarden'.",
+    "history_as_eras": "1846 Uilke Klazes Koopmans, 1.550 gulden, rosmolen in Holwerd, boekweit; 1867 Stoommeelfabriek Friso in Leeuwarden with a 2 pk steam engine; molens from 1965 and 1967 at De Merodestraat (1965 becomes roggemolen in the masterplan); the 2008 molen; 2026 Molen B by Buhler with walsenstoelen of 3.500-6.000 kg hoisted through the roof, in the 180-year jubilee year ('Groei door verbinding'). Predicaat Koninklijk 1976 appears as the crown on the level-complete card.",
+    "process_steps_as_tiles": "Reiniging (aspirateur/magneet: stenen en metaal mogen nooit op de walsen; failure text 'Steen op de wals!'), Conditionering (12-48 uur water intrekken zodat de zemel taai wordt), Walsenstoel (breekwalsen geribbeld, gladde walsen bij latere passages), Plansichter (schuddende zeefkast die het maalsel splitst in maalstromen: bloem rechtdoor, zemel opzij), Menger (de nieuwe menghal van 2026), silo's. Zemelen, gries en kortmeel go to 'Veevoer' - nevenstromen naar de veevoederindustrie.",
+    "numbers_in_scoring": "Uitmalingsgraad by passage count: 45% (short patent), 65% (long patent), 75% (straight grade) - the real 72-76% band; korrel = 83% endosperm, 14,5% zemel, 2,5% kiem shown on the result card; 1.000 t graan = ~1.415 broden per ton (212.000 t -> ~300 mln broden); bulkwagen cells of minimaal 2 t versus 25 kg zakken ('760 t bloem = 380 bulkcellen of 30.400 zakken'); campaign total compared with 165.000 t meel/bloem per jaar and 'ongeveer vier schepen per week'.",
+    "products": "Silo labels are real B2B flour names: Orion, Zuiderkroon, Jupiter, Saturnus, Silverline, Goldline, Eko Wit, Nedertarwe Bloem, Nedertarwe Volkorenmeel, Artisanaal T65; Premax mixes named after Frisian lakes: Slotermeer, Tjeukemeer, Fluessen, Bonkevaart, Princenhof. Inlets: Tarwe (NL), Duitse tarwe, EKO-tarwe (komt apart aan, Skal), Zaden & pitten, Boekweit (era 1), Rogge (bonus board for the 1965 roggemolen).",
+    "nedertarwe_and_sourcing": "Era 4-5 inlets are labelled 'Nedertarwe - Zeeland/Groningen'; a Molenaarsweetje tells of the first ship with 500 t Groninger baktarwe after forty years (februari 2025), the 170+ telers with minimaal 3% bloemenranden and 20 euro per ton meerprijs, and 65-70% Nederlandse tarwe. Nachtdienst flavor: bloem leaves via the elektrische pendel to the Kooiker-magazijn on De Zwette (30.000 kg CO2 per jaar bespaard).",
+    "molenaarsweetjes": [
+      "1846: Uilke Klazes Koopmans leende 1.550 gulden en kocht een rosmolen in Holwerd. Een paard maalde de boekweit.",
+      "1867: Stoommeelfabriek Friso in Leeuwarden. De stoommachine had 2 pk en bleek al snel te klein.",
+      "Een meelfabriek is hoog omdat het maalsel via buizen naar beneden valt: walsenstoel, plansichter, verdieping lager, en dat tot wel twintig keer.",
+      "Een schip van ongeveer 1.000 ton wordt in een werkdag gelost met 120 ton per uur. Zo'n vier schepen per week.",
+      "Conditioneren: schone tarwe krijgt water en rust 12 tot 48 uur, zodat de zemel taai wordt en schoon loslaat.",
+      "Uit een ton tarwe komt 720 tot 760 kilo bloem. De korrel is 83% endosperm, 14,5% zemel en 2,5% kiem.",
+      "Zemelen, gries en kortmeel gaan naar veevoer. Elke graankorrel telt.",
+      "EKO-tarwe komt apart aan in Leeuwarden en wordt apart vermalen (Skal).",
+      "Nedertarwe: ruim 170 telers, minimaal 3% bloemenranden, 20 euro per ton meerprijs, geen broodverbetermiddelen.",
+      "2026: voor Molen B zijn walsenstoelen van 3.500 tot 6.000 kilo door een opening in het dak gehesen.",
+      "De 100 meter loskade is in 2024-2025 vernieuwd; het oudste deel was uit 1927. Veertien buispalen om aan te meren.",
+      "Bulk of zakgoed: een bulkwagen heeft cellen van minimaal 2 ton, een zak bloem weegt 25 kilo.",
+      "Februari 2025: na veertig jaar weer een schip met 500 ton Groninger baktarwe aan de kade.",
+      "2026: 180 jaar Koopmans. Cadeau aan de stad: het eerste Urban Tarweveld van Nederland, in de wijk Middelsee.",
+      "Sinds 2024 rijdt een elektrische pendel naar het Kooiker-magazijn op De Zwette: 30.000 kilo CO2 minder per jaar."
+    ],
+    "guardrails": "No consumer products, pancake mixes or 'Koopmans' retail packaging appear anywhere; all silo names are bakers'/industry flours and the title card says 'levert aan bakkers en voedingsindustrie'. No sports sponsorship references. Humour is about horses, a 2 pk steam engine and open pipes, never about the company or staff; no real employee is used as a character.",
+    "easter_egg": "In era 5 the control room panel 'Molenbesturing - voorspellende storingssignalering' shows a tiny padlock icon. Tapping it once shows a toast: 'Inloggegevens veilig opgeslagen in Vaultwarden. Dank, Bikkel.' Nothing else; optional."
+  },
+  "controls": {
+    "mouse": "Left click a tile = rotate clockwise; right click or Shift+click = rotate counter-clockwise; hover shows a soft outline. Buttons: Ongedaan (undo), Opnieuw (reset), Molenaarstip (hint: fixes one tile, costs one crown), Geluid.",
+    "keyboard": "Arrow keys / WASD move a cursor highlight; Space or Enter rotates clockwise; Shift+Space rotates counter-clockwise; Z = undo; R = reset; H = hint; M = mute; N = next level after completion; Esc = menu. Fully playable without a mouse.",
+    "touch": "Tap a tile = rotate clockwise; long-press (400 ms) = rotate counter-clockwise; buttons are 48 px+ tap targets in a bottom bar within thumb reach. No swipes, no drag, so no scroll conflicts. Portrait layout: grid up to 6x9 at 56 px tiles = 336x504 px, header 70 px (era + ship + moves/par), process bar 36 px, button bar 64 px: fits a 400x740 phone with no horizontal scroll; the grid scales down via CSS for smaller screens, and the whole column is centered at max 440 px on desktop.",
+    "accessibility": "Stream types differ by shape as well as colour (EKO particles are squares, zaden are triangles, regular grain are ovals); flow problems are also named in text; no time pressure in the campaign; a 'Rustige animaties' toggle reduces motion."
+  },
+  "scoring": {
+    "per_level": "Kronen (the three-arch crown from the logo, drawn in gold): 3 kronen at or under par moves, 2 kronen up to par+3, 1 krone for any completion; a used Molenaarstip removes one krone. Under par = 'Meesterknecht' badge. Uitmalingsgraad shown as 45 / 65 / 75% depending on how many wals+plansichter passages the player chained; ton bloem = 1.000 t x uitmaling; broden = 1.000 x ~1.415.",
+    "campaign_total": "Jaarteller: cumulative ton bloem and broden, and the number of ships unloaded ('15 schepen = bijna vier weken lossen bij ongeveer vier schepen per week; X% van een jaarproductie van 165.000 ton'). Total kronen out of 45 unlock Nachtdienst variants (two inlets at 30 kronen, three at 40).",
+    "nachtdienst_high_score": "3:00 shift; score = ton bloem produced (boards solved x 1.000 t x uitmaling) + 50 t bonus per board solved under par; best shift saved in localStorage with date; a small 'Dienstrooster' shows the top 5 shifts.",
+    "replay_value": "Beat par on every level for 45 kronen; chase higher uitmaling by finding the extra-passage routes; endless procedural boards; three Nachtdienst difficulties by inlet count."
+  },
+  "visual_direction": {
+    "palette": {
+      "antraciet_gebouw": "#1D1D1B",
+      "verdieping_lijnen": "#2B2C2E",
+      "kaart_licht": "#F7F7F7",
+      "kaart_zand": "#E3E1DA",
+      "oranje_accent_buizen_knoppen": "#E78A01",
+      "goud_graan_kronen": "#CFAB00",
+      "bloem_wit": "#FFF8E7",
+      "gries_beige": "#D9B98A",
+      "zemel_bruin": "#8A5A2B",
+      "eko_groen": "#6E9B3A",
+      "meer_blauw_premax_zaden": "#3E7CB1",
+      "fout_donkerrood": "#C52135"
+    },
+    "shapes": "Everything is Canvas 2D, drawn procedurally, no images. Pipes: thick rounded strokes (#5A5B5E body with a lighter inner highlight) that glow #E78A01 while grain flows through them. Walsenstoel: two touching circles with short hatch lines (ribbed) that counter-rotate during flow; gladde wals variant has no hatching. Plansichter: a box with 5 stacked horizontal sieve lines that jitters +/-2 px while active, fine stream exits bottom, coarse exits the side. Reiniging: a horseshoe magnet and three dots being pulled aside. Conditionering: a tank with a wavy water line and a tiny clock '12-48 u'. Menger: a drum with a spiral. Silos at the bottom: tall rounded cylinders with a fill level and a label plate; a wrong product paints a red cross. Inlet at top: small ship hull silhouette on a blue band with a suction pipe and the '120 t/u' plate. Kolom: a dark grey pillar with rivets. Grain particles: 3-4 px ovals (regular), squares (EKO), triangles (zaden) travelling along the solved polyline at ~140 px/s, white for bloem, brown for zemel.",
+    "layout": "Portrait column: header (era title in La Belle Aurore, moves/par, kronen), process bar with the required station order as icons that light up when satisfied, the mill grid with thin floor lines every row (the 'verdiepingen'), the silo row, a button bar. Level-complete card: cream #F7F7F7 panel with the gold crown, uitmaling %, ton bloem, broden, a bulkwagen with cells filling (or stacked 25 kg bags), and a one-line fact. Title screen: 'Maalstroom - Pioniers in graan sinds 1846' with a crown of three arches and three balls drawn with arcs.",
+    "typography": "Google Fonts: 'Nunito' (600/800) for UI and numbers, 'La Belle Aurore' for era titles and Molenaarsweetjes as a nod to the brand's handwritten accent font.",
+    "theming": "Single dark-building theme that works in light and dark OS modes: antraciet building with cream cards; colour tokens on :root so Bikkel can retheme in one place."
+  },
+  "sound": "Optional WebAudio synthesis, muted until first tap (autoplay policy), M to toggle. Rotate: 30 ms filtered noise click with a pitch that rises with each consecutive rotation of the same tile (satisfying 'tick'). Flow: band-passed white noise 'hiss' with an ADSR envelope while particles move; walsenstoel adds a low 55 Hz sawtooth rumble through a low-pass filter; plansichter adds a soft 8 Hz amplitude tremolo. Problem: short muted two-note descending interval (no harsh buzzer). Level complete: three-note gold chime arpeggio (C5-E5-G5) plus one extra note per krone. Ship mooring: a single low horn (triangle wave, 110 Hz, 400 ms) at level start. All sounds under ~120 lines.",
+  "feasibility": "One self-contained HTML file, estimated 1.800-2.300 lines: grid model and tile definitions (~200), deterministic flow solver (DFS per inlet with stream-type state machine, visited set to catch cycles, O(cells); recomputed after each rotation, ~250), 15 ASCII level maps plus scramble and par calculation (~180), procedural Nachtdienst generator (random downward tree, station placement, decoys, ~160), Canvas renderer with per-tile draw functions and particle animation via requestAnimationFrame (~500), input handling for mouse/keyboard/touch incl. long-press (~150), UI screens and overlays as DOM/CSS (title, era card, level complete, Nachtdienst, settings, ~300), WebAudio (~120), strings (~100), localStorage save (~50). No external assets: all graphics are primitives, fonts via Google Fonts link with sans-serif fallback. The scramble-a-solved-board approach guarantees every level is solvable without a search solver, and win detection is just 'all inlet mass delivered correctly and no spills', which the solver already computes. Rules are a small state machine (RUW -> SCHOON -> GECOND -> MAALSEL -> BLOEM | ZEMEL; ZEMEL -> MAALSEL on a second wals; BLOEM + ZADEN -> PREMAX in a menger), so adding tiles is additive. Performance is trivial on a phone (max 54 cells, a few dozen particles).",
+  "risks": [
+    "Rotation-scramble puzzles can become mechanical 'un-rotate the obvious bend' busywork if boards are tree-shaped with no alternatives; mitigation: decoy pipes, locked kolom tiles, multiple valid routes, and the mandatory station order so the player reasons about sequence, not just connectivity. Playtest each of the 15 maps for at least two distinct solutions.",
+    "Flow-solver edge cases: cycles, a pipe receiving two streams, a plansichter fed from its side port, grain re-entering a station twice. Mitigation: define every illegal case as a named, visible problem (never a crash), use a visited set, and write a tiny console test harness for the 15 solved maps.",
+    "Portrait fit for 6x9 grids on 360-400 px phones plus header, process bar and buttons; mitigation: scale tiles with CSS to the available height (min 44 px), collapse the header to one line, keep buttons 48 px.",
+    "Difficulty tuning of par: scramble count may exceed the true minimum because alternative solutions exist; mitigation: compute par as the scramble distance but award 'Meesterknecht' when the player beats it, so an imperfect par is a bonus rather than an unfair ceiling.",
+    "Historical fidelity: a rosmolen (1846) had millstones, not walsenstoelen, and conditioning is modern; mitigation: era text frames the stations as 'het principe is gelijk' and the first two eras simply omit conditionering; present the 120 t/h, 1.000 t per ship and 4 ships/week figures as 'ongeveer' because they come from a newspaper summary (medium confidence).",
+    "Brand confusion: the supermarket brand Koopmans belongs to Dr. Oetker; mitigation: no consumer mixes, pancakes or retail packaging anywhere, only B2B flour names, bakers and industry; no sponsorship claims.",
+    "Long-press for counter-clockwise rotation on touch may conflict with the browser context menu/text selection; mitigation: preventDefault on touchstart/contextmenu over the canvas and user-select:none; clockwise-only is always sufficient to solve any board (3 taps max).",
+    "WebAudio autoplay restrictions and iOS quirks; mitigation: create the AudioContext on first user gesture and keep audio optional and muted by default."
+  ],
+  "unique_hook": "The mill is the puzzle: a real hoogmaalderij is a tall building precisely because the maalsel falls floor by floor through pipes between walsenstoelen and plansichters, so a portrait phone screen literally becomes a cross-section of the Koopmans mill and the player rotates the plant's own pipes to route real maalstromen (bloem rechtdoor, zemel opzij, EKO apart, zaden alleen in de menger). Fifteen levels grow the grid along the company's own timeline, from the horse-driven rosmolen in Holwerd (1846) to Bühler's Molen B in the 180th jubilee year (2026), and every finished board pays out in the mill's real units: uitmaling 45/65/75%, ton bloem, 2 t bulkcellen or 25 kg zakken, and broden."
+}

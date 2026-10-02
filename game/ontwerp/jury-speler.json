@@ -1,0 +1,87 @@
+{
+  "juror": "speler",
+  "scores": [
+    {
+      "key": "arcade",
+      "title": "Korrelval",
+      "fun": 9,
+      "koopmans_fit": 8,
+      "feasibility": 8,
+      "replay": 8,
+      "total": 33,
+      "comment": "Binnen vijf seconden speel je al: met één duim sleep je de korrel tussen de walsen door, en met één tik op 'Nog een korrel?' ga je meteen opnieuw. De levels zijn letterlijk de bedrijfstijdlijn, van rosmolen tot Molen B. Grootste zwakte: de kern is een bekende Flappy/Downwell-formule, en met zes tijdperk-achtergronden, veel pick-ups en combo-namen dreigt de bouwtijd in decor te verdwijnen in plaats van in het tunen van spleet en snelheid (420 px/s bij een spleet van 16% kan oneerlijk voelen)."
+    },
+    {
+      "key": "puzzel",
+      "title": "Maalstroom",
+      "fun": 6,
+      "koopmans_fit": 9,
+      "feasibility": 6,
+      "replay": 6,
+      "total": 27,
+      "comment": "Slimste koppeling met het echte maalproces: je draait de buizen van de molen zelf en leert zonder lappen tekst waarom zemel opzij en EKO apart moet. Tikken om te draaien werkt perfect op de telefoon. Maar het is rustig en cerebraal: de eerste 30 seconden geven geen kick, de campagne heeft geen faalspanning, en vijftien handgemaakte borden met meerdere oplossingen plus een flow-solver en een generator is veel ontwerpwerk voor één zit."
+    },
+    {
+      "key": "tycoon",
+      "title": "Elke Korrel Telt (tycoon)",
+      "fun": 4,
+      "koopmans_fit": 9,
+      "feasibility": 4,
+      "replay": 6,
+      "total": 23,
+      "comment": "Indrukwekkend diep (eiwitgehalte, Nedertarwe-meter, upgrade-draft, echte oogstweken), en de portrettoren met vallende korrels is een mooi beeld. Maar dit is precies de managementsim waar ik allergisch voor ben: vijf systemen tegelijk, coach-ballonnen, recepten en een kasboek op 400 px. Bovendien is zo'n economie in één zit niet te balanceren."
+    },
+    {
+      "key": "verhaal",
+      "title": "De Tijdmolenaar",
+      "fun": 4,
+      "koopmans_fit": 10,
+      "feasibility": 4,
+      "replay": 4,
+      "total": 22,
+      "comment": "Het rijkste verhaal met de meeste Koopmans-kennis, en de quizbaas met rollende meelzakken is een slimme vermomming. Toch blijft het een bedrijfsquiz met daartussen zes oppervlakkige minigames van 30 seconden. De eerste halve minuut bestaat uit intro en verhaalpanelen, en na één keer spelen ken je de antwoorden al."
+    },
+    {
+      "key": "fysica",
+      "title": "Elke Korrel Telt (fysica)",
+      "fun": 6,
+      "koopmans_fit": 9,
+      "feasibility": 5,
+      "replay": 6,
+      "total": 26,
+      "comment": "Een korrel die knakt in witte, bruine en gele brokjes die je naar de juiste silo kantelt: dat is van alle zes het mooiste 'zo werkt een molen'-moment, en de Peggle-plinks zijn verslavend. Maar één kanteling voor 8 tot 15 brokjes tegelijk voelt al snel willekeurig, en omdat de zeef al op grootte sorteert is je eigen invloed vaag. Zelfgeschreven fysica met zeefgaten en splitsende lichamen is bovendien lastig goed te tunen in één zit."
+    },
+    {
+      "key": "wildcard",
+      "title": "Graanskûtsje",
+      "fun": 7,
+      "koopmans_fit": 7,
+      "feasibility": 7,
+      "replay": 7,
+      "total": 28,
+      "comment": "Het meest charmante en het meest Friese concept: bruggeld in het klompje mikken en 'Tsjoch!' roepen, en de Prémax-meren die je echt bezeilt zijn een briljante vondst die collega's meteen snappen. Zwakte: zeilen met windhoek, dode hoek en kloeten is in de eerste 30 seconden verwarrend ('waarom sta ik stil?') en opkruisen op een smal portretscherm frustreert. Bovendien gaat het spel over de aanvoer en niet over de molen zelf."
+    }
+  ],
+  "best_key": "arcade",
+  "runner_up_key": "wildcard",
+  "ideas_to_graft": [
+    "Uit Graanskûtsje: zet de dagelijkse seed standaard aan in Nachtploeg (datum als RNG-seed, label 'Ploeg van vandaag'), zodat collega's op dezelfde dag dezelfde schacht spelen en hun scores eerlijk kunnen vergelijken. Korrelval noemt dit nu alleen als mitigatie.",
+    "Uit Graanskûtsje: Friese microkopij zonder extra mechaniek: startknop 'It giet oan!', 'Tsjoch!' bij elke nieuwe Prémax-comborang en 'Oant moarn' op het Nachtploeg-eindscherm. Daarbij een optionele navigator.vibrate(15) bij een perfecte passage en een korte dubbele tril bij een hit.",
+    "Uit De Tijdmolenaar: een knop 'Kopieer score' op het game-over-scherm die een deelbare regel op het klembord zet (bijv. 'Korrelval Nachtploeg 2 okt: 12.450 kg bloem, combo Tjeukemeer, 74% uitmaling'), om direct in Teams te plakken.",
+    "Uit De Tijdmolenaar: vervang het tekstveld voor de highscorenaam door een on-screen kiezer van drie letters, zodat op de telefoon geen toetsenbord opklapt en het canvas niet verspringt. Verhuis de Vaultwarden-grap dan naar het slotje in Molen B.",
+    "Uit Elke Korrel Telt (fysica): een knak-effect bij een perfecte walspassage. De korrel spat 2-3 bruine zemelvlokjes en een geel kiempje af als cosmetische deeltjes uit de bestaande pool, zodat 'van korrel tot bloem' zichtbaar wordt in plaats van alleen via een kleurovergang.",
+    "Uit Elke Korrel Telt (fysica): combo-toonhoogte. Elke perfecte passage speelt de C-E-G-plink een halve toon hoger tot de combo breekt, voor hoorbare flow zonder extra UI.",
+    "Uit Maalstroom: vervang 'Schip gelost: 37%' door een slanke procesbalk bovenin met iconen (Lossen, Reinigen, Conditioneren, Walsen, Zeven, Silo) die oplichten terwijl je door het level valt. Zo legt de HUD het maalproces uit zonder één wist-je-datkaartje.",
+    "Uit Elke Korrel Telt (fysica/tycoon): toon op het eindscherm naast kg en zakken ook 'goed voor X broden'. Dat zegt collega's buiten de molen meer dan bulkcellen en kost één regel rekenwerk."
+  ],
+  "red_flags": [
+    "Graanskûtsje tekent het echte lowercase 'koopmans'-woordmerk met de gouden kroon op het canvas. Dat oogt als een officiële uiting, terwijl de andere concepten het logo bewust vermijden.",
+    "Graanskûtsje gebruikt de echte productnamen Springline/Silverline/Goldline als brons/zilver/goud-medailles. Dat suggereert een kwaliteitsrangorde van echte bloemen, en de sales-collega's gaan daarover vallen.",
+    "Graanskûtsje laat een skûtsje 1.000 ton tarwe vervoeren, terwijl een skûtsje tientallen tonnen meenam. Collega's van de loskade lachen je daarom uit.",
+    "Elke Korrel Telt (fysica) maakt een spelmechaniek van de stofexplosiegrens (ATEX 60 g/m3, 'explosiegrens', stofalarm). In een meelfabriek is dat een serieus veiligheidsonderwerp, en Korrelval zegt terecht dat je dat nooit gamificeert. Ongemakkelijk tegenover KAM- of veiligheidscollega's.",
+    "De Tijdmolenaar plakt een briefje 'ww: Zuiderkroon1846' op een monitor in de controlekamer van Molen B. Als ICT-stagiair grappen over slecht wachtwoordbeheer in de echte nieuwe molen tonen aan je begeleider is pijnlijk.",
+    "De Tijdmolenaar maakt een speelbaar sorteerspel van de verkoop van de consumententak aan Dr. Oetker, inclusief een CEO-citaat over 'een vuist maken tegen retailers' en een tijdlijn waarin 'Koopmans uit de schappen verdwijnt'. Gevoelige bedrijfsgeschiedenis in een demo, en het geheel voelt als e-learning voor onboarding.",
+    "Elke Korrel Telt (tycoon) verzint eiwiteisen voor Orion/Zuiderkroon/Jupiter, toont nettowinsten in miljoenen euro's en voert events op als 'Matif-piek door onrust in het Midden-Oosten' en 'de aandeelhoudersvergadering grijpt in'. Dat kan gelezen worden als claims over echte producten of financiën.",
+    "Korrelval (winnaar): zorg dat moederkoren, graanklander, stenen en bouten duidelijk als 'wordt eruit gereinigd' worden gepresenteerd en niet als 'zit in onze bloem'. Zet daarnaast 'Fan-made door een stagiair, niet officieel' op het titelscherm en niet alleen in de credits."
+  ]
+}
