@@ -26,29 +26,31 @@
 html,body{height:100%;margin:0;overflow:hidden;overscroll-behavior:none;touch-action:none}
 body{background:var(--bg);color:var(--ink);font-family:var(--ui);-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none}
 #app{position:fixed;inset:0;overflow:hidden;background:var(--bg)}
-#cv{position:absolute;left:0;top:0;width:100%;height:100%;display:block;touch-action:none;outline:none}
+#lb,#cv{position:absolute;left:0;top:0;width:100%;height:100%;display:block}
+#cv{touch-action:none;outline:none}
 .screen{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;box-sizing:border-box;
   padding:max(16px,env(safe-area-inset-top,0px)) 16px max(16px,env(safe-area-inset-bottom,0px));pointer-events:none}
+/* --s schaalt koppen, knoppen en witruimte mee op kleine schermen (0,86 tot 1), gezet in layout() */
 .card{pointer-events:auto;box-sizing:border-box;width:100%;max-width:384px;max-height:100%;overflow-y:auto;overscroll-behavior:contain;
   touch-action:pan-y;background:var(--card);color:var(--ink);border-radius:3px;box-shadow:var(--shadow);
-  padding:18px 18px 16px;border-top:6px solid var(--gold);position:relative}
-.card>*+*{margin-top:12px}
+  padding:calc(18px*var(--s,1)) calc(18px*var(--s,1)) calc(16px*var(--s,1));border-top:6px solid var(--gold);position:relative}
+.card>*+*{margin-top:calc(12px*var(--s,1))}
 .card h1,.card h2,.card p{margin-bottom:0}
 .card h1{margin-top:2px}
 .kicker{display:flex;align-items:center;gap:8px;font:800 12px/1.2 var(--ui);letter-spacing:.12em;text-transform:uppercase;color:var(--gold-ink);margin:0}
 .kicker canvas{width:26px;height:26px;flex:none}
-.logo{font:800 46px/0.95 var(--ui);letter-spacing:-.025em;margin:0}
+.logo{font:800 calc(46px*var(--s,1))/0.95 var(--ui);letter-spacing:-.025em;margin:0}
 .logo span{color:var(--accent)}
-h2{font:800 26px/1.1 var(--ui);margin:0;letter-spacing:-.01em}
-.lead{font:600 15px/1.4 var(--ui);color:var(--ink);margin:0}
-.muted{color:var(--muted);font:600 14px/1.35 var(--ui);margin:0}
+h2{font:800 calc(26px*var(--s,1))/1.1 var(--ui);margin:0;letter-spacing:-.01em}
+.lead{font:600 calc(15px*var(--s,1))/1.4 var(--ui);color:var(--ink);margin:0}
+.muted{color:var(--muted);font:600 calc(14px*var(--s,1))/1.35 var(--ui);margin:0}
 .hand{font-family:var(--hand);font-weight:400}
-.era{font-size:24px;line-height:1.1;color:var(--gold-ink);margin:0}
+.era{font-size:calc(24px*var(--s,1));line-height:1.1;color:var(--gold-ink);margin:0}
 .btn{appearance:none;-webkit-appearance:none;display:inline-flex;align-items:center;justify-content:center;gap:8px;box-sizing:border-box;
-  min-height:46px;padding:6px 14px;border:2px solid var(--ink);background:transparent;color:var(--ink);font:800 15px/1.1 var(--ui);
+  min-height:46px;padding:6px 14px;border:2px solid var(--ink);background:transparent;color:var(--ink);font:800 calc(15px*var(--s,1))/1.1 var(--ui);
   border-radius:3px;cursor:pointer;pointer-events:auto;touch-action:manipulation;text-align:center}
 .btn:hover{background:var(--chip)}
-.btn.primary{display:flex;width:100%;min-height:58px;font-size:22px;background:var(--accent);border-color:var(--accent);color:var(--accent-ink);
+.btn.primary{display:flex;width:100%;min-height:calc(58px*var(--s,1));font-size:calc(22px*var(--s,1));background:var(--accent);border-color:var(--accent);color:var(--accent-ink);
   box-shadow:0 4px 0 var(--accent-edge);margin-bottom:4px}
 .btn.primary:hover{filter:brightness(1.05)}
 .btn.primary:active{transform:translateY(3px);box-shadow:0 1px 0 var(--accent-edge)}
@@ -60,19 +62,23 @@ h2{font:800 26px/1.1 var(--ui);margin:0;letter-spacing:-.01em}
 .sect{border-top:1px dashed var(--line);padding-top:10px}
 .sect-h{display:flex;justify-content:space-between;align-items:baseline;gap:8px;font:800 14px/1.2 var(--ui);margin:0 0 8px}
 .sect-h small{font:600 12px/1.2 var(--ui);color:var(--muted);text-align:right}
-.chips{display:grid;grid-template-columns:repeat(6,1fr);gap:5px;align-items:center}
-.chips .hint{grid-column:1/-1}
-.chips .btn{min-height:38px;padding:4px 0;font-size:14px;border-width:1.5px;font-variant-numeric:tabular-nums}
-.btn small{display:block;font:600 11px/1.1 var(--ui);opacity:.75;margin-top:2px}
-#bGezel{flex-direction:column;gap:0}
+.chips{display:grid;grid-template-columns:auto repeat(6,1fr);gap:5px;align-items:center}
+.chips .hint{max-width:4.4em;line-height:1.15}
+.chips .btn{min-height:44px;padding:4px 0;font-size:14px;border-width:1.5px;font-variant-numeric:tabular-nums}
+.btn small{display:block;font:600 11px/1.1 var(--ui);opacity:.75;margin-top:2px;text-wrap:balance}
+/* smalle telefoons: label boven de jaarknoppen, zodat elke knop 44 px breed blijft */
+@media (max-width:390px){.chips{grid-template-columns:repeat(6,1fr)}.chips .hint{grid-column:1/-1;max-width:none}.row>.btn{padding-left:5px;padding-right:5px}}
+#bGezel,#bDaily{flex-direction:column;gap:0}
 .hint{font:600 12px/1.4 var(--ui);color:var(--muted);margin:0}
+.card>.hint{margin-top:10px}
 .fine{font:600 11.5px/1.4 var(--ui);color:var(--muted);margin:0;border-top:1px solid var(--line);padding-top:8px}
+.fine.top{border-top:0;padding-top:0}
 .stamp{display:inline-block;font:800 21px/1 var(--ui);color:var(--danger);border:3px solid var(--danger);padding:7px 10px 6px;
   transform:rotate(-3.5deg);letter-spacing:.04em;text-transform:uppercase;border-radius:2px}
 .over-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
 .over-head .hand{font-size:26px;color:var(--gold-ink)}
-.bon{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;font:600 14px/1.25 var(--ui)}
-.bon td{padding:5px 0;border-bottom:1px dashed var(--line);vertical-align:baseline}
+.bon{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;font:600 calc(14px*var(--s,1))/1.25 var(--ui)}
+.bon td{padding:calc(5px*var(--s,1)) 0;border-bottom:1px dashed var(--line);vertical-align:baseline}
 .bon td:last-child{text-align:right;font-weight:800;padding-left:10px}
 .bon tr.big td{font-size:17px}
 .bon tr.big td:last-child{color:var(--accent-text)}
@@ -82,15 +88,17 @@ h2{font:800 26px/1.1 var(--ui);margin:0;letter-spacing:-.01em}
 .badge{display:inline-flex;align-items:center;gap:6px;padding:3px 9px 3px 3px;background:var(--chip);border-radius:20px;font:800 12px/1 var(--ui)}
 .badge canvas{width:24px;height:24px}
 .badge.off{opacity:.38}
-.fact{background:var(--card2);padding:10px 12px;font:600 14px/1.4 var(--ui);border-left:4px solid var(--accent);margin:0}
+.badge.ico{padding:3px}
+.badge.tap{cursor:pointer}
+.fact{background:var(--card2);padding:calc(10px*var(--s,1)) 12px;font:600 calc(14px*var(--s,1))/1.4 var(--ui);border-left:4px solid var(--accent);margin:0}
 .fact b{display:block;font:800 12px/1.2 var(--ui);letter-spacing:.1em;text-transform:uppercase;color:var(--gold-ink);margin-bottom:3px}
 .picker{display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--card2);padding:8px 10px}
 .picker p{margin:0;font:800 13px/1.3 var(--ui)}
 .slots{display:flex;gap:6px}
 .slot{display:flex;flex-direction:column;align-items:center}
-.slot .btn{min-height:26px;width:38px;padding:0;border-width:1.5px}
+.slot .btn{min-height:40px;width:44px;padding:0;border-width:1.5px}
 .slot .btn svg{width:14px;height:14px}
-.slot span{font:800 22px/1.15 var(--ui);width:38px;text-align:center}
+.slot span{font:800 22px/1.15 var(--ui);width:44px;text-align:center}
 .slot.sel span{color:var(--accent-text);text-decoration:underline;text-underline-offset:4px}
 textarea.copy{width:100%;box-sizing:border-box;font:600 13px/1.35 var(--ui);background:var(--card2);color:var(--ink);border:1px solid var(--line);padding:8px;resize:none;user-select:text;-webkit-user-select:text}
 .toplist{list-style:none;padding:0;margin:0;counter-reset:n}
@@ -98,18 +106,29 @@ textarea.copy{width:100%;box-sizing:border-box;font:600 13px/1.35 var(--ui);back
 .toplist li::before{counter-increment:n;content:counter(n);font-weight:800;color:var(--gold-ink);width:14px}
 .toplist li b{flex:1}
 .toplist li i{font-style:normal;color:var(--muted);font-size:12px}
-.about p{font:600 14px/1.45 var(--ui);margin:0}
+.toplist li.empty::before{content:none}
+.about p{font:600 calc(14px*var(--s,1))/1.45 var(--ui);margin:0}
+.about h2+p,.about p+p{margin-top:10px}
 .about h3{font:800 13px/1.2 var(--ui);letter-spacing:.1em;text-transform:uppercase;color:var(--gold-ink);margin:14px 0 4px}
+/* Terug blijft onderin de kaart staan, ook als de tekst langer is dan het scherm */
+.about #bAboutBack{position:sticky;bottom:0;z-index:1;box-shadow:0 4px 0 var(--accent-edge),0 20px 0 2px var(--card),0 -14px 14px 4px var(--card)}
 .hudbtn{position:absolute;display:flex;align-items:center;justify-content:center;border:0;border-radius:3px;padding:0;
   background:var(--hud-bg);color:var(--hud-ink);cursor:pointer;pointer-events:auto;touch-action:manipulation}
 .hudbtn svg{width:46%;height:46%}
 .hudbtn:focus-visible{outline:3px solid var(--hud-focus)}
 .toast{position:absolute;left:50%;bottom:max(24px,env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--card);
   font:800 14px/1.2 var(--ui);padding:10px 14px;border-radius:3px;pointer-events:none;max-width:calc(100% - 32px);box-sizing:border-box;text-align:center}
-@media (max-height:700px){.logo{font-size:38px}.card>*+*{margin-top:9px}.btn.primary{min-height:52px}}
+.rotate{position:absolute;inset:0;z-index:5;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;
+  padding:16px;box-sizing:border-box;background:var(--bg);color:var(--ink);text-align:center;font:800 20px/1.25 var(--ui);pointer-events:auto}
+.rotate small{font:600 14px/1.35 var(--ui);color:var(--muted)}
+.rotate[hidden]{display:none}
+@media (max-height:700px){.btn{min-height:44px}}
+/* lage vensters: Nog een korrel? bovenaan, bon weg */
+@media (max-height:480px){#scrOver .card{display:flex;flex-direction:column;gap:8px}#scrOver .card>*{margin-top:0;flex:none}#bAgain{order:-1}#overBon{display:none}}
 @media (prefers-reduced-motion:reduce){.btn.primary:active{transform:none}}
 </style>
 <div id="app">
+<canvas id="lb" aria-hidden="true"></canvas>
 <canvas id="cv" aria-label="Speelveld: een tarwekorrel valt door de meelfabriek"></canvas>
 <button id="btnPause" class="hudbtn" type="button" aria-label="Pauze" hidden><svg viewBox="0 0 10 10" aria-hidden="true"><rect x="1.5" y="1" width="2.4" height="8" fill="currentColor"/><rect x="6.1" y="1" width="2.4" height="8" fill="currentColor"/></svg></button>
 
@@ -117,18 +136,18 @@ textarea.copy{width:100%;box-sizing:border-box;font:600 13px/1.35 var(--ui);back
   <div class="card">
     <p class="kicker"><canvas data-ico="aar" width="52" height="52"></canvas><span>Van rosmolen tot Molen B</span></p>
     <h1 class="logo">Korrel<span>val</span></h1>
-    <p class="lead">Je bent één tarwekorrel in een torenhoge meelfabriek. Glip door de spleet tussen de walsen, door 180 jaar molengeschiedenis.</p>
+    <p class="lead">Je bent één tarwekorrel in een torenhoge meelfabriek. Glip door de spleet tussen de walsen en val door 180 jaar molengeschiedenis.</p>
+    <p class="fine top">Fan-made door een stagiair, geen officiële uiting van Royal Koopmans.</p>
     <button class="btn primary" id="bStart" type="button" data-primary>It giet oan!</button>
     <div class="chips" id="lvlChips" hidden></div>
     <div class="sect">
       <p class="sect-h">Nachtploeg <small id="nightNote">eindeloos, één korrel</small></p>
-      <div class="row"><button class="btn" id="bDaily" type="button">Korrel van de dag</button><button class="btn" id="bFree" type="button">Vrije dienst</button></div>
+      <div class="row"><button class="btn" id="bDaily" type="button">Korrel van de dag<small>iedereen dezelfde schacht</small></button><button class="btn" id="bFree" type="button">Vrije dienst</button></div>
     </div>
     <div class="row"><button class="btn" id="bGezel" type="button" aria-pressed="false">Gezel-modus</button><button class="btn" id="bSound" type="button" aria-pressed="true">Geluid aan</button></div>
     <div class="row"><button class="btn" id="bScores" type="button">Scores</button><button class="btn" id="bAbout" type="button">Over dit spel</button></div>
     <div class="badges" id="titleBadges"></div>
-    <p class="hint" id="ctlHint">Sturen: pijltjes of A/D, de muis, of sleep met je duim. P pauze, M geluid.</p>
-    <p class="fine">Fan-made door een stagiair, geen officiële uiting van Royal Koopmans.</p>
+    <p class="hint" id="ctlHint">Sturen met pijltjes, A/D, de muis of je duim. P: pauze, M: geluid.</p>
   </div>
 </section>
 
@@ -138,7 +157,7 @@ textarea.copy{width:100%;box-sizing:border-box;font:600 13px/1.35 var(--ui);back
     <p class="muted" id="pauseInfo"></p>
     <button class="btn primary" id="bResume" type="button" data-primary>Verder</button>
     <div class="row"><button class="btn" id="bPSound" type="button" aria-pressed="true">Geluid aan</button><button class="btn" id="bPMenu" type="button">Naar menu</button></div>
-    <p class="hint">Spatie of P: verder. Esc: menu.</p>
+    <p class="hint" id="pauseHint">Spatie of P: verder. Esc: menu.</p>
   </div>
 </section>
 
@@ -178,7 +197,7 @@ textarea.copy{width:100%;box-sizing:border-box;font:600 13px/1.35 var(--ui);back
   <div class="card">
     <p class="kicker">Jaarverslag 2026</p>
     <h2>180 jaar, van rosmolen tot Molen B</h2>
-    <p class="muted">Je viel door alle molens van de tijdlijn. Generaties lang draaide hier het vakmanschap; nu draaide jij mee.</p>
+    <p class="muted" id="doneNote">Je viel door alle molens van de tijdlijn. Generaties lang draaiden hier de molens op vakmanschap; jij draaide een rondje mee.</p>
     <table class="bon" id="doneBon"></table>
     <p class="uit" id="doneUit"></p>
     <div class="badges" id="doneBadges"></div>
@@ -194,7 +213,7 @@ textarea.copy{width:100%;box-sizing:border-box;font:600 13px/1.35 var(--ui);back
     <h2>Scores</h2>
     <div class="sect"><p class="sect-h">Nachtploeg top 5 <small id="dailyNote"></small></p><ol class="toplist" id="topList"></ol></div>
     <div class="sect"><p class="sect-h">Tijdlijn</p><p class="muted" id="campNote"></p></div>
-    <div class="sect"><p class="sect-h">Kernwaarden</p><div class="badges" id="allBadges"></div></div>
+    <div class="sect"><p class="sect-h">Badges</p><div class="badges" id="allBadges"></div></div>
     <div class="sect"><p class="sect-h">Uitmalingen gezien <small>witter = minder uitmaling</small></p><div class="badges" id="allLabels"></div></div>
     <p class="fine">Bewaar je wachtwoorden in de kluis, niet je highscore.</p>
     <button class="btn primary" id="bScoresBack" type="button" data-primary>Terug</button>
@@ -203,23 +222,24 @@ textarea.copy{width:100%;box-sizing:border-box;font:600 13px/1.35 var(--ui);back
 
 <section id="scrAbout" class="screen" aria-label="Over dit spel" hidden>
   <div class="card about">
-    <h2>Over Korrelval</h2>
+    <h2>Over dit spel</h2>
     <p>Fan-made door een stagiair, geen officiële uiting van Royal Koopmans.</p>
     <p>Het supermarktmerk Koopmans (bakmixen) is sinds 2000 van Dr. Oetker; dit spel gaat over Royal Koopmans, de meelfabriek in Leeuwarden die aan bakkers en voedingsindustrie levert.</p>
     <h3>Het spel</h3>
-    <p>Stuur je korrel door de spleet tussen de walsen. Midden door is een perfecte passage. Stenen, bouten en moederkoren haalt de reiniging uit het graan: stenen en metaal mogen nooit op de walsen.</p>
+    <p>Stuur je korrel door de spleet tussen de walsen. Wie midden door de spleet valt, haalt een perfecte passage. Stenen, bouten en moederkoren haalt de reiniging uit het graan: stenen en metaal mogen nooit op de walsen.</p>
     <p>Combo-rangen zijn Prémax-mixen met Friese waternamen: Slotermeer, Fluessen, Tjeukemeer, Princenhof en Bonkevaart.</p>
     <h3>Uitmaling</h3>
-    <p>Short patent circa 45%, long patent circa 65%, straight grade 75-76%, volkoren 100%. Witter = minder uitmaling. In het spel is jouw uitmaling het aandeel perfecte passages.</p>
+    <p>Uitmaling is het deel van de korrel dat in het meel eindigt: short patent circa 45%, long patent circa 65%, straight grade 75-76%, volkoren 100%. Witter = minder uitmaling. In het spel bepaalt je precisie het meel: hoe vaker je midden door de spleet valt, hoe witter het meel en hoe lager de uitmaling. Volkoren is niet slechter, alleen anders: de hele korrel, zemel en al.</p>
     <h3>Cijfers</h3>
     <p>Krantencijfers zijn afgerond en staan er met circa bij. Eén ton bloem is goed voor circa 1.800 broden.</p>
     <h3>Besturing</h3>
-    <p>Pijltjes of A/D, de muis, of sleep met je duim (de korrel volgt je beweging). Spatie of Enter: start en verder. P: pauze. M: geluid. Esc: menu.</p>
+    <p>Sturen kan met de pijltjes of A/D, de muis of je duim (de korrel volgt je beweging). Spatie of Enter: start en verder. P: pauze. M: geluid. Esc: menu.</p>
     <p class="hint">Gemaakt met Canvas en WebAudio, zonder plaatjes of geluidsbestanden.</p>
     <button class="btn primary" id="bAboutBack" type="button" data-primary>Terug</button>
   </div>
 </section>
 <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+<div id="rotate" class="rotate" role="alert" hidden>Draai je telefoon rechtop<small>Korrelval speelt staand. Een lopend spel gaat op pauze.</small></div>
 </div>
 <script>
 'use strict';
@@ -239,13 +259,16 @@ const CONFIG = {
   ranks: [[5, 'Slotermeer'], [10, 'Fluessen'], [15, 'Tjeukemeer'], [20, 'Princenhof'], [25, 'Bonkevaart']],
   slowmo: { scale: 0.55, dur: 3 }, magnet: { dur: 6 },
   fair: { dx: 0.7, minGap: 2.6, edge: 6, minShift: 0.6 },
-  hazard: { warn: 1.0, fall: [200, 280], vx: [30, 120], r: 9, moederR: 7, warnY: 86 },
-  intro: { t: 2.2, first: 3.0 },
+  hazard: { warn: 1.0, fall: [200, 280], vx: [0, 50], r: 9, moederR: 7, warnY: 86 },
+  // molen 1 en 2 (eerste kennismaking) krijgen een langere introband om de geschiedenis te kunnen lezen
+  intro: { t: 2.2, first: 3.0, tLong: 3.0, firstLong: 3.8 },
+  // mijlpalen in kg bloem (alleen getallen uit het bronmateriaal: zak 25 kg, bulkcel 2 ton, 1.800 broden per ton)
+  milestones: [[25, 'Eén zak van 25 kg!'], [1000, 'Een ton bloem: goed voor circa 1.800 broden!'], [2000, 'Eén bulkcel van 2 ton vol!'], [10000, 'Tien ton bloem: circa 18.000 broden!']],
   roll: { molen: 50, wals: 40, casing: 0.62 }, plate: 18, pickChance: 0.5,
   particles: 120, texts: 14,
   bread: 1800, bag: 25, cell: 2000,
   gezel: { gap: 1.3, scroll: 0.8 },
-  night: { scroll0: 360, grow: 0.04, scrollMax: 560, int0: 1.1, intMin: 0.8, gap0: 0.2, gapMin: 0.13 },
+  night: { scroll0: 360, grow: 0.04, scrollMax: 560, int0: 1.1, intMin: 0.9, gap0: 0.2, gapMin: 0.15 },
   demo: { scroll: 115 },
   audio: { master: 0.5, voices: 6 },
 };
@@ -262,25 +285,25 @@ const LEVELS = [
     pal: { wall: '#3a2817', wall2: '#5a3f26', line: '#C8A878', slab: '#6B4A2B', edge: '#C8A878', pipe: '#4a3320', plate: '#8a6a44' },
     floors: 12, interval: 2.0, scroll: 170, gap: 0.38, mix: { molen: 6, buil: 2, haz: 2 }, haz: ['steen'], picks: { boekweit: 6, kiem: 1 }, ribs: 0, white: 0,
     intro: 'Bakkersgezel Uilke Klazes Koopmans leent 1.550 gulden en begint met één rosmolen.', supply: 'Paarden draaien de molenstenen, de buil zeeft.' },
-  { year: 1867, short: 'Friso', title: 'Stoommeelfabriek Friso, Leeuwarden', style: 'steen', old: true, steam: true,
+  { year: 1867, short: 'Leeuwarden', title: 'Stoommeelfabriek, Leeuwarden', style: 'steen', old: true, steam: true,
     pal: { wall: '#2f1813', wall2: '#7A3B2E', line: '#3A3F44', slab: '#3A3F44', edge: '#a8a29a', pipe: '#2e3236', plate: '#7a5634' },
     floors: 16, interval: 1.8, scroll: 210, gap: 0.32, mix: { molen: 6, buil: 2, haz: 3 }, haz: ['steen', 'bout'], picks: { water: 3, boekweit: 2, kiem: 1 }, ribs: 0, white: 0.12,
     intro: 'In 1867 nam Koopmans in Leeuwarden een stoommeelfabriek over, aan het Noordvliet.', supply: 'De stoommachine van 2 pk bleek al snel ontoereikend.' },
   { year: 1920, short: 'N.V.', title: "N.V. Koopmans' Meelfabrieken", style: 'tegel',
     pal: { wall: '#1f3327', wall2: '#3F5E4A', line: '#EFE6C8', slab: '#cfc4a2', edge: '#EFE6C8', pipe: '#2b4436', plate: '#d9cfb0' },
-    floors: 20, interval: 1.6, scroll: 250, gap: 0.28, mix: { wals: 5, plan: 3, haz: 2 }, haz: ['steen', 'bout'], picks: { nedertarwe: 3, water: 2, kiem: 1 }, ribs: 24, plan: { A: 20, f: 0.5, holes: 1 }, white: 0.3,
-    intro: 'De N.V. groeit. Walsenstoelen en plansichters doen hun intrede: de spleten worden smaller.', supply: 'Grof geribbelde walsen breken de korrel open.' },
+    floors: 20, interval: 1.6, scroll: 250, gap: 0.28, mix: { wals: 5, plan: 3, haz: 2 }, haz: ['steen', 'bout'], picks: { nedertarwe: 3, water: 2, kiem: 1 }, ribs: 12, plan: { A: 20, f: 0.5, holes: 1 }, white: 0.3,
+    intro: 'De N.V. groeit. Nu draaien er walsenstoelen en plansichters, en de spleten worden smaller.', supply: 'Grof geribbelde walsen breken de korrel open.' },
   { year: 1976, short: 'Koninklijk', title: 'Koninklijk', style: 'hout2', crown: true,
     pal: { wall: '#2a190d', wall2: '#5C3A21', line: '#CFAB00', slab: '#4a2f1a', edge: '#CFAB00', pipe: '#3d2615', plate: '#8a6a3a' },
     floors: 24, interval: 1.4, scroll: 300, gap: 0.24, mix: { wals: 5, plan: 3, haz: 3 }, haz: ['steen', 'bout', 'bout'], picks: { kroon: 3, magneet: 2, nedertarwe: 2, kiem: 1 }, ribs: 18, plan: { A: 30, f: 0.6, holes: 1 }, white: 0.48,
     intro: 'Koningin Juliana verleent het predicaat Koninklijk. De molen staat aan het Nieuwe Kanaal.', supply: 'Reiniging: stenen en metaal mogen nooit op de walsen.' },
   { year: 2008, short: 'Nieuwe molen', title: 'Nieuwe molen', style: 'staal',
     pal: { wall: '#16212d', wall2: '#4F6D8C', line: '#9FB3C8', slab: '#3c536b', edge: '#9FB3C8', pipe: '#2d4256', plate: '#9FB3C8' },
-    floors: 28, interval: 1.2, scroll: 360, gap: 0.20, mix: { wals: 5, plan: 4, haz: 3 }, haz: ['steen', 'bout', 'moeder'], picks: { water: 2, magneet: 1, nedertarwe: 3, kroon: 1, kiem: 1 }, ribs: 12, plan: { A: 40, f: 0.9, holes: 2 }, white: 0.66,
-    intro: 'Een nieuwe molen: fijner geribbelde walsen en sneller schuddende plansichters.', supply: 'Onkruidzaad zoals moederkoren gaat er in de reiniging uit.' },
-  { year: 2026, short: 'Molen B', title: 'Molen B, 180 jaar', style: 'digi', predict: true,
+    floors: 28, interval: 1.2, scroll: 360, gap: 0.20, mix: { wals: 5, plan: 4, haz: 3 }, haz: ['steen', 'bout', 'moeder'], picks: { water: 2, magneet: 1, nedertarwe: 3, kroon: 1, kiem: 1 }, ribs: 24, plan: { A: 40, f: 0.9, holes: 2 }, white: 0.66,
+    intro: 'In 2008 opent een nieuwe molen: smallere spleten en sneller schuddende plansichters.', supply: 'De reiniging haalt giftig moederkoren uit het graan.' },
+  { year: 2026, short: 'Molen B', title: 'Molen B', style: 'digi', predict: true,
     pal: { wall: '#121314', wall2: '#1D1E1F', line: '#6FD3E0', slab: '#2b2d30', edge: '#E78A01', pipe: '#26282a', plate: '#45494d' },
-    floors: 32, interval: 1.0, scroll: 420, gap: 0.16, mix: { wals: 6, plan: 3, haz: 3 }, haz: ['steen', 'bout', 'moeder'], picks: { nedertarwe: 4, water: 2, magneet: 1, kroon: 1, kiem: 1 }, ribs: 0, plan: { A: 36, f: 0.9, holes: 2 }, white: 0.84,
+    floors: 32, interval: 1.0, scroll: 400, gap: 0.17, mix: { wals: 6, plan: 3, haz: 3 }, haz: ['steen', 'bout', 'moeder'], picks: { nedertarwe: 4, water: 2, magneet: 1, kroon: 1, kiem: 1 }, ribs: 0, plan: { A: 36, f: 0.9, holes: 2 }, white: 0.84,
     intro: 'Jubileumjaar 2026: walsenstoelen van enkele tonnen gaan door een opening in het dak.', supply: null },
 ];
 const NIGHT = { year: 2026, short: 'Nachtploeg', title: 'Nachtploeg', style: 'digi', predict: true,
@@ -290,49 +313,44 @@ const NIGHT = { year: 2026, short: 'Nachtploeg', title: 'Nachtploeg', style: 'di
 const DEMO = { ...LEVELS[2], mix: { wals: 5, plan: 3 }, picks: { nedertarwe: 1 }, floors: Infinity };
 const RANKS = CONFIG.ranks;
 const SILOS = ['Orion', 'Zuiderkroon', 'Jupiter', 'Saturnus', 'Silverline'];
-const SHIPS = ['Friese tarwe van boeren uit de buurt', 'Zeeuwse Nedertarwe van CZAV', 'Groninger baktarwe van Dollard Tarwe, circa 500 ton', 'een Duits schip met tarwe', 'EKO-tarwe, apart gelost (Skal)'];
+const SHIPS = ['Friese tarwe', 'Zeeuwse Nedertarwe van CZAV', 'Groninger baktarwe, circa 500 ton', 'een Duits schip met tarwe', 'EKO-tarwe (Skal)'];
 const STEPS = ['Lossen', 'Reinigen', 'Conditioneren', 'Walsen', 'Zeven', 'Silo'];
 const STEP_ICO = ['ship', 'magnet', 'drop', 'rolls', 'sieve', 'silo'];
 const STEP_AT = [0, 0.1, 0.28, 0.45, 0.68, 0.985];
 // Wist-je-dat: [level (6 = Nachtploeg), tekst]; max 120 tekens, krantencijfers met circa.
+// Tien kaartjes (brief: 8-10), per run zonder herhaling (pickFact). Geen kaartje herhaalt een introregel.
 const FACTS = [
   [0, 'Koopmans begon in 1846 met een door paarden aangedreven boekweitmolen in Holwerd.'],
   [1, 'In 1867 nam Koopmans in Leeuwarden de stoommeelfabriek van Hein Blok Wybrandi over, later Friso genoemd.'],
-  [1, 'De eerste stoommachine in Leeuwarden had 2 pk. Dat bleek al snel te weinig.'],
   [1, 'Na 1881 spreidde zoon Jan Koopmans het risico met veevoer van gerst en maïs.'],
-  [2, "In 1920 werd het N.V. Koopmans' Meelfabrieken, met de broers Uco, Daan en Jo."],
-  [2, 'Een tarwekorrel passeert in een hoogmaalderij soms wel twintig walsenstoelen.'],
-  [3, 'Koningin Juliana verleende Koopmans in 1976 het predicaat Koninklijk.'],
-  [3, 'Het oudste deel van de loskade aan het Nieuwe Kanaal was uit 1927.'],
-  [3, 'Een meelfabriek is altijd hoog: het maalsel valt via buizen van verdieping naar verdieping.'],
+  [2, "In 1920 werd het bedrijf de N.V. Koopmans' Meelfabrieken. De broers Uco, Daan en Jo namen het over."],
+  [3, 'Het oudste deel van de loskade aan het Nieuwe Kanaal stamde uit 1927. In 2024 werd de kade vervangen.'],
   [4, 'Uit 1.000 kilo tarwe komt 720 tot 760 kilo witte bloem; de rest is zemel, gries en kiem.'],
   [4, 'In 1993 nam Koopmans paneermeelmaker LaCo Crumbs over.'],
-  [5, 'Voor Molen B gingen walsenstoelen van circa 3.500 tot 6.000 kilo door een opening in het dak.'],
   [5, 'Molen B vervangt de molen uit 1967. De molen uit 1965 aan De Merodestraat wordt roggemolen.'],
-  [6, 'Gemiddeld lossen er circa vier graanschepen per week, elk zo\'n 1.000 ton.'],
-  [6, 'De zuiginstallatie haalt circa 120 ton graan per uur uit een schip.'],
   [6, 'In februari 2024 voer het eerste Nedertarwe-schip op HVO100 naar Leeuwarden.'],
   [6, 'KIEM (2016) staat voor Koopmans, Innovatie, Expertise en Molenaarschap.'],
 ];
 const BADGES = [
   { id: 'vak', name: 'Vakmanschap', ico: 'aar', desc: '75% of meer perfecte passages in een molen' },
-  { id: 'betr', name: 'Betrouwbaar', ico: 'check', desc: 'een molen zonder hit' },
-  { id: 'ond', name: 'Ondernemend', ico: 'up', desc: 'alle pick-ups van een molen' },
-  { id: 'pas', name: 'Gepassioneerd', ico: 'heart', desc: '100 verdiepingen in de Nachtploeg' },
-  { id: 'mens', name: 'Menselijk', ico: 'people', desc: 'de tijdlijn uitgespeeld als Gezel' },
+  { id: 'betr', name: 'Betrouwbaar', ico: 'check', desc: 'een molen zonder botsing' },
+  { id: 'ond', name: 'Ondernemend', ico: 'up', desc: 'alle bonussen van een molen' },
+  { id: 'pas', name: 'Gepassioneerd', ico: 'heart', desc: '75 verdiepingen in de Nachtploeg' },
+  { id: 'mens', name: 'Menselijk', ico: 'people', desc: 'de hele tijdlijn vanaf 1846 uitgespeeld als Gezel' },
   { id: 'elk', name: 'Elke korrel telt', ico: 'grain', desc: 'alle Nedertarwe-korrels van een molen' },
 ];
+// Precisie (perfecte passages / totaal) bepaalt het meel: zuiverder = witter = lagere uitmaling.
 const UIT = [
-  { id: 'sp', max: 55, name: 'Short patent', note: 'circa 45%' },
-  { id: 'lp', max: 70, name: 'Long patent', note: 'circa 65%' },
-  { id: 'sg', max: 88, name: 'Straight grade', note: '75-76%' },
-  { id: 'vk', max: 101, name: 'Volkoren', note: '100%' },
+  { id: 'sp', min: 90, name: 'Short patent', note: 'circa 45%' },
+  { id: 'lp', min: 75, name: 'Long patent', note: 'circa 65%' },
+  { id: 'sg', min: 50, name: 'Straight grade', note: '75-76%' },
+  { id: 'vk', min: 0, name: 'Volkoren', note: '100%' },
 ];
 const PICK_TIPS = {
-  boekweit: 'Boekweit is geen graan, maar wel glutenvrij.',
-  water: 'Conditioneren: normaal 12 tot 48 uur intrekken. Hier 3 seconden.',
+  boekweit: 'Boekweit is geen graan en dus van nature glutenvrij.',
+  water: 'Conditioneren: water trekt normaal 12 tot 48 uur in. Hier duurt het 3 seconden.',
   nedertarwe: 'Nedertarwe: van boeren met bloemenranden langs de akker.',
-  magneet: 'Magneet: metaal eruit, het mag nooit op de walsen.',
+  magneet: 'Magneet: haalt metaal eruit. Dat mag nooit op de walsen.',
   kroon: 'Koninklijk sinds 1976.',
   kiem: 'De kiem gaat apart: de olie maakt meel ranzig.',
 };
@@ -356,11 +374,14 @@ const reduced = (() => { try { return matchMedia('(prefers-reduced-motion: reduc
 function dateKey(d) { d = d || new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; }
 const dayLabel = () => { const d = new Date(); return `${d.getDate()} ${MONTHS[d.getMonth()]}`; };
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+// "1 verdieping" / "37 verdiepingen", standaard met vaste spatie zodat het getal niet alleen achterblijft
+const fl = (n, sp) => n + (sp || ' ') + (n === 1 ? 'verdieping' : 'verdiepingen');
+const isCoarse = () => { try { return matchMedia('(pointer: coarse)').matches; } catch (e) { return false; } };
 
 // ============================================================
 // 4. Opslag (localStorage, altijd in try/catch)
 // ============================================================
-const SAVE_KEY = 'korrelval-b-v1';
+const SAVE_KEY = 'korrelval-b-v2'; // v2: uitmalingslabels hebben een nieuwe betekenis (precisie)
 const save = { best: 0, maxLvl: 0, night: false, top: [], sound: true, gezel: false, badges: {}, labels: {}, name: 'KOR', daily: {}, campDone: false };
 function loadSave() {
   try { const raw = localStorage.getItem(SAVE_KEY); if (raw) Object.assign(save, JSON.parse(raw)); } catch (e) { /* privévenster: gewoon doorspelen */ }
@@ -375,21 +396,27 @@ function persist() { try { localStorage.setItem(SAVE_KEY, JSON.stringify(save));
 // ============================================================
 const app = $('app'), cv = $('cv'), ctx = cv.getContext('2d');
 const V = { cw: W, ch: H, dpr: 1, s: 1, ox: 0, oy: 0 };
-let lbCanvas = null, tiles = {};
+let tiles = {};
 function layout() {
   const cw = app.clientWidth || innerWidth, ch = app.clientHeight || innerHeight;
   const dpr = Math.min(window.devicePixelRatio || 1, CONFIG.dprMax);
   cv.width = Math.max(1, Math.round(cw * dpr)); cv.height = Math.max(1, Math.round(ch * dpr));
   const s = Math.min(cw / W, ch / H);
   Object.assign(V, { cw, ch, dpr, s, ox: (cw - W * s) / 2, oy: (ch - H * s) / 2 });
-  const bp = $('btnPause'), bs = Math.round(40 * s);
+  app.style.setProperty('--s', clamp(Math.min(cw / 400, ch / 790), 0.86, 1).toFixed(3));
+  const bp = $('btnPause'), bs = Math.max(44, Math.round(40 * s)); // tikdoel minstens 44 px
   bp.style.width = bp.style.height = bs + 'px';
-  bp.style.left = Math.round(V.ox + (W - 46) * s) + 'px'; bp.style.top = Math.round(V.oy + 6 * s) + 'px';
+  bp.style.left = Math.round(V.ox + (W - 6) * s - bs) + 'px'; bp.style.top = Math.round(V.oy + 6 * s) + 'px';
   tiles = {};
   buildLetterbox();
+  // telefoon dwars: speelveld wordt te klein, dus pauzeren en vragen om te draaien (tablets houden het veld)
+  const land = isCoarse() && cw > ch && ch < 600;
+  $('rotate').hidden = !land;
+  if (land) pause();
 }
+// Letterbox één keer op een eigen canvas onder het speelveld; #cv tekent alleen nog het veld zelf.
 function buildLetterbox() {
-  const c = document.createElement('canvas'); c.width = cv.width; c.height = cv.height;
+  const c = $('lb'); c.width = cv.width; c.height = cv.height;
   const g = c.getContext('2d'), k = V.dpr * Math.max(0.8, Math.min(V.s, 1.6));
   g.fillStyle = '#1b1816'; g.fillRect(0, 0, c.width, c.height);
   const bw = 44 * k, bh = 18 * k, rnd = mulberry32(7);
@@ -404,7 +431,6 @@ function buildLetterbox() {
     for (let y = 120 * k; y < c.height - 60 * k; y += 220 * k) { icon(g, 'aar', fx / 2, y, 34 * k, 'rgba(207,171,0,.22)'); icon(g, 'aar', c.width - fx / 2, y + 110 * k, 34 * k, 'rgba(207,171,0,.22)'); }
   }
   g.save(); g.shadowColor = 'rgba(0,0,0,.75)'; g.shadowBlur = 28 * V.dpr; g.fillStyle = '#000'; g.fillRect(fx, fy, fw, fh); g.restore();
-  lbCanvas = c;
 }
 // Achtergrond per tijdperk: één keer naar een offscreen canvas, daarna met modulo gescrold.
 function getTile(style, pal) {
@@ -512,7 +538,12 @@ const AU = {
     this.brown = c.createBuffer(1, sr * 2, sr); const b = this.brown.getChannelData(0); let lastV = 0;
     for (let i = 0; i < b.length; i++) { lastV = (lastV + 0.02 * (Math.random() * 2 - 1)) / 1.02; b[i] = lastV * 3.5; }
   },
-  setSound(on) { save.sound = on; persist(); if (this.master) this.master.gain.setTargetAtTime(on ? CONFIG.audio.master : 0, this.ctx.currentTime, 0.02); syncSoundButtons(); },
+  setSound(on) {
+    save.sound = on; persist();
+    if (this.master) this.master.gain.setTargetAtTime(on ? CONFIG.audio.master : 0, this.ctx.currentTime, 0.02);
+    syncSoundButtons();
+    if (S.screen === 'play') toast(on ? 'Geluid aan' : 'Geluid uit', 1400); // M in het spel: anders zie je niets
+  },
   ok(dur) { if (!this.ctx || !save.sound || this.ctx.state !== 'running' || this.voices >= CONFIG.audio.voices) return false; this.voices++; setTimeout(() => { this.voices--; }, dur * 1000 + 40); return true; },
   tone(f0, f1, dur, type, vol, delay, lp) {
     delay = delay || 0; if (!this.ok(dur + delay)) return;
@@ -564,6 +595,9 @@ const SFX = {
 const keys = { left: false, right: false };
 const ptr = { id: null, lastX: 0 };
 let inputMode = 'keys';
+// hintTouch bepaalt alleen de uitlegteksten (tutorial, pauze, titel); startwaarde uit de pointer-mediaquery
+let hintTouch = isCoarse();
+function syncHints() { $('ctlHint').hidden = hintTouch; $('pauseHint').hidden = hintTouch; }
 function toLogical(cx, cy) { const r = cv.getBoundingClientRect(); return { x: (cx - r.left - V.ox) / V.s, y: (cy - r.top - V.oy) / V.s }; }
 const xLo = () => L + CONFIG.grain.r, xHi = () => R - CONFIG.grain.r;
 cv.addEventListener('pointerdown', e => {
@@ -584,28 +618,47 @@ cv.addEventListener('pointermove', e => {
 const ptrEnd = e => { if (e.pointerId === ptr.id) { ptr.id = null; try { cv.releasePointerCapture(e.pointerId); } catch (err) { /* al los */ } } };
 cv.addEventListener('pointerup', ptrEnd); cv.addEventListener('pointercancel', ptrEnd);
 document.addEventListener('touchmove', e => { if (e.target === cv) e.preventDefault(); }, { passive: false });
-document.addEventListener('pointerdown', () => AU.ensure(), true);
+document.addEventListener('pointerdown', e => {
+  AU.ensure();
+  const t = e.pointerType !== 'mouse'; // ook de starttik op een DOM-knop telt
+  if (t !== hintTouch) { hintTouch = t; syncHints(); }
+}, true);
 
 // ============================================================
 // 8. Wereld, korrel en generator
 // ============================================================
 const G = { x: 200, px: 200, vx: 0, tx: 200, inv: 0, knaks: 0 };
-const Wd = { t: 0, camY: 0, pcam: 0, scroll: 170, len: 1, floors: [], haz: [], sched: [], picks: [], silo: null, ending: 0, complete: false, dying: 0, flash: 0, shakeT: 0, slow: 0, mag: 0, banner: null, tip: null, ambT: 0, steamT: 2, joke: false, sndT: 0 };
-const gen = { rng: Math.random, nextY: 0, count: 0, prevX: 200, prevY: 0, lastHaz: false, done: false, pick: false };
+const Wd = {
+  t: 0, camY: 0, pcam: 0, scroll: 170, len: 1, floors: [], haz: [], sched: [], picks: [], steam: [], jg: null, silo: null,
+  ending: 0, complete: false, dying: 0, flash: 0, shakeT: 0, slow: 0, mag: 0, banner: null, tip: null, ambT: 0, steamT: 2, joke: false, sndT: 0,
+};
+const gen = { rng: Math.random, nextY: 0, count: 0, prevX: 200, prevY: 0, lastHaz: false, done: false, pick: false, molen: 0 };
 let run = null, lvS = null, debug = false;
 const S = { screen: 'title' };
 
 function newRun(mode, lvl, seed, daily) {
   const r = mulberry32(seed >>> 0);
-  return { mode, lvl: lvl || 0, seed: seed >>> 0, daily: !!daily, score: 0, lives: CONFIG.lives, combo: 0, bestCombo: 0, perfects: 0, total: 0, passed: 0, rank: -1,
-    badges: new Set(), seen: new Set(), gezel: mode === 'camp' && save.gezel, cp: null, ship: SHIPS[Math.floor(r() * SHIPS.length)], ploeg: 'ABCDE'[Math.floor(r() * 5)], prevYear: 1800 };
+  return {
+    mode, lvl: lvl || 0, startLvl: lvl || 0, seed: seed >>> 0, daily: !!daily,
+    score: 0, lives: CONFIG.lives, combo: 0, bestCombo: 0, perfects: 0, total: 0, passed: 0, rank: -1,
+    badges: new Set(), seen: new Set(), facts: new Set(), ms: 0, gezel: mode === 'camp' && save.gezel, cp: null,
+    ship: SHIPS[Math.floor(r() * SHIPS.length)], ploeg: 'ABCDE'[Math.floor(r() * 5)], prevYear: 1800,
+  };
 }
 function lvlCfg() { return run.mode === 'night' ? NIGHT : run.mode === 'demo' ? DEMO : LEVELS[Math.min(run.lvl, LEVELS.length - 1)]; }
+const introLong = () => run.mode === 'camp' && run.lvl <= 1;
+const introT = () => introLong() ? CONFIG.intro.tLong : CONFIG.intro.t;
+const introFirst = () => introLong() ? CONFIG.intro.firstLong : CONFIG.intro.first;
 function params(n) {
   const lv = lvlCfg();
   if (run.mode === 'night') {
     const N = CONFIG.night, z = n / 10;
-    return { ...lv, floors: Infinity, scroll: Math.min(N.scrollMax, N.scroll0 * Math.pow(1 + N.grow, z)), interval: Math.max(N.intMin, N.int0 - 0.03 * z), gap: Math.max(N.gapMin, N.gap0 - 0.007 * z) };
+    return {
+      ...lv, floors: Infinity,
+      scroll: Math.min(N.scrollMax, N.scroll0 * Math.pow(1 + N.grow, z)),
+      interval: Math.max(N.intMin, N.int0 - 0.03 * z),
+      gap: Math.max(N.gapMin, N.gap0 - 0.007 * z),
+    };
   }
   if (run.mode === 'demo') return { ...lv, scroll: CONFIG.demo.scroll, interval: 2.4, gap: 0.3 };
   const gz = run.gezel ? CONFIG.gezel : { gap: 1, scroll: 1 };
@@ -613,11 +666,14 @@ function params(n) {
 }
 function resetWorld() {
   const P = params(0);
-  Object.assign(Wd, { t: 0, camY: 0, pcam: 0, scroll: P.scroll, silo: null, ending: 0, complete: false, dying: 0, flash: 0, shakeT: 0, slow: 0, mag: 0, banner: null, tip: null, ambT: 0, steamT: 2, joke: false, sndT: 0 });
-  Wd.floors.length = 0; Wd.haz.length = 0; Wd.sched.length = 0; Wd.picks.length = 0;
-  Wd.len = P.scroll * (CONFIG.intro.first + (isFinite(P.floors) ? P.floors * P.interval : 1e6));
+  Object.assign(Wd, {
+    t: 0, camY: 0, pcam: 0, scroll: P.scroll, silo: null, jg: null, ending: 0, complete: false, dying: 0, flash: 0,
+    shakeT: 0, slow: 0, mag: 0, banner: null, tip: null, ambT: 0, steamT: 2, joke: false, sndT: 0,
+  });
+  Wd.floors.length = 0; Wd.haz.length = 0; Wd.sched.length = 0; Wd.picks.length = 0; Wd.steam.length = 0;
+  Wd.len = P.scroll * (introFirst() + (isFinite(P.floors) ? P.floors * P.interval : 1e6));
   gen.rng = mulberry32((run.seed ^ Math.imul(run.lvl + 1, 0x9E3779B1)) >>> 0);
-  Object.assign(gen, { count: 0, nextY: CONFIG.GY + P.scroll * CONFIG.intro.first, prevX: 200, prevY: CONFIG.GY, lastHaz: false, done: false });
+  Object.assign(gen, { count: 0, nextY: CONFIG.GY + P.scroll * introFirst(), prevX: 200, prevY: CONFIG.GY, lastHaz: false, done: false, molen: 0 });
   Object.assign(G, { x: 200, px: 200, vx: 0, tx: 200, inv: 0, knaks: 0 });
   for (const p of PARTS) p.on = false;
   for (const t of TEXTS) t.on = false;
@@ -637,8 +693,11 @@ function genSlot() {
 function spawnFloor(kind, P, y, n) {
   const minGap = CONFIG.fair.minGap * 2 * hitR();
   const w = clamp(P.gap * (R - L), minGap, (R - L) * 0.6);
-  // eerlijkheid: verschuiving begrensd door wat de korrel in de beschikbare tijd haalt
-  const maxDx = CONFIG.fair.dx * CONFIG.grain.vmax * ((y - gen.prevY) / P.scroll);
+  // eerlijkheid: verschuiving begrensd door wat de korrel in de beschikbare tijd haalt.
+  // Vrije tijd = afstand min de botsingsband van beide verdiepingen, min de tijd om op topsnelheid te komen (toetsenbord).
+  const band = 2 * (CONFIG.roll.wals * CONFIG.roll.casing + hitR());
+  const tFree = Math.max(0, (y - gen.prevY - band) / P.scroll - CONFIG.grain.vmax / CONFIG.grain.accel);
+  const maxDx = CONFIG.fair.dx * CONFIG.grain.vmax * tFree;
   const lo = L + w / 2 + CONFIG.fair.edge, hi = R - w / 2 - CONFIG.fair.edge;
   let a = Math.max(lo, gen.prevX - maxDx), b = Math.min(hi, gen.prevX + maxDx);
   if (a > b) a = b = clamp(gen.prevX, lo, hi);
@@ -646,7 +705,8 @@ function spawnFloor(kind, P, y, n) {
   let x = a + gen.rng() * (b - a);
   for (let i = 0; i < 6 && Math.abs(x - gen.prevX) < minShift; i++) x = a + gen.rng() * (b - a);
   const f = { kind, y, w, cx: x, R: kind === 'molen' ? CONFIG.roll.molen : CONFIG.roll.wals, ribs: P.ribs || 0, spin: 0.8 + gen.rng() * 0.4,
-    passed: false, hit: false, base: x, A: 0, f: 0, ph: 0, holes: [0], locked: true, dir: gen.rng() < 0.5 ? 1 : -1, seed: gen.rng() * 100, jit: gen.rng(), beeped: false };
+    passed: false, hit: false, base: x, A: 0, f: 0, ph: 0, holes: [0], locked: true, dir: gen.rng() < 0.5 ? 1 : -1, seed: gen.rng() * 100, jit: gen.rng(), beeped: false,
+    mi: kind === 'molen' ? ++gen.molen : 0 }; // mi: volgnummer molensteen (voor de 1856-grap bij de derde)
   if (kind === 'plan') {
     f.A = P.plan.A; f.f = P.plan.f; f.locked = false;
     if (P.plan.holes === 2 && gen.rng() < 0.7) {
@@ -664,7 +724,7 @@ function spawnFloor(kind, P, y, n) {
 }
 function spawnHazardSlot(P, y) {
   const type = P.haz[Math.floor(gen.rng() * P.haz.length)], hz = CONFIG.hazard, r = gen.rng;
-  if (type === 'moeder') { // onkruidzaad drijft traag heen en weer op deze verdieping
+  if (type === 'moeder') { // moederkoren (giftige schimmel uit de aar) drijft traag heen en weer op deze verdieping
     const A = 40 + r() * 30, w = 0.9 + r() * 0.8, ph = r() * TAU, sp = 120 + r() * 40, base = 200 + (r() - 0.5) * 40;
     for (const o of [-sp / 2, sp / 2]) Wd.haz.push({ type, anch: true, y: y + (o > 0 ? 18 : -18), base: base + o, A, w, ph, sx: base + o, sy: 0, rot: 0, hit: false, passed: false });
     return;
@@ -672,7 +732,8 @@ function spawnHazardSlot(P, y) {
   const vfall = lerp(hz.fall[0], hz.fall[1], r());
   const x0 = L + 14 + r() * (R - L - 28), vx = (r() < 0.5 ? -1 : 1) * lerp(hz.vx[0], hz.vx[1], r());
   const pts = []; for (let i = 0; i < 6; i++) pts.push(0.75 + r() * 0.35);
-  Wd.sched.push({ type, y, x0, vx, vfall, lead: hz.warn + (CONFIG.GY + 30) / vfall, state: 0, tw: 0, pts });
+  // steen verschijnt direct onder de HUD-band (HUD - 12), dus geen gat tussen driehoekje en steen
+  Wd.sched.push({ type, y, x0, vx, vfall, lead: hz.warn + (CONFIG.GY - CONFIG.HUD + 12) / vfall, state: 0, tw: 0, pts });
 }
 function holeX(f, t) { return f.A ? f.base + f.A * Math.sin(TAU * f.f * t + f.ph) : f.base; }
 // Plansichter: de fase wordt vastgelegd op basis van het aankomstmoment van de korrel.
@@ -715,7 +776,11 @@ function part(o) {
   const p = PARTS.find(q => !q.on); if (!p) return;
   Object.assign(p, { on: true, vx: 0, vy: 0, g: 0, rot: 0, vr: 0, size: 2, life: 0.6, color: '#fff', kind: 'dust' }, o); p.max = p.life;
 }
-function say(text, x, y, color, size, opts) { const t = TEXTS.find(q => !q.on) || TEXTS[0]; Object.assign(t, { on: true, text, x, y, color: color || '#F7F7F7', size: size || 18, life: 1.0, vy: -40, font: F_UI, weight: 800 }, opts || {}); t.max = t.life; }
+function say(text, x, y, color, size, opts) {
+  const t = TEXTS.find(q => !q.on) || TEXTS[0];
+  Object.assign(t, { on: true, text, x, y, color: color || '#F7F7F7', size: size || 18, life: 1.0, vy: -40, font: F_UI, weight: 800 }, opts || {});
+  t.max = t.life;
+}
 function tip(text, dur) { Wd.tip = { text, t: 0, dur: dur || 2.6 }; }
 const mult = () => Math.min(CONFIG.multMax, 1 + Math.floor(run.combo / CONFIG.comboStep));
 function vibrate(p) { try { if (navigator.vibrate) navigator.vibrate(p); } catch (e) { /* niet ondersteund */ } }
@@ -786,16 +851,21 @@ function update(dt) {
   for (let i = Wd.sched.length - 1; i >= 0; i--) {
     const s = Wd.sched[i];
     if (Wd.mag > 0 && s.type === 'bout') { Wd.sched.splice(i, 1); continue; }
-    if (s.state === 0 && (s.y - gy) / Math.max(1, Wd.scroll) <= s.lead) { s.state = 1; s.tw = Wd.t; if (!demo && !run.seen.has('haz')) { run.seen.add('haz'); tip('Reiniging: stenen en metaal mogen nooit op de walsen.', 2.6); } }
-    else if (s.state === 1 && Wd.t - s.tw >= CONFIG.hazard.warn) {
-      Wd.haz.push({ type: s.type, sx: s.x0, sy: -24, vx: s.vx, vfall: s.vfall, rot: 0, pts: s.pts, hit: false, passed: false, fling: 0 });
+    if (s.state === 0 && (s.y - gy) / Math.max(1, Wd.scroll) <= s.lead) {
+      s.state = 1; s.tw = Wd.t;
+      if (!demo && !run.seen.has('haz')) {
+        run.seen.add('haz');
+        tip(lv.old ? 'Reiniging: stenen en metaal mogen nooit tussen de molenstenen.' : 'Reiniging: stenen en metaal mogen nooit op de walsen.', 2.6);
+      }
+    } else if (s.state === 1 && Wd.t - s.tw >= CONFIG.hazard.warn) {
+      Wd.haz.push({ type: s.type, sx: s.x0, sy: CONFIG.HUD - 12, vx: s.vx, vfall: s.vfall, rot: 0, pts: s.pts, hit: false, passed: false, fling: 0 });
       Wd.sched.splice(i, 1);
     }
   }
   for (let i = Wd.haz.length - 1; i >= 0; i--) {
     const h = Wd.haz[i];
     if (h.anch) {
-      if (!demo && !run.seen.has('moeder') && h.y - gy < 420) { run.seen.add('moeder'); tip('Moederkoren is onkruidzaad: de reiniging haalt het eruit.', 2.6); }
+      if (!demo && !run.seen.has('moeder') && h.y - gy < 420) { run.seen.add('moeder'); tip('Moederkoren is een giftige schimmel in de aar: de reiniging haalt het eruit.', 2.6); }
       h.sx = h.base + h.A * Math.sin(h.w * Wd.t + h.ph); h.rot = Math.cos(h.w * Wd.t + h.ph) * 0.5;
       if (!demo && !h.hit && !h.passed && hitCirc(G.x, gy, r, h.sx, h.y, CONFIG.hazard.moederR)) { h.hit = true; hurt('moeder'); }
       if (!h.passed && gy > h.y + 16) { h.passed = true; if (!h.hit && !demo) slotPassed(); }
@@ -824,15 +894,18 @@ function update(dt) {
   while (Wd.picks.length && Wd.picks[0].y < Wd.camY - 60) Wd.picks.shift();
   while (Wd.floors.length && Wd.floors[0].y < Wd.camY - 140) Wd.floors.shift();
   // silohal aan het eind van een molen
+  if (Wd.silo && !demo && !run.seen.has('silo') && Wd.silo.y - Wd.camY < H + 60) {
+    run.seen.add('silo'); tip('Mik op de gouden silo: daar wacht de bulkwagen.', 2.6);
+  }
   if (Wd.silo && !Wd.silo.passed && gy >= Wd.silo.y - 6 && !demo && !Wd.dying) siloLanded();
   if (Wd.ending) { Wd.ending += dt; if (Wd.ending > 1.5 && !Wd.complete) { Wd.complete = true; levelComplete(); return; } }
   // sfeer per tijdperk
   if (!demo) ambience(wdt, gy, lv);
-  const jf = lv === LEVELS[0] && !Wd.joke && Wd.floors.find(q => q.kind === 'molen');
-  if (jf && jf.y - Wd.camY < H - 120) {
-    Wd.joke = true; const f = jf;
-    part({ x: f.cx - f.w / 2 - f.R + 6, y: f.y - f.R - 6, vx: -90, vy: -230, g: 520, vr: -8, life: 1.3, size: 8, color: '#D9A441', kind: 'grain' });
-    tip('1856: de rosmolen bleek niet geschikt voor tarwe.', 3);
+  if (lv === LEVELS[0]) jokeGrain(wdt);
+  // mijlpalen in kg: tekst boven de korrel, nooit tijdens de introband, de tutorial of de silo-landing
+  const ms = CONFIG.milestones[run.ms];
+  if (!demo && ms && run.score >= ms[0] && Wd.t > introT() + 0.3 && !tutorialOn(lv) && !Wd.ending) {
+    run.ms++; say(ms[1], 200, CONFIG.GY - 62, '#CFAB00', 15, { life: 2.2, vy: -16 });
   }
   // timers (echte tijd)
   if (G.inv > 0) G.inv -= dt;
@@ -854,20 +927,43 @@ function ambience(wdt, gy, lv) {
   const prox = clamp(1 - near / 320, 0, 1);
   if (Wd.sndT <= 0) { Wd.sndT = 0.125; AU.rumbleSet(120 + run.lvl * 30 + 220 * prox, 0.05 + 0.12 * prox); if (plate) SFX.ratel(); }
   if (lv === LEVELS[0]) { Wd.ambT -= wdt; if (Wd.ambT <= 0) { Wd.ambT = 0.5; SFX.hoof(); } }
-  if (lv.steam) {
+  if (lv.steam && !reduced.matches) {
+    // stoompuffjes van de 2 pk-machine: klein, langs de wand, boven de korrel en achter de verdiepingen (puur sfeer)
     Wd.steamT -= wdt;
-    if (Wd.steamT <= 0) { // stoomwolk van de 2 pk-machine: puur sfeer, verbergt kort een stukje schacht
-      Wd.steamT = 2.2 + Math.random() * 1.5; SFX.steam();
-      const y0 = Wd.camY + 340 + Math.random() * 220, fromLeft = Math.random() < 0.5;
-      for (let i = 0; i < 6; i++) part({ x: fromLeft ? L - 10 - i * 14 : R + 10 + i * 14, y: y0 + (Math.random() - 0.5) * 50, vx: (fromLeft ? 1 : -1) * (70 + Math.random() * 40), vy: -10, life: 2.4, size: 22 + Math.random() * 20, color: '#F7F7F7', kind: 'steam' });
+    if (Wd.steamT <= 0) {
+      Wd.steamT = 1.4 + Math.random() * 1.4; SFX.steam();
+      const left = Math.random() < 0.5;
+      Wd.steam.push({ x: left ? L + 4 : R - 4, y: 96 + Math.random() * 104, vx: left ? 22 : -22, r: 7, life: 1.6, max: 1.6 });
     }
   }
+  for (let i = Wd.steam.length - 1; i >= 0; i--) {
+    const p = Wd.steam[i]; p.life -= wdt; p.x += p.vx * wdt; p.y -= 18 * wdt; p.r += 9 * wdt;
+    if (p.life <= 0) Wd.steam.splice(i, 1);
+  }
+}
+const tutorialOn = lv => lv === LEVELS[0] && lvS.total < 2;
+// 1856-grap (molen 1): na de introband valt een tarwekorrel op de derde molensteen en stuitert er zichtbaar van af
+function jokeGrain(wdt) {
+  if (!Wd.joke && Wd.t > introT()) {
+    const f = Wd.floors.find(q => q.mi === 3);
+    if (f && f.y - Wd.camY < H - 150) {
+      Wd.joke = true;
+      Wd.jg = { f, x: f.cx + f.w / 2 + f.R * 0.65, y: f.y - f.R - 70, vx: 0, vy: 0, rot: 0, life: 2.4, bounced: false };
+    }
+  }
+  const j = Wd.jg; if (!j) return;
+  j.life -= wdt; j.vy += 900 * wdt; j.x += j.vx * wdt; j.y += j.vy * wdt; j.rot += (j.bounced ? 9 : 0) * wdt;
+  if (!j.bounced && hitCirc(j.x, j.y, 6, j.f.cx + j.f.w / 2 + j.f.R, j.f.y, j.f.R)) {
+    j.bounced = true; j.vy = -320; j.vx = 130; j.life = 0.9; SFX.click();
+    tip('1856: de rosmolen bleek niet geschikt voor tarwe.', 3);
+  }
+  if (j.life <= 0) Wd.jg = null;
 }
 function slotPassed() { run.passed++; comboUp(); run.score += CONFIG.pts.pass * mult(); nightTick(); }
 function nightTick() {
   if (run.mode !== 'night') return;
   Wd.scroll = params(run.passed).scroll;
-  if (run.passed === 100 && !run.badges.has('pas')) { grant(['pas']); tip('Gepassioneerd: 100 verdiepingen!', 2.4); }
+  if (run.passed === 75 && !run.badges.has('pas')) { grant(['pas']); tip('Gepassioneerd: 75 verdiepingen!', 2.4); }
 }
 function floorPassed(f) {
   run.total++; lvS.total++;
@@ -901,7 +997,8 @@ function siloLanded() {
   const idx = clamp(Math.floor((G.x - L) / 60), 0, 4), goal = idx === s.target;
   const pts = goal ? CONFIG.pts.siloGoal : CONFIG.pts.siloOther;
   run.score += pts; lvS.silo = { name: SILOS[idx], goal, pts };
-  say(goal ? 'Order geladen! +' + pts : 'In de silo +' + pts, 200, CONFIG.GY - 40, goal ? '#CFAB00' : '#F7F7F7', 20, { life: 1.5 });
+  if (goal) say('Order geladen! +' + pts, 200, CONFIG.GY - 40, '#CFAB00', 20, { life: 1.5 });
+  else { say('Zakgoed: 25 kg, via de groothandel.', 200, CONFIG.GY - 58, '#F7F7F7', 15, { life: 1.6 }); say('+' + pts, 200, CONFIG.GY - 34, '#F7F7F7', 20, { life: 1.6 }); }
   SFX.silo(); if (goal) SFX.fanfare();
   Wd.ending = 0.0001; G.inv = 0;
 }
@@ -910,38 +1007,78 @@ function siloLanded() {
 // 10. Tekenen
 // ============================================================
 function render(alpha) {
-  ctx.setTransform(1, 0, 0, 1, 0, 0);
-  if (lbCanvas) ctx.drawImage(lbCanvas, 0, 0);
+  // de letterbox staat op #lb eronder; buiten het veld blijft #cv doorzichtig en wordt nooit beschilderd
   const k = V.s * V.dpr;
   ctx.setTransform(k, 0, 0, k, V.ox * V.dpr, V.oy * V.dpr);
   ctx.save(); ctx.beginPath(); ctx.rect(0, 0, W, H); ctx.clip();
   const cam = lerp(Wd.pcam, Wd.camY, alpha), gx = lerp(G.px, G.x, alpha), lv = lvlCfg(), pal = lv.pal, demo = run.mode === 'demo';
   let sx = 0, sy = 0;
-  if (Wd.shakeT > 0) { const a = CONFIG.shake.amp * (Wd.shakeT / CONFIG.shake.t); sx = (Math.random() - 0.5) * 2 * a; sy = (Math.random() - 0.5) * 2 * a; }
+  if (Wd.shakeT > 0) {
+    const a = CONFIG.shake.amp * (Wd.shakeT / CONFIG.shake.t); sx = (Math.random() - 0.5) * 2 * a; sy = (Math.random() - 0.5) * 2 * a;
+    ctx.fillStyle = '#000'; ctx.fillRect(0, 0, W, H); // randen die de schok vrijlaat
+  }
   ctx.save(); ctx.translate(sx, sy);
   const tile = getTile(lv.style, pal), off = -((cam * 0.5) % 240);
   for (let y = off; y < H; y += 240) ctx.drawImage(tile, 0, y, W, 240);
   drawWalls(cam, pal, lv);
+  drawSteam();
   ctx.save(); ctx.translate(0, -cam);
   drawChute(lv);
   if (Wd.silo) drawSilo(Wd.silo, cam);
+  // verdiepingen alleen binnen de schacht: stenen en walsen verdwijnen in de wand in plaats van eroverheen
+  ctx.save(); ctx.beginPath(); ctx.rect(L, cam - 150, R - L, H + 300); ctx.clip();
   for (const f of Wd.floors) if (f.y - cam > -140 && f.y - cam < H + 140) drawFloor(f, pal);
+  ctx.restore();
   for (const p of Wd.picks) if (!p.got && p.y - cam > -30 && p.y - cam < H + 30) drawPick(p.type, p.x, p.y + Math.sin(Wd.t * 3 + p.ph) * 4, Wd.t + p.ph);
   for (const h of Wd.haz) if (h.anch) drawHazard('moeder', h.sx, h.y, h.rot, null, 1);
   drawParticles();
+  if (Wd.jg) drawJokeGrain(Wd.jg);
   ctx.restore();
   for (const h of Wd.haz) if (!h.anch) drawHazard(h.type, h.sx, h.sy, h.rot, h.pts, h.fling ? 0.5 : 1);
   if (!demo) drawGrain(gx, CONFIG.GY);
   ctx.restore();
-  if (lv.predict && !demo) drawPredict(cam);
   drawWarnings();
   if (Wd.slow > 0) vignette('rgba(95,168,211,', 0.35 * clamp(Wd.slow, 0, 1));
-  if (run.mode === 'night') { const g = ctx.createRadialGradient(gx, CONFIG.GY, 60, gx, CONFIG.GY, 420); g.addColorStop(0, 'rgba(0,0,0,0)'); g.addColorStop(1, 'rgba(0,0,0,.6)'); ctx.fillStyle = g; ctx.fillRect(0, 0, W, H); }
+  if (run.mode === 'night') drawNightLamp(gx);
+  if (lv.predict && !demo) drawPredict(cam); // na de werklamp, zodat de vooruitblik niet gedimd wordt
   if (Wd.flash > 0) { ctx.strokeStyle = `rgba(197,33,53,${(Wd.flash / CONFIG.flashT) * 0.9})`; ctx.lineWidth = 16; ctx.strokeRect(0, 0, W, H); }
-  if (!demo) { drawHUD(lv); drawSide(); drawBanner(); drawTip(); if (Wd.t < CONFIG.intro.t) drawIntro(lv); else if (lv === LEVELS[0] && lvS.total < 2) drawTutorial(); }
+  if (!demo) {
+    drawHUD(lv); drawSide(); drawBanner(); drawTip();
+    if (Wd.t < introT()) drawIntro(lv); else if (tutorialOn(lv)) drawTutorial();
+  }
   drawTexts();
+  // achter een kaart (pauze, weegbon, game-over, jaarverslag) het veld dimmen; de titeldemo blijft helder
+  if (!demo && S.screen !== 'play') { ctx.fillStyle = 'rgba(0,0,0,.5)'; ctx.fillRect(0, 0, W, H); }
   if (debug) drawDebug(cam);
   ctx.restore();
+}
+function drawSteam() {
+  if (!Wd.steam.length) return;
+  ctx.fillStyle = '#F7F7F7';
+  for (const p of Wd.steam) {
+    const d = Math.sign(p.vx);
+    ctx.globalAlpha = 0.34 * clamp(p.life / p.max * 2, 0, 1);
+    ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, TAU); ctx.arc(p.x + d * p.r * 0.75, p.y - p.r * 0.35, p.r * 0.7, 0, TAU); ctx.fill();
+  }
+  ctx.globalAlpha = 1;
+}
+function drawJokeGrain(j) {
+  ctx.save(); ctx.globalAlpha = clamp(j.life / 0.4, 0, 1); ctx.translate(j.x, j.y); ctx.rotate(j.rot);
+  ctx.fillStyle = '#D9A441'; ctx.beginPath(); ctx.ellipse(0, 0, 5.5, 8, 0, 0, TAU); ctx.fill();
+  ctx.strokeStyle = 'rgba(70,45,10,.7)'; ctx.lineWidth = 1.2; ctx.stroke();
+  ctx.restore();
+}
+// Werklamp van de Nachtploeg: één keer als klein offscreen-verloop, daarna alleen geschaald neergezet.
+let lampC = null;
+function drawNightLamp(gx) {
+  if (!lampC) {
+    const c = document.createElement('canvas'), q = 0.5; c.width = 2 * W * q; c.height = 2 * H * q;
+    const g = c.getContext('2d'), gr = g.createRadialGradient(W * q, H * q, 90 * q, W * q, H * q, 460 * q);
+    gr.addColorStop(0, 'rgba(0,0,0,0)'); gr.addColorStop(1, 'rgba(0,0,0,.5)'); g.fillStyle = gr; g.fillRect(0, 0, c.width, c.height);
+    lampC = c;
+  }
+  // middelpunt onder de korrel, zodat de binnenkomende verdiepingen in het licht liggen
+  ctx.drawImage(lampC, gx - W, CONFIG.GY + 140 - H, 2 * W, 2 * H);
 }
 function vignette(rgb, a) { const g = ctx.createRadialGradient(200, 360, 160, 200, 360, 470); g.addColorStop(0, rgb + '0)'); g.addColorStop(1, rgb + a + ')'); ctx.fillStyle = g; ctx.fillRect(0, 0, W, H); }
 function drawWalls(cam, pal, lv) {
@@ -990,7 +1127,7 @@ function drawRoll(f, x, y, dir) {
     for (let i = 0; i < 8; i++) { const a = i / 8 * TAU; ctx.beginPath(); ctx.moveTo(Math.cos(a) * Rr * 0.22, Math.sin(a) * Rr * 0.22); ctx.quadraticCurveTo(Math.cos(a + 0.5) * Rr * 0.65, Math.sin(a + 0.5) * Rr * 0.65, Math.cos(a + 0.4) * Rr * 0.95, Math.sin(a + 0.4) * Rr * 0.95); ctx.stroke(); }
     ctx.fillStyle = 'rgba(255,255,255,.12)'; for (let i = 0; i < 9; i++) { const a = f.seed + i * 2.1, d = Rr * (0.3 + (i % 4) * 0.16); ctx.fillRect(Math.cos(a) * d, Math.sin(a) * d, 2, 2); }
   } else if (f.ribs > 0) { // geribbelde wals: grof in 1920, fijner later
-    ctx.strokeStyle = 'rgba(40,46,54,.6)'; ctx.lineWidth = f.ribs > 20 ? 2 : 1.5;
+    ctx.strokeStyle = 'rgba(40,46,54,.6)'; ctx.lineWidth = f.ribs < 15 ? 2.2 : 1.5; // weinig ribbels = grof en dik
     for (let i = 0; i < f.ribs; i++) { const a = i / f.ribs * TAU; ctx.beginPath(); ctx.moveTo(Math.cos(a) * Rr * 0.8, Math.sin(a) * Rr * 0.8); ctx.lineTo(Math.cos(a) * Rr, Math.sin(a) * Rr); ctx.stroke(); }
   }
   ctx.restore();
@@ -1092,15 +1229,16 @@ function drawPredict(cam) { // voorspellende storingssignalering: vage oranje om
 }
 function drawWarnings() {
   const y = CONFIG.hazard.warnY;
-  for (const s of Wd.sched) {
-    if (s.state !== 1) continue;
-    const blink = Math.floor((Wd.t - s.tw) * 8) % 2 === 0;
-    ctx.save(); ctx.translate(s.x0, y); ctx.globalAlpha = blink ? 1 : 0.55;
+  const tri = (x, a) => {
+    ctx.save(); ctx.translate(x, y); ctx.globalAlpha = a;
     ctx.fillStyle = '#E78A01'; ctx.beginPath(); ctx.moveTo(0, -10); ctx.lineTo(11, 9); ctx.lineTo(-11, 9); ctx.closePath(); ctx.fill();
     ctx.strokeStyle = '#1D1E1F'; ctx.lineWidth = 1; ctx.stroke();
     ctx.fillStyle = '#1D1E1F'; ctx.fillRect(-1.5, -4, 3, 7); ctx.fillRect(-1.5, 5, 3, 2.5);
     ctx.restore();
-  }
+  };
+  for (const s of Wd.sched) if (s.state === 1) tri(s.x0, Math.floor((Wd.t - s.tw) * 8) % 2 === 0 ? 1 : 0.55);
+  // blijft staan (en volgt de steen) tot de steen onder de HUD-band uit komt
+  for (const h of Wd.haz) if (!h.anch && !h.fling && h.sy < CONFIG.HUD + CONFIG.hazard.r * 0.5) tri(h.sx, 1);
 }
 function drawGrain(x, y) {
   if (G.inv > 0 && Math.floor(G.inv * 14) % 2 === 0) return;
@@ -1121,7 +1259,6 @@ function drawParticles() {
     if (!p.on) continue;
     const a = clamp(p.life / p.max, 0, 1);
     if (p.kind === 'ring') { ctx.globalAlpha = a; ctx.strokeStyle = p.color; ctx.lineWidth = 3; ctx.beginPath(); ctx.arc(p.x, p.y, p.size + (1 - a) * 26, 0, TAU); ctx.stroke(); }
-    else if (p.kind === 'steam') { ctx.globalAlpha = 0.3 * Math.min(1, a * 2); ctx.fillStyle = p.color; ctx.beginPath(); ctx.arc(p.x, p.y, p.size * (1.4 - a * 0.4), 0, TAU); ctx.fill(); }
     else if (p.kind === 'flake' || p.kind === 'grain' || p.kind === 'kiem') {
       ctx.globalAlpha = a; ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot); ctx.fillStyle = p.color;
       ctx.beginPath(); if (p.kind === 'flake') { ctx.moveTo(-p.size, -1); ctx.lineTo(p.size, -2); ctx.lineTo(p.size - 1, 2); ctx.lineTo(-p.size + 1, 1.5); } else ctx.ellipse(0, 0, p.size * 0.7, p.size, 0, 0, TAU);
@@ -1155,9 +1292,10 @@ function drawHUD(lv) {
   const s = fmt(run.score); ctx.fillText(s, 14, 31);
   const sw = ctx.measureText(s).width;
   ctx.font = `600 13px ${F_UI}`; ctx.fillStyle = '#E3E1DA'; ctx.fillText('kg bloem', 20 + sw, 31);
+  if (run.gezel) { ctx.textAlign = 'right'; ctx.font = `800 10.5px ${F_UI}`; ctx.fillStyle = '#CFAB00'; ctx.fillText('GEZEL', 266, 30); ctx.textAlign = 'left'; }
   const maxL = run.mode === 'night' ? CONFIG.nightLives : CONFIG.lives;
   for (let i = 0; i < maxL; i++) {
-    const x = 334 - (maxL - 1 - i) * 22, on = i < run.lives;
+    const x = 328 - (maxL - 1 - i) * 22, on = i < run.lives; // ruimte voor de pauzeknop van 44 px
     ctx.save(); ctx.translate(x, 23); ctx.rotate(0.25); ctx.beginPath(); ctx.ellipse(0, 0, 6.5, 9, 0, 0, TAU);
     if (on) { ctx.fillStyle = '#D9A441'; ctx.fill(); ctx.fillStyle = '#1D1E1F'; ctx.fillRect(-3, -2, 1.6, 1.6); ctx.fillRect(1.4, -2, 1.6, 1.6); } else { ctx.strokeStyle = '#C52135'; ctx.lineWidth = 2; ctx.stroke(); }
     ctx.restore();
@@ -1166,8 +1304,11 @@ function drawHUD(lv) {
     const mins = (22 * 60 + run.passed * 5) % 1440, clock = `${String(Math.floor(mins / 60)).padStart(2, '0')}:${String(mins % 60).padStart(2, '0')}`;
     ctx.font = `800 13px ${F_UI}`; ctx.fillStyle = '#6FD3E0'; ctx.fillText(run.daily ? 'Korrel van de dag' : 'Vrije dienst', 14, 52);
     ctx.font = `600 11.5px ${F_UI}`; ctx.fillStyle = '#E3E1DA'; ctx.fillText(`volcontinu · ploeg ${run.ploeg} · ${clock}`, 14, 67);
-    ctx.textAlign = 'right'; ctx.font = `800 20px ${F_UI}`; ctx.fillStyle = '#F7F7F7'; ctx.fillText(String(run.passed), W - 14, 62);
-    const nw = ctx.measureText(String(run.passed)).width; ctx.font = `600 11.5px ${F_UI}`; ctx.fillStyle = '#E3E1DA'; ctx.fillText('verdieping', W - 20 - nw, 62);
+    ctx.textAlign = 'right'; ctx.font = `800 20px ${F_UI}`; ctx.fillStyle = '#F7F7F7'; ctx.fillText(String(run.passed), W - 14, 65);
+    const nw = ctx.measureText(String(run.passed)).width;
+    ctx.font = `600 11px ${F_UI}`; ctx.fillStyle = '#E3E1DA'; ctx.fillText('verdieping', W - 20 - nw, 55);
+    // zone per tien verdiepingen, vernoemd naar de Prémax-mixen
+    ctx.font = `800 11px ${F_UI}`; ctx.fillStyle = '#CFAB00'; ctx.fillText(RANKS[Math.floor(run.passed / 10) % RANKS.length][1], W - 20 - nw, 68);
     return;
   }
   // procesbalk: Lossen > Reinigen > Conditioneren > Walsen > Zeven > Silo
@@ -1225,7 +1366,7 @@ function drawTip() {
   ctx.globalAlpha = 1;
 }
 function drawIntro(lv) { // doorrollende jaartal-teller plus tijdperk-titel
-  const t = Wd.t, a = clamp(Math.min(t / 0.15, (CONFIG.intro.t - t) / 0.35), 0, 1);
+  const t = Wd.t, a = clamp(Math.min(t / 0.15, (introT() - t) / 0.35), 0, 1);
   ctx.globalAlpha = a;
   ctx.fillStyle = 'rgba(22,22,23,.86)'; ctx.fillRect(22, 84, W - 44, 146); ctx.fillStyle = '#CFAB00'; ctx.fillRect(22, 84, W - 44, 3);
   const from = String(run.prevYear), to = String(lv.year), bw = 30, bh = 40, gap = 5, x0 = 200 - (4 * bw + 3 * gap) / 2, y0 = 96;
@@ -1240,19 +1381,21 @@ function drawIntro(lv) { // doorrollende jaartal-teller plus tijdperk-titel
     ctx.restore();
     ctx.fillStyle = 'rgba(255,255,255,.08)'; ctx.fillRect(x, y0, bw, bh / 2);
   }
-  ctx.font = `400 25px ${F_HAND}`; ctx.fillStyle = '#CFAB00'; ctx.fillText(lv.title, 200, 160);
+  // maxWidth als vangnet: een te lange regel wordt iets smaller in plaats van uit het paneel te steken
+  ctx.font = `400 25px ${F_HAND}`; ctx.fillStyle = '#CFAB00'; ctx.fillText(lv.title, 200, 160, 330);
   ctx.font = `600 13px ${F_UI}`; ctx.fillStyle = '#F7F7F7';
   const lines = wrapLines(lv.intro, 330); lines.slice(0, 2).forEach((l, i) => ctx.fillText(l, 200, 186 + i * 17));
   ctx.font = `800 11.5px ${F_UI}`; ctx.fillStyle = '#E78A01';
-  ctx.fillText(lv.supply || `Aan de loskade: ${run.ship}.`, 200, 219);
+  ctx.fillText(lv.supply || `Aan de loskade: ${run.ship}.`, 200, 219, 330);
   ctx.globalAlpha = 1;
 }
-function drawTutorial() {
+function drawTutorial() { // boven de korrel (de spleten komen van onderen), na de introband
+  if (Wd.haz.some(h => !h.anch && h.sy > 160 && h.sy < 225)) return; // nooit over een vallende steen
   ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
   ctx.font = `800 14px ${F_UI}`; ctx.lineWidth = 4; ctx.strokeStyle = 'rgba(20,20,21,.85)'; ctx.fillStyle = '#F7F7F7';
-  const l1 = 'Stuur door de spleet. Midden door = perfect.', l2 = inputMode === 'touch' ? 'Sleep met je duim, waar dan ook.' : 'Pijltjes, A/D of de muis.';
-  ctx.strokeText(l1, 200, 300); ctx.fillText(l1, 200, 300);
-  ctx.font = `600 12px ${F_UI}`; ctx.strokeText(l2, 200, 320); ctx.fillText(l2, 200, 320);
+  const l1 = 'Stuur door de spleet. Midden door = perfect.', l2 = hintTouch ? 'Sleep met je duim, waar dan ook.' : 'Pijltjes, A/D of de muis.';
+  ctx.strokeText(l1, 200, 186); ctx.fillText(l1, 200, 186);
+  ctx.font = `600 12px ${F_UI}`; ctx.strokeText(l2, 200, 206); ctx.fillText(l2, 200, 206);
 }
 function drawDebug(cam) {
   ctx.save(); ctx.strokeStyle = '#3f3'; ctx.lineWidth = 1;
@@ -1274,6 +1417,7 @@ function drawDebug(cam) {
 const SCR = { title: $('scrTitle'), pause: $('scrPause'), level: $('scrLevel'), over: $('scrOver'), done: $('scrDone'), scores: $('scrScores'), about: $('scrAbout') };
 function show(name) {
   S.screen = name;
+  clearTimeout(toastT); $('toast').hidden = true; // een oude toast mag geen knop van het nieuwe scherm afdekken
   for (const k in SCR) SCR[k].hidden = k !== name;
   $('btnPause').hidden = name !== 'play';
   keys.left = keys.right = false;
@@ -1286,36 +1430,63 @@ function show(name) {
 let toastT = 0, lastKey = false;
 const hoverDevice = () => { try { return matchMedia('(hover: hover) and (pointer: fine)').matches; } catch (e) { return false; } };
 addEventListener('pointerdown', () => { lastKey = false; }, true);
-function toast(msg) { const t = $('toast'); t.textContent = msg; t.hidden = false; clearTimeout(toastT); toastT = setTimeout(() => { t.hidden = true; }, 2600); }
+function toast(msg, dur) { const t = $('toast'); t.textContent = msg; t.hidden = false; clearTimeout(toastT); toastT = setTimeout(() => { t.hidden = true; }, dur || 2600); }
 function grant(ids) { for (const id of ids) { run.badges.add(id); save.badges[id] = 1; } persist(); }
-function uitLabel(pct) { return UIT.find(u => pct < u.max) || UIT[UIT.length - 1]; }
+function uitLabel(pct) { return UIT.find(u => pct >= u.min) || UIT[UIT.length - 1]; }
 function uitHTML(perf, total) {
   if (!total) return 'Nog geen passages gemeten.';
   const pct = Math.round(perf / total * 100), u = uitLabel(pct); save.labels[u.id] = 1; persist();
-  return `Jouw uitmaling: <b>${pct}%</b> (${perf} van ${total} perfect): <b>${u.name}</b>, ${u.note}. Witter = minder uitmaling.`;
+  return `Precisie <b>${pct}%</b>: ${perf} van ${total} perfect. Jouw meel: <b>${u.name}</b>, uitmaling ${u.note}. Witter = minder uitmaling.`;
+}
+// Wist-je-dat zonder herhaling binnen een run; bij voorkeur een kaartje van deze molen (6 = Nachtploeg)
+function pickFact(lvl) {
+  let free = FACTS.map((_, i) => i).filter(i => !run.facts.has(i));
+  if (!free.length) { run.facts.clear(); free = FACTS.map((_, i) => i); }
+  const own = free.filter(i => FACTS[i][0] === lvl), pool = own.length ? own : free;
+  const i = pool[Math.floor(Math.random() * pool.length)]; run.facts.add(i); return FACTS[i][1];
 }
 function bonRows(kg) {
   return `<tr class="big"><td>Bloem</td><td>${fmt(kg)} kg</td></tr><tr><td>Zakken van 25 kg</td><td>${fmt(Math.floor(kg / CONFIG.bag))}</td></tr>` +
     `<tr><td>Bulkcellen van 2 ton</td><td>${fmt1(kg / CONFIG.cell)}</td></tr><tr><td>Goed voor</td><td>circa ${fmt(Math.round(kg / 1000 * CONFIG.bread / 10) * 10)} broden</td></tr>`;
 }
+// Badge-chip; de uitleg staat in title (muis) en komt als toast bij een tik (touch heeft geen hover).
+function badgeEl(b, earned, iconOnly) {
+  const s = document.createElement('span');
+  s.className = 'badge tap' + (earned ? '' : ' off') + (iconOnly ? ' ico' : '');
+  s.title = b.desc; s.onclick = () => toast(b.name + ': ' + b.desc);
+  s.appendChild(badgeCanvas(b.id, earned));
+  if (iconOnly) { s.setAttribute('role', 'img'); s.setAttribute('aria-label', b.name + (earned ? '' : ', nog niet verdiend')); }
+  else s.appendChild(document.createTextNode(b.name));
+  return s;
+}
 function fillBadges(el, ids) {
   el.innerHTML = '';
-  for (const id of ids) { const b = BADGES.find(q => q.id === id); const s = document.createElement('span'); s.className = 'badge'; s.title = b.desc; s.appendChild(badgeCanvas(id, true)); s.appendChild(document.createTextNode(b.name)); el.appendChild(s); }
+  for (const id of ids) el.appendChild(badgeEl(BADGES.find(q => q.id === id), true, false));
   el.hidden = !ids.length;
 }
+// Hele kernwaardenrij: verdiend in goud met naam, de rest grijs als icoon (tik voor uitleg)
+function fillBadgesAll(el, got) {
+  el.innerHTML = '';
+  for (const b of BADGES) el.appendChild(badgeEl(b, got.has(b.id), !got.has(b.id)));
+  el.hidden = false;
+}
 function shareLine() {
-  const kg = run.score, br = fmt(Math.round(kg / 1000 * CONFIG.bread / 10) * 10), uit = run.total ? Math.round(run.perfects / run.total * 100) + '% uitmaling' : '';
+  const kg = run.score, br = fmt(Math.round(kg / 1000 * CONFIG.bread / 10) * 10);
+  const pc = run.total ? Math.round(run.perfects / run.total * 100) : null, uit = pc === null ? '' : `${uitLabel(pc).name}, ${pc}% perfect`;
   const rank = run.rank >= 0 ? `combo ${RANKS[run.rank][1]}, ` : '';
-  const head = run.mode === 'night' ? `Korrelval Nachtploeg ${dayLabel()}${run.daily ? ' (Korrel van de dag)' : ''}: ${fmt(kg)} kg bloem, ${run.passed} verdiepingen`
-    : S.screen === 'done' ? `Korrelval, van 1846 tot 2026: ${fmt(kg)} kg bloem` : `Korrelval ${lvlCfg().year} ${lvlCfg().short}: ${fmt(kg)} kg bloem`;
+  const head = run.mode === 'night'
+    ? `Korrelval Nachtploeg ${dayLabel()}${run.daily ? ' (Korrel van de dag)' : ''}, ${save.name}: ${fmt(kg)} kg bloem, ${fl(run.passed, ' ')}`
+    : S.screen === 'done' ? `Korrelval, van ${LEVELS[run.startLvl].year} tot 2026: ${fmt(kg)} kg bloem` : `Korrelval ${lvlCfg().year} ${lvlCfg().short}: ${fmt(kg)} kg bloem`;
   return `${head}, goed voor circa ${br} broden, ${rank}${uit}`.replace(/, $/, '');
 }
 async function copyScore(boxId) {
-  const text = shareLine(); let ok = false;
+  const text = shareLine(), box = $(boxId); let ok = false;
   try { if (navigator.clipboard && window.isSecureContext) { await navigator.clipboard.writeText(text); ok = true; } } catch (e) { ok = false; }
-  if (ok) { toast('Gekopieerd. Plak hem in Teams.'); return; }
-  const box = $(boxId); box.hidden = false; box.value = text; try { box.focus(); box.select(); } catch (e) { /* ok */ }
-  toast('Kopiëren lukte niet: selecteer de tekst.');
+  if (!ok) { // terugval voor iframes en iOS: zichtbaar tekstveld, volledig selecteren, oude copy-opdracht
+    box.hidden = false; box.value = text;
+    try { box.focus(); box.select(); box.setSelectionRange(0, text.length); ok = document.execCommand('copy'); } catch (e) { ok = false; }
+  }
+  if (ok) { box.hidden = true; toast('Gekopieerd. Plak de score waar je wilt.'); } else toast('Kopiëren lukte niet: selecteer de tekst.');
 }
 
 function startDemo() { run = newRun('demo', 0, 20261846); resetWorld(); show('title'); refreshTitle(); }
@@ -1340,6 +1511,7 @@ function levelComplete() {
   const lv = lvlCfg(), pct = lvS.total ? lvS.perf / lvS.total : 0;
   const lifeB = run.lives * CONFIG.pts.life, uitB = Math.round(pct * CONFIG.pts.uit), kgLevel = run.score - lvS.kg0;
   run.score += lifeB + uitB;
+  save.best = Math.max(save.best, run.score); // ook bewaren als je na de weegbon naar het menu gaat
   const earned = [];
   if (lvS.hits === 0) earned.push('betr');
   if (lvS.total && pct >= 0.75) earned.push('vak');
@@ -1352,12 +1524,12 @@ function levelComplete() {
   $('lvTitle').textContent = lvS.silo && lvS.silo.goal ? 'Order geladen!' : 'In de silo';
   $('lvEra').textContent = `${lv.year} · ${lv.title}`;
   $('lvBon').innerHTML = `<tr><td>Deze molen</td><td>+${fmt(kgLevel)} kg</td></tr>` +
-    (lvS.silo ? `<tr><td>Silo ${esc(lvS.silo.name)}${lvS.silo.goal ? ' (bulkwagen)' : ''}</td><td>+${lvS.silo.pts}</td></tr>` : '') +
-    `<tr><td>Korrels over: ${run.lives}</td><td>+${lifeB}</td></tr><tr><td>Uitmalingsbonus</td><td>+${uitB}</td></tr>` +
+    (lvS.silo ? `<tr><td>Silo ${esc(lvS.silo.name)} (${lvS.silo.goal ? 'bulkwagen' : 'zakgoed'})</td><td>+${lvS.silo.pts}</td></tr>` : '') +
+    `<tr><td>Korrels over: ${run.lives}</td><td>+${lifeB}</td></tr><tr><td>Precisiebonus</td><td>+${uitB}</td></tr>` +
     `<tr class="big"><td>Totaal</td><td>${fmt(run.score)} kg</td></tr><tr><td>Zakken van 25 kg</td><td>${fmt(Math.floor(run.score / CONFIG.bag))}</td></tr>`;
   $('lvUit').innerHTML = uitHTML(lvS.perf, lvS.total) + (unlocked ? ' <b>De Nachtploeg is nu open.</b>' : '');
   fillBadges($('lvBadges'), earned);
-  const pool = FACTS.filter(f => f[0] === run.lvl); $('lvFact').textContent = pool[Math.floor(Math.random() * pool.length)][1];
+  $('lvFact').textContent = pickFact(run.lvl);
   $('bNext').textContent = last ? 'Naar het jaarverslag' : `Volgende molen: ${LEVELS[run.lvl + 1].year}`;
   show('level'); SFX.fanfare();
 }
@@ -1366,29 +1538,33 @@ function nextLevel() {
   run.prevYear = lvlCfg().year; run.lvl++; startLevel();
 }
 function showDone() {
-  save.campDone = true; save.best = Math.max(save.best, run.score);
-  if (run.gezel) grant(['mens']);
+  const full = run.startLvl === 0; // alleen een run vanaf 1846 telt als hele tijdlijn
+  if (full) save.campDone = true;
+  save.best = Math.max(save.best, run.score);
+  if (run.gezel && full) grant(['mens']);
   persist();
+  $('doneNote').textContent = (full ? 'Je viel door alle molens van de tijdlijn.' : `Je viel van ${LEVELS[run.startLvl].year} tot Molen B.`) +
+    ' Generaties lang draaiden hier de molens op vakmanschap; jij draaide een rondje mee.';
   $('doneBon').innerHTML = bonRows(run.score) + `<tr><td>Beste combo</td><td>${run.bestCombo}${run.rank >= 0 ? ' · ' + RANKS[run.rank][1] : ''}</td></tr>`;
   $('doneUit').innerHTML = uitHTML(run.perfects, run.total);
-  fillBadges($('doneBadges'), [...run.badges]);
+  fillBadgesAll($('doneBadges'), run.badges);
   $('copyBox2').hidden = true;
   show('done');
 }
 let pickerEntry = null, pickerSlot = 0;
 function gameOver() {
   const night = run.mode === 'night', lv = lvlCfg();
-  $('overSub').textContent = night ? `Nachtploeg · ${run.daily ? 'Korrel van de dag, ' + dayLabel() : 'vrije dienst'} · ${run.passed} verdiepingen` : `${lv.year} · ${lv.title}: probeer deze molen nog eens`;
+  $('overSub').textContent = night ? `Nachtploeg · ${run.daily ? 'Korrel van de dag, ' + dayLabel() : 'vrije dienst'} · ${fl(run.passed)}` : `${lv.year} · ${lv.title}: probeer deze molen nog eens`;
   $('overBon').innerHTML = bonRows(run.score) + `<tr><td>Beste combo</td><td>${run.bestCombo}${run.rank >= 0 ? ' · ' + RANKS[run.rank][1] : ''}</td></tr>`;
   $('overUit').innerHTML = uitHTML(run.perfects, run.total);
-  fillBadges($('overBadges'), [...run.badges]);
+  fillBadgesAll($('overBadges'), run.badges);
   $('copyBox').hidden = true;
   pickerEntry = null; $('picker').hidden = true;
   if (night) {
     const k = dateKey(); if (run.daily) save.daily[k] = Math.max(save.daily[k] || 0, run.score);
     const entry = { n: save.name, s: run.score, f: run.passed, d: dayLabel(), daily: run.daily };
     if (run.score > 0) { save.top.push(entry); save.top.sort((a, b) => b.s - a.s); save.top = save.top.slice(0, 5); if (save.top.includes(entry)) { pickerEntry = entry; buildPicker(); } }
-    const pool = FACTS.filter(f => f[0] === 6 || Math.random() < 0.2); $('overFact').textContent = pool[Math.floor(Math.random() * pool.length)][1];
+    $('overFact').textContent = pickFact(Math.random() < 0.6 ? 6 : -1); // meestal een Nachtploeg-kaartje, soms een ander
   } else save.best = Math.max(save.best, run.score);
   $('overFactBox').hidden = !night;
   persist();
@@ -1413,7 +1589,7 @@ function shiftLetter(i, d) {
   [...$('slots').children].forEach((s, j) => { s.children[1].textContent = save.name[j]; s.classList.toggle('sel', j === i); });
 }
 function pause() { if (S.screen !== 'play') return; const lv = lvlCfg(); $('pauseInfo').textContent = run.mode === 'night' ? `Nachtploeg · verdieping ${run.passed}` : `${lv.year} · ${lv.title}`; show('pause'); }
-function resume() { if (S.screen === 'pause') show('play'); }
+function resume() { if (S.screen === 'pause') { G.inv = Math.max(G.inv, 0.6); show('play'); } } // korte adempauze na Verder
 function toMenu() { startDemo(); }
 function syncSoundButtons() { for (const id of ['bSound', 'bPSound']) { const b = $(id); b.textContent = save.sound ? 'Geluid aan' : 'Geluid uit'; b.setAttribute('aria-pressed', String(save.sound)); } }
 function refreshTitle() {
@@ -1422,23 +1598,32 @@ function refreshTitle() {
   syncSoundButtons();
   $('bDaily').disabled = $('bFree').disabled = !save.night;
   const best = save.daily[dateKey()];
-  $('nightNote').textContent = save.night ? (best ? `vandaag jouw beste: ${fmt(best)} kg` : 'eindeloos, één korrel, zelfde schacht voor iedereen') : 'open na de eerste molen (1846)';
+  $('nightNote').textContent = save.night ? (best ? `vandaag jouw beste: ${fmt(best)} kg` : 'eindeloos, één korrel') : 'open na de eerste molen (1846)';
   const chips = $('lvlChips'); chips.innerHTML = '';
   if (save.maxLvl > 0) {
     const lab = document.createElement('span'); lab.className = 'hint'; lab.textContent = 'Verder vanaf'; chips.appendChild(lab);
-    LEVELS.forEach((lv, i) => { if (i > save.maxLvl) return; const b = document.createElement('button'); b.type = 'button'; b.className = 'btn'; b.textContent = lv.year; b.setAttribute('aria-label', `Start bij ${lv.year}, ${lv.title}`); b.onclick = () => startCampaign(i); chips.appendChild(b); });
+    LEVELS.forEach((lv, i) => {
+      if (i > save.maxLvl) return;
+      const b = document.createElement('button'); b.type = 'button'; b.className = 'btn'; b.textContent = lv.year;
+      b.setAttribute('aria-label', `Start bij ${lv.year}, ${lv.title}`); b.onclick = () => startCampaign(i); chips.appendChild(b);
+    });
   }
   chips.hidden = save.maxLvl <= 0;
   const got = BADGES.filter(b => save.badges[b.id]).map(b => b.id); fillBadges($('titleBadges'), got);
-  if (UIT.every(u => save.labels[u.id])) { const s = document.createElement('span'); s.className = 'badge'; s.style.paddingLeft = '9px'; s.textContent = 'Alle vier uitmalingen gezien'; $('titleBadges').appendChild(s); $('titleBadges').hidden = false; }
+  if (UIT.every(u => save.labels[u.id])) {
+    const s = document.createElement('span'); s.className = 'badge'; s.style.paddingLeft = '9px'; s.textContent = 'Alle vier uitmalingen gezien';
+    $('titleBadges').appendChild(s); $('titleBadges').hidden = false;
+  }
 }
 function showScores() {
   const ol = $('topList');
-  ol.innerHTML = save.top.length ? save.top.map(e => `<li><b>${esc(e.n)}</b><span>${fmt(e.s)} kg</span><i>${e.f} verd. · ${esc(e.d)}${e.daily ? ' · dag' : ''}</i></li>`).join('') : '<li><b>Nog leeg.</b><i>Speel de Nachtploeg</i></li>';
+  ol.innerHTML = save.top.length
+    ? save.top.map(e => `<li><b>${esc(e.n)}</b><span>${fmt(e.s)} kg</span><i>${e.f} verd. · ${esc(e.d)}${e.daily ? ' · van de dag' : ''}</i></li>`).join('')
+    : '<li class="empty"><b>Nog leeg.</b><i>Speel de Nachtploeg</i></li>';
   const best = save.daily[dateKey()]; $('dailyNote').textContent = best ? `Korrel van de dag: ${fmt(best)} kg` : '';
   $('campNote').textContent = save.best || save.maxLvl ? `Beste score: ${fmt(save.best)} kg bloem. Bereikt: ${LEVELS[save.maxLvl].year}${save.campDone ? ', tijdlijn uitgespeeld.' : '.'}` : 'Nog geen molen gehaald.';
   const ab = $('allBadges'); ab.innerHTML = '';
-  for (const b of BADGES) { const s = document.createElement('span'); s.className = 'badge' + (save.badges[b.id] ? '' : ' off'); s.title = b.desc; s.appendChild(badgeCanvas(b.id, !!save.badges[b.id])); s.appendChild(document.createTextNode(b.name)); ab.appendChild(s); }
+  for (const b of BADGES) ab.appendChild(badgeEl(b, !!save.badges[b.id], false));
   $('allLabels').innerHTML = UIT.map(u => `<span class="badge${save.labels[u.id] ? '' : ' off'}" style="padding-left:9px">${u.name} <small>${u.note}</small></span>`).join('');
   show('scores');
 }
@@ -1474,7 +1659,14 @@ addEventListener('keydown', e => {
   if (k === 'ArrowLeft' || k === 'a' || k === 'A') { keys.left = true; if (S.screen === 'play') e.preventDefault(); return; }
   if (k === 'ArrowRight' || k === 'd' || k === 'D') { keys.right = true; if (S.screen === 'play') e.preventDefault(); return; }
   if (e.repeat) return;
-  if (k === ' ' || k === 'Enter') { if (e.target && (e.target.tagName === 'BUTTON' || e.target.tagName === 'TEXTAREA')) return; if (S.screen !== 'play') { e.preventDefault(); primary(); } return; }
+  if (k === ' ' || k === 'Enter') {
+    // Buiten het spel is spatie/Enter altijd de hoofdactie, ook als er nog een met de muis aangeklikte knop focus heeft.
+    // Native activatie alleen in het tekstveld, op de hoofdknop zelf, of op een knop die met Tab is gekozen.
+    const tg = e.target, tag = tg && tg.tagName;
+    if (tag === 'TEXTAREA' || (tag === 'BUTTON' && (tg.hasAttribute('data-primary') || focusByKey))) return;
+    if (S.screen !== 'play') { e.preventDefault(); primary(); }
+    return;
+  }
   if (k === 'p' || k === 'P') { if (S.screen === 'play') pause(); else if (S.screen === 'pause') resume(); return; }
   if (k === 'm' || k === 'M') { AU.setSound(!save.sound); return; }
   if (k === 'Escape') { if (S.screen === 'play') pause(); else if (S.screen === 'scores' || S.screen === 'about') { show('title'); refreshTitle(); } else if (S.screen !== 'title') toMenu(); return; }
@@ -1485,7 +1677,9 @@ addEventListener('keyup', e => {
   if (k === 'ArrowLeft' || k === 'a' || k === 'A') keys.left = false;
   if (k === 'ArrowRight' || k === 'd' || k === 'D') keys.right = false;
 });
-addEventListener('blur', () => { keys.left = keys.right = false; });
+addEventListener('blur', () => { keys.left = keys.right = false; if (S.screen === 'play') pause(); }); // klik naast het venster
+let focusByKey = false; // kwam de huidige focus via het toetsenbord (Tab) of via een klik?
+addEventListener('focusin', () => { focusByKey = lastKey; }, true);
 document.addEventListener('visibilitychange', () => {
   if (document.hidden) { if (S.screen === 'play') pause(); if (AU.ctx) AU.ctx.suspend().catch(() => {}); }
   else if (AU.ctx) AU.ctx.resume().catch(() => {});
@@ -1511,7 +1705,9 @@ function frame(ts) {
   requestAnimationFrame(frame);
 }
 function start(data) {
+  document.documentElement.lang = 'nl'; // uitspraak, afbreking en spellingscontrole
   loadSave();
+  syncHints();
   layout();
   addEventListener('resize', layout);
   if (window.visualViewport) visualViewport.addEventListener('resize', layout);
