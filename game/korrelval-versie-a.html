@@ -1,0 +1,1501 @@
+<title>Korrelval</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800&family=La+Belle+Aurore&display=swap">
+<style>
+:root{
+  --bg:#E3E1DA; --card:#F7F7F7; --ink:#1D1E1F; --muted:#5b5955; --line:#d3cfc3;
+  --accent:#E78A01; --accent-ink:#1D1E1F; --gold:#CFAB00; --danger:#C52135;
+  --chip:rgba(207,171,0,.16); --shadow:0 12px 32px rgba(0,0,0,.28);
+  --wall:#1D1E1F; --wall2:#26282b; --wall3:#2f3236;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#141516; --card:#24262a; --ink:#F7F7F7; --muted:#b4b1a8; --line:#3d3f45;
+    --danger:#E25266; --chip:rgba(207,171,0,.22); --shadow:0 12px 32px rgba(0,0,0,.6);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#141516; --card:#24262a; --ink:#F7F7F7; --muted:#b4b1a8; --line:#3d3f45;
+  --danger:#E25266; --chip:rgba(207,171,0,.22); --shadow:0 12px 32px rgba(0,0,0,.6);
+  color-scheme:dark;
+}
+html,body{height:100%}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:Nunito,"Avenir Next","Segoe UI",system-ui,sans-serif; font-weight:600;
+  overflow:hidden; touch-action:none; overscroll-behavior:none;
+  -webkit-user-select:none; user-select:none; -webkit-tap-highlight-color:transparent;
+}
+#stage{
+  position:fixed; inset:0; display:flex; align-items:center; justify-content:center;
+  touch-action:none; overscroll-behavior:none;
+  background-color:var(--wall);
+  background-image:
+    linear-gradient(var(--wall3) 1px, transparent 1px),
+    linear-gradient(90deg, var(--wall3) 1px, transparent 1px),
+    linear-gradient(var(--wall2), var(--wall2));
+  background-size:100% 36px, 72px 36px, 100% 100%;
+}
+#c{display:block; touch-action:none; cursor:crosshair}
+#ui{position:absolute; pointer-events:none; font-size:calc(var(--s,1) * 16px); line-height:1.3}
+.screen{
+  position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center;
+  box-sizing:border-box; padding:16px 16px calc(16px + env(safe-area-inset-bottom,0px));
+}
+.screen.low{justify-content:flex-end}
+.card{
+  pointer-events:auto; background:var(--card); color:var(--ink); border:1px solid var(--line);
+  border-radius:14px; box-shadow:var(--shadow); width:100%; max-width:22.5em; max-height:100%;
+  overflow:auto; box-sizing:border-box; padding:1.1em 1.15em; display:flex; flex-direction:column; gap:.55em;
+}
+.card > *{margin:0}
+.kicker{font-size:.78em; color:var(--muted); letter-spacing:.06em; text-transform:uppercase}
+h1.title{font-weight:800; font-size:2.7em; line-height:1; letter-spacing:-.02em}
+h2{font-weight:800; font-size:1.45em; line-height:1.1}
+.era{font-family:"La Belle Aurore",cursive; font-weight:400; color:var(--accent); font-size:1.35em; line-height:1.1}
+p.small,.small{font-size:.86em; color:var(--muted)}
+.fine{font-size:.72em; color:var(--muted); line-height:1.35}
+.btn{
+  pointer-events:auto; display:block; width:100%; min-height:56px; border:0; border-radius:9px;
+  background:var(--accent); color:var(--accent-ink); font:800 1.05em/1.2 Nunito,"Avenir Next",system-ui,sans-serif;
+  padding:.6em 1em; cursor:pointer; touch-action:manipulation; box-sizing:border-box;
+}
+.btn:active{transform:translateY(1px)}
+.btn.alt{background:transparent; border:2px solid var(--line); color:var(--ink)}
+.btn.small{min-height:44px; font-size:.9em}
+.btn[disabled]{opacity:.45; cursor:default}
+.row{display:flex; gap:.5em}
+.row > .btn{flex:1 1 0; min-width:0}
+.tog{font-size:.8em; padding:.3em .4em}
+.tog[aria-pressed="true"]{border-color:var(--gold); background:var(--chip)}
+.grid{display:grid; grid-template-columns:1fr 1fr; gap:.45em}
+.tile{border:1px solid var(--line); border-radius:9px; padding:.5em .6em}
+.tile b{display:block; font-weight:800; font-size:1.25em; font-variant-numeric:tabular-nums}
+.tile span{font-size:.72em; color:var(--muted)}
+.badges{display:flex; flex-wrap:wrap; gap:.35em}
+.badge{border:1px solid var(--line); border-radius:999px; padding:.15em .6em; font-size:.72em; color:var(--muted)}
+.badge.on{border-color:var(--gold); color:var(--ink); background:var(--chip)}
+.fact{border-left:4px solid var(--gold); padding:.35em .7em; font-size:.92em; background:var(--chip); border-radius:0 8px 8px 0}
+.fact small{display:block; color:var(--muted); font-size:.75em; margin-bottom:.15em; letter-spacing:.05em; text-transform:uppercase}
+ol.scores{padding:0; list-style:none; display:flex; flex-direction:column; gap:.3em; font-variant-numeric:tabular-nums}
+ol.scores li{display:flex; justify-content:space-between; gap:.6em; border-bottom:1px solid var(--line); padding:.25em 0; font-size:.95em}
+ol.scores li span:last-child{color:var(--muted); font-size:.82em}
+.picker{display:flex; justify-content:center; gap:.6em}
+.picker .col{display:flex; flex-direction:column; align-items:center; gap:.2em}
+.picker .pk{width:44px; height:44px; min-height:44px; padding:0; font-size:1em}
+.picker .letter{font-weight:800; font-size:1.7em; width:44px; text-align:center}
+.sharebox{pointer-events:auto; -webkit-user-select:all; user-select:all; font-size:.8em; border:1px dashed var(--line); border-radius:8px; padding:.5em .6em; word-break:break-word}
+.hint{pointer-events:none; color:#F7F7F7; background:rgba(29,30,31,.75); border-radius:999px; padding:.4em 1em; font-size:.85em}
+#pausebtn{
+  pointer-events:auto; position:absolute; top:10px; right:10px; width:40px; height:40px; border-radius:50%;
+  border:2px solid rgba(247,247,247,.55); background:rgba(29,30,31,.55); cursor:pointer; padding:0;
+}
+#pausebtn::before,#pausebtn::after{content:""; position:absolute; top:11px; width:4px; height:14px; background:#F7F7F7; border-radius:1px}
+#pausebtn::before{left:13px} #pausebtn::after{left:21px}
+@media (prefers-reduced-motion: reduce){ .btn:active{transform:none} }
+</style>
+
+<div id="stage">
+  <canvas id="c" width="400" height="720" aria-label="Korrelval speelveld"></canvas>
+  <div id="ui">
+    <button id="pausebtn" aria-label="Pauze" hidden></button>
+
+    <section id="s-title" class="screen low" hidden>
+      <div class="card">
+        <p class="kicker">Een val door 180 jaar meelfabriek</p>
+        <h1 class="title">Korrelval</h1>
+        <p class="era">van korrel tot bloem, Leeuwarden</p>
+        <button id="b-start" class="btn">It giet oan!</button>
+        <button id="b-continue" class="btn alt" hidden>Verder</button>
+        <button id="b-night" class="btn alt">Nachtploeg</button>
+        <div class="row">
+          <button id="b-scores" class="btn alt small">Highscores</button>
+          <button id="b-credits" class="btn alt small">Credits</button>
+        </div>
+        <div class="row">
+          <button id="t-gezel" class="btn alt small tog" aria-pressed="false">Gezel: uit</button>
+          <button id="t-sound" class="btn alt small tog" aria-pressed="true">Geluid: aan</button>
+          <button id="t-daily" class="btn alt small tog" aria-pressed="true">Dagseed: aan</button>
+        </div>
+        <p class="fine">Fan-made door een stagiair, geen officiële uiting van Royal Koopmans. Gezel-modus: ruimere spleten en tragere val.</p>
+      </div>
+    </section>
+
+    <section id="s-intro" class="screen low" hidden>
+      <p class="hint">Tik of druk op spatie om over te slaan</p>
+    </section>
+
+    <section id="s-pause" class="screen" hidden>
+      <div class="card">
+        <h2>Pauze</h2>
+        <p class="small">De molen staat even stil.</p>
+        <button id="b-resume" class="btn">Verder</button>
+        <div class="row">
+          <button id="b-psound" class="btn alt small">Geluid: aan</button>
+          <button id="b-pmenu" class="btn alt small">Menu</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="s-card" class="screen" hidden>
+      <div class="card">
+        <p class="kicker" id="card-kicker">Level klaar</p>
+        <p class="era" id="card-era">1846 · Rosmolen, Holwerd</p>
+        <div class="grid" id="card-grid"></div>
+        <div class="fact"><small>Wist je dat</small><span id="card-fact"></span></div>
+        <button id="b-next" class="btn">Verder</button>
+      </div>
+    </section>
+
+    <section id="s-over" class="screen" hidden>
+      <div class="card">
+        <p class="kicker" id="over-kicker">Mini-jaarverslag</p>
+        <h2 id="over-title">Partij afgekeurd</h2>
+        <p class="era" id="over-sub">Oant moarn</p>
+        <p class="small" id="over-note" hidden></p>
+        <div class="grid" id="report"></div>
+        <p class="small" id="extract"></p>
+        <div class="badges" id="badges"></div>
+        <div id="nameentry" hidden>
+          <p class="small" id="name-label">Top 5! Kies drie letters:</p>
+          <div class="picker" id="picker"></div>
+          <button id="b-savename" class="btn alt small">Opslaan</button>
+        </div>
+        <button id="b-retry" class="btn">Nog een korrel?</button>
+        <div class="row">
+          <button id="b-copy" class="btn alt small">Kopieer score</button>
+          <button id="b-menu" class="btn alt small">Menu</button>
+        </div>
+        <div id="sharebox" class="sharebox" hidden></div>
+      </div>
+    </section>
+
+    <section id="s-scores" class="screen" hidden>
+      <div class="card">
+        <p class="kicker">Nachtploeg · lokale top 5</p>
+        <h2>Highscores</h2>
+        <ol class="scores" id="scorelist"></ol>
+        <p class="small" id="bestline"></p>
+        <p class="fine">Bewaar je wachtwoorden in de kluis, niet je highscore.</p>
+        <button id="b-scback" class="btn alt">Terug</button>
+      </div>
+    </section>
+
+    <section id="s-credits" class="screen" hidden>
+      <div class="card">
+        <p class="kicker">Credits</p>
+        <h2>Korrelval</h2>
+        <div id="creditlines"></div>
+        <button id="b-crback" class="btn alt">Terug</button>
+      </div>
+    </section>
+  </div>
+</div>
+
+<script>
+'use strict';
+/* =====================================================================
+   Korrelval - een fan-made arcade-faller over 180 jaar Koopmans-molens.
+   Alle tuning-getallen staan in CONFIG en LEVELS. Eén state machine (G.state),
+   vaste fysicastap met accumulator, Canvas 2D + WebAudio, geen externe assets.
+
+   Opbouw van dit script (zoeken op de kopjes "----------------"):
+     1. CONFIG, LEVELS, NIGHT_LEVEL, TEXT   alle getallen en alle teksten
+     2. Hulpfuncties, Store (localStorage), Sfx (WebAudio)
+     3. Canvas/schaal, spelstatus G, generator (spawnFloor, scheduleHazard)
+     4. Levelflow: startRun -> startLevel -> intro -> play -> card/over/finale
+     5. stepPlay: vaste stap (beweging, generatie, botsingen, timers)
+     6. Tekenen: achtergronden, schacht, verdiepingen, dingen, korrel, HUD, intro, titel
+     7. Schermen (DOM): setState, rapport, naamkiezer, highscores, credits
+     8. Invoer (toetsen, muis, touch) en de hoofdlus
+
+   Coördinaten: logisch veld 400x720. Wereld-y loopt met de camera mee (G.cam);
+   de korrel hangt vast op 35% schermhoogte, grainY() = G.cam + 0.35 * H.
+   Verdiepingen (G.floors) en dingen (G.things) staan in wereld-y; deeltjes en
+   zwevende tekst in scherm-y. Toetsen bovenaan het bestand: ` toont hitboxen.
+   ===================================================================== */
+const CONFIG = {
+  W: 400, H: 720, SHAFT_L: 50, SHAFT_R: 350,
+  GRAIN_Y: 0.35,                 // schermhoogte-fractie waar de korrel hangt
+  GRAIN_RX: 9, GRAIN_RY: 12,     // getekende ellips
+  HIT_FRAC: 0.8,                 // hitbox = 80% van de getekende straal
+  MIN_GAP_MULT: 2.6,             // spleet nooit kleiner dan 2,6 x hitbox-diameter
+  SHIFT_FACTOR: 0.7,             // |dx| <= 0,7 x vmax x (dy / scroll)
+  ACCEL: 1800, VMAX: 420, FRICTION: 2600, POINTER_GAIN: 14,
+  LIVES: 3, INVULN: 1.0,
+  STEP: 1 / 120, MAX_DT: 0.05, MAX_SUBSTEPS: 4,
+  SHAKE_MS: 120, SHAKE_PX: 6,
+  SLOWMO_SCALE: 0.55, SLOWMO_DUR: 3, MAGNET_DUR: 6, WARN_LEAD: 1.0,
+  HAZ_FALL: [150, 230], HAZ_VX: [90, 170],
+  PLATE_H: 18, PARTICLES: 120,
+  INTRO_ROLL: 1.3, INTRO_TEXT: 1.1, FINISH_DUR: 1.4, OVER_DELAY: 0.7,
+  SCORE: {
+    pass: 10, perfectMill: 25, perfectSieve: 15, comboStep: 5, maxMult: 5,
+    finishGold: 250, finishOther: 50, lifeBonus: 100, extractBonus: 300,
+    pickup: { boekweit: 5, nedertarwe: 20, kroon: 100, magneet: 50, water: 25, kiem: 30 }
+  },
+  RANKS: [[5, 'Slotermeer'], [10, 'Fluessen'], [15, 'Tjeukemeer'], [20, 'Princenhof'], [25, 'Bonkevaart']],
+  MILESTONES: [[25, 'Eén zak van 25 kg!'], [2000, 'Eén bulkcel van 2 ton vol!'], [12500, 'Een hele silowagen!']],
+  BREAD_PER_TON: 1800, BAG_KG: 25, CELL_KG: 2000,
+  GEZEL: { gapMult: 1.25, scrollMult: 0.8 },
+  NIGHT: { zone: 10, scrollStep: 0.04, intervalStep: 0.05, intervalMin: 0.8, gapStep: 0.01, gapMin: 0.14 },
+  STORAGE_KEY: 'korrelval.v1'
+};
+const W = CONFIG.W, H = CONFIG.H, SHAFT_L = CONFIG.SHAFT_L, SHAFT_R = CONFIG.SHAFT_R, HUD_H = 76;
+const SHAFT_W = SHAFT_R - SHAFT_L, CENTER = (SHAFT_L + SHAFT_R) / 2;
+const HIT_R = CONFIG.GRAIN_RX * CONFIG.HIT_FRAC;        // cirkelhitbox (geen ellips)
+const FONT_UI = 'Nunito, "Avenir Next", "Segoe UI", system-ui, sans-serif';
+const FONT_HAND = '"La Belle Aurore", "Segoe Script", cursive';
+const COL = {
+  oranje: '#E78A01', goud: '#CFAB00', antraciet: '#1D1E1F', rood: '#C52135', wit: '#F7F7F7', zand: '#E3E1DA',
+  tarwe: '#D9A441', zemel: '#8A5A2B', staal: '#B0B7BF', moederkoren: '#4A1F4F', water: '#5FA8D3', kiem: '#F2D45C'
+};
+
+/* ---------------- Levels: de echte molentijdlijn als configrijen ---------------- */
+const LEVELS = [
+  { year: 1846, title: 'Rosmolen, Holwerd', floors: 12, interval: 2.0, scroll: 170, gap: 0.38,
+    mill: 'steen', R: 70, ribs: 0, sieve: 'buil', sieveEvery: 4, sieveAmp: 0, sieveFreq: 0, sieveHoles: 1,
+    hazards: ['steen'], hazardRate: [8, 12], pickups: ['boekweit', 'boekweit', 'water'], pickupChance: 0.6, ergot: 0,
+    intro: '1.550 gulden geleend, één rosmolen voor boekweit.',
+    ship: 'Boekweit van de Friese klei, met paard en wagen.',
+    pal: { style: 'hout', bg: '#4a3620', bg2: '#5c452a', line: '#2e2010', wall: '#6B4A2B', wall2: '#3b2a18', housing: '#7a5a35', roller: '#8f8577', plate: '#a8835a', accent: '#CFAB00' } },
+  { year: 1867, title: 'Stoommeelfabriek Friso, Noordvliet', floors: 16, interval: 1.8, scroll: 210, gap: 0.32,
+    mill: 'steen', R: 66, ribs: 0, sieve: 'buil', sieveEvery: 4, sieveAmp: 12, sieveFreq: 0.3, sieveHoles: 1,
+    hazards: ['steen', 'bout'], hazardRate: [6, 10], pickups: ['water', 'kiem'], pickupChance: 0.45, ergot: 0,
+    intro: 'Stoommachine van 2 pk: al snel ontoereikend.',
+    ship: 'Grote graanschepen halen Holwerd niet, Leeuwarden wel.',
+    pal: { style: 'baksteen', bg: '#5a2d23', bg2: '#7A3B2E', line: '#3a1d17', wall: '#3A3F44', wall2: '#24282c', housing: '#4b4f54', roller: '#8b8680', plate: '#6e5a3c', accent: '#E78A01' } },
+  { year: 1920, title: "N.V. Koopmans' Meelfabrieken", floors: 20, interval: 1.6, scroll: 250, gap: 0.28,
+    mill: 'wals', R: 60, ribs: 24, sieve: 'plansichter', sieveEvery: 3, sieveAmp: 20, sieveFreq: 0.5, sieveHoles: 1,
+    hazards: ['steen', 'bout'], hazardRate: [5, 8], pickups: ['water', 'kiem'], pickupChance: 0.45, ergot: 0,
+    intro: 'Hoogmaalderij: walsenstoelen en plansichters.',
+    ship: 'Graan per schip over het Vliet; zemelen en gries gaan naar veevoer.',
+    pal: { style: 'tegels', bg: '#3F5E4A', bg2: '#EFE6C8', line: '#2c4334', wall: '#2d4336', wall2: '#1d2c23', housing: '#5c6b63', roller: '#B0B7BF', plate: '#cfc7ab', accent: '#CFAB00' } },
+  { year: 1976, title: 'Koninklijk, De Merodestraat', floors: 24, interval: 1.4, scroll: 300, gap: 0.24,
+    mill: 'wals', R: 58, ribs: 18, sieve: 'plansichter', sieveEvery: 3, sieveAmp: 28, sieveFreq: 0.6, sieveHoles: 1,
+    hazards: ['steen', 'bout', 'bout'], hazardRate: [3.5, 6], pickups: ['magneet', 'water', 'kroon', 'kiem'], pickupChance: 0.5, ergot: 0.25,
+    intro: 'Predicaat Koninklijk, verleend door koningin Juliana.',
+    ship: 'Schepen aan de loskade aan het Nieuwe Kanaal; het oudste deel van de kade is uit 1927.',
+    pal: { style: 'staal', bg: '#5C3A21', bg2: '#6e4a2c', line: '#3b2514', wall: '#3a2a1e', wall2: '#241a12', housing: '#4e3b2a', roller: '#B0B7BF', plate: '#a99e8e', accent: '#CFAB00' } },
+  { year: 2008, title: 'Nieuwe molen', floors: 28, interval: 1.2, scroll: 360, gap: 0.20,
+    mill: 'wals', R: 56, ribs: 12, sieve: 'plansichter', sieveEvery: 3, sieveAmp: 40, sieveFreq: 0.8, sieveHoles: 2,
+    hazards: ['steen', 'bout', 'bout'], hazardRate: [3, 5], pickups: ['nedertarwe', 'nedertarwe', 'magneet', 'water', 'kiem'], pickupChance: 0.55, ergot: 0.3,
+    intro: 'Een van de modernste molens van Europa.', ship: null,
+    pal: { style: 'staal', bg: '#2f4256', bg2: '#4F6D8C', line: '#1f2d3c', wall: '#3a4a5c', wall2: '#26313d', housing: '#5b7290', roller: '#B0B7BF', plate: '#9FB3C8', accent: '#E78A01' } },
+  { year: 2026, title: 'Molen B', floors: 32, interval: 1.0, scroll: 420, gap: 0.16,
+    mill: 'wals', R: 54, ribs: 0, sieve: 'plansichter', sieveEvery: 3, sieveAmp: 40, sieveFreq: 0.9, sieveHoles: 2,
+    hazards: ['steen', 'bout', 'bout'], hazardRate: [2.5, 4.5], pickups: ['nedertarwe', 'nedertarwe', 'magneet', 'kroon', 'kiem'], pickupChance: 0.55, ergot: 0.3, predict: true, lock: true,
+    intro: 'Jubileumjaar 2026: 180 jaar. Walsenstoelen van enkele tonnen, door het dak gehesen.', ship: null,
+    pal: { style: 'digitaal', bg: '#1D1E1F', bg2: '#2a2c2f', line: '#6FD3E0', wall: '#2b2d30', wall2: '#19191b', housing: '#35383c', roller: '#C8CDD2', plate: '#8e949a', accent: '#E78A01' } }
+];
+const NIGHT_LEVEL = {
+  year: 2026, title: 'Nachtploeg', night: true, floors: Infinity, interval: 1.1, scroll: 360, gap: 0.20,
+  mill: 'wals', R: 54, ribs: 8, sieve: 'plansichter', sieveEvery: 3, sieveAmp: 36, sieveFreq: 0.8, sieveHoles: 2,
+  hazards: ['steen', 'bout', 'bout'], hazardRate: [2.5, 4.5], pickups: ['nedertarwe', 'nedertarwe', 'magneet', 'water', 'kroon', 'kiem'], pickupChance: 0.5, ergot: 0.3, predict: true,
+  intro: 'Volcontinu: de molen draait dag en nacht.', ship: null,
+  pal: { style: 'digitaal', bg: '#161718', bg2: '#222426', line: '#4f9ba6', wall: '#242628', wall2: '#131415', housing: '#2e3134', roller: '#C8CDD2', plate: '#7f858b', accent: '#E78A01' }
+};
+const TEXT = {
+  ships: [
+    'Schip aan de kade: Friese tarwe uit de Westhoek, circa 1.000 ton.',
+    'Schip aan de kade: Zeeuwse Nedertarwe via CZAV, gelost met circa 120 ton per uur.',
+    'Schip aan de kade: circa 500 ton Groninger baktarwe van Dollard Tarwe.',
+    'Schip aan de kade: een Duits schip met eiwitrijke tarwe, circa 1.000 ton.',
+    'Schip aan de kade: EKO-tarwe met Skal-certificaat, apart gelost.'
+  ],
+  facts: [
+    'Koopmans begon in 1846 met een door paarden aangedreven boekweitmolen in Holwerd: 1.550 gulden familiegeld.',
+    'In 1867 nam Koopmans in Leeuwarden de stoommeelfabriek van Hein Blok Wybrandi over. 2 pk, al snel te weinig.',
+    'Zoon Jan Koopmans spreidde na 1881 het risico met veevoer en kocht graanopslag aan het Vliet.',
+    "1920: N.V. Koopmans' Meelfabrieken. De broers Uco, Daan en Jo namen het roer over.",
+    'Koningin Juliana verleende Koopmans in 1976 het predicaat Koninklijk.',
+    '1993: paneermeelmaker LaCo Crumbs komt erbij. Brood bakken, drogen en weer vermalen.',
+    'Uit 1.000 kilo tarwe komt 720 tot 760 kilo witte bloem; de rest is zemel, gries en kiem.',
+    'KIEM (2016) staat voor Koopmans, Innovatie, Expertise en Molenaarschap.',
+    'Februari 2024: het eerste Nedertarwe-schip op HVO100 meert aan in Leeuwarden.',
+    'De molen van 1967 aan De Merodestraat maakt plaats voor Molen B; die van 1965 wordt roggemolen.'
+  ],
+  clean: {
+    steen: 'Reiniging: stenen en metaal mogen nooit op de walsen.',
+    bout: 'Reiniging: de magneet vangt bouten en moeren.',
+    moederkoren: 'Reiniging: moederkoren (giftig onkruidzaad) gaat eruit.'
+  },
+  pickup: {
+    boekweit: 'Boekweit: geen graan, wel glutenvrij.',
+    water: 'Conditioneren: 12-48 uur intrekken, hier 3 seconden.',
+    magneet: 'Magneet en steenuitlezer: even geen stenen of bouten.',
+    nedertarwe: 'Nedertarwe-korrel: +20, als de telerspremie per ton.',
+    kroon: 'Koninklijk sinds 1976!',
+    kiem: 'De kiem gaat apart: de olie maakt meel ranzig.'
+  },
+  hints: ['Sleep of gebruik de pijltjes: stuur door de spleet.', 'Door het midden van de spleet = Perfecte passage, +25.'],
+  stages: ['Lossen', 'Reinigen', 'Conditioneren', 'Walsen', 'Zeven', 'Silo'],
+  stagesOld: ['Lossen', 'Reinigen', 'Conditioneren', 'Malen', 'Builen', 'Silo'],
+  silos: ['Orion', 'Zuiderkroon', 'Jupiter', 'Saturnus', 'Silverline'],
+  zones: ['Slotermeer', 'Fluessen', 'Tjeukemeer', 'Princenhof', 'Bonkevaart'],
+  badges: [
+    ['Vakmanschap', '75% of meer perfecte passages'],
+    ['Betrouwbaar', 'een level zonder hit'],
+    ['Ondernemend', 'alle pick-ups van een level'],
+    ['Gepassioneerd', '100 verdiepingen in de Nachtploeg'],
+    ['Menselijk', 'Gezel-modus uitgespeeld'],
+    ['Elke korrel telt', 'alle Nedertarwe-korrels gepakt']
+  ],
+  credits: [
+    'Fan-made door een stagiair, geen officiële uiting van Royal Koopmans.',
+    'Het supermarktmerk Koopmans (bakmixen) is sinds 2000 van Dr. Oetker; dit spel gaat over Royal Koopmans, de meelfabriek in Leeuwarden die aan bakkers en voedingsindustrie levert.',
+    'Krantencijfers zijn afgerond (circa). Stenen, bouten en moederkoren gaan er in de reiniging uit, lang voor de walsen.',
+    'De comborangen lenen de Friese waternamen van Prémax-mixen; silo-labels zijn productnamen zonder rangorde.',
+    'Canvas 2D en WebAudio-synthese, geen externe afbeeldingen. Fonts: Nunito en La Belle Aurore. Oprichter: bakkersgezel Uilke Klazes Koopmans, 1846; generaties lang een familiebedrijf.',
+    'Besturing: pijltjes of A/D, muis, of sleep met je duim. Spatie = start/doorgaan, P = pauze, M = geluid, Esc = menu.'
+  ]
+};
+
+/* ---------------- Hulpfuncties ---------------- */
+const clamp = (v, a, b) => v < a ? a : v > b ? b : v;
+const lerp = (a, b, t) => a + (b - a) * t;
+const TAU = Math.PI * 2;
+function mulberry32(a) {
+  return function () {
+    a |= 0; a = a + 0x6D2B79F5 | 0;
+    let t = Math.imul(a ^ a >>> 15, 1 | a);
+    t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+    return ((t ^ t >>> 14) >>> 0) / 4294967296;
+  };
+}
+function hashStr(s) { let h = 2166136261; for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; }
+function fmt(n) { n = Math.round(n); try { return n.toLocaleString('nl-NL'); } catch (e) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, '.'); } }
+function todayKey() { const d = new Date(); return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); }
+function todayShort() { try { return new Date().toLocaleDateString('nl-NL', { day: 'numeric', month: 'short' }); } catch (e) { return todayKey(); } }
+function hexToRgb(h) { const n = parseInt(h.slice(1), 16); return [n >> 16 & 255, n >> 8 & 255, n & 255]; }
+function mixHex(a, b, t) { const A = hexToRgb(a), B = hexToRgb(b); return 'rgb(' + Math.round(lerp(A[0], B[0], t)) + ',' + Math.round(lerp(A[1], B[1], t)) + ',' + Math.round(lerp(A[2], B[2], t)) + ')'; }
+function rgba(h, a) { const c = hexToRgb(h); return 'rgba(' + c[0] + ',' + c[1] + ',' + c[2] + ',' + a + ')'; }
+const $ = id => document.getElementById(id);
+const REDUCED = (() => { try { return matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) { return false; } })();
+function vibrate(p) { try { if (navigator.vibrate) navigator.vibrate(p); } catch (e) { /* geen trilling */ } }
+
+/* ---------------- Opslag (altijd in try/catch) ---------------- */
+const Store = {
+  data: { best: 0, top5: [], maxLevel: 0, nightUnlocked: false, sound: true, gezel: false, daily: true, badges: {}, name: 'AAA' },
+  load() {
+    try { const raw = localStorage.getItem(CONFIG.STORAGE_KEY); if (raw) Object.assign(this.data, JSON.parse(raw)); } catch (e) { /* privévenster */ }
+  },
+  save() { try { localStorage.setItem(CONFIG.STORAGE_KEY, JSON.stringify(this.data)); } catch (e) { /* geen opslag */ } }
+};
+
+/* ---------------- Audio: WebAudio-synthese, start na eerste tik ---------------- */
+const Sfx = {
+  ctx: null, master: null, noiseBuf: null, rumble: null, voices: 0, lastRattle: 0,
+  init() {
+    if (this.ctx) return;
+    try {
+      const AC = window.AudioContext || window.webkitAudioContext; if (!AC) return;
+      this.ctx = new AC(); this.master = this.ctx.createGain();
+      this.master.gain.value = Store.data.sound ? 0.5 : 0; this.master.connect(this.ctx.destination);
+      const len = this.ctx.sampleRate * 2, buf = this.ctx.createBuffer(1, len, this.ctx.sampleRate), d = buf.getChannelData(0);
+      let last = 0; for (let i = 0; i < len; i++) { const w = Math.random() * 2 - 1; last = (last + 0.02 * w) / 1.02; d[i] = last * 3.5; }
+      this.noiseBuf = buf;
+    } catch (e) { this.ctx = null; }
+  },
+  resume() { try { if (this.ctx && this.ctx.state === 'suspended') this.ctx.resume(); } catch (e) { /* */ } },
+  setMuted(m) { if (this.master) this.master.gain.value = m ? 0 : 0.5; },
+  tone(freq, dur, type, vol, when, slideTo) {
+    if (!this.ctx || this.voices > 6) return; const c = this.ctx, t0 = c.currentTime + (when || 0);
+    const o = c.createOscillator(), g = c.createGain(); o.type = type || 'sine'; o.frequency.setValueAtTime(freq, t0);
+    if (slideTo) o.frequency.exponentialRampToValueAtTime(slideTo, t0 + dur);
+    g.gain.setValueAtTime(0.0001, t0); g.gain.exponentialRampToValueAtTime(vol || 0.2, t0 + 0.008); g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+    o.connect(g); g.connect(this.master); o.start(t0); o.stop(t0 + dur + 0.02);
+    this.voices++; o.onended = () => { this.voices--; };
+  },
+  noise(dur, cutoff, vol, when, hp) {
+    if (!this.ctx || !this.noiseBuf) return; const c = this.ctx, t0 = c.currentTime + (when || 0);
+    const s = c.createBufferSource(); s.buffer = this.noiseBuf; s.loop = true; s.playbackRate.value = 1 + Math.random() * 0.3;
+    const f = c.createBiquadFilter(); f.type = hp ? 'highpass' : 'lowpass'; f.frequency.value = cutoff;
+    const g = c.createGain(); g.gain.setValueAtTime(vol, t0); g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+    s.connect(f); f.connect(g); g.connect(this.master); s.start(t0); s.stop(t0 + dur + 0.02);
+  },
+  perfect(step) {
+    // C-E-G arpeggio, per combo-stap een halve toon hoger (tot een octaaf)
+    const f = 523.25 * Math.pow(2, Math.min(step, 12) / 12);
+    this.tone(f, 0.07, 'sine', 0.18, 0); this.tone(f * 1.25, 0.07, 'sine', 0.18, 0.06); this.tone(f * 1.5, 0.09, 'sine', 0.18, 0.12);
+  },
+  pass() { this.tone(330, 0.05, 'triangle', 0.08); },
+  hit() { this.tone(180, 0.15, 'sine', 0.35, 0, 40); this.noise(0.12, 600, 0.3); },
+  pickup() { this.tone(400, 0.12, 'sine', 0.2, 0, 900); },
+  rank() { this.tone(659, 0.25, 'triangle', 0.18); this.tone(988, 0.25, 'triangle', 0.14, 0.02); },
+  fanfare() { const n = [392, 523.25, 659.25, 783.99]; n.forEach((f, i) => this.tone(f, 0.22, 'sawtooth', 0.09, i * 0.14)); },
+  rattle(now) { if (now - this.lastRattle < 0.125) return; this.lastRattle = now; this.noise(0.03, 1800, 0.12, 0, true); },
+  hiss() { this.noise(0.35, 1200, 0.07, 0, true); },
+  click() { this.tone(900, 0.03, 'square', 0.05); this.noise(0.02, 2500, 0.08); },
+  beep() { this.tone(1760, 0.04, 'sine', 0.06); },
+  startRumble() {
+    if (!this.ctx || this.rumble || !this.noiseBuf) return; const c = this.ctx;
+    const s = c.createBufferSource(); s.buffer = this.noiseBuf; s.loop = true;
+    const f = c.createBiquadFilter(); f.type = 'lowpass'; f.frequency.value = 160; const g = c.createGain(); g.gain.value = 0.0001;
+    s.connect(f); f.connect(g); g.connect(this.master); s.start(); this.rumble = { s, f, g };
+  },
+  setRumble(cutoff, vol) {
+    if (!this.rumble) return; const t = this.ctx.currentTime;
+    this.rumble.f.frequency.setTargetAtTime(cutoff, t, 0.2);
+    this.rumble.g.gain.setTargetAtTime(Math.max(0.0001, vol), t, 0.2);
+  },
+  stopRumble() {
+    if (!this.rumble) return; const r = this.rumble; this.rumble = null;
+    try {
+      r.g.gain.setTargetAtTime(0.0001, this.ctx.currentTime, 0.1);
+      setTimeout(() => { try { r.s.stop(); } catch (e) { /* al gestopt */ } }, 400);
+    } catch (e) { /* */ }
+  }
+};
+
+/* ---------------- Canvas en schaal ---------------- */
+const canvas = $('c'), ctx = canvas.getContext('2d'), ui = $('ui');
+let SCALE = 1, DPR = 1;
+function resize() {
+  const vv = window.visualViewport;
+  const vw = vv ? vv.width : window.innerWidth, vh = vv ? vv.height : window.innerHeight;
+  SCALE = Math.min(vw / W, vh / H); DPR = Math.min(2, window.devicePixelRatio || 1);
+  const cw = Math.floor(W * SCALE), ch = Math.floor(H * SCALE);
+  canvas.style.width = cw + 'px'; canvas.style.height = ch + 'px';
+  canvas.width = Math.round(cw * DPR); canvas.height = Math.round(ch * DPR);
+  const r = canvas.getBoundingClientRect(), s = $('stage').getBoundingClientRect();
+  ui.style.left = (r.left - s.left) + 'px'; ui.style.top = (r.top - s.top) + 'px';
+  ui.style.width = cw + 'px'; ui.style.height = ch + 'px';
+  ui.style.setProperty('--s', clamp(SCALE, 0.85, 1.6).toFixed(3));
+}
+function toLogicalX(e) { const r = canvas.getBoundingClientRect(); return (e.clientX - r.left) / r.width * W; }
+
+/* ---------------- Spelstatus ---------------- */
+const G = {
+  state: 'boot', mode: 'campaign', levelIdx: 0, level: null, pal: null, bg: null,
+  cam: 0, wt: 0, t: 0, grain: { x: CENTER, vx: 0, white: 0, size: 1 },
+  lives: 3, inv: 0, score: 0, combo: 0, rankIdx: -1,
+  floors: [], things: [], parts: [], floats: [], toasts: [], toastT: 0, banner: null,
+  floorsMade: 0, floorsPassed: 0, siloMade: false, nextY: 0, hazTimer: 0, warn: null, hazCount: 0,
+  slowmo: 0, magnet: 0, shake: 0, flash: 0, overTimer: 0, finishTimer: 0, finished: false,
+  rng: Math.random, seed: 0, gezel: false, debug: false, dailyLabel: '',
+  stats: null, lv: null, levelStartScore: 0, milestones: {}, shownClean: {}, shownHints: {},
+  intro: { t: 0, from: 1800, ship: '' }, titleT: 0, shipPick: 0, factBag: []
+};
+const input = { left: false, right: false, keyUsed: false, target: null, pointerId: null, lastX: 0, tap: null };
+
+function newRunStats() {
+  return { perfects: 0, total: 0, hits: 0, levelsNoHit: 0, pickups: 0, pickupsTotal: 0, ned: 0, nedTotal: 0,
+    maxCombo: 0, bestRank: '', floors: 0, allPickupsLevel: false, startLevel: 0 };
+}
+function newLevelStats() { return { perfects: 0, total: 0, hits: 0, pickups: 0, pickupsTotal: 0, ned: 0, nedTotal: 0, kg: 0 }; }
+function grainY() { return G.cam + CONFIG.GRAIN_Y * H; }
+function zone() { return Math.floor(G.floorsMade / CONFIG.NIGHT.zone); }
+function curScroll() {
+  let s = G.level.scroll;
+  if (G.level.night) s *= Math.pow(1 + CONFIG.NIGHT.scrollStep, zone());
+  if (G.gezel) s *= CONFIG.GEZEL.scrollMult;
+  return s;
+}
+function curInterval() { const L = G.level; return L.night ? Math.max(CONFIG.NIGHT.intervalMin, L.interval - CONFIG.NIGHT.intervalStep * zone()) : L.interval; }
+function curGapPct() { const L = G.level; return L.night ? Math.max(CONFIG.NIGHT.gapMin, L.gap - CONFIG.NIGHT.gapStep * zone()) : L.gap; }
+function mult() { return Math.min(CONFIG.SCORE.maxMult, 1 + Math.floor(G.combo / CONFIG.SCORE.comboStep)); }
+
+/* ---------------- Generator (eerlijkheidsregels verplicht) ---------------- */
+function spawnFloor() {
+  const L = G.level, idx = G.floorsMade, prev = G.floors.length ? G.floors[G.floors.length - 1] : null;
+  const scroll = curScroll(), interval = curInterval(), y = G.nextY;
+  let gapW = curGapPct() * SHAFT_W * (G.gezel ? CONFIG.GEZEL.gapMult : 1);
+  gapW = Math.max(gapW, CONFIG.MIN_GAP_MULT * HIT_R * 2);
+  const dy = prev ? y - prev.y : interval * scroll;
+  const maxShift = CONFIG.SHIFT_FACTOR * CONFIG.VMAX * (dy / scroll);
+  const half = gapW / 2 + 6, minC = SHAFT_L + half, maxC = SHAFT_R - half;
+  const prevC = prev ? (prev.type === 'silo' ? CENTER : prev.gapX) : CENTER;
+  const desired = clamp(prevC + (G.rng() * 2 - 1) * maxShift, minC, maxC);
+  const f = { y, idx, gapX: desired, gapW, hit: false, passed: false, type: 'mill' };
+  const isSieve = L.sieve && idx > 0 && (idx % L.sieveEvery === L.sieveEvery - 1);
+  if (isSieve) {
+    f.type = 'sieve'; f.style = L.sieve; f.amp = L.sieveAmp; f.freq = L.sieveFreq; f.phase = G.rng() * TAU;
+    const T = G.wt + (y - grainY()) / scroll;              // aankomstmoment van de korrel
+    const s = Math.sin(TAU * f.freq * T + f.phase);
+    f.baseX = clamp(desired - f.amp * s, minC + f.amp, maxC - f.amp);
+    f.gapX = f.baseX + f.amp * s;                           // gatpositie bij aankomst
+    f.holes = [0];
+    if (L.sieveHoles > 1) {
+      const off = (gapW + 70 + G.rng() * 60) * (f.baseX < CENTER ? 1 : -1);
+      if (f.baseX + off > minC + f.amp && f.baseX + off < maxC - f.amp) f.holes.push(off);
+    }
+  } else {
+    f.style = L.mill; f.R = L.R; f.ribs = L.ribs; f.rot = 0;
+  }
+  G.floors.push(f); G.floorsMade++;
+  // Pick-up of moederkoren tussen deze en de volgende verdieping
+  const midY = y + interval * scroll * 0.5;
+  if (G.rng() < L.pickupChance && idx > 0) {
+    const type = L.pickups[Math.floor(G.rng() * L.pickups.length)];
+    const rare = type === 'kiem' || type === 'kroon';
+    if (!rare || G.rng() < 0.45) {
+      G.things.push({ kind: 'pick', type, x: clamp(f.gapX + (G.rng() * 2 - 1) * 70, SHAFT_L + 20, SHAFT_R - 20), y: midY, r: 11, rot: G.rng() * TAU, bob: G.rng() * TAU });
+      G.lv.pickupsTotal++; G.stats.pickupsTotal++;
+      if (type === 'nedertarwe') { G.lv.nedTotal++; G.stats.nedTotal++; }
+    }
+  } else if (L.ergot && G.rng() < L.ergot && idx > 1) {
+    G.things.push({ kind: 'haz', type: 'moederkoren', x: clamp(f.gapX + (G.rng() * 2 - 1) * 90, SHAFT_L + 24, SHAFT_R - 24), y: midY, r: 8, rot: 0.6, drift: G.rng() * TAU, baseX: 0 });
+    G.things[G.things.length - 1].baseX = G.things[G.things.length - 1].x;
+  }
+  if (L.lock && idx === 10) G.things.push({ kind: 'deco', type: 'slot', x: SHAFT_R - 14, y: midY, r: 6, done: false });
+  if (idx === 2 && G.levelIdx === 0 && !L.night) G.things.push({ kind: 'deco', type: 'tarwe', x: f.gapX + gapW / 2 + f.R * 0.45, y: y - 190, vx: 0, vy: 70, r: 7, life: 6, bounced: false });
+  G.nextY = y + interval * scroll;
+}
+function spawnSilo() {
+  const y = G.nextY + 60;
+  G.floors.push({ y, idx: G.floorsMade, type: 'silo', gold: Math.floor(G.rng() * 5), gapX: CENTER, gapW: 60, passed: false, hit: false });
+  G.floorsMade++; G.siloMade = true; G.nextY = y + 400;
+}
+function scheduleHazard() {
+  const L = G.level; if (!L.hazards.length) return;
+  const type = L.hazards[Math.floor(G.rng() * L.hazards.length)];
+  const x = SHAFT_L + 30 + G.rng() * (SHAFT_W - 60);
+  const vx = (CONFIG.HAZ_VX[0] + G.rng() * (CONFIG.HAZ_VX[1] - CONFIG.HAZ_VX[0])) * (G.rng() < 0.5 ? -1 : 1);
+  const fall = CONFIG.HAZ_FALL[0] + G.rng() * (CONFIG.HAZ_FALL[1] - CONFIG.HAZ_FALL[0]);
+  G.warn = { type, x, vx, fall, t: CONFIG.WARN_LEAD };
+  if (L.predict) Sfx.beep();
+  if (!G.shownClean[type]) { G.shownClean[type] = true; toast(TEXT.clean[type]); }
+}
+function spawnHazard(w) {
+  const r = w.type === 'steen' ? 9 : 8;
+  const verts = []; const n = 5 + Math.floor(G.rng() * 3);
+  for (let i = 0; i < n; i++) { const a = i / n * TAU, rr = r * (0.75 + G.rng() * 0.4); verts.push([Math.cos(a) * rr, Math.sin(a) * rr]); }
+  G.things.push({ kind: 'haz', type: w.type, x: w.x, y: G.cam + HUD_H + 4, vx: w.vx, vy: w.fall, r, rot: 0, spin: (G.rng() * 2 - 1) * 4, verts });
+  G.hazCount++;
+}
+
+/* ---------------- Levelstart, intro, flow ---------------- */
+function startRun(mode, fromLevel) {
+  G.mode = mode; G.stats = newRunStats(); G.score = 0; G.milestones = {}; G.shownClean = {}; G.shownHints = {};
+  G.gezel = Store.data.gezel; G.factBag = TEXT.facts.map((_, i) => i);
+  G.shipPick = Math.floor(Math.random() * TEXT.ships.length);
+  G.stats.startLevel = fromLevel || 0;
+  if (mode === 'night') {
+    const daily = Store.data.daily; const key = daily ? todayKey() : String(Date.now());
+    const ploeg = 'ABCDE'[Math.floor(Date.now() / 86400000) % 5];          // vijfploegendienst-knipoog
+    G.seed = hashStr('korrelval:' + key);
+    G.dailyLabel = daily ? 'Korrel van de dag · ' + todayShort() + ' · ploeg ' + ploeg : 'Vrije ploeg ' + ploeg;
+  }
+  startLevel(mode === 'night' ? 0 : (fromLevel || 0), null);
+}
+function startLevel(idx, prevYear) {
+  const L = G.mode === 'night' ? NIGHT_LEVEL : LEVELS[idx];
+  G.levelIdx = idx; G.level = L; G.pal = L.pal; G.bg = makeBackground(L.pal);
+  G.rng = mulberry32(G.mode === 'night' ? G.seed : (Math.random() * 4294967295) >>> 0);
+  G.cam = 0; G.wt = 0; G.t = 0; G.floors = []; G.things = []; G.parts = []; G.floats = []; G.toasts = []; G.toastT = 0; G.banner = null;
+  G.floorsMade = 0; G.floorsPassed = 0; G.siloMade = false; G.nextY = CONFIG.GRAIN_Y * H + 460; G.hazTimer = L.hazardRate[0]; G.warn = null; G.hazCount = 0;
+  G.slowmo = 0; G.magnet = 0; G.shake = 0; G.flash = 0; G.overTimer = 0; G.finishTimer = 0; G.finished = false;
+  G.lives = L.night ? 1 : CONFIG.LIVES; G.inv = 0; G.combo = 0; G.rankIdx = -1;
+  G.grain.x = CENTER; G.grain.vx = 0; G.grain.white = L.night ? 0.6 : idx / 6; G.grain.size = 1;
+  G.lv = newLevelStats(); G.levelStartScore = G.score;
+  input.target = null; input.left = input.right = false;
+  const ship = L.ship || TEXT.ships[(G.shipPick + idx) % TEXT.ships.length];
+  G.intro = { t: 0, from: prevYear == null ? L.year - 24 : prevYear, ship };
+  setState('intro');
+}
+function skipIntro() { if (G.state === 'intro') beginPlay(); }
+function beginPlay() {
+  setState('play'); Sfx.startRumble();
+  if (G.levelIdx === 0 && G.mode === 'campaign' && !G.shownHints[0]) { G.shownHints[0] = true; toast(TEXT.hints[0], 3); }
+  if (G.mode === 'night') toast(G.dailyLabel, 2.5);
+}
+function retry() {
+  if (G.mode === 'night') { startRun('night'); return; }
+  G.score = G.levelStartScore; startLevel(G.levelIdx, null);
+}
+function levelComplete() {
+  const L = G.level, lv = G.lv;
+  const extract = lv.total ? lv.perfects / lv.total : 0;
+  const bonus = G.lives * CONFIG.SCORE.lifeBonus + Math.round(extract * CONFIG.SCORE.extractBonus);
+  G.score += bonus; lv.kg = G.score - G.levelStartScore;
+  if (lv.hits === 0) G.stats.levelsNoHit++;
+  if (lv.pickupsTotal > 0 && lv.pickups === lv.pickupsTotal) G.stats.allPickupsLevel = true;
+  Store.data.maxLevel = Math.max(Store.data.maxLevel, G.levelIdx + 1); Store.save();
+  const grid = $('card-grid'); grid.textContent = '';
+  tile(grid, fmt(lv.kg) + ' kg', 'bloem dit level');
+  tile(grid, Math.round(extract * 100) + '%', 'perfecte passages (' + lv.perfects + ' van ' + lv.total + ')');
+  tile(grid, '+' + fmt(bonus), 'bonus: ' + G.lives + ' korrels × 100 + uitmaling');
+  tile(grid, lv.pickups + ' / ' + lv.pickupsTotal, 'pick-ups gepakt');
+  $('card-kicker').textContent = 'Level ' + (G.levelIdx + 1) + ' van 6 klaar';
+  $('card-era').textContent = L.year + ' · ' + L.title;
+  $('card-fact').textContent = nextFact();
+  setState('card');
+}
+function nextFact() {
+  if (!G.factBag.length) G.factBag = TEXT.facts.map((_, i) => i);
+  const k = Math.floor(Math.random() * G.factBag.length); return TEXT.facts[G.factBag.splice(k, 1)[0]];
+}
+function afterCard() {
+  if (G.levelIdx + 1 < LEVELS.length) startLevel(G.levelIdx + 1, LEVELS[G.levelIdx].year);
+  else finale();
+}
+function finale() {
+  Store.data.nightUnlocked = true; Store.data.best = Math.max(Store.data.best, G.score);
+  if (G.gezel && G.stats.startLevel === 0) Store.data.badges.Menselijk = true;
+  Store.save(); Sfx.fanfare();
+  showReport('finale');
+}
+function gameOver() {
+  Sfx.stopRumble();
+  if (G.mode === 'night') G.stats.floors = G.floorsPassed;
+  if (G.mode === 'campaign') Store.data.best = Math.max(Store.data.best, G.score);
+  Store.save();
+  showReport('over');
+}
+
+/* ---------------- Score, combo, feedback ---------------- */
+function addScore(n) {
+  G.score += n;
+  for (const [th, label] of CONFIG.MILESTONES) if (G.score >= th && !G.milestones[th]) { G.milestones[th] = true; toast(label); }
+}
+function floatText(text, x, y, color) { G.floats.push({ text, x, y, t: 0, color: color || COL.goud }); }
+function toast(text, dur) { G.toasts.push({ text, dur: dur || 2.4 }); }
+function onPassed(f) {
+  const gx = G.grain.x; let pts = CONFIG.SCORE.pass * mult(); let perfect = false;
+  if (f.type === 'mill') perfect = Math.abs(gx - f.gapX) <= 0.2 * f.gapW;
+  else { const hx = nearestHole(f, G.wt); perfect = Math.abs(gx - hx) <= 0.25 * f.gapW; }
+  G.combo++; G.stats.maxCombo = Math.max(G.stats.maxCombo, G.combo);
+  G.lv.total++; G.stats.total++;
+  if (perfect) {
+    const bonus = f.type === 'mill' ? CONFIG.SCORE.perfectMill : CONFIG.SCORE.perfectSieve;
+    pts += bonus; G.lv.perfects++; G.stats.perfects++;
+    floatText('+' + bonus + ' perfect', gx, CONFIG.GRAIN_Y * H - 20, COL.oranje);
+    Sfx.perfect(G.combo); vibrate(15);
+    if (f.type === 'mill') knak();
+    G.floats.push({ ring: true, x: gx, y: CONFIG.GRAIN_Y * H, t: 0 });
+  } else { Sfx.pass(); floatText('+' + pts, gx, CONFIG.GRAIN_Y * H - 20, COL.wit); }
+  addScore(pts);
+  let ri = -1; for (let i = 0; i < CONFIG.RANKS.length; i++) if (G.combo >= CONFIG.RANKS[i][0]) ri = i;
+  if (ri > G.rankIdx) { G.rankIdx = ri; G.stats.bestRank = CONFIG.RANKS[ri][1]; G.banner = { text: CONFIG.RANKS[ri][1], t: 0 }; Sfx.rank(); }
+  if (G.levelIdx === 0 && G.mode === 'campaign' && G.floorsPassed === 1 && !G.shownHints[1]) { G.shownHints[1] = true; toast(TEXT.hints[1], 3); }
+}
+function knak() {
+  const g = G.grain; g.white = Math.min(1, g.white + 0.05); g.size = Math.max(0.8, g.size * 0.985);
+  const n = REDUCED ? 1 : 3;
+  for (let i = 0; i < n; i++) spawnPart(g.x, CONFIG.GRAIN_Y * H, (Math.random() - 0.5) * 160, -40 - Math.random() * 80, COL.zemel, 2.5, 0.7);
+  spawnPart(g.x, CONFIG.GRAIN_Y * H, (Math.random() - 0.5) * 120, -60, COL.kiem, 2, 0.7);
+}
+function hit(source) {
+  if (G.inv > 0 || G.finished || G.overTimer > 0) return;
+  G.lives--; G.combo = 0; G.rankIdx = -1; G.inv = CONFIG.INVULN; G.shake = CONFIG.SHAKE_MS / 1000; G.flash = 0.25;
+  G.lv.hits++; G.stats.hits++; if (source && source.type) source.hit = true;
+  Sfx.hit(); vibrate([30, 50, 30]);
+  const n = REDUCED ? 3 : 10;
+  for (let i = 0; i < n; i++) spawnPart(G.grain.x, CONFIG.GRAIN_Y * H, (Math.random() - 0.5) * 260, (Math.random() - 0.7) * 220, COL.rood, 2.5, 0.5);
+  if (G.lives <= 0) G.overTimer = CONFIG.OVER_DELAY;
+}
+function collect(p) {
+  const S = CONFIG.SCORE.pickup; let pts = S[p.type] || 10;
+  G.lv.pickups++; G.stats.pickups++;
+  if (p.type === 'nedertarwe') { G.lv.ned++; G.stats.ned++; G.combo++; }
+  if (p.type === 'water') G.slowmo = CONFIG.SLOWMO_DUR;
+  if (p.type === 'magneet') { G.magnet = CONFIG.MAGNET_DUR; G.warn = null; for (const t of G.things) if (t.kind === 'haz' && t.type !== 'moederkoren') t.fly = true; }
+  addScore(pts); floatText('+' + pts, p.x, p.y - G.cam, p.type === 'water' ? COL.water : COL.goud);
+  if (!G.shownClean['p_' + p.type]) { G.shownClean['p_' + p.type] = true; toast(TEXT.pickup[p.type]); }
+  Sfx.pickup(); const n = REDUCED ? 2 : 6;
+  for (let i = 0; i < n; i++) spawnPart(p.x, p.y - G.cam, (Math.random() - 0.5) * 140, (Math.random() - 0.5) * 140, COL.goud, 2, 0.5);
+}
+function spawnPart(x, y, vx, vy, color, r, life, grav) {
+  let p = null; for (const q of G.parts) if (!q.on) { p = q; break; }
+  if (!p) { if (G.parts.length >= CONFIG.PARTICLES) return; p = {}; G.parts.push(p); }
+  p.on = true; p.x = x; p.y = y; p.vx = vx; p.vy = vy; p.color = color; p.r = r; p.life = life; p.max = life; p.g = grav === undefined ? 300 : grav;
+}
+function cosmetics(dt) {
+  // Puur cosmetisch: stoomwolkjes in 1867 (2 pk) en wat bloemstof in de hoogmaalderij. Geen mechaniek, geen meter.
+  if (REDUCED) return;
+  G.cosT = (G.cosT || 0) + dt;
+  if (G.levelIdx === 1 && G.mode === 'campaign' && G.cosT > 1.6 + Math.random() * 1.6) {
+    G.cosT = 0; const side = Math.random() < 0.5 ? SHAFT_L + 8 : SHAFT_R - 8;
+    G.things.push({ kind: 'deco', type: 'stoom', x: side, y: G.cam + 120 + Math.random() * (H - 200), vx: side < CENTER ? 30 : -30, vy: -35, r: 12, life: 1.8 });
+    Sfx.hiss();
+  } else if ((G.levelIdx >= 2 || G.level.night) && G.cosT > 0.3) {
+    G.cosT = 0; spawnPart(SHAFT_L + 12 + Math.random() * (SHAFT_W - 24), H + 6, (Math.random() - 0.5) * 12, -10, rgba('#F7F7F7', 0.35), 1.5, 3.5, 0);
+  }
+}
+function nearestHole(f, T) {
+  const s = Math.sin(TAU * f.freq * T + f.phase) * f.amp + plateJitter(T);
+  let best = 1e9, bx = f.baseX;
+  for (const o of f.holes) { const hx = f.baseX + o + s; if (Math.abs(hx - G.grain.x) < best) { best = Math.abs(hx - G.grain.x); bx = hx; } }
+  return bx;
+}
+function plateJitter(T) { const k = Math.floor(T * 20); return ((Math.sin(k * 12.9898) * 43758.5453) % 1) * 2.5; }
+
+/* ---------------- Vaste fysicastap ---------------- */
+function stepPlay(dt) {
+  const wdt = dt * (G.slowmo > 0 ? CONFIG.SLOWMO_SCALE : 1) * (G.debug ? 0.5 : 1);
+  const scroll = curScroll(), L = G.level;
+  G.t += dt; G.wt += wdt;
+  G.inv = Math.max(0, G.inv - dt); G.slowmo = Math.max(0, G.slowmo - dt); G.magnet = Math.max(0, G.magnet - dt);
+  G.shake = Math.max(0, G.shake - dt); G.flash = Math.max(0, G.flash - dt);
+  movePlayer(dt);
+  const gyPrev = grainY(); G.cam += scroll * wdt; const gy = grainY();
+  // Verdiepingen genereren tot ruim onder het scherm
+  while (G.nextY < G.cam + H + 240) {
+    if (!L.night && G.floorsMade >= L.floors) { if (!G.siloMade) spawnSilo(); else break; }   // één silohal per level
+    else spawnFloor();
+  }
+  // Gevaren: waarschuwing 1 s vooraf, dan binnen van boven
+  if (!G.finished && G.magnet <= 0 && G.floorsMade > 1) {
+    if (G.warn) { G.warn.t -= wdt; if (G.warn.t <= 0) { spawnHazard(G.warn); G.warn = null; } }
+    else { G.hazTimer -= wdt; if (G.hazTimer <= 0) { scheduleHazard(); G.hazTimer = L.hazardRate[0] + G.rng() * (L.hazardRate[1] - L.hazardRate[0]); } }
+  }
+  // Dingen bewegen
+  for (const t of G.things) {
+    if (t.kind === 'haz' && t.type !== 'moederkoren') {
+      if (t.fly) { t.vy -= 1800 * wdt; t.y += t.vy * wdt; continue; }
+      t.x += t.vx * wdt; t.y += (scroll + t.vy) * wdt; t.rot += t.spin * wdt;
+      if (t.x < SHAFT_L + t.r) { t.x = SHAFT_L + t.r; t.vx = Math.abs(t.vx); }
+      if (t.x > SHAFT_R - t.r) { t.x = SHAFT_R - t.r; t.vx = -Math.abs(t.vx); }
+    } else if (t.type === 'moederkoren') { t.drift += wdt * 1.2; t.x = t.baseX + Math.sin(t.drift) * 26; }
+    else if (t.kind === 'pick') t.bob += wdt * 3;
+    else if (t.type === 'stoom') { t.life -= wdt; t.x += t.vx * wdt; t.y += t.vy * wdt; t.r += 14 * wdt; }
+    else if (t.type === 'tarwe') {
+      t.life -= wdt; t.x += t.vx * wdt; t.y += t.vy * wdt;
+      const f = G.floors.find(q => q.idx === 2 && q.type === 'mill');
+      if (f && !t.bounced) {
+        const cx = f.gapX + f.gapW / 2 + f.R, dx = t.x - cx, dy = t.y - f.y;
+        if (dx * dx + dy * dy < (f.R + t.r) * (f.R + t.r)) { t.bounced = true; t.vy = -260; t.vx = 150; t.life = 1.6; toast('1856: de rosmolen bleek niet geschikt voor tarwe.', 3); Sfx.click(); }
+      }
+    }
+  }
+  for (const f of G.floors) if (f.type === 'mill') f.rot += (scroll / f.R) * wdt;
+  // Passages
+  for (const f of G.floors) if (!f.passed && f.y > gyPrev && f.y <= gy) {
+    f.passed = true;
+    if (f.type === 'silo') finishLevel(f);
+    else { G.floorsPassed++; if (!f.hit) onPassed(f); else { G.lv.total++; G.stats.total++; } }
+  }
+  // Botsingen
+  if (G.inv <= 0 && !G.finished && G.overTimer <= 0) checkCollisions(gy);
+  for (let i = G.things.length - 1; i >= 0; i--) {
+    const t = G.things[i];
+    if (t.kind === 'pick' && circ(G.grain.x, gy, HIT_R + 6, t.x, t.y, t.r)) { collect(t); G.things.splice(i, 1); continue; }
+    if (t.type === 'slot' && !t.done && Math.abs(t.y - gy) < 10) { t.done = true; toast('kluis: ok', 1.6); Sfx.beep(); }
+    if (t.y < G.cam - 120 || t.y > G.cam + H + 120 || (t.life !== undefined && t.life <= 0)) G.things.splice(i, 1);
+  }
+  while (G.floors.length && G.floors[0].y < G.cam - 200) G.floors.shift();
+  // Deeltjes, zwevende tekst, toasts, banner
+  for (const p of G.parts) {
+    if (!p.on) continue;
+    p.life -= dt; if (p.life <= 0) { p.on = false; continue; }
+    p.x += p.vx * dt; p.y += (p.vy - scroll * 0.4) * dt; p.vy += p.g * dt;
+  }
+  if (!REDUCED && (G.t * 60 | 0) % 2 === 0) spawnPart(G.grain.x + (Math.random() - 0.5) * 8, CONFIG.GRAIN_Y * H - 10, (Math.random() - 0.5) * 20, -60, COL.wit, 1.6, 0.6);
+  cosmetics(dt);
+  for (let i = G.floats.length - 1; i >= 0; i--) { const f = G.floats[i]; f.t += dt; if (f.t > 0.9) G.floats.splice(i, 1); }
+  if (G.toasts.length) { G.toastT += dt; if (G.toastT > G.toasts[0].dur) { G.toasts.shift(); G.toastT = 0; } }
+  if (G.banner) { G.banner.t += dt; if (G.banner.t > 1.8) G.banner = null; }
+  // Geluid van de walsen en de zeefplaat
+  let near = 1e9;
+  for (const f of G.floors) {
+    const d = Math.abs(f.y - gy);
+    if (f.type === 'sieve' && d < 120) Sfx.rattle(G.t);
+    if (d < near) near = d;
+  }
+  Sfx.setRumble(140 + G.levelIdx * 40 + (G.mode === 'night' ? 120 : 0), 0.05 + (near < 150 ? 0.08 : 0));
+  if (G.levelIdx === 0 && G.mode === 'campaign' && Math.floor(G.t * 2) !== Math.floor((G.t - dt) * 2)) Sfx.click();
+  // Afloop
+  if (G.overTimer > 0) { G.overTimer -= dt; if (G.overTimer <= 0) gameOver(); }
+  if (G.finished) { G.finishTimer -= dt; if (G.finishTimer <= 0) { Sfx.stopRumble(); levelComplete(); } }
+}
+function movePlayer(dt) {
+  const g = G.grain, lo = SHAFT_L + HIT_R + 1, hi = SHAFT_R - HIT_R - 1;
+  if (input.left || input.right) {
+    const dir = (input.right ? 1 : 0) - (input.left ? 1 : 0);
+    g.vx = clamp(g.vx + dir * CONFIG.ACCEL * dt, -CONFIG.VMAX, CONFIG.VMAX);
+    input.target = null;
+  } else if (input.target !== null) {
+    g.vx = clamp((input.target - g.x) * CONFIG.POINTER_GAIN, -CONFIG.VMAX, CONFIG.VMAX);
+  } else {
+    const dec = CONFIG.FRICTION * dt; g.vx = Math.abs(g.vx) <= dec ? 0 : g.vx - Math.sign(g.vx) * dec;
+  }
+  g.x = clamp(g.x + g.vx * dt, lo, hi);
+  if ((g.x === lo && g.vx < 0) || (g.x === hi && g.vx > 0)) g.vx = 0;
+}
+function circ(ax, ay, ar, bx, by, br) { const dx = ax - bx, dy = ay - by, r = ar + br; return dx * dx + dy * dy < r * r; }
+function rectHit(cx, cy, r, x0, y0, x1, y1) { const nx = clamp(cx, x0, x1), ny = clamp(cy, y0, y1), dx = cx - nx, dy = cy - ny; return dx * dx + dy * dy < r * r; }
+function checkCollisions(gy) {
+  const gx = G.grain.x;
+  for (const f of G.floors) {
+    if (Math.abs(f.y - gy) > 120) continue;
+    if (f.type === 'mill') {
+      const lx = f.gapX - f.gapW / 2 - f.R, rx = f.gapX + f.gapW / 2 + f.R, hh = f.R * 0.75;
+      if (circ(gx, gy, HIT_R, lx, f.y, f.R) || circ(gx, gy, HIT_R, rx, f.y, f.R) ||
+          rectHit(gx, gy, HIT_R, SHAFT_L, f.y - hh, lx, f.y + hh) || rectHit(gx, gy, HIT_R, rx, f.y - hh, SHAFT_R, f.y + hh)) { hit(f); return; }
+    } else if (f.type === 'sieve') {
+      const hp = CONFIG.PLATE_H / 2;
+      if (Math.abs(gy - f.y) < hp + HIT_R) {
+        const s = Math.sin(TAU * f.freq * G.wt + f.phase) * f.amp + plateJitter(G.wt);
+        const inside = f.holes.some(o => { const hx = f.baseX + o + s; return gx - HIT_R > hx - f.gapW / 2 && gx + HIT_R < hx + f.gapW / 2; });
+        if (!inside) { hit(f); return; }
+      }
+    }
+  }
+  for (const t of G.things) if (t.kind === 'haz' && !t.fly && circ(gx, gy, HIT_R, t.x, t.y, t.r * 0.85)) { hit(t); return; }
+}
+function finishLevel(f) {
+  if (G.finished) return;                                   // één keer per level
+  const slot = clamp(Math.floor((G.grain.x - SHAFT_L) / 60), 0, 4);
+  const gold = slot === f.gold; const pts = gold ? CONFIG.SCORE.finishGold : CONFIG.SCORE.finishOther;
+  addScore(pts); floatText('+' + pts, G.grain.x, CONFIG.GRAIN_Y * H - 24, COL.goud);
+  toast(gold ? 'Order geladen! Bulkwagen vol.' : 'Zakgoed: 25 kg, via de groothandel.', 2);
+  G.finished = true; G.finishTimer = CONFIG.FINISH_DUR; G.warn = null; Sfx.fanfare();
+  const n = REDUCED ? 6 : 30;
+  for (let i = 0; i < n; i++) spawnPart(G.grain.x, CONFIG.GRAIN_Y * H, (Math.random() - 0.5) * 300, -100 - Math.random() * 200, Math.random() < 0.5 ? COL.goud : COL.oranje, 2.5, 1.2);
+}
+
+/* ---------------- Achtergronden (offscreen, per stijl) ---------------- */
+function makeBackground(pal) {
+  const c = document.createElement('canvas'); c.width = SHAFT_W; c.height = 480; const g = c.getContext('2d');
+  g.fillStyle = pal.bg; g.fillRect(0, 0, SHAFT_W, 480);
+  const rnd = mulberry32(hashStr(pal.style + pal.bg));
+  if (pal.style === 'hout') {
+    for (let y = 0; y < 480; y += 40) {
+      g.fillStyle = (y / 40) % 2 ? pal.bg : pal.bg2; g.fillRect(0, y, SHAFT_W, 40);
+      g.strokeStyle = pal.line; g.lineWidth = 1; g.beginPath(); g.moveTo(0, y + 0.5); g.lineTo(SHAFT_W, y + 0.5); g.stroke();
+      g.strokeStyle = rgba('#000000', 0.12);
+      for (let k = 0; k < 3; k++) { const yy = y + 8 + rnd() * 26; g.beginPath(); g.moveTo(0, yy); g.bezierCurveTo(100, yy + rnd() * 6 - 3, 200, yy - rnd() * 6 + 3, SHAFT_W, yy); g.stroke(); }
+      g.fillStyle = rgba('#000000', 0.35); g.beginPath(); g.arc(14, y + 20, 2, 0, TAU); g.arc(SHAFT_W - 14, y + 20, 2, 0, TAU); g.fill();
+    }
+  } else if (pal.style === 'baksteen') {
+    for (let row = 0, y = 0; y < 480; y += 24, row++) {
+      for (let x = (row % 2 ? -30 : 0); x < SHAFT_W; x += 60) {
+        g.fillStyle = rnd() < 0.5 ? pal.bg2 : mixHex(pal.bg2, pal.bg, 0.5); g.fillRect(x + 1, y + 1, 58, 22);
+      }
+    }
+    g.fillStyle = rgba('#000000', 0.18); for (let i = 0; i < 40; i++) g.fillRect(rnd() * SHAFT_W, rnd() * 480, 3 + rnd() * 20, 1);
+  } else if (pal.style === 'tegels') {
+    g.strokeStyle = rgba(pal.bg2, 0.22); g.lineWidth = 2;
+    for (let y = 0; y <= 480; y += 48) { g.beginPath(); g.moveTo(0, y + 0.5); g.lineTo(SHAFT_W, y + 0.5); g.stroke(); }
+    for (let x = 0; x <= SHAFT_W; x += 50) { g.beginPath(); g.moveTo(x + 0.5, 0); g.lineTo(x + 0.5, 480); g.stroke(); }
+    g.fillStyle = rgba(pal.bg2, 0.08); for (let i = 0; i < 18; i++) g.fillRect(Math.floor(rnd() * 6) * 50 + 2, Math.floor(rnd() * 10) * 48 + 2, 46, 44);
+  } else if (pal.style === 'staal') {
+    for (let y = 0; y < 480; y += 160) for (let x = 0; x < SHAFT_W; x += 150) {
+      g.fillStyle = ((x / 150 + y / 160) % 2) ? pal.bg : mixHex(pal.bg, pal.bg2, 0.35); g.fillRect(x, y, 150, 160);
+      g.strokeStyle = rgba('#000000', 0.35); g.lineWidth = 2; g.strokeRect(x + 3, y + 3, 144, 154);
+      g.fillStyle = rgba('#ffffff', 0.18); [[x + 10, y + 10], [x + 140, y + 10], [x + 10, y + 150], [x + 140, y + 150]].forEach(p => { g.beginPath(); g.arc(p[0], p[1], 2.5, 0, TAU); g.fill(); });
+    }
+  } else {
+    g.fillStyle = pal.bg2; for (let y = 0; y < 480; y += 120) g.fillRect(0, y, SHAFT_W, 2);
+    g.strokeStyle = rgba(pal.line, 0.35); g.lineWidth = 1;
+    for (let i = 0; i < 10; i++) { const y = rnd() * 480, x = rnd() * SHAFT_W, w = 40 + rnd() * 120; g.beginPath(); g.moveTo(x, y); g.lineTo(x + w, y); g.stroke(); g.beginPath(); g.moveTo(x + w, y); g.lineTo(x + w, y + 20 + rnd() * 40); g.stroke(); }
+    g.fillStyle = rgba(pal.accent, 0.55); for (let i = 0; i < 14; i++) g.fillRect(8 + Math.floor(rnd() * 5) * 56, Math.floor(rnd() * 24) * 20 + 6, 4 + rnd() * 10, 3);
+    g.fillStyle = rgba(pal.line, 0.5); for (let i = 0; i < 8; i++) g.fillRect(Math.floor(rnd() * 20) * 15, Math.floor(rnd() * 40) * 12, 2, 2);
+  }
+  return c;
+}
+
+/* ---------------- Tekenen ---------------- */
+function drawShaft(cam, pal, bg) {
+  const off = (cam * 0.5) % 480;
+  for (let y = -off; y < H; y += 480) ctx.drawImage(bg, SHAFT_L, Math.round(y));
+  // Zijwanden: buizen met flenzen om de 160 px
+  for (const side of [0, 1]) {
+    const x = side ? SHAFT_R : 0;
+    ctx.fillStyle = pal.wall; ctx.fillRect(x, 0, 50, H);
+    ctx.fillStyle = pal.wall2; ctx.fillRect(x + (side ? 0 : 36), 0, 14, H);
+    ctx.fillStyle = rgba('#ffffff', 0.08); ctx.fillRect(x + (side ? 20 : 10), 0, 8, H);
+    const fo = cam % 160;
+    ctx.fillStyle = pal.wall2;
+    for (let y = -fo; y < H + 20; y += 160) { ctx.fillRect(x, y, 50, 10); ctx.fillStyle = rgba('#ffffff', 0.12); ctx.fillRect(x, y + 2, 50, 2); ctx.fillStyle = pal.wall2; }
+  }
+  ctx.fillStyle = rgba('#000000', 0.25); ctx.fillRect(SHAFT_L, 0, 10, H); ctx.fillRect(SHAFT_R - 10, 0, 10, H);
+}
+function drawFloor(f, pal) {
+  const y = f.y - G.cam; if (y < -160 || y > H + 160) return;
+  if (f.type === 'silo') return drawSilo(f, y, pal);
+  if (f.type === 'sieve') return drawPlate(f, y, pal);
+  const R = f.R, lx = f.gapX - f.gapW / 2 - R, rx = f.gapX + f.gapW / 2 + R, hh = R * 0.75;
+  ctx.fillStyle = pal.housing; ctx.fillRect(SHAFT_L, y - hh, lx - SHAFT_L, hh * 2); ctx.fillRect(rx, y - hh, SHAFT_R - rx, hh * 2);
+  ctx.fillStyle = rgba('#000000', 0.25); ctx.fillRect(SHAFT_L, y + hh - 6, lx - SHAFT_L, 6); ctx.fillRect(rx, y + hh - 6, SHAFT_R - rx, 6);
+  for (const [cx, dir] of [[lx, 1], [rx, -1]]) {
+    ctx.save(); ctx.translate(cx, y); ctx.rotate(f.rot * dir);
+    if (f.style === 'steen') {
+      ctx.fillStyle = pal.roller; ctx.beginPath(); ctx.arc(0, 0, R, 0, TAU); ctx.fill();
+      ctx.strokeStyle = rgba('#000000', 0.4); ctx.lineWidth = 2;
+      for (let i = 0; i < 8; i++) { ctx.rotate(TAU / 8); ctx.beginPath(); ctx.moveTo(R * 0.15, 0); ctx.quadraticCurveTo(R * 0.55, R * 0.25, R * 0.95, R * 0.1); ctx.stroke(); }
+      ctx.fillStyle = rgba('#000000', 0.5); ctx.beginPath(); ctx.arc(0, 0, R * 0.12, 0, TAU); ctx.fill();
+    } else {
+      ctx.fillStyle = pal.roller; ctx.beginPath(); ctx.arc(0, 0, R, 0, TAU); ctx.fill();
+      if (f.ribs) { ctx.strokeStyle = rgba('#000000', 0.35); ctx.lineWidth = f.ribs > 16 ? 2 : 3; ctx.beginPath(); for (let i = 0; i < f.ribs; i++) { const a = i / f.ribs * TAU; ctx.moveTo(Math.cos(a) * R * 0.45, Math.sin(a) * R * 0.45); ctx.lineTo(Math.cos(a) * R, Math.sin(a) * R); } ctx.stroke(); }
+      else { ctx.fillStyle = rgba('#ffffff', 0.35); ctx.beginPath(); ctx.ellipse(-R * 0.3, -R * 0.3, R * 0.35, R * 0.14, -0.8, 0, TAU); ctx.fill(); }
+      ctx.fillStyle = rgba('#000000', 0.45); ctx.beginPath(); ctx.arc(0, 0, R * 0.14, 0, TAU); ctx.fill();
+    }
+    ctx.restore();
+    ctx.strokeStyle = rgba('#000000', 0.35); ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(cx, y, R, 0, TAU); ctx.stroke();
+  }
+}
+function drawPlate(f, y, pal) {
+  const hp = CONFIG.PLATE_H / 2, s = Math.sin(TAU * f.freq * G.wt + f.phase) * f.amp + plateJitter(G.wt);
+  const holes = f.holes.map(o => f.baseX + o + s).sort((a, b) => a - b);
+  ctx.fillStyle = pal.plate;
+  let x0 = SHAFT_L;
+  for (const hx of holes) { const h0 = hx - f.gapW / 2; if (h0 > x0) ctx.fillRect(x0, y - hp, h0 - x0, hp * 2); x0 = hx + f.gapW / 2; }
+  if (x0 < SHAFT_R) ctx.fillRect(x0, y - hp, SHAFT_R - x0, hp * 2);
+  ctx.fillStyle = rgba('#000000', 0.3); ctx.fillRect(SHAFT_L, y + hp - 4, SHAFT_W, 4);
+  if (f.style === 'buil') {
+    ctx.strokeStyle = rgba('#000000', 0.25); ctx.lineWidth = 1; ctx.beginPath();
+    for (let x = SHAFT_L; x < SHAFT_R; x += 8) { if (holes.some(hx => Math.abs(x - hx) < f.gapW / 2 + 2)) continue; ctx.moveTo(x, y - hp + 3); ctx.lineTo(x + 6, y + hp - 3); }
+    ctx.stroke();
+  } else {
+    ctx.fillStyle = rgba('#000000', 0.4);
+    for (let x = SHAFT_L + 8; x < SHAFT_R - 4; x += 12) { if (holes.some(hx => Math.abs(x - hx) < f.gapW / 2 + 4)) continue; ctx.beginPath(); ctx.arc(x, y - 2, 1.6, 0, TAU); ctx.fill(); }
+  }
+  ctx.strokeStyle = rgba(pal.accent, 0.6); ctx.lineWidth = 2;
+  for (const hx of holes) { ctx.beginPath(); ctx.moveTo(hx - f.gapW / 2, y - hp); ctx.lineTo(hx - f.gapW / 2, y + hp); ctx.moveTo(hx + f.gapW / 2, y - hp); ctx.lineTo(hx + f.gapW / 2, y + hp); ctx.stroke(); }
+}
+function drawSilo(f, y, pal) {
+  ctx.font = '600 9px ' + FONT_UI; ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
+  for (let i = 0; i < 5; i++) {
+    const x0 = SHAFT_L + i * 60, gold = i === f.gold;
+    ctx.fillStyle = gold ? COL.goud : pal.housing;
+    ctx.beginPath(); ctx.moveTo(x0 + 4, y - 36); ctx.lineTo(x0 + 56, y - 36); ctx.lineTo(x0 + 40, y + 30); ctx.lineTo(x0 + 20, y + 30); ctx.closePath(); ctx.fill();
+    ctx.fillStyle = rgba('#000000', 0.3); ctx.fillRect(x0 + 4, y - 36, 52, 6);
+    ctx.fillStyle = gold ? COL.antraciet : COL.zand; ctx.fillText(TEXT.silos[i], x0 + 30, y - 42);
+    if (gold) {
+      ctx.strokeStyle = rgba(COL.goud, 0.5 + 0.4 * Math.sin(G.t * 6)); ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(x0 + 2, y - 38); ctx.lineTo(x0 + 58, y - 38); ctx.stroke();
+      ctx.fillStyle = COL.staal; ctx.fillRect(x0 + 6, y + 44, 48, 20); ctx.fillStyle = rgba('#000000', 0.35);
+      for (let k = 1; k < 4; k++) ctx.fillRect(x0 + 6 + k * 12, y + 46, 1.5, 16);
+      ctx.fillStyle = COL.antraciet; ctx.beginPath(); ctx.arc(x0 + 16, y + 68, 5, 0, TAU); ctx.arc(x0 + 44, y + 68, 5, 0, TAU); ctx.fill();
+    }
+  }
+}
+function hexagon(r) { ctx.beginPath(); for (let i = 0; i < 6; i++) { const a = i / 6 * TAU; ctx.lineTo(Math.cos(a) * r, Math.sin(a) * r); } ctx.closePath(); }
+function drawHazard(t) {
+  // Reinigingsgevaren: wat de reiniging uit het graan haalt, lang voor de walsen
+  ctx.rotate(t.rot);
+  if (t.type === 'moederkoren') {
+    ctx.fillStyle = COL.moederkoren; ctx.beginPath(); ctx.ellipse(0, 0, 5, 11, 0, 0, TAU); ctx.fill();
+    ctx.strokeStyle = rgba('#ffffff', 0.25); ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(0, -8); ctx.lineTo(0, 8); ctx.stroke();
+  } else if (t.type === 'steen') {
+    ctx.fillStyle = '#8d8f93'; ctx.beginPath();
+    t.verts.forEach((v, i) => i ? ctx.lineTo(v[0], v[1]) : ctx.moveTo(v[0], v[1]));
+    ctx.closePath(); ctx.fill();
+    ctx.strokeStyle = rgba('#000000', 0.45); ctx.lineWidth = 1.5; ctx.stroke();
+  } else {
+    ctx.fillStyle = '#9aa0a6'; hexagon(7); ctx.fill();
+    ctx.fillStyle = '#767c82'; ctx.fillRect(-2.5, 4, 5, 10);
+    ctx.strokeStyle = rgba('#000000', 0.45); ctx.lineWidth = 1.5; hexagon(7); ctx.stroke();
+  }
+}
+function drawPickup(t) {
+  ctx.translate(0, Math.sin(t.bob) * 3);
+  switch (t.type) {
+    case 'boekweit':
+      ctx.fillStyle = '#7a5230'; ctx.beginPath(); ctx.moveTo(0, -10); ctx.lineTo(9, 7); ctx.lineTo(-9, 7); ctx.closePath(); ctx.fill();
+      ctx.strokeStyle = rgba('#ffffff', 0.3); ctx.lineWidth = 1; ctx.stroke();
+      break;
+    case 'water':
+      ctx.fillStyle = COL.water; ctx.beginPath(); ctx.moveTo(0, -12);
+      ctx.bezierCurveTo(9, 0, 9, 10, 0, 10); ctx.bezierCurveTo(-9, 10, -9, 0, 0, -12); ctx.fill();
+      ctx.fillStyle = rgba('#ffffff', 0.6); ctx.beginPath(); ctx.ellipse(-3, 2, 2, 3.5, 0.3, 0, TAU); ctx.fill();
+      break;
+    case 'magneet':
+      ctx.strokeStyle = COL.rood; ctx.lineWidth = 6; ctx.beginPath(); ctx.arc(0, -1, 8, Math.PI, 0);
+      ctx.moveTo(-8, -1); ctx.lineTo(-8, 8); ctx.moveTo(8, -1); ctx.lineTo(8, 8); ctx.stroke();
+      ctx.fillStyle = COL.wit; ctx.fillRect(-11, 6, 6, 5); ctx.fillRect(5, 6, 6, 5);
+      break;
+    case 'nedertarwe':
+      ctx.fillStyle = '#e8a0b4';                                   // bloemenrand rond de korrel
+      for (let i = 0; i < 5; i++) { const a = i / 5 * TAU; ctx.beginPath(); ctx.arc(Math.cos(a) * 11, Math.sin(a) * 11, 3, 0, TAU); ctx.fill(); }
+      ctx.fillStyle = COL.goud; ctx.beginPath(); ctx.ellipse(0, 0, 6, 9, 0, 0, TAU); ctx.fill();
+      ctx.strokeStyle = rgba('#000000', 0.3); ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(0, -7); ctx.lineTo(0, 7); ctx.stroke();
+      break;
+    case 'kroon':                                                 // simpele vijfpuntskroon, geen logokroon
+      ctx.fillStyle = COL.goud; ctx.beginPath(); ctx.moveTo(-11, 8); ctx.lineTo(-11, -2); ctx.lineTo(-6, 3); ctx.lineTo(-3, -8);
+      ctx.lineTo(0, 1); ctx.lineTo(3, -8); ctx.lineTo(6, 3); ctx.lineTo(11, -2); ctx.lineTo(11, 8); ctx.closePath(); ctx.fill();
+      ctx.fillStyle = rgba('#000000', 0.25); ctx.fillRect(-11, 5, 22, 3);
+      break;
+    default:                                                      // kiem
+      ctx.fillStyle = COL.kiem; ctx.beginPath(); ctx.ellipse(0, 0, 4, 7, 0.4, 0, TAU); ctx.fill();
+      ctx.strokeStyle = rgba('#ffffff', 0.5); ctx.lineWidth = 1; ctx.beginPath(); ctx.arc(0, 0, 10, 0, TAU); ctx.stroke();
+  }
+}
+function drawThing(t, pal) {
+  const y = t.y - G.cam; if (y < -40 || y > H + 40) return;
+  ctx.save(); ctx.translate(t.x, y);
+  if (t.kind === 'haz') drawHazard(t);
+  else if (t.kind === 'pick') drawPickup(t);
+  else if (t.type === 'slot') {
+    const c = t.done ? '#5fbf7a' : COL.goud;
+    ctx.fillStyle = pal.housing; ctx.fillRect(-9, -8, 18, 16);
+    ctx.fillStyle = c; ctx.fillRect(-4, -1, 8, 6);
+    ctx.strokeStyle = c; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.arc(0, -2, 3, Math.PI, 0); ctx.stroke();
+  } else if (t.type === 'tarwe') {
+    ctx.globalAlpha = clamp(t.life, 0, 1); drawGrainShape(0, 0, 7, 9, COL.tarwe, 0, false);
+  } else if (t.type === 'stoom') {
+    ctx.globalAlpha = clamp(t.life / 1.8, 0, 1) * 0.45; ctx.fillStyle = COL.wit;
+    ctx.beginPath(); ctx.arc(0, 0, t.r, 0, TAU); ctx.arc(t.r * 0.7, -t.r * 0.4, t.r * 0.7, 0, TAU); ctx.arc(-t.r * 0.6, -t.r * 0.3, t.r * 0.6, 0, TAU); ctx.fill();
+  }
+  ctx.restore();
+}
+function drawLoskade(cx, y, era) {
+  // Intro-tafereel: loskade met schip en zuigbuis (vanaf 1867), of de rosmolen (1846)
+  ctx.save(); ctx.translate(cx, y);
+  if (era === 0) {
+    ctx.strokeStyle = COL.zemel; ctx.lineWidth = 6; ctx.lineCap = 'round';
+    ctx.beginPath(); ctx.ellipse(0, 10, 70, 22, 0, 0, TAU); ctx.stroke();
+    ctx.fillStyle = '#8f8577'; ctx.beginPath(); ctx.ellipse(0, 10, 28, 10, 0, 0, TAU); ctx.fill();
+    ctx.strokeStyle = COL.zemel; ctx.lineWidth = 5; ctx.beginPath(); ctx.moveTo(0, 10); ctx.lineTo(0, -34); ctx.stroke();
+    const a = G.intro.t * 1.2; ctx.beginPath(); ctx.moveTo(0, -30); ctx.lineTo(Math.cos(a) * 70, -30 + Math.sin(a) * 22); ctx.stroke();
+    ctx.fillStyle = '#6b4a2b'; ctx.beginPath(); ctx.ellipse(Math.cos(a) * 70, -30 + Math.sin(a) * 22, 9, 6, a, 0, TAU); ctx.fill();
+  } else {
+    ctx.fillStyle = '#243a4a'; ctx.fillRect(-170, 20, 340, 30);
+    ctx.strokeStyle = rgba('#ffffff', 0.25); ctx.lineWidth = 1.5; ctx.beginPath();
+    for (let x = -160; x < 160; x += 20) { ctx.moveTo(x, 30 + Math.sin(x / 10 + G.intro.t * 3) * 2); ctx.lineTo(x + 10, 30 + Math.sin(x / 10 + 1 + G.intro.t * 3) * 2); }
+    ctx.stroke();
+    ctx.fillStyle = '#3a3f44'; ctx.beginPath(); ctx.moveTo(-90, 0); ctx.lineTo(90, 0); ctx.lineTo(76, 22); ctx.lineTo(-76, 22); ctx.closePath(); ctx.fill();
+    ctx.fillStyle = COL.oranje; ctx.fillRect(-90, -3, 180, 4);
+    ctx.fillStyle = '#5c6670'; ctx.fillRect(-70, -16, 100, 14); ctx.fillStyle = COL.tarwe; ctx.fillRect(-66, -12, 92, 6);
+    ctx.fillStyle = COL.zand; ctx.fillRect(48, -22, 30, 20); ctx.fillStyle = '#243a4a'; ctx.fillRect(54, -18, 8, 6); ctx.fillRect(66, -18, 8, 6);
+    ctx.strokeStyle = COL.staal; ctx.lineWidth = 7; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+    ctx.beginPath(); ctx.moveTo(-20, -10); ctx.lineTo(-20, -56); ctx.lineTo(120, -56); ctx.lineTo(120, -110); ctx.stroke();
+    ctx.fillStyle = COL.tarwe; const k = (G.intro.t * 2) % 1;
+    for (let i = 0; i < 6; i++) { const u = (i / 6 + k) % 1; let px, py; if (u < 0.3) { px = -20; py = -10 - u / 0.3 * 46; } else if (u < 0.75) { px = -20 + (u - 0.3) / 0.45 * 140; py = -56; } else { px = 120; py = -56 - (u - 0.75) / 0.25 * 54; } ctx.beginPath(); ctx.arc(px, py, 2, 0, TAU); ctx.fill(); }
+    ctx.fillStyle = '#4a4e52'; ctx.fillRect(100, -112, 60, 112); ctx.fillStyle = rgba('#ffffff', 0.08); ctx.fillRect(104, -108, 10, 104);
+    ctx.font = '600 10px ' + FONT_UI; ctx.textAlign = 'left'; ctx.fillStyle = COL.zand; ctx.fillText('circa 120 t/u', 128, -40);
+  }
+  ctx.restore();
+}
+function drawGrainShape(x, y, rx, ry, color, white, eyes) {
+  ctx.fillStyle = color; ctx.beginPath(); ctx.ellipse(x, y, rx, ry, 0, 0, TAU); ctx.fill();
+  ctx.strokeStyle = rgba('#000000', 0.35 - white * 0.2); ctx.lineWidth = 1.5; ctx.beginPath(); ctx.moveTo(x, y - ry * 0.75); ctx.quadraticCurveTo(x - rx * 0.25, y, x, y + ry * 0.75); ctx.stroke();
+  if (eyes) { ctx.fillStyle = COL.antraciet; ctx.beginPath(); ctx.arc(x - rx * 0.4, y - ry * 0.2, 1.5, 0, TAU); ctx.arc(x + rx * 0.4, y - ry * 0.2, 1.5, 0, TAU); ctx.fill(); }
+}
+function drawGrain() {
+  const g = G.grain, y = CONFIG.GRAIN_Y * H;
+  if (G.inv > 0 && Math.floor(G.t * 16) % 2 === 0) return;
+  const color = mixHex(COL.tarwe, COL.wit, g.white);
+  ctx.fillStyle = rgba('#000000', 0.25); ctx.beginPath(); ctx.ellipse(g.x + 2, y + 3, CONFIG.GRAIN_RX * g.size, CONFIG.GRAIN_RY * g.size, 0, 0, TAU); ctx.fill();
+  drawGrainShape(g.x, y, CONFIG.GRAIN_RX * g.size, CONFIG.GRAIN_RY * g.size, color, g.white, true);
+}
+function drawParticles() {
+  for (const p of G.parts) if (p.on) { ctx.globalAlpha = clamp(p.life / p.max, 0, 1); ctx.fillStyle = p.color; ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, TAU); ctx.fill(); }
+  ctx.globalAlpha = 1;
+}
+function drawIcon(kind, x, y, s, color) {
+  // Procesbalk-iconen met primitieven: 0 schip, 1 zeef, 2 druppel, 3 walsen, 4 zeefkast, 5 silo
+  ctx.save(); ctx.translate(x, y); ctx.strokeStyle = color; ctx.fillStyle = color; ctx.lineWidth = 1.6; ctx.lineJoin = 'round';
+  switch (kind) {
+    case 0:
+      ctx.beginPath(); ctx.moveTo(-s, -s * 0.2); ctx.lineTo(s, -s * 0.2); ctx.lineTo(s * 0.6, s * 0.5); ctx.lineTo(-s * 0.6, s * 0.5); ctx.closePath(); ctx.fill();
+      ctx.fillRect(-s * 0.3, -s * 0.7, s * 0.6, s * 0.5);
+      break;
+    case 1:
+      ctx.beginPath(); ctx.arc(0, 0, s * 0.8, 0, TAU); ctx.stroke();
+      for (const p of [[-0.3, -0.3], [0.3, -0.3], [-0.3, 0.3], [0.3, 0.3]]) { ctx.beginPath(); ctx.arc(p[0] * s, p[1] * s, 1.3, 0, TAU); ctx.fill(); }
+      break;
+    case 2:
+      ctx.beginPath(); ctx.moveTo(0, -s); ctx.bezierCurveTo(s * 0.8, 0, s * 0.8, s * 0.8, 0, s * 0.8); ctx.bezierCurveTo(-s * 0.8, s * 0.8, -s * 0.8, 0, 0, -s); ctx.fill();
+      break;
+    case 3:
+      ctx.beginPath(); ctx.arc(-s * 0.5, 0, s * 0.45, 0, TAU); ctx.arc(s * 0.5, 0, s * 0.45, 0, TAU); ctx.fill();
+      break;
+    case 4:
+      ctx.strokeRect(-s * 0.8, -s * 0.6, s * 1.6, s * 1.2);
+      ctx.beginPath(); ctx.moveTo(-s * 0.3, -s * 0.6); ctx.lineTo(-s * 0.3, s * 0.6); ctx.moveTo(s * 0.3, -s * 0.6); ctx.lineTo(s * 0.3, s * 0.6);
+      ctx.moveTo(-s * 0.8, 0); ctx.lineTo(s * 0.8, 0); ctx.stroke();
+      break;
+    default:
+      ctx.beginPath(); ctx.moveTo(-s * 0.5, -s); ctx.lineTo(s * 0.5, -s); ctx.lineTo(s * 0.5, s * 0.4); ctx.lineTo(0, s); ctx.lineTo(-s * 0.5, s * 0.4); ctx.closePath(); ctx.fill();
+  }
+  ctx.restore();
+}
+function drawHUD() {
+  // Drie rijen: score + levens, procesbalk, procesnaam + combo
+  ctx.fillStyle = rgba(COL.antraciet, 0.78); ctx.fillRect(0, 0, W, HUD_H);
+  ctx.fillStyle = rgba(COL.goud, 0.6); ctx.fillRect(0, HUD_H, W, 1);
+  ctx.textBaseline = 'alphabetic'; ctx.textAlign = 'left';
+  ctx.font = '800 22px ' + FONT_UI; ctx.fillStyle = COL.wit; ctx.fillText(fmt(G.score) + ' kg', 14, 30);
+  // Levens
+  const lx = G.level.night ? 330 : 300;
+  for (let i = 0; i < (G.level.night ? 1 : CONFIG.LIVES); i++) {
+    const x = lx + i * 18, alive = i < G.lives;
+    if (alive) drawGrainShape(x, 22, 6, 8, COL.tarwe, 0, false);
+    else { ctx.strokeStyle = COL.rood; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.ellipse(x, 22, 6, 8, 0, 0, TAU); ctx.stroke(); }
+  }
+  // Procesbalk
+  const stages = G.levelIdx < 2 && !G.level.night ? TEXT.stagesOld : TEXT.stages;
+  const total = G.level.night ? CONFIG.NIGHT.zone : G.level.floors;
+  const prog = G.level.night ? (G.floorsPassed % total) / total : clamp(G.floorsPassed / total, 0, 1);
+  const stage = G.finished ? 5 : Math.min(4, Math.floor(prog * 5));
+  const by = 47, bx0 = 24, bx1 = W - 62, step = (bx1 - bx0) / 5;     // eindigt links van de pauzeknop
+  ctx.strokeStyle = rgba('#ffffff', 0.18); ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(bx0, by); ctx.lineTo(bx1, by); ctx.stroke();
+  ctx.strokeStyle = COL.goud; ctx.beginPath(); ctx.moveTo(bx0, by); ctx.lineTo(bx0 + (bx1 - bx0) * (G.finished ? 1 : prog), by); ctx.stroke();
+  for (let i = 0; i < 6; i++) {
+    const x = bx0 + i * step, on = i <= stage;
+    ctx.fillStyle = rgba(COL.antraciet, 0.9); ctx.beginPath(); ctx.arc(x, by, 10, 0, TAU); ctx.fill();
+    drawIcon(i, x, by, 6, on ? (i === stage ? COL.oranje : COL.goud) : rgba('#ffffff', 0.35));
+  }
+  ctx.font = '600 11px ' + FONT_UI; ctx.fillStyle = COL.oranje; ctx.fillText(stages[stage], 14, 70);
+  if (G.combo > 0) { ctx.textAlign = 'right'; ctx.fillStyle = COL.goud; ctx.font = '800 12px ' + FONT_UI; ctx.fillText('combo ' + G.combo + ' · ×' + mult(), W - 14, 70); }
+  if (G.level.night) { ctx.textAlign = 'right'; ctx.font = '600 11px ' + FONT_UI; ctx.fillStyle = COL.zand; ctx.fillText('Verdieping ' + G.floorsPassed + ' · ' + TEXT.zones[zone() % TEXT.zones.length], 316, 30); }
+  else { ctx.textAlign = 'right'; ctx.font = '600 11px ' + FONT_UI; ctx.fillStyle = COL.zand; ctx.fillText(G.level.year + '', 286, 30); }
+  // Waarschuwingsdriehoekje (en in Molen B een vage omtrek)
+  if (G.warn) {
+    const a = 0.5 + 0.5 * Math.sin(G.t * 18);
+    const wy = HUD_H + 6;
+    ctx.fillStyle = rgba(COL.oranje, 0.5 + a * 0.5); ctx.beginPath(); ctx.moveTo(G.warn.x, wy); ctx.lineTo(G.warn.x - 9, wy + 16); ctx.lineTo(G.warn.x + 9, wy + 16); ctx.closePath(); ctx.fill();
+    ctx.fillStyle = COL.antraciet; ctx.fillRect(G.warn.x - 1, wy + 5, 2, 6); ctx.fillRect(G.warn.x - 1, wy + 12, 2, 2);
+    if (G.level.predict) { ctx.strokeStyle = rgba(COL.oranje, 0.35); ctx.lineWidth = 2; ctx.setLineDash([3, 3]); ctx.beginPath(); ctx.arc(G.warn.x, wy + 32, 11, 0, TAU); ctx.stroke(); ctx.setLineDash([]); }
+  }
+  // Effecten
+  if (G.slowmo > 0) { ctx.fillStyle = rgba(COL.water, 0.08); ctx.fillRect(0, HUD_H, W, H - HUD_H); ctx.font = '600 11px ' + FONT_UI; ctx.textAlign = 'center'; ctx.fillStyle = COL.water; ctx.fillText('Conditioneren ' + G.slowmo.toFixed(1) + ' s', W / 2, HUD_H + 16); }
+  if (G.magnet > 0) { ctx.font = '600 11px ' + FONT_UI; ctx.textAlign = 'center'; ctx.fillStyle = COL.rood; ctx.fillText('Magneet ' + G.magnet.toFixed(1) + ' s', W / 2, HUD_H + (G.slowmo > 0 ? 30 : 16)); }
+}
+function drawOverlays() {
+  ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
+  for (const f of G.floats) {
+    if (f.ring) { ctx.strokeStyle = rgba(COL.oranje, 1 - f.t / 0.9); ctx.lineWidth = 3; ctx.beginPath(); ctx.arc(f.x, f.y, 14 + f.t * 60, 0, TAU); ctx.stroke(); continue; }
+    ctx.globalAlpha = 1 - f.t / 0.9; ctx.font = '800 16px ' + FONT_UI; ctx.fillStyle = f.color; ctx.fillText(f.text, f.x, f.y - f.t * 50); ctx.globalAlpha = 1;
+  }
+  if (G.toasts.length) {
+    const t = G.toasts[0], a = clamp(Math.min(G.toastT * 4, (t.dur - G.toastT) * 3), 0, 1), ty = HUD_H + 34;
+    ctx.font = '600 12px ' + FONT_UI;
+    if (ctx.measureText(t.text).width > W - 64) ctx.font = '600 11px ' + FONT_UI;   // lange zin: iets kleiner, niet samenknijpen
+    const w = Math.min(W - 40, ctx.measureText(t.text).width + 28);
+    ctx.globalAlpha = a; ctx.fillStyle = rgba(COL.antraciet, 0.85); roundRect(W / 2 - w / 2, ty, w, 30, 15); ctx.fill();
+    ctx.fillStyle = COL.wit; ctx.fillText(t.text, W / 2, ty + 20, W - 60); ctx.globalAlpha = 1;
+  }
+  if (G.banner) {
+    const b = G.banner, ease = b.t < 0.3 ? 1 - Math.pow(1 - b.t / 0.3, 3) : 1, a = b.t > 1.4 ? 1 - (b.t - 1.4) / 0.4 : 1;
+    const x = lerp(W + 160, W / 2, ease);
+    ctx.globalAlpha = a; ctx.fillStyle = rgba(COL.goud, 0.92); roundRect(x - 120, 150, 240, 54, 8); ctx.fill();
+    ctx.fillStyle = COL.antraciet; ctx.font = '400 26px ' + FONT_HAND; ctx.fillText('Tsjoch!', x, 176);
+    ctx.font = '800 13px ' + FONT_UI; ctx.fillText('Comborang ' + b.text, x, 195); ctx.globalAlpha = 1;
+  }
+  if (G.flash > 0) { ctx.strokeStyle = rgba(COL.rood, G.flash * 3); ctx.lineWidth = 18; ctx.strokeRect(0, 0, W, H); }
+  if (G.level.night) ctx.drawImage(nightVignette(), 0, 0);
+  if (G.debug) drawDebug();
+}
+let _vig = null;
+function nightVignette() {
+  if (_vig) return _vig; _vig = document.createElement('canvas'); _vig.width = W; _vig.height = H; const g = _vig.getContext('2d');
+  const r = g.createRadialGradient(W / 2, 120, 60, W / 2, 300, 520); r.addColorStop(0, 'rgba(0,0,0,0)'); r.addColorStop(1, 'rgba(0,0,0,0.55)');
+  g.fillStyle = r; g.fillRect(0, 0, W, H); return _vig;
+}
+function roundRect(x, y, w, h, r) { ctx.beginPath(); ctx.moveTo(x + r, y); ctx.arcTo(x + w, y, x + w, y + h, r); ctx.arcTo(x + w, y + h, x, y + h, r); ctx.arcTo(x, y + h, x, y, r); ctx.arcTo(x, y, x + w, y, r); ctx.closePath(); }
+function drawDebug() {
+  const gy = CONFIG.GRAIN_Y * H; ctx.strokeStyle = '#00ff88'; ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.arc(G.grain.x, gy, HIT_R, 0, TAU); ctx.stroke();
+  for (const f of G.floors) {
+    const y = f.y - G.cam;
+    if (f.type === 'mill') { const lx = f.gapX - f.gapW / 2 - f.R, rx = f.gapX + f.gapW / 2 + f.R, hh = f.R * 0.75; ctx.beginPath(); ctx.arc(lx, y, f.R, 0, TAU); ctx.arc(rx, y, f.R, 0, TAU); ctx.stroke(); ctx.strokeRect(SHAFT_L, y - hh, lx - SHAFT_L, hh * 2); ctx.strokeRect(rx, y - hh, SHAFT_R - rx, hh * 2); }
+    else if (f.type === 'sieve') { const s = Math.sin(TAU * f.freq * G.wt + f.phase) * f.amp + plateJitter(G.wt); for (const o of f.holes) ctx.strokeRect(f.baseX + o + s - f.gapW / 2, y - 9, f.gapW, 18); }
+  }
+  for (const t of G.things) { ctx.beginPath(); ctx.arc(t.x, t.y - G.cam, t.r * (t.kind === 'haz' ? 0.85 : 1), 0, TAU); ctx.stroke(); }
+  ctx.fillStyle = '#00ff88'; ctx.font = '600 10px ' + FONT_UI; ctx.textAlign = 'left'; ctx.fillText('debug 0,5x · scroll ' + Math.round(curScroll()) + ' · gap ' + Math.round(curGapPct() * 100) + '%', 14, H - 10);
+}
+function drawPlayScene() {
+  ctx.save();
+  if (G.shake > 0 && !REDUCED) { const k = CONFIG.SHAKE_PX * (G.shake / (CONFIG.SHAKE_MS / 1000)); ctx.translate((Math.random() - 0.5) * 2 * k, (Math.random() - 0.5) * 2 * k); }
+  drawShaft(G.cam, G.pal, G.bg);
+  for (const f of G.floors) drawFloor(f, G.pal);
+  for (const t of G.things) drawThing(t, G.pal);
+  drawParticles(); drawGrain();
+  ctx.restore();
+  drawHUD(); drawOverlays();
+}
+function drawOdometer(cx, cy, value) {
+  const dw = 46, dh = 62, gap = 6, x0 = cx - (4 * dw + 3 * gap) / 2;
+  ctx.font = '800 44px ' + FONT_UI; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  for (let i = 0; i < 4; i++) {
+    const p = Math.pow(10, 3 - i), d = (value / p) % 10, base = Math.floor(d), frac = d - base, x = x0 + i * (dw + gap);
+    ctx.fillStyle = '#111213'; roundRect(x, cy - dh / 2, dw, dh, 6); ctx.fill();
+    ctx.save(); ctx.beginPath(); ctx.rect(x, cy - dh / 2, dw, dh); ctx.clip(); ctx.fillStyle = COL.goud;
+    ctx.fillText(String(base), x + dw / 2, cy - frac * dh); ctx.fillText(String((base + 1) % 10), x + dw / 2, cy + (1 - frac) * dh);
+    ctx.restore();
+    ctx.fillStyle = rgba('#000000', 0.35); ctx.fillRect(x, cy - 1, dw, 2);
+  }
+  ctx.textBaseline = 'alphabetic';
+}
+function drawIntro() {
+  drawShaft(G.intro.t * 40, G.pal, G.bg);
+  ctx.fillStyle = rgba(COL.antraciet, 0.55); ctx.fillRect(0, 0, W, H);
+  const L = G.level, k = clamp(G.intro.t / CONFIG.INTRO_ROLL, 0, 1), e = 1 - Math.pow(1 - k, 3);
+  drawOdometer(W / 2, 250, lerp(G.intro.from, L.year, e));
+  ctx.textAlign = 'center'; ctx.fillStyle = COL.oranje; ctx.font = '400 30px ' + FONT_HAND; ctx.fillText(L.title, W / 2, 330, W - 40);
+  if (G.mode === 'night') { ctx.font = '600 12px ' + FONT_UI; ctx.fillStyle = COL.zand; ctx.fillText(G.dailyLabel + ' · één leven', W / 2, 356); }
+  else { ctx.font = '600 12px ' + FONT_UI; ctx.fillStyle = COL.zand; ctx.fillText('Level ' + (G.levelIdx + 1) + ' van 6', W / 2, 356); }
+  const a = clamp((G.intro.t - CONFIG.INTRO_ROLL + 0.3) / 0.4, 0, 1);
+  if (a > 0) {
+    ctx.globalAlpha = a; ctx.fillStyle = COL.wit; ctx.font = '800 15px ' + FONT_UI; wrapText(L.intro, W / 2, 410, W - 60, 20);
+    ctx.fillStyle = COL.zand; ctx.font = '600 12px ' + FONT_UI; wrapText(G.intro.ship, W / 2, 470, W - 60, 17); ctx.globalAlpha = 1;
+  }
+  drawKorenaar(W / 2, 130, 0.7, 0.9);
+  drawLoskade(W / 2 - 20, 600, G.mode === 'night' ? 6 : G.levelIdx);
+}
+function wrapText(text, x, y, maxW, lh) {
+  const words = text.split(' '); let line = '';
+  for (const w of words) { const t = line ? line + ' ' + w : w; if (ctx.measureText(t).width > maxW && line) { ctx.fillText(line, x, y); line = w; y += lh; } else line = t; }
+  if (line) ctx.fillText(line, x, y);
+}
+function drawKorenaar(x, y, s, alpha) {
+  ctx.save(); ctx.translate(x, y); ctx.scale(s, s); ctx.globalAlpha = alpha;
+  ctx.strokeStyle = COL.goud; ctx.lineWidth = 3; ctx.lineCap = 'round'; ctx.beginPath(); ctx.moveTo(0, 70); ctx.lineTo(0, -40); ctx.stroke();
+  ctx.fillStyle = COL.goud;
+  // Gestileerde aar: parallellogram-blaadjes om en om langs de steel (bewust geen logokroon)
+  for (let i = 0; i < 5; i++) {
+    const yy = -26 + i * 17, d = i % 2 ? -1 : 1;
+    for (const side of [d, -d]) {
+      const yo = side === d ? 0 : 8;
+      ctx.beginPath(); ctx.moveTo(0, yy + yo); ctx.lineTo(side * 15, yy + yo - 9); ctx.lineTo(side * 21, yy + yo - 1); ctx.lineTo(side * 6, yy + yo + 8); ctx.closePath(); ctx.fill();
+    }
+  }
+  ctx.beginPath(); ctx.moveTo(0, -58); ctx.lineTo(8, -40); ctx.lineTo(0, -30); ctx.lineTo(-8, -40); ctx.closePath(); ctx.fill();
+  ctx.strokeStyle = rgba('#000000', 0.25); ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(0, 70); ctx.lineTo(0, -30); ctx.stroke();
+  ctx.restore();
+}
+let titleBg = null, titleGrains = [];
+function drawTitle(dt) {
+  if (!titleBg) { titleBg = makeBackground(NIGHT_LEVEL.pal); for (let i = 0; i < 14; i++) titleGrains.push({ x: SHAFT_L + 20 + Math.random() * (SHAFT_W - 40), y: Math.random() * H, w: Math.random(), v: 40 + Math.random() * 60 }); }
+  G.titleT += dt;
+  drawShaft(G.titleT * 70, NIGHT_LEVEL.pal, titleBg);
+  for (const g of titleGrains) { g.y -= g.v * dt; if (g.y < -20) { g.y = H + 20; g.x = SHAFT_L + 20 + Math.random() * (SHAFT_W - 40); } drawGrainShape(g.x, g.y, 6, 8, mixHex(COL.tarwe, COL.wit, g.w), g.w, false); }
+  ctx.fillStyle = rgba(COL.antraciet, 0.35); ctx.fillRect(0, 0, W, H);
+  drawKorenaar(W / 2, 110, 1, 1);
+}
+function render(dt) {
+  ctx.setTransform(SCALE * DPR, 0, 0, SCALE * DPR, 0, 0);
+  ctx.clearRect(0, 0, W, H);
+  switch (G.state) {
+    case 'title': case 'scores': case 'credits': drawTitle(dt); break;
+    case 'intro': drawIntro(); break;
+    case 'play': case 'pause': case 'card': case 'over': case 'finale': drawPlayScene(); break;
+    default: drawTitle(dt);
+  }
+}
+
+/* ---------------- Schermen (DOM) en state machine ---------------- */
+const SCREENS = { title: 's-title', intro: 's-intro', pause: 's-pause', card: 's-card', over: 's-over', finale: 's-over', scores: 's-scores', credits: 's-credits' };
+function setState(s) {
+  G.state = s;
+  for (const k in SCREENS) $(SCREENS[k]).hidden = true;
+  if (SCREENS[s]) $(SCREENS[s]).hidden = false;
+  $('pausebtn').hidden = s !== 'play';
+  if (s === 'title') refreshTitle();
+}
+function refreshTitle() {
+  const d = Store.data;
+  $('t-gezel').textContent = 'Gezel: ' + (d.gezel ? 'aan' : 'uit'); $('t-gezel').setAttribute('aria-pressed', String(!!d.gezel));
+  $('t-sound').textContent = 'Geluid: ' + (d.sound ? 'aan' : 'uit'); $('t-sound').setAttribute('aria-pressed', String(!!d.sound));
+  $('t-daily').textContent = 'Dagseed: ' + (d.daily ? 'aan' : 'uit'); $('t-daily').setAttribute('aria-pressed', String(!!d.daily));
+  const c = $('b-continue'); c.hidden = !(d.maxLevel > 0 && d.maxLevel < LEVELS.length);
+  if (!c.hidden) c.textContent = 'Verder vanaf ' + LEVELS[d.maxLevel].year;
+  const n = $('b-night'); n.disabled = !d.nightUnlocked; n.textContent = d.nightUnlocked ? 'Nachtploeg (eindeloos)' : 'Nachtploeg: speel de campagne uit';
+}
+function tile(grid, big, label) {
+  const t = document.createElement('div'); t.className = 'tile';
+  const b = document.createElement('b'); b.textContent = big;
+  const s = document.createElement('span'); s.textContent = label;
+  t.appendChild(b); t.appendChild(s); grid.appendChild(t);
+}
+function extractLabel(pct) {
+  // Echte uitmalingstrappen als beschrijvend label, geen rangorde: witter = minder uitmaling
+  if (pct < 55) return 'short patent (circa 45%)';
+  if (pct < 70) return 'long patent (circa 65%)';
+  if (pct < 85) return 'straight grade (75-76%)';
+  return 'richting volkoren (100%)';
+}
+function runBadges() {
+  const S = G.stats, d = Store.data.badges, b = {};
+  b.Vakmanschap = S.total >= 8 && S.perfects / S.total >= 0.75;
+  b.Betrouwbaar = S.levelsNoHit > 0 || (G.mode === 'night' && S.hits === 0 && G.floorsPassed >= 20);
+  b.Ondernemend = S.allPickupsLevel || (G.mode === 'night' && S.pickupsTotal >= 6 && S.pickups === S.pickupsTotal);
+  b.Gepassioneerd = G.mode === 'night' && G.floorsPassed >= 100;
+  b.Menselijk = !!(G.state === 'finale' && G.gezel && S.startLevel === 0);
+  b['Elke korrel telt'] = S.nedTotal >= 3 && S.ned === S.nedTotal;
+  for (const k in b) if (b[k]) d[k] = true;
+  return b;
+}
+let shareLine = '';
+function showReport(kind) {
+  setState(kind);
+  const S = G.stats, kg = G.score, pct = S.total ? Math.round(S.perfects / S.total * 100) : 0, bread = Math.round(kg / 1000 * CONFIG.BREAD_PER_TON);
+  const isFinale = kind === 'finale', night = G.mode === 'night';
+  $('over-kicker').textContent = isFinale ? 'Jubileumjaar 2026 · 180 jaar' : (night ? 'Nachtploeg · ' + G.dailyLabel : 'Mini-jaarverslag · t/m ' + G.level.year);
+  $('over-title').textContent = isFinale ? 'Molen B gehaald!' : 'Partij afgekeurd';
+  $('over-sub').textContent = isFinale ? 'Groei door verbinding' : 'Oant moarn';
+  const note = $('over-note'); note.hidden = !isFinale;
+  if (isFinale) note.textContent = 'Van de rosmolen in Holwerd tot Molen B in het jubileumjaar 2026, met een Urban Tarweveld in Middelsee als cadeau aan de stad. Nachtploeg ontgrendeld.';
+  const grid = $('report'); grid.textContent = '';
+  tile(grid, fmt(kg) + ' kg', 'bloem'); tile(grid, fmt(Math.floor(kg / CONFIG.BAG_KG)), 'zakken van 25 kg');
+  tile(grid, (kg / CONFIG.CELL_KG).toFixed(1).replace('.', ','), 'bulkcellen van 2 ton'); tile(grid, 'ca. ' + fmt(bread), 'broden (ca. 1.800 per ton)');
+  if (night) tile(grid, String(G.floorsPassed), 'verdiepingen');
+  else tile(grid, (G.levelIdx + (isFinale ? 1 : 0)) + ' van 6', 'molens gehaald');
+  tile(grid, S.bestRank || '–', 'beste comborang (' + S.maxCombo + ')');
+  $('extract').textContent = 'Jouw uitmaling: ' + pct + '% perfecte passages ≈ ' + extractLabel(pct) + '. Witter = minder uitmaling; echte molens halen 72-76% bloem.';
+  const badges = runBadges(); const bx = $('badges'); bx.textContent = '';
+  for (const [name, desc] of TEXT.badges) { const el = document.createElement('span'); el.className = 'badge' + (badges[name] ? ' on' : ''); el.textContent = name; el.title = desc; bx.appendChild(el); }
+  if (isFinale) { $('b-retry').textContent = 'Nachtploeg (ontgrendeld)'; toast('Nachtploeg ontgrendeld!'); }
+  else $('b-retry').textContent = 'Nog een korrel?';
+  const when = todayShort();
+  shareLine = 'Korrelval · ' + (night ? 'Nachtploeg ' + when + (Store.data.daily ? ' (korrel van de dag)' : '') : (isFinale ? 'Campagne uitgespeeld ' + when : 'Campagne t/m ' + G.level.year + ', ' + when)) +
+    ': ' + fmt(kg) + ' kg bloem, combo ' + (S.bestRank || '–') + ', ' + pct + '% uitmaling, goed voor ca. ' + fmt(bread) + ' broden' + (night ? ', ' + G.floorsPassed + ' verdiepingen' : '') + '.';
+  $('sharebox').hidden = true; $('sharebox').textContent = '';
+  const ne = $('nameentry'); ne.hidden = true;
+  const entering = night && qualifies(kg);
+  if (entering) { ne.hidden = false; buildPicker(); }
+  // Bij een nieuwe highscore eerst de naamkiezer, het jaarverslag verschijnt na het opslaan (kaart blijft in beeld)
+  for (const id of ['report', 'extract', 'badges']) $(id).hidden = entering;
+  Store.save();
+}
+function qualifies(score) { const t = Store.data.top5; return score > 0 && (t.length < 5 || score > t[t.length - 1].s); }
+let pickerLetters = ['A', 'A', 'A'], nameSaved = false;
+function buildPicker() {
+  nameSaved = false; pickerLetters = (Store.data.name || 'AAA').split('').slice(0, 3); while (pickerLetters.length < 3) pickerLetters.push('A');
+  const p = $('picker'); p.textContent = ''; $('b-savename').disabled = false; $('b-savename').textContent = 'Opslaan'; $('name-label').textContent = 'Top 5! Kies drie letters:';
+  pickerLetters.forEach((L, i) => {
+    const col = document.createElement('div'); col.className = 'col';
+    const up = document.createElement('button'); up.className = 'btn alt pk'; up.textContent = '▲'; up.setAttribute('aria-label', 'Letter omhoog');
+    const letter = document.createElement('div'); letter.className = 'letter'; letter.textContent = L;
+    const dn = document.createElement('button'); dn.className = 'btn alt pk'; dn.textContent = '▼'; dn.setAttribute('aria-label', 'Letter omlaag');
+    const step = d => { let c = pickerLetters[i].charCodeAt(0) - 65; c = (c + d + 26) % 26; pickerLetters[i] = String.fromCharCode(65 + c); letter.textContent = pickerLetters[i]; Sfx.beep(); };
+    up.addEventListener('click', () => step(1)); dn.addEventListener('click', () => step(-1));
+    col.appendChild(up); col.appendChild(letter); col.appendChild(dn); p.appendChild(col);
+  });
+}
+function saveName() {
+  if (nameSaved) return; nameSaved = true;
+  const name = pickerLetters.join(''); Store.data.name = name;
+  Store.data.top5.push({ n: name, s: G.score, d: todayKey(), m: Store.data.daily ? 'dag' : 'vrij', f: G.floorsPassed });
+  Store.data.top5.sort((a, b) => b.s - a.s); Store.data.top5 = Store.data.top5.slice(0, 5); Store.save();
+  $('nameentry').hidden = true;
+  for (const id of ['report', 'extract', 'badges']) $(id).hidden = false;
+  toast('Opgeslagen als ' + name + '. Tsjoch!', 2);
+}
+function copyScore() {
+  const box = $('sharebox');
+  const fallback = () => { box.hidden = false; box.textContent = shareLine + ' (selecteer en kopieer)'; };
+  try {
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(shareLine).then(() => { box.hidden = false; box.textContent = 'Gekopieerd: ' + shareLine; }, fallback);
+    else fallback();
+  } catch (e) { fallback(); }
+}
+function showScores() {
+  const ol = $('scorelist'); ol.textContent = '';
+  const t = Store.data.top5;
+  if (!t.length) { const li = document.createElement('li'); li.textContent = 'Nog geen Nachtploeg-scores. Speel de campagne uit om te ontgrendelen.'; ol.appendChild(li); }
+  t.forEach((e, i) => { const li = document.createElement('li'); const a = document.createElement('span'); a.textContent = (i + 1) + '. ' + e.n + '  ' + fmt(e.s) + ' kg'; const b = document.createElement('span'); b.textContent = (e.f ? e.f + ' verd. · ' : '') + e.m + ' · ' + e.d; li.appendChild(a); li.appendChild(b); ol.appendChild(li); });
+  const got = Object.keys(Store.data.badges).filter(k => TEXT.badges.some(b => b[0] === k)).length;
+  $('bestline').textContent = 'Beste campagnescore: ' + fmt(Store.data.best) + ' kg · kernwaarden verzameld: ' + got + ' van ' + TEXT.badges.length + '.';
+  setState('scores');
+}
+function showCredits() {
+  const c = $('creditlines'); c.textContent = '';
+  TEXT.credits.forEach(line => { const p = document.createElement('p'); p.className = 'fine'; p.textContent = line; c.appendChild(p); });
+  setState('credits');
+}
+function toMenu() { Sfx.stopRumble(); setState('title'); }
+function togglePause() {
+  if (G.state === 'play') { setState('pause'); Sfx.stopRumble(); $('b-psound').textContent = 'Geluid: ' + (Store.data.sound ? 'aan' : 'uit'); }
+  else if (G.state === 'pause') { setState('play'); Sfx.startRumble(); }
+}
+function toggleSound() { Store.data.sound = !Store.data.sound; Store.save(); Sfx.init(); Sfx.setMuted(!Store.data.sound); refreshTitle(); $('b-psound').textContent = 'Geluid: ' + (Store.data.sound ? 'aan' : 'uit'); }
+function primaryAction() {
+  switch (G.state) {
+    case 'title': startRun('campaign', 0); break;
+    case 'intro': skipIntro(); break;
+    case 'pause': togglePause(); break;
+    case 'card': afterCard(); break;
+    case 'over': retry(); break;
+    case 'finale': startRun('night'); break;
+    case 'scores': case 'credits': setState('title'); break;
+  }
+}
+
+/* ---------------- Invoer: toetsenbord, muis, touch ---------------- */
+function bindInput() {
+  const on = (id, fn) => $(id).addEventListener('click', e => { e.preventDefault(); Sfx.init(); Sfx.resume(); fn(); });
+  on('b-start', () => startRun('campaign', 0));
+  on('b-continue', () => startRun('campaign', Store.data.maxLevel));
+  on('b-night', () => { if (Store.data.nightUnlocked) startRun('night'); });
+  on('b-scores', showScores); on('b-credits', showCredits);
+  on('t-gezel', () => { Store.data.gezel = !Store.data.gezel; Store.save(); refreshTitle(); });
+  on('t-sound', toggleSound); on('b-psound', toggleSound);
+  on('t-daily', () => { Store.data.daily = !Store.data.daily; Store.save(); refreshTitle(); });
+  on('pausebtn', togglePause); on('b-resume', togglePause); on('b-pmenu', toMenu);
+  on('b-next', afterCard);
+  on('b-retry', () => primaryAction());
+  on('b-copy', copyScore); on('b-menu', toMenu); on('b-savename', saveName);
+  on('b-scback', () => setState('title')); on('b-crback', () => setState('title'));
+
+  window.addEventListener('keydown', e => {
+    if (e.repeat && !['ArrowLeft', 'ArrowRight', 'a', 'd', 'A', 'D'].includes(e.key)) return;
+    Sfx.init(); Sfx.resume();
+    switch (e.key) {
+      case 'ArrowLeft': case 'a': case 'A': input.left = true; e.preventDefault(); break;
+      case 'ArrowRight': case 'd': case 'D': input.right = true; e.preventDefault(); break;
+      case ' ': case 'Enter': if (G.state !== 'play') { e.preventDefault(); primaryAction(); } break;
+      case 'p': case 'P': togglePause(); break;
+      case 'm': case 'M': toggleSound(); break;
+      case 'Escape': if (G.state === 'play') togglePause(); else if (G.state !== 'title') toMenu(); break;
+      case '`': if (G.state === 'play') G.debug = !G.debug; break;
+    }
+  });
+  window.addEventListener('keyup', e => {
+    if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') input.left = false;
+    if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') input.right = false;
+  });
+  window.addEventListener('blur', () => { input.left = input.right = false; });
+
+  canvas.addEventListener('pointerdown', e => {
+    Sfx.init(); Sfx.resume(); e.preventDefault();
+    const x = toLogicalX(e);
+    if (e.pointerType === 'mouse') { input.target = x; return; }
+    try { canvas.setPointerCapture(e.pointerId); } catch (err) { /* */ }
+    input.pointerId = e.pointerId; input.lastX = x; input.target = G.grain.x; input.tap = { x: e.clientX, y: e.clientY, t: performance.now() };
+  });
+  canvas.addEventListener('pointermove', e => {
+    const x = toLogicalX(e);
+    if (e.pointerType === 'mouse') { if (G.state === 'play') input.target = x; return; }
+    if (e.pointerId !== input.pointerId) return;
+    const dx = x - input.lastX; input.lastX = x;              // relatief sturen: nooit springen naar de vinger
+    if (input.target === null) input.target = G.grain.x;
+    input.target = clamp(input.target + dx, SHAFT_L, SHAFT_R);
+    if (input.tap && Math.abs(e.clientX - input.tap.x) > 12) input.tap = null;
+  });
+  const up = e => {
+    if (e.pointerType === 'mouse') return;
+    if (e.pointerId !== input.pointerId) return;
+    input.pointerId = null;
+    if (input.tap && performance.now() - input.tap.t < 350) { if (G.state === 'intro') skipIntro(); }
+    input.tap = null;
+  };
+  canvas.addEventListener('pointerup', up); canvas.addEventListener('pointercancel', up);
+  canvas.addEventListener('mouseleave', () => { if (input.pointerId === null) input.target = null; });
+  document.addEventListener('touchmove', e => { if (e.cancelable) e.preventDefault(); }, { passive: false });
+  canvas.addEventListener('contextmenu', e => e.preventDefault());
+
+  window.addEventListener('resize', resize);
+  if (window.visualViewport) window.visualViewport.addEventListener('resize', resize);
+  document.addEventListener('visibilitychange', () => { if (document.hidden) { if (G.state === 'play') togglePause(); } else Sfx.resume(); });
+}
+
+/* ---------------- Hoofdlus: vaste stap met accumulator ---------------- */
+let last = 0, acc = 0;
+function frame(now) {
+  requestAnimationFrame(frame);
+  if (!last) last = now;
+  let dt = Math.min(CONFIG.MAX_DT, (now - last) / 1000); last = now;
+  if (G.state === 'play') {
+    acc += dt; let n = 0;
+    while (acc >= CONFIG.STEP && n < CONFIG.MAX_SUBSTEPS) { stepPlay(CONFIG.STEP); acc -= CONFIG.STEP; n++; }
+    if (n === CONFIG.MAX_SUBSTEPS) acc = 0;
+  } else if (G.state === 'intro') {
+    G.intro.t += dt; if (G.intro.t >= CONFIG.INTRO_ROLL + CONFIG.INTRO_TEXT) beginPlay();
+  } else { acc = 0; }
+  render(dt);
+}
+function start(saved) {
+  Store.load();
+  if (saved && saved.state) { /* hot-reload: alleen voorkeuren hergebruiken, run opnieuw vanaf titel */ }
+  bindInput(); resize(); setState('title');
+  if (window.claude && window.claude.hot && typeof window.claude.hot.snapshot === 'function') { try { window.claude.hot.snapshot(() => ({ state: G.state, mode: G.mode, levelIdx: G.levelIdx, score: G.score })); } catch (e) { /* */ } }
+  requestAnimationFrame(frame);
+}
+(window.claude && window.claude.hot && window.claude.hot.ready) ? window.claude.hot.ready(start) : start((window.claude && window.claude.hot && window.claude.hot.data) || {});
+</script>
