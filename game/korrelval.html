@@ -161,7 +161,7 @@ textarea.copy{width:100%;box-sizing:border-box;font:600 13px/1.35 var(--ui);back
       <p class="sect-h">Nachtploeg <small id="nightNote">eindeloos, één korrel</small></p>
       <div class="row"><button class="btn" id="bDaily" type="button">Korrel van de dag<small>iedereen dezelfde schacht</small></button><button class="btn" id="bFree" type="button">Vrije dienst</button></div>
     </div>
-    <div class="row"><button class="btn" id="bGezel" type="button" aria-pressed="false">Gezel-modus</button><button class="btn" id="bSound" type="button" aria-pressed="true">Geluid aan</button></div>
+    <div class="row"><button class="btn" id="bGezel" type="button" aria-pressed="false">Gezel-modus (makkelijk)</button><button class="btn" id="bSound" type="button" aria-pressed="true">Geluid aan</button></div>
     <div class="row"><button class="btn" id="bScores" type="button">Scores</button><button class="btn" id="bAbout" type="button">Over dit spel</button></div>
     <div class="badges" id="titleBadges"></div>
     <p class="hint" id="ctlHint">Sturen met pijltjes, A/D, de muis of je duim. P: pauze, M: geluid.</p>
@@ -203,7 +203,7 @@ textarea.copy{width:100%;box-sizing:border-box;font:600 13px/1.35 var(--ui);back
       <p>Top 5!<br><span class="muted">Jouw letters</span></p>
       <div class="slots" id="slots"></div>
     </div>
-    <div class="easy" id="easyBox" hidden><b>Te moeilijk?</b><p>Probeer de Gezel-modus: ruimere spleten en een tragere val. Je kunt hem op het titelscherm weer uitzetten.</p><button class="btn" id="bEasy" type="button">Probeer de Gezel-modus</button></div>
+    <div class="easy" id="easyBox" hidden><b>Te moeilijk?</b><p>Probeer de Gezel-modus (makkelijk): ruimere spleten en een tragere val. Je kunt hem op het titelscherm weer uitzetten.</p><button class="btn" id="bEasy" type="button">Probeer de Gezel-modus</button></div>
     <button class="btn primary" id="bAgain" type="button" data-primary>Nog een korrel?</button>
     <div class="row"><button class="btn" id="bCopy" type="button">Kopieer score</button><button class="btn" id="bOMenu" type="button">Menu</button></div>
     <textarea class="copy" id="copyBox" rows="3" readonly hidden aria-label="Score om te kopiëren"></textarea>
@@ -1755,7 +1755,7 @@ function toMenu() { startDemo(); }
 function syncSoundButtons() { for (const id of ['bSound', 'bPSound']) { const b = $(id); b.textContent = save.sound ? 'Geluid aan' : 'Geluid uit'; b.setAttribute('aria-pressed', String(save.sound)); } }
 function refreshTitle() {
   const gz = $('bGezel'); gz.setAttribute('aria-pressed', String(save.gezel));
-  gz.innerHTML = `${save.gezel ? 'Gezel: aan' : 'Gezel-modus'}<small>ruimere spleten, tragere val</small>`;
+  gz.innerHTML = `${save.gezel ? 'Gezel-modus: aan' : 'Gezel-modus (makkelijk)'}<small>ruimere spleten, tragere val</small>`;
   syncSoundButtons();
   $('bDaily').disabled = $('bFree').disabled = !save.night;
   const best = save.daily[dateKey()];
