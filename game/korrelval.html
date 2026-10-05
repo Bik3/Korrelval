@@ -107,6 +107,15 @@ h2{font:800 calc(26px*var(--s,1))/1.1 var(--ui);margin:0;letter-spacing:-.01em}
 .slot .btn svg{width:14px;height:14px}
 .slot span{font:800 22px/1.15 var(--ui);width:44px;text-align:center}
 .slot.sel span{color:var(--accent-text);text-decoration:underline;text-underline-offset:4px}
+/* Deel het spel: label boven het linkveld, knop ernaast over twee regels; samen 44 px hoog */
+.share{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:8px;row-gap:3px;align-items:end}
+.share label{grid-column:1;font:800 11px/1.2 var(--ui);letter-spacing:.1em;text-transform:uppercase;color:var(--gold-ink)}
+.card>.share{margin-top:calc(8px*var(--s,1))}
+.share input{grid-column:1;grid-row:2;min-width:0;width:100%;height:28px;box-sizing:border-box;font:600 11px/1 var(--ui);background:var(--card2);color:var(--ink);
+  border:1px solid var(--line);border-radius:2px;padding:0 5px;user-select:text;-webkit-user-select:text;touch-action:auto}
+.share input:focus-visible{outline:3px solid var(--gold);outline-offset:1px}
+.share .btn{grid-column:2;grid-row:1/3;min-height:44px;padding:4px 10px;font-size:calc(13px*var(--s,1))}
+@media (pointer:fine){.share .btn{min-height:38px}.share input{height:22px}}
 textarea.copy{width:100%;box-sizing:border-box;font:600 13px/1.35 var(--ui);background:var(--card2);color:var(--ink);border:1px solid var(--line);padding:8px;resize:none;user-select:text;-webkit-user-select:text}
 .toplist{list-style:none;padding:0;margin:0;counter-reset:n}
 .toplist li{display:flex;gap:10px;align-items:baseline;padding:6px 0;border-bottom:1px dashed var(--line);font:600 14px/1.2 var(--ui);font-variant-numeric:tabular-nums}
@@ -129,7 +138,7 @@ textarea.copy{width:100%;box-sizing:border-box;font:600 13px/1.35 var(--ui);back
   padding:16px;box-sizing:border-box;background:var(--bg);color:var(--ink);text-align:center;font:800 20px/1.25 var(--ui);pointer-events:auto}
 .rotate small{font:600 14px/1.35 var(--ui);color:var(--muted)}
 .rotate[hidden]{display:none}
-@media (max-height:700px){.btn{min-height:44px}}
+@media (max-height:700px){.btn{min-height:44px}#shareRow{display:none}}
 /* lage vensters: Nog een korrel? bovenaan, bon weg */
 @media (max-height:480px){#scrOver .card{display:flex;flex-direction:column;gap:8px}#scrOver .card>*{margin-top:0;flex:none}#bAgain{order:-1}#overBon{display:none}}
 @media (prefers-reduced-motion:reduce){.btn.primary:active{transform:none}}
@@ -145,6 +154,7 @@ textarea.copy{width:100%;box-sizing:border-box;font:600 13px/1.35 var(--ui);back
     <h1 class="logo">Korrel<span>val</span></h1>
     <p class="lead">Je bent één tarwekorrel in een torenhoge meelfabriek. Glip door de spleet tussen de walsen en val door 180 jaar molengeschiedenis.</p>
     <p class="fine top">Fan-made door een stagiair, geen officiële uiting van Royal Koopmans.</p>
+    <div class="share" id="shareRow"><label for="shareUrl">Deel het spel</label><input id="shareUrl" type="text" readonly spellcheck="false" autocomplete="off"><button class="btn" id="bShare" type="button">Kopieer link</button></div>
     <button class="btn primary" id="bStart" type="button" data-primary>It giet oan!</button>
     <div class="chips" id="lvlChips" hidden></div>
     <div class="sect">
@@ -255,6 +265,7 @@ textarea.copy{width:100%;box-sizing:border-box;font:600 13px/1.35 var(--ui);back
 // ============================================================
 // 1. CONFIG: alle tuning-getallen op één plek
 // ============================================================
+const SHARE_URL = 'https://bik3.github.io/Korrelval/'; // openbare link: titelscherm (Deel het spel) en Kopieer score
 const CONFIG = {
   W: 400, H: 720, L: 50, R: 350, GY: 252, HUD: 74,
   dprMax: 2, step: 1 / 120, dtMax: 0.05, maxSub: 6,
@@ -502,8 +513,13 @@ function icon(g, name, x, y, s, col) {
       g.lineWidth = 4.5; g.lineCap = 'butt'; g.arc(0, 0, 7, Math.PI, 0, true); g.moveTo(-7, 0); g.lineTo(-7, -9); g.moveTo(7, 0); g.lineTo(7, -9); g.stroke(); break;
     case 'drop':
       g.moveTo(0, -11); g.bezierCurveTo(4, -4, 8, 0, 8, 4); g.arc(0, 4, 8, 0, Math.PI); g.bezierCurveTo(-8, 0, -4, -4, 0, -11); g.fill(); break;
-    case 'rolls':
-      g.arc(-6, 0, 6, 0, TAU); g.moveTo(12, 0); g.arc(6, 0, 6, 0, TAU); g.fill(); break;
+    case 'rolls': // twee gladde stalen walsen (1920+), elk met een lichte glansband zoals in het spel
+      g.arc(-6.3, 0, 5.7, 0, TAU); g.moveTo(12, 0); g.arc(6.3, 0, 5.7, 0, TAU); g.fill();
+      g.clip(); g.fillStyle = 'rgba(255,255,255,.55)'; g.fillRect(-9.9, -6, 2, 12); g.fillRect(2.7, -6, 2, 12); break;
+    case 'stone': // molensteen (tot 1920): volle steen met donker oog en een glansrand linksboven
+      g.arc(0, 0, 10.5, 0, TAU); g.fill();
+      g.beginPath(); g.strokeStyle = 'rgba(255,255,255,.38)'; g.lineWidth = 2; g.arc(0, 0, 7.6, -2.7, -1.25); g.stroke();
+      g.beginPath(); g.fillStyle = '#161617'; g.arc(0, 0, 3.4, 0, TAU); g.fill(); break;
     case 'sieve':
       g.fillRect(-11, -3, 22, 6); g.fillRect(-11, -9, 2, 6); g.fillRect(9, -9, 2, 6);
       g.clearRect(-8, -1, 2, 2); g.clearRect(-3, -1, 2, 2); g.clearRect(2, -1, 2, 2); g.clearRect(7, -1, 2, 2); break;
@@ -1389,7 +1405,7 @@ function drawHUD(lv) {
   for (let i = 0; i < 6; i++) {
     const x = x0 + i * dx, col = i === active ? '#E78A01' : i < active ? '#CFAB00' : 'rgba(227,225,218,.62)';
     ctx.fillStyle = '#161617'; ctx.beginPath(); ctx.arc(x, yy, 10, 0, TAU); ctx.fill();
-    icon(ctx, STEP_ICO[i], x, yy, i === active ? 15 : 12, col);
+    icon(ctx, lv.old && STEP_ICO[i] === 'rolls' ? 'stone' : STEP_ICO[i], x, yy, i === active ? 15 : 12, col); // oude molens: molensteen, vanaf 1920 walsen
   }
   const name = lv.old && i18nOld[active] ? i18nOld[active] : STEPS[active];
   ctx.font = `800 10.5px ${F_UI}`; ctx.fillStyle = '#E78A01'; ctx.textAlign = 'center';
@@ -1595,17 +1611,18 @@ function shareLine() {
   const head = run.mode === 'night'
     ? `Korrelval Nachtploeg ${dayLabel()}${run.daily ? ' (Korrel van de dag)' : ''}, ${save.name}: ${fmt(kg)} kg bloem, ${fl(run.passed, ' ')}`
     : S.screen === 'done' ? `Korrelval, van ${LEVELS[run.startLvl].year} tot 2026: ${fmt(kg)} kg bloem` : `Korrelval ${lvlCfg().year} ${lvlCfg().short}: ${fmt(kg)} kg bloem`;
-  return `${head}${run.gezel ? ' (Gezel)' : ''}, goed voor circa ${br} broden, ${rank}${uit}`.replace(/, $/, '');
+  return `${head}${run.gezel ? ' (Gezel)' : ''}, goed voor circa ${br} broden, ${rank}${uit}`.replace(/, $/, '') + ` · speel mee: ${SHARE_URL}`;
 }
-async function copyScore(boxId) {
-  const text = shareLine(), box = $(boxId); let ok = false;
+async function copyText(text, box, okMsg, keep) { // keep: tekstveld blijft staan (linkveld op het titelscherm)
+  let ok = false;
   try { if (navigator.clipboard && window.isSecureContext) { await navigator.clipboard.writeText(text); ok = true; } } catch (e) { ok = false; }
   if (!ok) { // terugval voor iframes en iOS: zichtbaar tekstveld, volledig selecteren, oude copy-opdracht
     box.hidden = false; box.value = text;
     try { box.focus(); box.select(); box.setSelectionRange(0, text.length); ok = document.execCommand('copy'); } catch (e) { ok = false; }
   }
-  if (ok) { box.hidden = true; toast('Gekopieerd. Plak de score waar je wilt.'); } else toast('Kopiëren lukte niet: selecteer de tekst.');
+  if (ok) { if (!keep) box.hidden = true; toast(okMsg); } else toast('Kopiëren lukte niet: selecteer de tekst.');
 }
+const copyScore = boxId => copyText(shareLine(), $(boxId), 'Gekopieerd. Plak de score waar je wilt.');
 
 function startDemo() { run = newRun('demo', 0, 20261846); resetWorld(); show('title'); refreshTitle(); }
 function startCampaign(lvl) { run = newRun('camp', lvl || 0, Math.random() * 4294967296); run.prevYear = lvl ? LEVELS[lvl - 1].year : 1800; startLevel(true); }
@@ -1788,6 +1805,9 @@ $('btnPause').onclick = pause;
 $('bNext').onclick = nextLevel;
 $('bCopy').onclick = () => copyScore('copyBox');
 $('bDoneCopy').onclick = () => copyScore('copyBox2');
+$('shareUrl').value = SHARE_URL;
+$('shareUrl').onfocus = e => e.target.select(); // één tik selecteert de hele link
+$('bShare').onclick = () => copyText(SHARE_URL, $('shareUrl'), 'Link gekopieerd.', true);
 $('bDoneNight').onclick = () => startNight(true);
 document.querySelectorAll('canvas[data-ico]').forEach(c => { const g = c.getContext('2d'); icon(g, c.dataset.ico, c.width / 2, c.height / 2, c.width * 0.9, '#CFAB00'); });
 
@@ -1812,7 +1832,7 @@ addEventListener('keydown', e => {
     // Buiten het spel is spatie/Enter altijd de hoofdactie, ook als er nog een met de muis aangeklikte knop focus heeft.
     // Native activatie alleen in het tekstveld, op de hoofdknop zelf, of op een knop die met Tab is gekozen.
     const tg = e.target, tag = tg && tg.tagName;
-    if (tag === 'TEXTAREA' || (tag === 'BUTTON' && (tg.hasAttribute('data-primary') || focusByKey))) return;
+    if (tag === 'TEXTAREA' || tag === 'INPUT' || (tag === 'BUTTON' && (tg.hasAttribute('data-primary') || focusByKey))) return;
     if (S.screen !== 'play') { e.preventDefault(); primary(); }
     return;
   }
