@@ -118,6 +118,8 @@ h2{font:800 calc(26px*var(--s,1))/1.1 var(--ui);margin:0;letter-spacing:-.01em}
 .easy b{display:block;font:800 12px/1.2 var(--ui);letter-spacing:.1em;text-transform:uppercase;color:var(--gold-ink);margin-bottom:3px}
 .easy p{margin:0;font:600 calc(14px*var(--s,1))/1.4 var(--ui)}
 .easy .btn{width:100%;margin-top:calc(8px*var(--s,1));min-height:44px}
+#bookAllAsk:focus{outline:none}
+.easy .btn.pick{background:var(--ink);color:var(--card)}
 #scrOver.tight1 #overBon tr:not(.big){display:none}
 #scrOver.tight2 #overBadges{display:none}
 .picker{display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--card2);padding:8px 10px}
@@ -352,6 +354,12 @@ textarea.copy{width:100%;box-sizing:border-box;font:600 13px/1.35 var(--ui);back
     <h2>Molenboek</h2>
     <p class="muted">De verhalen en alles wat je in de molen tegenkomt, staan hier. Een pagina gaat open zodra je iets voor het eerst ziet.</p>
     <button class="linkbtn" id="bBookAll" type="button">Toon alle pagina's</button>
+    <div class="easy" id="bookAllAsk" role="group" aria-labelledby="bookAllAskH" tabindex="-1" hidden>
+      <b id="bookAllAskH">Alles in één keer?</b>
+      <p>Dan zie je meteen alle zes verhalen en alle uitleg over de molen. Leuker is het om ze onderweg te ontdekken: elk verhaal komt halverwege zijn eigen molen tevoorschijn. Wil je eerst alles lezen, bijvoorbeeld op je eerste werkdag? Dan kan dat gewoon.</p>
+      <button class="btn pick" id="bBookAllNo" type="button">Ik ontdek ze onderweg</button>
+      <button class="btn" id="bBookAllYes" type="button">Ja, toon alles</button>
+    </div>
     <div class="sect newsect" id="bookNewSect" hidden><p class="sect-h">Nieuw sinds de vorige keer <small id="bookCntNew"></small></p><div id="bookNew"></div></div>
     <div class="sect"><p class="sect-h">Tijdperken <small id="bookCntSt"></small></p><div id="bookStories"></div></div>
     <div class="sect"><p class="sect-h">In de molen <small id="bookCntIt"></small></p>
@@ -2370,6 +2378,7 @@ function renderBook() {
   $('bookCntSt').textContent = `${nSt} van ${BOOK_STORY_IDS.length} open`;
   $('bookCntIt').textContent = `${nIt} van ${items.length} open`;
   $('bBookAll').hidden = BOOK_IDS.every(isOpen);
+  $('bookAllAsk').hidden = true;
 }
 // Toon alle pagina's: alles open (blijft bewaard), zonder nieuw-markeringen; handig om eerst te lezen
 function openAllPages() {
@@ -2401,7 +2410,13 @@ $('bAbout').onclick = () => show('about');
 $('bScoresBack').onclick = $('bAboutBack').onclick = () => { show('title'); refreshTitle(); };
 $('bBook').onclick = $('bPBook').onclick = $('bLBook').onclick = $('bOBook').onclick = openBook;
 $('bBookBack').onclick = closeBook;
-$('bBookAll').onclick = openAllPages;
+// Toon alle pagina's: eerst een vriendelijke vraag in de kaart zelf (confirm() werkt niet in de viewer)
+$('bBookAll').onclick = () => {
+  const ask = $('bookAllAsk'); $('bBookAll').hidden = true; ask.hidden = false;
+  try { ask.scrollIntoView({ block: 'nearest', behavior: reduced.matches ? 'auto' : 'smooth' }); ask.focus({ preventScroll: true }); } catch (e) { /* oudere browsers */ }
+};
+$('bBookAllYes').onclick = () => { $('bookAllAsk').hidden = true; openAllPages(); };
+$('bBookAllNo').onclick = () => { $('bookAllAsk').hidden = true; $('bBookAll').hidden = false; try { $('bBookAll').focus({ preventScroll: true }); } catch (e) { /* oudere browsers */ } };
 $('bAgain').onclick = retry;
 $('bEasy').onclick = tryGezel;
 $('bOMenu').onclick = $('bLMenu').onclick = $('bPMenu').onclick = $('bDoneMenu').onclick = toMenu;
@@ -2438,7 +2453,7 @@ addEventListener('keydown', e => {
   }
   if (k === 'ArrowLeft' || k === 'a' || k === 'A') { keys.left = true; if (S.screen === 'play') e.preventDefault(); return; }
   if (k === 'ArrowRight' || k === 'd' || k === 'D') { keys.right = true; if (S.screen === 'play') e.preventDefault(); return; }
-  if (S.screen === 'boek' && k === ' ' && !(e.target && e.target.id === 'bBookAll' && focusByKey)) {
+  if (S.screen === 'boek' && k === ' ' && !(e.target && /^bBookAll(Yes|No)?$/.test(e.target.id) && focusByKey)) {
     e.preventDefault(); const c = bookCard();
     c.scrollBy({ top: c.clientHeight * 0.85 * (e.shiftKey ? -1 : 1), behavior: reduced.matches ? 'auto' : 'smooth' });
     return;
