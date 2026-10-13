@@ -14,6 +14,8 @@ onderzoek-royal-koopmans.md is het bedrijfsprofiel waarop het spel is gebaseerd,
 
 De map onderzoek bevat de zes losse onderzoeken (geschiedenis, bedrijf nu, consumentenmerk, identiteit, nieuws, molenproces) met per feit een bron en een betrouwbaarheid, het rapport over de website van Koopmans, en spelmateriaal.json met quizvragen, weetjes en een lijst van claims die het spel bewust vermijdt.
 
+De map tests bevat nieuwkomer.js, een test die het spel speelt zoals een nieuwe collega. webbeheer.md legt uit hoe het spel op de website van Royal Koopmans komt.
+
 De map ontwerp bevat de zes spelconcepten die zijn bedacht, de drie juryrapporten die Korrelval kozen, de bouwopdracht, de bouwverslagen van de twee onafhankelijke versies, de vergelijking tussen die versies en de test- en tekstrapporten.
 
 korrelval-versie-a.html is de tweede, onafhankelijk gebouwde versie die het in de vergelijking niet haalde. Hij werkt wel en is bewaard voor wie ideeën wil overnemen.
