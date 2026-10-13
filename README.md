@@ -6,7 +6,7 @@ Het spel is één bestand: korrelval.html. Het werkt op een laptop (pijltjes, A/
 
 De speelbare versie staat online als privépagina op https://claude.ai/artifact/2ihMijpJHxtAguUNuEEHQD. Wil je hem zelf hosten, zet het bestand dan in een gewone HTML-pagina met een doctype, head en body eromheen; het bestand begint bewust met alleen een titel omdat de publicatiepagina dat zelf toevoegt.
 
-Het spel is fan-made door een stagiair en geen officiële uiting van Royal Koopmans. Het supermarktmerk Koopmans (bakmixen) is sinds 2000 van Dr. Oetker; dit spel gaat over Royal Koopmans, de meelfabriek die aan bakkers en voedingsindustrie levert.
+Het spel is fan-made door een stagiair. Het logo van Royal Koopmans wordt gebruikt met toestemming. Het supermarktmerk Koopmans (bakmixen) is sinds 2000 van Dr. Oetker; dit spel gaat over Royal Koopmans, de meelfabriek die aan bakkers en voedingsindustrie levert.
 
 ## Wat er verder in deze map staat
 
