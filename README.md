@@ -2,7 +2,7 @@
 
 Korrelval is een browserspel over Royal Koopmans, de meelfabriek in Leeuwarden. Je bent één tarwekorrel die door een torenhoge meelfabriek valt en glipt door de spleet tussen de walsen. De zes levels volgen de echte tijdlijn van het bedrijf: de rosmolen in Holwerd (1846), de stoommeelfabriek in Leeuwarden (1867), de N.V. (1920), het predicaat Koninklijk (1976), de nieuwe molen (2008) en Molen B in het jubileumjaar 2026. Daarna is er een eindeloze Nachtploeg met een "korrel van de dag", zodat collega's dezelfde schacht spelen en scores kunnen vergelijken.
 
-Het spel is één bestand: korrelval.html. Het werkt op een laptop (pijltjes, A/D of de muis) en op een telefoon (sleep met je duim). Het gebruikt alleen Google Fonts van buitenaf, alles verder is in het bestand zelf getekend en gemaakt. Scores worden alleen in je eigen browser bewaard.
+Het spel is één bestand: korrelval.html. Het werkt op een laptop (pijltjes, A/D of de muis) en op een telefoon (sleep met je duim). Het laadt niets van buiten: de lettertypen zitten in het bestand en alles is in het bestand zelf getekend en gemaakt. Scores worden alleen in je eigen browser bewaard.
 
 De speelbare versie staat online als privépagina op https://claude.ai/artifact/2ihMijpJHxtAguUNuEEHQD. Wil je hem zelf hosten, zet het bestand dan in een gewone HTML-pagina met een doctype, head en body eromheen; het bestand begint bewust met alleen een titel omdat de publicatiepagina dat zelf toevoegt.
 

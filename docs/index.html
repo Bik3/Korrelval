@@ -350,8 +350,7 @@ textarea.copy{width:100%;box-sizing:border-box;font:600 13px/1.35 var(--ui);back
     <div class="easy" id="easyBox" hidden><b>Te moeilijk?</b><p>Probeer de Gezel-modus (makkelijk): ruimere spleten en een tragere val. Je kunt hem op het titelscherm weer uitzetten.</p><button class="btn" id="bEasy" type="button">Probeer de Gezel-modus</button></div>
     <p class="tip" id="overTip" hidden>Tip: sleep met je duim over het scherm, de korrel volgt je.</p>
     <button class="btn primary" id="bAgain" type="button" data-primary>Nog een korrel?</button>
-    <div class="row"><button class="btn" id="bCopy" type="button">Kopieer score</button><button class="btn bookbtn" id="bOBook" type="button">Molenboek</button><button class="btn" id="bOMenu" type="button">Menu</button></div>
-    <textarea class="copy" id="copyBox" rows="3" readonly hidden aria-label="Score om te kopiëren"></textarea>
+    <div class="row"><button class="btn bookbtn" id="bOBook" type="button">Molenboek</button><button class="btn" id="bOMenu" type="button">Menu</button></div>
     <p class="fact" id="overFactBox" hidden><b>Wist je dat?</b><span id="overFact"></span></p>
   </div>
 </section>
@@ -366,8 +365,7 @@ textarea.copy{width:100%;box-sizing:border-box;font:600 13px/1.35 var(--ui);back
     <div class="badges" id="doneBadges"></div>
     <p class="fact"><b>Jubileumjaar</b>In het Urban Tarweveld in de Leeuwarder wijk Middelsee groeide in 2026 tarwe gewoon bij de stoplichten.</p>
     <button class="btn primary" id="bDoneNight" type="button" data-primary>Nachtploeg</button>
-    <div class="row"><button class="btn" id="bDoneCopy" type="button">Kopieer score</button><button class="btn" id="bDoneMenu" type="button">Menu</button></div>
-    <textarea class="copy" id="copyBox2" rows="3" readonly hidden aria-label="Score om te kopiëren"></textarea>
+    <div class="row"><button class="btn" id="bDoneMenu" type="button">Menu</button></div>
   </div>
 </section>
 
@@ -438,7 +436,7 @@ textarea.copy{width:100%;box-sizing:border-box;font:600 13px/1.35 var(--ui);back
 // ============================================================
 // 1. CONFIG: alle tuning-getallen op één plek
 // ============================================================
-// Openbare link: titelscherm (Deel het spel) en Kopieer score. Een site die het spel in een iframe zet, kan zijn eigen pagina
+// Openbare link: titelscherm (Deel het spel). Een site die het spel in een iframe zet, kan zijn eigen pagina
 // meegeven met ?share=<url> in de iframe-src. Alleen https en alleen royalkoopmans.com/.nl of het eigen domein van het spel,
 // zodat een vreemde link er via de adresbalk niet in kan; anders blijft de standaardlink staan.
 const SHARE_URL = (() => {
@@ -2436,15 +2434,6 @@ function fillBadgesAll(el, got) {
   for (const b of BADGES) el.appendChild(badgeEl(b, got.has(b.id), !got.has(b.id)));
   el.hidden = false;
 }
-function shareLine() {
-  const kg = run.score, br = fmt(Math.round(kg / 1000 * CONFIG.bread / 10) * 10);
-  const pc = run.total ? Math.round(run.perfects / run.total * 100) : null, uit = pc === null ? '' : `${uitLabel(pc).name}, ${pc}% perfect`;
-  const streak = run.bestStreak > 1 ? `${fl(run.bestStreak, ' ')} op rij zonder botsing, ` : ''; // een reeks van 1 zegt weinig
-  const head = run.mode === 'night'
-    ? `Korrelval Nachtploeg ${dayLabel()}${run.daily ? ' (Korrel van de dag)' : ''}, ${save.name}: ${fmt(kg)} kg bloem, ${fl(run.passed, ' ')}`
-    : S.screen === 'done' ? `Korrelval, van ${LEVELS[run.startLvl].year} tot 2026: ${fmt(kg)} kg bloem` : `Korrelval ${lvlCfg().year} ${lvlCfg().short}: ${fmt(kg)} kg bloem`;
-  return `${head}${run.gezel ? ' (Gezel)' : ''}, goed voor circa ${br} broden, ${streak}${uit}`.replace(/, $/, '') + ` · speel mee: ${SHARE_URL}`;
-}
 async function copyText(text, box, okMsg, keep) { // keep: tekstveld blijft staan (linkveld op het titelscherm)
   let ok = false;
   try { if (navigator.clipboard && window.isSecureContext) { await navigator.clipboard.writeText(text); ok = true; } } catch (e) { ok = false; }
@@ -2454,7 +2443,6 @@ async function copyText(text, box, okMsg, keep) { // keep: tekstveld blijft staa
   }
   if (ok) { if (!keep) box.hidden = true; toast(okMsg); } else toast('Kopiëren lukte niet: selecteer de tekst.');
 }
-const copyScore = boxId => copyText(shareLine(), $(boxId), 'Gekopieerd. Plak de score waar je wilt.');
 
 function startDemo() {
   run = newRun('demo', 0, 20261846); resetWorld(); idleT0 = performance.now(); demoV = 1;
@@ -2542,7 +2530,6 @@ function showDone() {
   $('doneBon').innerHTML = bonRows(run.score) + streakRow(run.bestStreak);
   fillUit($('doneUit'), uitHTML(run.perfects, run.total));
   fillBadgesAll($('doneBadges'), run.badges);
-  $('copyBox2').hidden = true;
   show('done');
 }
 let pickerEntry = null, pickerSlot = 0;
@@ -2552,7 +2539,6 @@ function gameOver() {
   $('overBon').innerHTML = bonRows(run.score) + streakRow(run.bestStreak);
   fillUit($('overUit'), uitHTML(run.perfects, run.total));
   fillBadgesAll($('overBadges'), run.badges);
-  $('copyBox').hidden = true;
   pickerEntry = null; $('picker').hidden = true;
   if (night) {
     const k = dateKey(); if (run.daily) save.daily[k] = Math.max(save.daily[k] || 0, run.score);
@@ -2799,8 +2785,6 @@ const storyLift = e => { if (e.pointerId === storyHeld) storyHeld = null; };
 addEventListener('pointerup', storyLift, true); addEventListener('pointercancel', storyLift, true);
 $('btnPause').onclick = pause;
 $('bNext').onclick = nextLevel;
-$('bCopy').onclick = () => copyScore('copyBox');
-$('bDoneCopy').onclick = () => copyScore('copyBox2');
 $('shareUrl').value = SHARE_URL;
 $('shareUrl').onfocus = e => e.target.select(); // één tik selecteert de hele link
 $('bShare').onclick = () => copyText(SHARE_URL, $('shareUrl'), 'Link gekopieerd.', true);
