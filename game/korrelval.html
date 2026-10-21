@@ -75,13 +75,13 @@ h2{font:800 calc(26px*var(--s,1))/1.1 var(--ui);margin:0;letter-spacing:-.01em}
 .sect{border-top:1px dashed var(--line);padding-top:10px}
 .sect-h{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:8px;font:800 14px/1.2 var(--ui);margin:0 0 8px}
 .sect-h small{font:600 12px/1.2 var(--ui);color:var(--muted);text-align:right}
-.chips{display:grid;grid-template-columns:auto repeat(6,1fr);gap:5px;align-items:center}
-.chips .hint{max-width:4.4em;line-height:1.15}
-.chips .btn{min-height:44px;padding:4px 0;font-size:14px;border-width:1.5px;font-variant-numeric:tabular-nums}
+/* Kies een molen: jaartal met de korte naam eronder, twee per rij */
+.chips{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.chips .btn{flex-direction:column;gap:0;min-height:52px;padding:4px 6px;font-size:calc(17px*var(--s,1));font-variant-numeric:tabular-nums}
 .btn small{display:block;font:600 11px/1.1 var(--ui);opacity:.75;margin-top:2px;text-wrap:balance}
-/* smalle telefoons: label boven de jaarknoppen, zodat elke knop 44 px breed blijft */
-@media (max-width:390px){.chips{grid-template-columns:repeat(6,1fr)}.chips .hint{grid-column:1/-1;max-width:none}.row>.btn{padding-left:5px;padding-right:5px}}
-#bGezel,#bDaily,.bookbtn{flex-direction:column;gap:0}
+/* smalle telefoons: knoppen naast elkaar krijgen minder zijmarge */
+@media (max-width:390px){.row>.btn{padding-left:5px;padding-right:5px}}
+#bGezel,.subbtn,.bookbtn{flex-direction:column;gap:0}
 .hint{font:600 12px/1.4 var(--ui);color:var(--muted);margin:0}
 .card>.hint{margin-top:10px}
 .fine{font:600 11.5px/1.4 var(--ui);color:var(--muted);margin:0;border-top:1px solid var(--line);padding-top:8px}
@@ -175,11 +175,16 @@ textarea.copy{width:100%;box-sizing:border-box;font:600 13px/1.35 var(--ui);back
 .nb-lock{background:var(--gold-soft);padding:calc(10px*var(--s,1)) 12px;border-left:4px solid var(--gold);font:700 calc(14px*var(--s,1))/1.4 var(--ui);margin:calc(12px*var(--s,1)) 0 0}
 .brief .linkbtn{text-align:center}
 .brief .btn.primary{margin-bottom:0}
-/* Titelscherm: klein linkje Wat is dit? naast het kopje Nachtploeg; het tikvlak is hoger dan de tekst */
-.sect-h>span{white-space:nowrap}
-.minilink{appearance:none;-webkit-appearance:none;background:none;border:0;margin:-14px 0 -14px 4px;padding:14px 4px;color:var(--accent-text);
-  font:800 12px/1.2 var(--ui);text-decoration:underline;text-underline-offset:3px;cursor:pointer;touch-action:manipulation}
-.minilink:focus-visible{outline:3px solid var(--focus);outline-offset:-8px}
+/* Titelscherm: rustig. Hoofdknop, Nachtploeg en Molenboek naast elkaar, kleine tekstlinks onderaan */
+.title .lead{text-wrap:pretty}
+.title .gz-note{text-align:center;margin-top:calc(6px*var(--s,1))}
+.linkbtn.mid{text-align:center;margin-top:calc(2px*var(--s,1))}
+.duo>.btn{flex:1 1 0;min-height:calc(54px*var(--s,1))}
+.links{display:flex;flex-wrap:wrap;justify-content:center;column-gap:4px}
+.links .linkbtn{width:auto;flex:1 1 auto;text-align:center;padding:6px 4px;color:var(--ink);font-weight:700;text-decoration-color:var(--line)}
+.links .linkbtn:hover{text-decoration-color:currentColor}
+.title .fine{text-align:center}
+.btn.wide{display:flex;width:100%}
 /* Nachtploeg nog dicht: knoppen zien er dicht uit, maar een tik opent het briefje. Alleen tekst en rand gedimd, niet de hele knop,
    zodat de focusring vol blijft. */
 .btn[aria-disabled="true"]{color:var(--muted);color:color-mix(in srgb,var(--ink) 42%,var(--card));border-color:currentColor}
@@ -226,13 +231,36 @@ textarea.copy{width:100%;box-sizing:border-box;font:600 13px/1.35 var(--ui);back
 .hudbtn:focus-visible{outline:3px solid var(--hud-focus)}
 .sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;border:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap}
 .card h1[tabindex="-1"]:focus,.card h2[tabindex="-1"]:focus{outline:none} /* touch: de kop krijgt de focus voor de schermlezer, zonder ring */
-.toast{position:absolute;left:50%;bottom:max(24px,env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--card);
+.toast{position:absolute;z-index:3;left:50%;bottom:max(24px,env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--card);
   font:800 14px/1.2 var(--ui);padding:10px 14px;border-radius:3px;pointer-events:none;max-width:calc(100% - 32px);box-sizing:border-box;text-align:center}
+/* de melding valt niet achter de plakkende Terug-knop of over de deelregel van Over dit spel, en in de intro niet over het paneel */
+#scrAbout:not([hidden])~#toast{top:max(16px,env(safe-area-inset-top,0px));bottom:auto}
+#scrIntro:not([hidden])~#toast{top:max(68px,calc(env(safe-area-inset-top,0px) + 64px));bottom:auto}
 .rotate{position:absolute;inset:0;z-index:5;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;
   padding:16px;box-sizing:border-box;background:var(--bg);color:var(--ink);text-align:center;font:800 20px/1.25 var(--ui);pointer-events:auto}
 .rotate small{font:600 14px/1.35 var(--ui);color:var(--muted)}
 .rotate[hidden]{display:none}
-@media (max-height:700px){.btn{min-height:44px}#shareRow{display:none}
+/* Intro: de vlucht van buiten de maaltoren in. Het beeld (canvas) vult het hele scherm; onderaan een ondertitelpaneel
+   in de vorm van een kaart, rechtsboven altijd een klein Overslaan. */
+#scrIntro{display:block;padding:0;pointer-events:auto;background:#1b1816;touch-action:none}
+#introCv{position:absolute;left:0;top:0;width:100%;height:100%;display:block;cursor:pointer}
+.intro-panel{position:absolute;left:0;right:0;bottom:0;margin:0 auto;max-width:560px;border-radius:3px 3px 0 0;
+  padding:calc(13px*var(--s,1)) 16px max(calc(8px*var(--s,1)),env(safe-area-inset-bottom,0px))}
+.card.intro-panel>*+*{margin-top:calc(10px*var(--s,1))}
+@media (min-width:600px) and (min-height:560px){.intro-panel{bottom:16px;border-radius:3px}}
+.intro-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.intro-dots{display:flex;gap:7px;margin:0;flex:none}
+.intro-dots i{display:block;width:9px;height:9px;border-radius:50%;background:transparent;box-shadow:inset 0 0 0 1.5px var(--muted)}
+.intro-dots i.on{background:var(--accent-text);box-shadow:none}
+.intro-text{font:600 calc(15px*var(--s,1))/1.45 var(--ui);margin:calc(8px*var(--s,1)) 0 0;text-wrap:pretty}
+.intro-panel .btn.primary{margin-bottom:0}
+.intro-panel .linkbtn{text-align:center;margin-top:calc(4px*var(--s,1))}
+.intro-skip{position:absolute;top:max(12px,env(safe-area-inset-top,0px));right:max(12px,env(safe-area-inset-right,0px));min-height:44px;min-width:44px;
+  padding:0 16px;border:0;border-radius:22px;background:rgba(29,30,31,.88);color:#F7F7F7;font:800 14px/1 var(--ui);cursor:pointer;touch-action:manipulation}
+.intro-skip:hover{background:rgba(29,30,31,.96)}
+.intro-skip:focus-visible{outline:3px solid #CFAB00;outline-offset:0;box-shadow:0 0 0 6px #1D1E1F} /* goud met een donkere band: zichtbaar op lucht en wolk */
+.veil{position:absolute;inset:0;z-index:4;background:#0b0c0d;pointer-events:none}
+@media (max-height:700px){.btn{min-height:44px}
   /* weegbon op kleine telefoons: de zakkenregel (staat ook op het jaarverslag) wijkt voor de langste reeks */
   #lvBon tr.opt{display:none}#lvBon td{padding-top:calc(4px*var(--s,1));padding-bottom:calc(4px*var(--s,1))}}
 /* lage vensters: Nog een korrel? bovenaan, bon weg */
@@ -241,27 +269,55 @@ textarea.copy{width:100%;box-sizing:border-box;font:600 13px/1.35 var(--ui);back
 </style>
 <div id="app">
 <canvas id="lb" aria-hidden="true"></canvas>
-<canvas id="cv" aria-label="Speelveld: een tarwekorrel valt door de meelfabriek"></canvas>
+<canvas id="cv" role="img" aria-label="Speelveld: een tarwekorrel valt door de meelfabriek"></canvas>
 <button id="btnPause" class="hudbtn" type="button" aria-label="Pauze" hidden><svg viewBox="0 0 10 10" aria-hidden="true"><rect x="1.5" y="1" width="2.4" height="8" fill="currentColor"/><rect x="6.1" y="1" width="2.4" height="8" fill="currentColor"/></svg></button>
 
 <section id="scrTitle" class="screen" aria-label="Titelscherm">
-  <div class="card">
+  <div class="card title">
     <div class="brand"><svg class="rk-logo" focusable="false" role="img" aria-label="koopmans" viewBox="0 0 426 147" version="1.1" xmlns="http://www.w3.org/2000/svg"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g><path d="M150.3,104.8 C155.3,104.8 155.4,102.9 155.4,101.9 L155.4,79.8 C155.4,79 155.4,77.2 150.3,77.2 C145.2,77.2 145,78.5 145,79.7 L145,101.9 C145,103.1 145.5,104.8 150.3,104.8 Z"></path><path d="M188.8,103.9 C193.8,103.9 192.9,98.9 192.9,98.9 L192.9,81.7 C192.9,80.9 192.7,78.6 188.8,78.6 C184.9,78.6 183.1,79.4 183.1,83 L183.1,100.5 C183.1,103.1 184.4,103.9 188.8,103.9 Z"></path><rect x="198.6" y="46.5" width="30.3" height="5.9"></rect><path d="M194.1,41.2 L201.5,41.2 L201.5,33.5 C201.5,33.5 200.8,27.8 195.2,27.8 C191,27.8 188.3,31.6 188.3,34.5 C188.3,37.8 191.2,41.2 194.1,41.2 Z"></path><path d="M239.4,34.5 C239.4,31.6 236.7,27.8 232.5,27.8 C226.8,27.8 226.2,33.5 226.2,33.5 L226.2,41.2 L233.6,41.2 C236.6,41.2 239.4,37.8 239.4,34.5 Z"></path><path d="M286.6,93 C284.9,92.3 282.3,92.3 281.2,92.8 C280.1,93.2 279.2,94.8 279.2,95.9 L279.2,101.4 C279.2,103.1 279.8,103.6 280.9,104 C282,104.4 283.7,104.6 285.6,104.2 C287.6,103.9 288,102.1 288.1,101.4 C288.2,100.7 288,96.1 288,94.8 C288,94.8 287.6,93.4 286.6,93 Z"></path><path d="M220.3,29.3 C220.3,24.7 216.9,23 213.6,23 C210.3,23 207.4,25.2 207.4,29.3 L207.4,41.2 L220.3,41.2 L220.3,29.3 L220.3,29.3 Z"></path><path d="M112.5,104.8 C117.5,104.8 117.6,102.9 117.6,101.9 L117.6,79.8 C117.6,79 117.6,77.2 112.5,77.2 C107.4,77.2 107.2,78.5 107.2,79.7 L107.2,101.9 C107.2,103.1 107.6,104.8 112.5,104.8 Z"></path><path d="M213.7,8.4 C216,8.4 217.9,6.5 217.9,4.2 C217.9,1.9 216,0 213.7,0 C211.4,0 209.5,1.9 209.5,4.2 C209.5,6.5 211.4,8.4 213.7,8.4 Z" fill="#CFAB00" fill-rule="nonzero"></path><path d="M215.7,11.9 C215.7,14.2 217.6,16.1 219.9,16.1 C222.2,16.1 224.1,14.2 224.1,11.9 C224.1,9.6 222.2,7.7 219.9,7.7 C217.5,7.7 215.7,9.6 215.7,11.9 Z" fill="#CFAB00" fill-rule="nonzero"></path><path d="M207.5,16.1 C209.8,16.1 211.7,14.2 211.7,11.9 C211.7,9.6 209.8,7.7 207.5,7.7 C205.2,7.7 203.3,9.6 203.3,11.9 C203.3,14.3 205.2,16.1 207.5,16.1 Z" fill="#CFAB00" fill-rule="nonzero"></path><polygon fill="currentColor" fill-rule="nonzero" points="68.9 93.3 82.6 113.1 96.7 113.1 80.1 88.9 97.4 68.4 82.8 68.4 69.2 84.8 69.2 51 57.5 51 57.5 113.1 68.9 113.1"></polygon><path d="M95.8,104.8 C95.8,108.4 96.2,114.1 112.2,114.1 C128.6,114.1 128.8,106.8 128.8,104.8 L128.8,76.6 C128.8,74.9 129.2,67.9 112,67.9 C96.1,67.9 95.7,76.8 95.7,76.8 L95.7,104.8 L95.8,104.8 Z M107.2,79.7 C107.2,78.5 107.4,77.2 112.5,77.2 C117.6,77.2 117.6,79.1 117.6,79.8 L117.6,101.9 C117.6,102.9 117.5,104.8 112.5,104.8 C107.6,104.8 107.2,103.1 107.2,101.9 L107.2,79.7 Z" fill="currentColor" fill-rule="nonzero"></path><path d="M150.1,114 C166.5,114 166.7,106.7 166.7,104.7 L166.7,76.6 C166.7,74.9 167.1,67.9 149.9,67.9 C134,67.9 133.6,76.8 133.6,76.8 L133.6,104.7 C133.7,108.4 134.1,114 150.1,114 Z M145,79.7 C145,78.5 145.2,77.2 150.3,77.2 C155.4,77.2 155.4,79.1 155.4,79.8 L155.4,101.9 C155.4,102.9 155.3,104.8 150.3,104.8 C145.4,104.8 145,103.1 145,101.9 L145,79.7 Z" fill="currentColor" fill-rule="nonzero"></path><path d="M183.1,108.8 C185.5,113.4 189.6,113.8 194,113.8 C200.5,113.7 204.9,110.2 204.8,103.9 C204.7,97 204.8,82.6 204.8,76.7 C204.8,70.7 199.8,68.4 194,68.4 C188.2,68.4 185.7,70.4 183.1,72.8 L183.1,68.4 L171.5,68.4 L171.5,130.9 L183.1,130.9 L183.1,108.8 Z M183.1,83 C183.1,79.4 185,78.6 188.8,78.6 C192.7,78.6 192.9,80.9 192.9,81.7 L192.9,98.9 C192.9,98.9 193.8,103.9 188.8,103.9 C184.4,103.9 183.1,103.1 183.1,100.6 L183.1,83 Z" fill="currentColor" fill-rule="nonzero"></path><path d="M242.3,74.2 C241.2,71.6 238.9,67.9 232,67.9 C225.2,67.9 221.4,72.9 221.4,72.9 L221.4,68.4 L209.6,68.4 L209.6,113.2 L221.4,113.2 L221.4,83 C221.4,78.9 224.6,78.6 226,78.6 C227.4,78.6 230.4,78.9 230.4,83 L230.4,113.1 L242.3,113.1 L242.3,83 C242.3,78.5 245.9,78.4 247.2,78.4 C248.4,78.4 251.5,78.6 251.5,83 L251.5,113.1 L263.3,113.1 L263.3,76.4 C263.3,75.1 263.6,68 252.7,68 C245.7,68 242.3,74.2 242.3,74.2 Z" fill="currentColor" fill-rule="nonzero"></path><path d="M284.7,85.6 C283,85.3 279.5,84.6 274,85.9 C267.7,87.4 267.799905,93.9 267.799905,93.9 L267.799905,105.7 C267.799905,110.4 272.3,113.6 275.2,113.6 L280,113.6 C284.9,113.6 288.2,108 288.2,108 L288.2,113.1 L299.1,113.1 L299.1,79 C299.1,73.7 295.1,70.4 292.8,69.3 C290.5,68.2 285.7,67.6 282.1,67.6 C278.5,67.6 276.4,67.4 268.1,69.7 L268.1,80.6 C269.5,79.3 274.8,77.2 279.5,77.2 C284.1,77.2 287.9,78.7 287.9,80.9 L287.9,87.3 C288,87.3 286.4,85.9 284.7,85.6 Z M288,94.8 C288,96.1 288.2,100.8 288.1,101.4 C288,102.1 287.5,103.8 285.6,104.2 C283.6,104.5 282,104.4 280.9,104 C279.8,103.6 279.2,103 279.2,101.4 L279.2,95.9 C279.2,94.8 280.1,93.3 281.2,92.8 C282.3,92.4 285,92.4 286.6,93 C287.6,93.4 288,94.8 288,94.8 Z" fill="currentColor" fill-rule="nonzero"></path><path d="M316,81.7 C316,78.1 319.5,78.2 320.1,78.2 C320.8,78.2 324.8,78.5 324.8,81.5 L324.8,113.1 L336.7,113.1 C336.7,113.1 336.6,79.1 336.7,76.3 C336.8,73.5 335.4,67.5 325.6,67.8 C322,67.9 317.5,68.8 316,72.9 L316,68.3 L304,68.3 L304,113.1 L316,113.1 L316,81.7 Z" fill="currentColor" fill-rule="nonzero"></path><path d="M347.6,94.6 C349.9,94.8 353.8,94.4 356.5,94.6 C359.1,94.8 359,96.9 359.2,97.3 C359.4,97.7 359.1,100.4 359.1,100.4 C359.1,100.4 359,103.4 356.5,103.5 C348,104.1 341.6,102 341.6,102 L341.7,111.3 C341.7,111.3 347.8,113.3 355.3,113.8 C357.8,114 358.1,113.7 360.9,113.6 C362.5,113.5 364.9,112.9 367.5,110.5 C369.8,108.4 370.3,103.7 370.4,102.9 C370.6,101 370.5,94.6 370.3,93 C370.2,91.4 369.7,88.6 368.5,87.2 C367.3,85.8 364.9,85.4 364.3,85.3 C363.6,85.2 358.4,85.3 355.6,85.4 C352.8,85.5 352.6,84.3 352.6,84.3 C352.6,84.3 352.2,81.4 352.7,79.3 C352.7,79.2 352.4,77.3 357.4,77.3 C362.4,77.3 367.7,78.8 367.7,78.8 L367.7,69.5 C366.2,68.8 364.6,68.6 362.6,68.2 C360.6,67.8 353.6,67.7 349.1,68.3 C345.3,68.8 341.9,72.8 341.6,75.1 C341.3,77.7 340.9,81 341.3,87.7 C341.6,94.4 345.2,94.4 347.6,94.6 Z" fill="currentColor" fill-rule="nonzero"></path><path d="M192.5,46.4 L192.5,57.9 L234.7,57.9 L234.7,46.4 C238,46.4 245.3,41.5 245.3,34.5 C245.3,26.3 237.4,21.7 232.7,21.7 C228.1,21.7 225.2,24.5 225.2,24.5 C224,21.7 219.9,17 213.4,17 C206.9,17 203.8,21.6 202.2,24.6 C202.2,24.6 200.5,21.9 194.6,21.9 C188.8,21.9 182.2,27.7 182.2,34.2 C182.3,40.7 187.6,46.4 192.5,46.4 Z M226.2,33.5 C226.2,33.5 226.9,27.8 232.5,27.8 C236.7,27.8 239.4,31.6 239.4,34.5 C239.4,37.8 236.5,41.2 233.6,41.2 L226.2,41.2 L226.2,33.5 Z M207.4,29.3 C207.4,25.2 210.3,23 213.6,23 C216.9,23 220.3,24.7 220.3,29.3 L220.3,41.2 L207.4,41.2 L207.4,29.3 L207.4,29.3 Z M228.9,46.5 L228.9,52.4 L198.6,52.4 L198.6,46.5 L228.9,46.5 Z M195.2,27.8 C200.9,27.8 201.5,33.5 201.5,33.5 L201.5,41.2 L194.1,41.2 C191.2,41.2 188.3,37.8 188.3,34.5 C188.3,31.6 191,27.8 195.2,27.8 Z" fill="#CFAB00" fill-rule="nonzero"></path><path d="M395.8,124.6 L395.8,132.5 C395.8,137.9 391.9,142 386.4,142 L38.1,142 C31.8,142 28.3,138 28.3,132.5 L28.3,124.6 L0,124.6 L0,128.6 L23.9,128.6 L23.9,132.6 C23.9,140.3 28.3,146.1 38,146.1 L386.6,146.1 C395.9,146.1 399.8,139.2 399.8,132.6 L399.8,128.6 L425.2,128.6 L425.2,124.6 L395.8,124.6 Z" fill="#CFAB00" fill-rule="nonzero"></path></g></g></svg></div>
     <p class="kicker"><canvas data-ico="aar" width="52" height="52"></canvas><span>Van rosmolen tot Molen B</span></p>
     <h1 class="logo">Korrel<wbr><span>val</span></h1>
-    <p class="lead">Je bent één tarwekorrel in een torenhoge meelfabriek. Glip door de spleet tussen de walsen en val door 180 jaar molengeschiedenis.</p>
-    <p class="fine top">Fan-made door een stagiair.</p>
-    <div class="share" id="shareRow"><label for="shareUrl">Deel het spel</label><input id="shareUrl" type="text" readonly spellcheck="false" autocomplete="off"><button class="btn" id="bShare" type="button">Kopieer link</button></div>
+    <p class="lead">Je bent één tarwekorrel. Glip door de walsen en val door 180 jaar molengeschiedenis.</p>
     <button class="btn primary" id="bStart" type="button" data-primary>It giet oan!</button>
-    <div class="chips" id="lvlChips" hidden></div>
-    <div class="sect">
-      <p class="sect-h"><span>Nachtploeg<button class="minilink" id="bNightWhat" type="button">Wat is dit?</button></span> <small id="nightNote">eindeloos, één korrel</small></p>
-      <div class="row"><button class="btn" id="bDaily" type="button">Korrel van de dag<small>iedereen dezelfde schacht</small></button><button class="btn" id="bFree" type="button">Vrije dienst</button></div>
+    <p class="hint gz-note" id="gezelNote" hidden>Gezel-modus staat aan</p>
+    <button class="linkbtn mid" id="bPick" type="button" hidden>Kies een molen</button>
+    <div class="row duo"><button class="btn subbtn" id="bNight" type="button">Nachtploeg</button><button class="btn bookbtn" id="bBook" type="button">Molenboek</button></div>
+    <div class="links"><button class="linkbtn" id="bScores" type="button">Scores</button><button class="linkbtn" id="bSettings" type="button">Instellingen</button><button class="linkbtn" id="bAbout" type="button">Over dit spel</button></div>
+    <p class="fine">Fan-made door een stagiair.</p>
+  </div>
+</section>
+
+<section id="scrIntro" class="screen" aria-label="Intro" hidden>
+  <canvas id="introCv" aria-hidden="true"></canvas>
+  <div class="card intro-panel" id="introPanel">
+    <div id="introSay">
+      <div class="intro-head"><h2 class="kicker" id="introKicker"></h2><p class="intro-dots" id="introDots"><span class="sr" id="introStep"></span><i></i><i></i><i></i></p></div>
+      <p class="intro-text" id="introText"></p>
+      <p class="sr" id="introDesc"></p>
     </div>
-    <div class="row"><button class="btn" id="bGezel" type="button" aria-pressed="false">Gezel-modus (makkelijk)</button><button class="btn" id="bSound" type="button">Geluid: uit</button></div>
-    <div class="row"><button class="btn" id="bScores" type="button">Scores</button><button class="btn bookbtn" id="bBook" type="button">Molenboek</button><button class="btn" id="bAbout" type="button">Over dit spel</button></div>
-    <div class="badges" id="titleBadges"></div>
-    <p class="hint" id="ctlHint">Sturen met pijltjes, A/D, de muis of je duim. P: pauze, M: geluid.</p>
+    <button class="btn primary" id="bIntroNext" type="button" data-primary>Verder</button>
+    <button class="linkbtn" id="bIntroSkip" type="button">Overslaan</button>
+  </div>
+  <button class="intro-skip" id="bIntroSkipTop" type="button">Overslaan</button>
+</section>
+
+<section id="scrPick" class="screen" aria-label="Kies een molen" hidden>
+  <div class="card">
+    <h2>Kies een molen</h2>
+    <p class="muted">Begin bij een molen die je al hebt bereikt.</p>
+    <div class="chips" id="lvlChips"></div>
+    <button class="btn primary" id="bPickBack" type="button" data-primary>Terug</button>
+  </div>
+</section>
+
+<section id="scrSettings" class="screen" aria-label="Instellingen" hidden>
+  <div class="card">
+    <h2>Instellingen</h2>
+    <button class="btn wide" id="bGezel" type="button" aria-pressed="false">Gezel-modus (makkelijk)</button>
+    <button class="btn wide" id="bSound" type="button">Geluid: uit</button>
+    <p class="hint" id="ctlHint">Sturen met de pijltjes, A/D of de muis. P: pauze, M: geluid, Esc: menu.</p>
+    <p class="hint" id="ctlHintTouch" hidden>Sturen: sleep met je duim over het scherm, de korrel volgt je.</p>
+    <button class="btn primary" id="bSettingsBack" type="button" data-primary>Terug</button>
   </div>
 </section>
 
@@ -327,7 +383,7 @@ textarea.copy{width:100%;box-sizing:border-box;font:600 13px/1.35 var(--ui);back
       <p>Top 5!<br><span class="muted">Jouw letters</span></p>
       <div class="slots" id="slots"></div>
     </div>
-    <div class="easy" id="easyBox" hidden><b>Te moeilijk?</b><p>Probeer de Gezel-modus (makkelijk): ruimere spleten en een tragere val. Je kunt hem op het titelscherm weer uitzetten.</p><button class="btn" id="bEasy" type="button">Probeer de Gezel-modus</button></div>
+    <div class="easy" id="easyBox" hidden><b>Te moeilijk?</b><p>Probeer de Gezel-modus (makkelijk): ruimere spleten en een tragere val. Je kunt hem bij Instellingen weer uitzetten.</p><button class="btn" id="bEasy" type="button">Probeer de Gezel-modus</button></div>
     <p class="tip" id="overTip" hidden>Tip: sleep met je duim over het scherm, de korrel volgt je.</p>
     <button class="btn primary" id="bAgain" type="button" data-primary>Nog een korrel?</button>
     <div class="row"><button class="btn bookbtn" id="bOBook" type="button">Molenboek</button><button class="btn" id="bOMenu" type="button">Menu</button></div>
@@ -367,6 +423,7 @@ textarea.copy{width:100%;box-sizing:border-box;font:600 13px/1.35 var(--ui);back
     <h2>Over dit spel</h2>
     <p>Fan-made door een stagiair.</p>
     <p>Het supermarktmerk Koopmans, met de bakmixen, is sinds 2000 van Dr. Oetker. Dit spel gaat over Royal Koopmans, de meelfabriek in Leeuwarden die aan bakkers en voedingsindustrie levert.</p>
+    <button class="linkbtn" id="bIntroAgain" type="button">Bekijk de intro opnieuw</button>
     <h3>Het spel</h3>
     <p>Stuur je korrel door de spleet tussen de walsen. Wie midden door de spleet valt, haalt een perfecte passage. Stenen, bouten en moederkoren haalt de reiniging uit het graan: stenen en metaal mogen nooit op de walsen.</p>
     <p>Elke verdieping levert bloem op, en een perfecte passage levert extra op. Meer bloem krijg je voor bonussen die je onderweg pakt, de gouden silo, de korrels die je overhoudt en je precisie. Na afloop zie je ook je langste reeks verdiepingen zonder botsing.</p>
@@ -381,6 +438,7 @@ textarea.copy{width:100%;box-sizing:border-box;font:600 13px/1.35 var(--ui);back
     <p>Sturen kan met de pijltjes of A/D, de muis of je duim: sleep over het scherm en de korrel volgt je. Spatie of Enter: start en verder. In het Molenboek blader je met spatie. P: pauze. M: geluid. Esc: menu.</p>
     <p class="hint">Gemaakt met Canvas en WebAudio, zonder plaatjes of geluidsbestanden.</p>
     <p class="hint">Lettertypen: Nunito en La Belle Aurore, SIL Open Font License.</p>
+    <div class="share" id="shareRow"><label for="shareUrl">Deel het spel</label><input id="shareUrl" type="text" readonly spellcheck="false" autocomplete="off"><button class="btn" id="bShare" type="button">Kopieer link</button></div>
     <button class="btn primary" id="bAboutBack" type="button" data-primary>Terug</button>
   </div>
 </section>
@@ -406,6 +464,7 @@ textarea.copy{width:100%;box-sizing:border-box;font:600 13px/1.35 var(--ui);back
     <button class="btn primary" id="bBookBack" type="button" data-primary>Terug</button>
   </div>
 </section>
+<div id="introVeil" class="veil" aria-hidden="true" hidden></div>
 <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
 <div id="sr" class="sr" aria-live="polite"></div><!-- schermlezer: wat alleen op het canvas staat (introband, korrel kwijt, zone); onzichtbaar -->
 <div id="rotate" class="rotate" role="alert" hidden>Draai je telefoon rechtop<small>Korrelval speelt staand. Een lopend spel gaat op pauze.</small></div>
@@ -416,7 +475,7 @@ textarea.copy{width:100%;box-sizing:border-box;font:600 13px/1.35 var(--ui);back
 // ============================================================
 // 1. CONFIG: alle tuning-getallen op één plek
 // ============================================================
-// Openbare link: titelscherm (Deel het spel). Een site die het spel in een iframe zet, kan zijn eigen pagina
+// Openbare link: Over dit spel (Deel het spel). Een site die het spel in een iframe zet, kan zijn eigen pagina
 // meegeven met ?share=<url> in de iframe-src. Alleen https en alleen royalkoopmans.com/.nl of het eigen domein van het spel,
 // zodat een vreemde link er via de adresbalk niet in kan; anders blijft de standaardlink staan.
 const SHARE_URL = (() => {
@@ -670,10 +729,12 @@ const isCoarse = () => { try { return matchMedia('(pointer: coarse)').matches; }
 // ============================================================
 const SAVE_KEY = 'korrelval-b-v2'; // v2: uitmalingslabels hebben een nieuwe betekenis (precisie)
 // book: open pagina's van het Molenboek (id: 1); bookNew: open maar nog niet bekeken. Oude opslag zonder deze velden blijft werken.
-// nightBrief: het dienstbriefje van de Nachtploeg is al eens (open) getoond; daarna starten de Nachtploeg-knoppen meteen.
+// introSeen: de intro (vlucht de maaltoren in) is gezien of overgeslagen. Iedereen krijgt hem één keer, ook wie al eerder speelde.
+// nightBrief: het dienstbriefje van de Nachtploeg is al eens (open) getoond; daarna start de Nachtploeg-knop op het jaarverslag meteen.
+// De knop op het titelscherm opent het briefje altijd.
 // sound: bij een eerste bezoek (nog niets opgeslagen) staat het geluid uit, zodat tien telefoons in één zaal niet tegelijk piepen;
 // de knop werkt gewoon en de keuze wordt bewaard. Wie al opslag heeft, houdt wat daarin staat.
-const save = { best: 0, maxLvl: 0, night: false, nightBrief: false, top: [], sound: false, gezel: false, badges: {}, labels: {}, name: 'KOR', daily: {}, campDone: false, book: {}, bookNew: {} };
+const save = { best: 0, maxLvl: 0, night: false, nightBrief: false, top: [], sound: false, gezel: false, badges: {}, labels: {}, name: 'KOR', daily: {}, campDone: false, book: {}, bookNew: {}, introSeen: false };
 const isMap = o => !!o && typeof o === 'object' && !Array.isArray(o);
 function loadSave() {
   try { const raw = localStorage.getItem(SAVE_KEY); if (raw) Object.assign(save, JSON.parse(raw)); } catch (e) { /* privévenster: gewoon doorspelen */ }
@@ -708,7 +769,7 @@ function frameSample(ms) {
   fps.n++; fps.sum += ms;
   if (fps.sum < 1000) return;
   const avg = fps.sum / fps.n, cur = Math.min(window.devicePixelRatio || 1, dprCap); fps.n = fps.sum = 0;
-  if (avg > CONFIG.slowFrame && cur > 1) { dprCap = CONFIG.dprSteps.find(d => d < cur) || 1; layout(); }
+  if (avg > CONFIG.slowFrame && cur > 1) { dprCap = S.screen === 'intro' ? 1 : CONFIG.dprSteps.find(d => d < cur) || 1; layout(); } // intro: één herbouw, niet twee
 }
 function layout() {
   const cw = app.clientWidth || innerWidth, ch = app.clientHeight || innerHeight;
@@ -728,6 +789,7 @@ function layout() {
   $('rotate').hidden = !land;
   if (land) pause();
   if (S.screen === 'over') fitOver();
+  if (S.screen === 'intro') introLayout();
 }
 // Letterbox één keer op een eigen canvas onder het speelveld; #cv tekent alleen nog het veld zelf.
 function buildLetterbox() {
@@ -862,7 +924,8 @@ const AU = {
     save.sound = on; persist();
     if (this.master) this.master.gain.setTargetAtTime(on ? CONFIG.audio.master : 0, this.ctx.currentTime, 0.02);
     syncSoundButtons();
-    if (S.screen === 'play') toast(on ? 'Geluid aan' : 'Geluid uit', 1400); // M in het spel: anders zie je niets
+    if (S.screen === 'play' || S.screen === 'intro') toast(on ? 'Geluid aan' : 'Geluid uit', 1400); // M in het spel of de intro: anders zie je niets
+    if (S.screen === 'intro') introWind(on);
   },
   ok(dur) { if (!this.ctx || !save.sound || this.ctx.state !== 'running' || this.voices >= CONFIG.audio.voices) return false; this.voices++; setTimeout(() => { this.voices--; }, dur * 1000 + 40); return true; },
   tone(f0, f1, dur, type, vol, delay, lp) {
@@ -916,7 +979,7 @@ const ptr = { id: null, lastX: 0, moved: 0 }; // moved: afgelegde px (logisch) v
 let inputMode = 'keys';
 // hintTouch bepaalt alleen de uitlegteksten (tutorial, pauze, titel); startwaarde uit de pointer-mediaquery
 let hintTouch = isCoarse();
-function syncHints() { $('ctlHint').hidden = hintTouch; $('pauseHint').hidden = hintTouch; $('storyHint').hidden = hintTouch; }
+function syncHints() { $('ctlHint').hidden = hintTouch; $('ctlHintTouch').hidden = !hintTouch; $('pauseHint').hidden = hintTouch; $('storyHint').hidden = hintTouch; }
 function toLogical(cx, cy) { const r = cv.getBoundingClientRect(); return { x: (cx - r.left - V.ox) / V.s, y: (cy - r.top - V.oy) / V.s }; }
 const xLo = () => L + CONFIG.grain.r, xHi = () => R - CONFIG.grain.r;
 cv.addEventListener('pointerdown', e => {
@@ -2000,11 +2063,12 @@ function drawWarnings() {
 // molen nog aan zitten (SHELL). Gezichtje: gewone oogjes (knipperen af en toe), ^ ^ met een lachje en blosjes na een perfecte passage
 // (eerst platgedrukt, dan terugveren), > < met een golfmondje na een botsing (trilt even) en tot de game-over. In de silo: zie meelWolk.
 const GR = { rx: 10, ry: 13 };
-function drawGrain(x, y) {
-  if (G.inv > 0 && Math.floor(G.inv * 14) % 2 === 0) return; // knipperen tijdens onkwetsbaarheid; de eerste 0,07 s na een botsing is hij zichtbaar (> <)
-  const Rc = CONFIG.react, calm = reduced.matches, ouch = G.ouch > 0 || Wd.dying > 0, joy = !ouch && G.joy > 0;
+// g en st: ook op een ander canvas (de intro), met een eigen toestand st = { joy, blink } in plaats van die van het spel
+function drawGrain(x, y, g = ctx, st = null) {
+  if (!st && G.inv > 0 && Math.floor(G.inv * 14) % 2 === 0) return; // knipperen tijdens onkwetsbaarheid; de eerste 0,07 s na een botsing is hij zichtbaar (> <)
+  const Rc = CONFIG.react, calm = reduced.matches, ouch = !st && (G.ouch > 0 || Wd.dying > 0), joy = st ? !!st.joy : !ouch && G.joy > 0;
   let sx = 1, sy = 1, dx = 0;
-  if (joy) {
+  if (joy && !st) {
     const el = Rc.joy - G.joy, u = el / Rc.squash;
     const k = u >= 1 ? 0 : calm ? 0.4 * (1 - u) * (1 - u) : Math.cos(1.5 * Math.PI * u) * (1 - u); // 1 = plat, daarna even uitgerekt
     const pop = 1 + Rc.pop * Math.min(1, el / 0.08) * clamp(G.joy / (Rc.joy * 0.4), 0, 1);
@@ -2014,43 +2078,44 @@ function drawGrain(x, y) {
     sx = sy = pop;
     if (!calm && el < Rc.tremble) dx = Math.sin(el * TAU * 22) * Rc.amp * (1 - el / Rc.tremble);
   }
-  let sc = 1 - Math.min(G.knaks, 15) * 0.006, a = 1;
-  if (Wd.ending) { const e = Wd.ending / 0.16; if (e >= 1) return; sc *= 1 + 0.35 * e; a = 1 - e; } // in de silo: even opbollen en weg, het meelwolkje neemt het over
-  const { rx, ry } = GR, col = mixHex('#D9A441', '#F7F7F7', clamp(grainWhite(), 0, 0.96));
-  ctx.save(); ctx.globalAlpha = a; ctx.translate(x + dx, y); ctx.rotate(G.vx / CONFIG.grain.vmax * 0.35); ctx.scale(sc * sx, sc * sy);
-  ctx.fillStyle = col; ctx.beginPath(); ctx.ellipse(0, 0, rx, ry, 0, 0, TAU); ctx.fill();
-  ctx.strokeStyle = 'rgba(70,45,10,.6)'; ctx.lineWidth = 1.5; ctx.stroke();
-  ctx.beginPath(); ctx.moveTo(1.5, -11); ctx.quadraticCurveTo(5.5, 0, 1.5, 11); ctx.strokeStyle = 'rgba(110,75,25,.4)'; ctx.stroke();
-  ctx.lineCap = 'round'; ctx.lineJoin = 'round';
-  if (run.mode === 'camp' && G.wstep < SHELL.length) { // zemelschil: de stukjes die er nog aan zitten, met barstjes ertussen
+  let sc = st ? 1 : 1 - Math.min(G.knaks, 15) * 0.006, a = 1;
+  if (!st && Wd.ending) { const e = Wd.ending / 0.16; if (e >= 1) return; sc *= 1 + 0.35 * e; a = 1 - e; } // in de silo: even opbollen en weg, het meelwolkje neemt het over
+  const { rx, ry } = GR, col = st ? '#D9A441' : mixHex('#D9A441', '#F7F7F7', clamp(grainWhite(), 0, 0.96));
+  g.save(); g.globalAlpha = a; g.translate(x + dx, y); g.rotate(st ? 0 : G.vx / CONFIG.grain.vmax * 0.35); g.scale(sc * sx, sc * sy);
+  g.fillStyle = col; g.beginPath(); g.ellipse(0, 0, rx, ry, 0, 0, TAU); g.fill();
+  g.strokeStyle = 'rgba(70,45,10,.6)'; g.lineWidth = 1.5; g.stroke();
+  g.beginPath(); g.moveTo(1.5, -11); g.quadraticCurveTo(5.5, 0, 1.5, 11); g.strokeStyle = 'rgba(110,75,25,.4)'; g.stroke();
+  g.lineCap = 'round'; g.lineJoin = 'round';
+  const wstep = st ? 0 : G.wstep;
+  if ((st || run.mode === 'camp') && wstep < SHELL.length) { // zemelschil: de stukjes die er nog aan zitten, met barstjes ertussen
     const q = SHELL_IN, hw = Math.PI / 4;
-    ctx.fillStyle = BRAN;
-    for (let i = G.wstep; i < SHELL.length; i++) { const a0 = SHELL[i] - hw, a1 = SHELL[i] + hw; ctx.beginPath(); ctx.ellipse(0, 0, rx - 0.75, ry - 0.75, 0, a0, a1); ctx.ellipse(0, 0, rx * q, ry * q, 0, a1, a0, true); ctx.closePath(); ctx.fill(); }
-    ctx.strokeStyle = 'rgba(60,35,10,.75)'; ctx.lineWidth = 0.9; ctx.beginPath();
-    for (let i = G.wstep; i < SHELL.length; i++) {
+    g.fillStyle = BRAN;
+    for (let i = wstep; i < SHELL.length; i++) { const a0 = SHELL[i] - hw, a1 = SHELL[i] + hw; g.beginPath(); g.ellipse(0, 0, rx - 0.75, ry - 0.75, 0, a0, a1); g.ellipse(0, 0, rx * q, ry * q, 0, a1, a0, true); g.closePath(); g.fill(); }
+    g.strokeStyle = 'rgba(60,35,10,.75)'; g.lineWidth = 0.9; g.beginPath();
+    for (let i = wstep; i < SHELL.length; i++) {
       const a0 = SHELL[i] - hw, a1 = SHELL[i] + hw;
-      for (const e of [a0, a1]) { ctx.moveTo(Math.cos(e) * rx * q, Math.sin(e) * ry * q); ctx.lineTo(Math.cos(e) * (rx - 0.6), Math.sin(e) * (ry - 0.6)); }
-      ctx.moveTo(Math.cos(a0) * rx * q, Math.sin(a0) * ry * q); ctx.ellipse(0, 0, rx * q, ry * q, 0, a0, a1);
+      for (const e of [a0, a1]) { g.moveTo(Math.cos(e) * rx * q, Math.sin(e) * ry * q); g.lineTo(Math.cos(e) * (rx - 0.6), Math.sin(e) * (ry - 0.6)); }
+      g.moveTo(Math.cos(a0) * rx * q, Math.sin(a0) * ry * q); g.ellipse(0, 0, rx * q, ry * q, 0, a0, a1);
     }
-    ctx.stroke();
+    g.stroke();
   }
   const ex = 3.6, ey = -2.6, c0 = -0.3; // ogen op c0 ± ex
-  ctx.fillStyle = ctx.strokeStyle = '#1D1E1F';
+  g.fillStyle = g.strokeStyle = '#1D1E1F';
   if (joy) {
-    ctx.lineWidth = 1.8; ctx.beginPath();
-    for (const s of [-1, 1]) { const e = c0 + s * ex; ctx.moveTo(e - 2.4, ey + 1.3); ctx.lineTo(e, ey - 1.4); ctx.lineTo(e + 2.4, ey + 1.3); }
-    ctx.stroke();
-    ctx.beginPath(); ctx.ellipse(c0, 2.4, 3, 2.6, 0, 0, Math.PI); ctx.fill(); // open lachje
-    ctx.fillStyle = 'rgba(226,104,92,.6)'; ctx.beginPath(); ctx.ellipse(c0 - 6.4, 1.2, 1.9, 1.3, 0, 0, TAU); ctx.ellipse(c0 + 6.4, 1.2, 1.9, 1.3, 0, 0, TAU); ctx.fill(); // blosjes
+    g.lineWidth = 1.8; g.beginPath();
+    for (const s of [-1, 1]) { const e = c0 + s * ex; g.moveTo(e - 2.4, ey + 1.3); g.lineTo(e, ey - 1.4); g.lineTo(e + 2.4, ey + 1.3); }
+    g.stroke();
+    g.beginPath(); g.ellipse(c0, 2.4, 3, 2.6, 0, 0, Math.PI); g.fill(); // open lachje
+    g.fillStyle = 'rgba(226,104,92,.6)'; g.beginPath(); g.ellipse(c0 - 6.4, 1.2, 1.9, 1.3, 0, 0, TAU); g.ellipse(c0 + 6.4, 1.2, 1.9, 1.3, 0, 0, TAU); g.fill(); // blosjes
   } else if (ouch) {
-    ctx.lineWidth = 1.8; ctx.beginPath();
-    for (const s of [-1, 1]) { const e = c0 + s * ex; ctx.moveTo(e + s * 2.2, ey - 2); ctx.lineTo(e - s * 1.6, ey); ctx.lineTo(e + s * 2.2, ey + 2); } // links >, rechts <
-    ctx.stroke();
-    ctx.lineWidth = 1.4; ctx.beginPath(); ctx.moveTo(c0 - 3.2, 4.2); ctx.lineTo(c0 - 1.6, 3); ctx.lineTo(c0, 4.2); ctx.lineTo(c0 + 1.6, 3); ctx.lineTo(c0 + 3.2, 4.2); ctx.stroke(); // golfmondje
-  } else if (((Wd.t + Wd.it) % 3.1) < 0.12) { // knipperen, ook terwijl de wereld op de start wacht (Wd.it)
-    ctx.fillRect(c0 - ex - 1.8, ey - 0.4, 3.6, 1.3); ctx.fillRect(c0 + ex - 1.8, ey - 0.4, 3.6, 1.3);
-  } else { ctx.beginPath(); ctx.arc(c0 - ex, ey, 1.6, 0, TAU); ctx.arc(c0 + ex, ey, 1.6, 0, TAU); ctx.fill(); }
-  ctx.restore();
+    g.lineWidth = 1.8; g.beginPath();
+    for (const s of [-1, 1]) { const e = c0 + s * ex; g.moveTo(e + s * 2.2, ey - 2); g.lineTo(e - s * 1.6, ey); g.lineTo(e + s * 2.2, ey + 2); } // links >, rechts <
+    g.stroke();
+    g.lineWidth = 1.4; g.beginPath(); g.moveTo(c0 - 3.2, 4.2); g.lineTo(c0 - 1.6, 3); g.lineTo(c0, 4.2); g.lineTo(c0 + 1.6, 3); g.lineTo(c0 + 3.2, 4.2); g.stroke(); // golfmondje
+  } else if (st ? st.blink : ((Wd.t + Wd.it) % 3.1) < 0.12) { // knipperen, ook terwijl de wereld op de start wacht (Wd.it)
+    g.fillRect(c0 - ex - 1.8, ey - 0.4, 3.6, 1.3); g.fillRect(c0 + ex - 1.8, ey - 0.4, 3.6, 1.3);
+  } else { g.beginPath(); g.arc(c0 - ex, ey, 1.6, 0, TAU); g.arc(c0 + ex, ey, 1.6, 0, TAU); g.fill(); }
+  g.restore();
 }
 // Duimpje (zie updateThumb): doorzichtige duim, van bovenaf met de nagel en een stukje hand, die onder de korrel heen en weer veegt
 // over een gestippeld veegspoor met een pijlpunt aan elke kant. Bij verminderde beweging staat hij stil in het midden. Geen tekst.
@@ -2191,9 +2256,10 @@ function drawIntro(lv) {
   ctx.fillStyle = 'rgba(22,22,23,.88)'; ctx.fillRect(22, top, W - 44, bandH); ctx.fillStyle = '#CFAB00'; ctx.fillRect(22, top, W - 44, 3);
   const from = String(run.prevYear), to = String(lv.year), bw = 28, bh = 36, gap = 5, x0 = 200 - (4 * bw + 3 * gap) / 2, y0 = 90;
   ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.font = `800 26px ${F_UI}`;
+  const back = +to < +from; // na de intro: van 2026 terug naar 1846, de cijfers rollen achteruit
   for (let i = 0; i < 4; i++) {
-    const a0 = +from[i], b0 = +to[i], d = (b0 - a0 + 10) % 10 + (i >= 2 && from !== to ? 10 : 0);
-    const v = a0 + d * ease((t / 1.2 - i * 0.07) / 0.8), x = x0 + i * (bw + gap);
+    const a0 = +from[i], b0 = +to[i], d = ((back ? a0 - b0 : b0 - a0) + 10) % 10 + (i >= 2 && from !== to ? 10 : 0), e = reduced.matches ? 1 : ease((t / 1.2 - i * 0.07) / 0.8);
+    const v = back ? a0 + 20 - d * e : a0 + d * e, x = x0 + i * (bw + gap);
     ctx.fillStyle = '#0d0d0e'; ctx.fillRect(x, y0, bw, bh);
     ctx.save(); ctx.beginPath(); ctx.rect(x, y0, bw, bh); ctx.clip();
     const fr = v - Math.floor(v), dg = Math.floor(v) % 10;
@@ -2333,12 +2399,13 @@ function drawDebug(cam) {
 // ============================================================
 // 11. Schermen (DOM-overlays, één state machine)
 // ============================================================
-const SCR = { title: $('scrTitle'), pause: $('scrPause'), story: $('scrStory'), night: $('scrNight'), level: $('scrLevel'), over: $('scrOver'), done: $('scrDone'), scores: $('scrScores'), about: $('scrAbout'), boek: $('scrBoek') };
+const SCR = { title: $('scrTitle'), pause: $('scrPause'), story: $('scrStory'), night: $('scrNight'), level: $('scrLevel'), over: $('scrOver'), done: $('scrDone'), scores: $('scrScores'), about: $('scrAbout'), boek: $('scrBoek'), pick: $('scrPick'), settings: $('scrSettings'), intro: $('scrIntro') };
 function show(name) {
   S.screen = name; still = false; // het veld één keer opnieuw tekenen (gedimd of niet) voor dit scherm
   clearTimeout(toastT); $('toast').hidden = true; // een oude toast mag geen knop van het nieuwe scherm afdekken
   for (const k in SCR) SCR[k].hidden = k !== name;
   $('btnPause').hidden = name !== 'play';
+  cv.toggleAttribute('aria-hidden', name === 'intro'); // de intro ligt eroverheen
   keys.left = keys.right = false;
   AU.rumble(name === 'play');
   if (name === 'play') { if (document.activeElement && document.activeElement.blur) document.activeElement.blur(); return; }
@@ -2359,6 +2426,7 @@ function show(name) {
 let toastT = 0, lastKey = false, acted = false; // acted: de speler heeft zelf al iets in het spel gedaan (toets of aanraking)
 const hoverDevice = () => { try { return matchMedia('(hover: hover) and (pointer: fine)').matches; } catch (e) { return false; } };
 addEventListener('pointerdown', () => { lastKey = false; acted = true; idleT0 = performance.now(); }, true);
+addEventListener('click', () => { acted = true; }, true); // ook een kale klik (schermlezer, spraakbesturing) is een eigen handeling
 // Schermlezer: korte meldingen uit het canvas in een onzichtbare live-regio (geen leestekst in beeld). Twee keer dezelfde
 // melding (korrel kwijt, nog 1) krijgt een vaste spatie erachter, anders leest de schermlezer hem niet opnieuw voor.
 function announce(msg) { const r = $('sr'); r.textContent = r.textContent === msg ? msg + '\u00a0' : msg; }
@@ -2414,7 +2482,7 @@ function fillBadgesAll(el, got) {
   for (const b of BADGES) el.appendChild(badgeEl(b, got.has(b.id), !got.has(b.id)));
   el.hidden = false;
 }
-async function copyText(text, box, okMsg, keep) { // keep: tekstveld blijft staan (linkveld op het titelscherm)
+async function copyText(text, box, okMsg, keep) { // keep: tekstveld blijft staan (linkveld bij Over dit spel)
   let ok = false;
   try { if (navigator.clipboard && window.isSecureContext) { await navigator.clipboard.writeText(text); ok = true; } } catch (e) { ok = false; }
   if (!ok) { // terugval voor iframes en iOS: zichtbaar tekstveld, volledig selecteren, oude copy-opdracht
@@ -2429,7 +2497,8 @@ function startDemo() {
   if (reduced.matches) for (let i = 0; i < 300; i++) update(CONFIG.step); // verminderde beweging: stilstaande demo, maar met walsen in beeld
   show('title'); refreshTitle();
 }
-function startCampaign(lvl) { run = newRun('camp', lvl || 0, Math.random() * 4294967296); run.prevYear = lvl ? LEVELS[lvl - 1].year : 1800; startLevel(true); }
+// fromYear: jaar waar de teller van de introband vandaan rolt (2026 na de intro: terug in de tijd)
+function startCampaign(lvl, fromYear) { run = newRun('camp', lvl || 0, Math.random() * 4294967296); run.prevYear = fromYear || (lvl ? LEVELS[lvl - 1].year : 1800); startLevel(true); }
 // quick: Nog een korrel? in de Nachtploeg, zonder introband
 function startNight(daily, quick) {
   if (!save.night) return;
@@ -2457,7 +2526,7 @@ function retry() {
   Object.assign(run, run.cp); run.seed = (run.seed + 0x51ED) >>> 0; run.prevYear = run.lvl ? LEVELS[run.lvl - 1].year : 1800;
   startLevel(false);
 }
-// Te moeilijk? > Probeer de Gezel-modus: zelfde als de knop op het titelscherm, daarna meteen opnieuw (zonder introband)
+// Te moeilijk? > Probeer de Gezel-modus: zelfde als de knop bij Instellingen, daarna meteen opnieuw (zonder introband)
 function tryGezel() {
   save.gezel = true; persist(); refreshTitle();
   $('easyBox').hidden = true; SCR.over.classList.remove('easy-on');
@@ -2571,31 +2640,31 @@ function toMenu() { startDemo(); }
 function syncSoundButtons() { for (const id of ['bSound', 'bPSound']) { const b = $(id); b.textContent = save.sound ? 'Geluid: aan' : 'Geluid: uit'; b.classList.toggle('on', save.sound); } }
 function refreshTitle() {
   const gz = $('bGezel'); gz.setAttribute('aria-pressed', String(save.gezel));
-  gz.innerHTML = `${save.gezel ? 'Gezel-modus: aan' : 'Gezel-modus (makkelijk)'}<small>ruimere spleten, tragere val</small>`;
+  gz.innerHTML = 'Gezel-modus (makkelijk)<small>ruimere spleten, tragere val</small>'; // vaste naam; aan of uit zit in aria-pressed en de donkere knop
+  $('gezelNote').hidden = !save.gezel; // op het titelscherm zichtbaar zolang hij aan staat, zodat hij niet verstopt raakt
   syncSoundButtons();
-  // nog dicht: aria-disabled in plaats van disabled, zodat een tik het dienstbriefje opent (met wanneer hij opengaat)
-  for (const id of ['bDaily', 'bFree']) { if (save.night) $(id).removeAttribute('aria-disabled'); else $(id).setAttribute('aria-disabled', 'true'); }
+  $('bPick').hidden = save.maxLvl <= 0;
+  // De Nachtploeg-knop opent altijd het dienstbriefje: daar kies je Korrel van de dag of Vrije dienst, of lees je wanneer hij opengaat
   const best = save.daily[dateKey()];
-  $('nightNote').textContent = save.night ? (best ? `vandaag jouw beste: ${fmt(best)} kg` : 'eindeloos, één korrel') : 'open na molen 1';
-  const chips = $('lvlChips'); chips.innerHTML = '';
-  if (save.maxLvl > 0) {
-    const lab = document.createElement('span'); lab.className = 'hint'; lab.textContent = 'Verder vanaf'; chips.appendChild(lab);
-    LEVELS.forEach((lv, i) => {
-      if (i > save.maxLvl) return;
-      const b = document.createElement('button'); b.type = 'button'; b.className = 'btn'; b.textContent = lv.year;
-      b.setAttribute('aria-label', `Start bij ${lv.year}, ${lv.title}`); b.onclick = () => startCampaign(i); chips.appendChild(b);
-    });
-  }
-  chips.hidden = save.maxLvl <= 0;
-  const got = BADGES.filter(b => save.badges[b.id]).map(b => b.id); fillBadges($('titleBadges'), got);
-  if (UIT.every(u => save.labels[u.id])) {
-    const s = document.createElement('span'); s.className = 'badge'; s.style.paddingLeft = '9px'; s.textContent = 'Alle vier uitmalingen gezien';
-    $('titleBadges').appendChild(s); $('titleBadges').hidden = false;
-  }
+  const sub = save.night ? (best ? `vandaag jouw beste: ${fmt(best)} kg` : 'eindeloos, één korrel') : 'open na molen 1';
+  $('bNight').innerHTML = `Nachtploeg<small>${sub}</small>`;
+  $('bNight').setAttribute('aria-label', `Nachtploeg, ${sub}`);
 }
+// Kies een molen: de jaartallen t/m de verste gehaalde molen
+function openPick() {
+  const chips = $('lvlChips'); chips.innerHTML = '';
+  LEVELS.forEach((lv, i) => {
+    if (i > save.maxLvl) return;
+    const b = document.createElement('button'); b.type = 'button'; b.className = 'btn'; b.innerHTML = `${lv.year}<small>${esc(lv.short)}</small>`;
+    b.setAttribute('aria-label', `Start bij ${lv.year} ${lv.short}`); b.onclick = () => startCampaign(i); chips.appendChild(b);
+  });
+  show('pick');
+  if (acted && lastKey && chips.lastElementChild) chips.lastElementChild.focus(); // toetsenbord: meteen op de verste molen, Terug blijft onderaan
+}
+function toTitle() { show('title'); refreshTitle(); }
 // ---------- Dienstbriefje van de Nachtploeg ----------
 // Kaart die op een tik wacht: wat de Nachtploeg is en het verschil tussen Korrel van de dag en Vrije dienst, met die keuze onderaan.
-// Verschijnt bij de eerste tik op een Nachtploeg-knop (save.nightBrief) en altijd via Wat is dit?. Zolang de Nachtploeg dicht is,
+// Verschijnt altijd via de Nachtploeg-knop op het titelscherm, en op het jaarverslag bij de eerste tik (save.nightBrief). Zolang de Nachtploeg dicht is,
 // staat er in plaats van de keuze wanneer hij opengaat, met een knop naar molen 1.
 let nightFrom = 'title';
 function openNightBrief() {
@@ -2607,7 +2676,7 @@ function openNightBrief() {
   drawBriefArt(); show('night');
 }
 function closeNightBrief() { if (S.screen !== 'night') return; show(nightFrom); if (nightFrom === 'title') refreshTitle(); }
-// Nachtploeg-knop (titel, jaarverslag): eerst het briefje als de Nachtploeg nog dicht is of het briefje nog nooit open stond, anders meteen spelen
+// Nachtploeg-knop op het jaarverslag: eerst het briefje als de Nachtploeg nog dicht is of het briefje nog nooit open stond, anders meteen spelen
 function nightButton(daily) { if (!save.night || !save.nightBrief) openNightBrief(); else startNight(daily); }
 // Plaatje op het briefje: de molen 's nachts, met verlichte ramen onder een maansikkel (eigen donker tegeltje, ook in het lichte thema)
 function drawBriefArt() {
@@ -2729,23 +2798,25 @@ function showScores() {
   $('campNote').textContent = save.best || save.maxLvl ? `Beste score: ${fmt(save.best)} kg bloem. Bereikt: ${LEVELS[save.maxLvl].year}${save.campDone ? ', tijdlijn uitgespeeld.' : '.'}` : 'Nog geen molen gehaald.';
   const ab = $('allBadges'); ab.innerHTML = '';
   for (const b of BADGES) ab.appendChild(badgeEl(b, !!save.badges[b.id], false));
-  $('allLabels').innerHTML = UIT.map(u => `<span class="badge txt${save.labels[u.id] ? '' : ' off'}">${u.name} <small>${u.note}</small></span>`).join('');
+  $('allLabels').innerHTML = UIT.map(u => `<span class="badge txt${save.labels[u.id] ? '' : ' off'}">${u.name} <small>${u.note}</small></span>`).join('')
+    + (UIT.every(u => save.labels[u.id]) ? '<span class="badge txt">Alle vier gezien</span>' : '');
   show('scores');
 }
 
-$('bStart').onclick = () => startCampaign(0);
-$('bDaily').onclick = () => nightButton(true);
-$('bFree').onclick = () => nightButton(false);
-$('bNightWhat').onclick = openNightBrief;
+$('bStart').onclick = () => { if (introWanted()) openIntro('start'); else startCampaign(0); }; // de intro alleen bij de allereerste start
+$('bNight').onclick = openNightBrief;
+$('bPick').onclick = openPick;
+$('bSettings').onclick = () => { show('settings'); if (acted && lastKey) $('bGezel').focus(); }; // toetsenbord: op de eerste keuze
+$('bPickBack').onclick = $('bSettingsBack').onclick = toTitle;
 $('bNbDaily').onclick = () => startNight(true);
 $('bNbFree').onclick = () => startNight(false);
-$('bNbPlay').onclick = () => startCampaign(0);
+$('bNbPlay').onclick = () => { if (introWanted()) openIntro('start'); else startCampaign(0); }; // net als It giet oan!
 $('bNbBack').onclick = closeNightBrief;
 $('bGezel').onclick = () => { save.gezel = !save.gezel; persist(); refreshTitle(); };
 $('bSound').onclick = $('bPSound').onclick = () => { AU.ensure(); AU.setSound(!save.sound); };
 $('bScores').onclick = showScores;
 $('bAbout').onclick = () => show('about');
-$('bScoresBack').onclick = $('bAboutBack').onclick = () => { show('title'); refreshTitle(); };
+$('bScoresBack').onclick = $('bAboutBack').onclick = toTitle;
 $('bBook').onclick = $('bPBook').onclick = $('bLBook').onclick = $('bOBook').onclick = openBook;
 $('bBookBack').onclick = closeBook;
 // Toon alle pagina's: eerst een vriendelijke vraag in de kaart zelf (confirm() werkt niet in de viewer)
@@ -2771,13 +2842,564 @@ $('bShare').onclick = () => copyText(SHARE_URL, $('shareUrl'), 'Link gekopieerd.
 $('bDoneNight').onclick = () => nightButton(true);
 document.querySelectorAll('canvas[data-ico]').forEach(c => { const g = c.getContext('2d'); icon(g, c.dataset.ico, c.width / 2, c.height / 2, c.width * 0.9, '#CFAB00'); });
 
+// ============================================================
+// 11b. Intro: van buiten de maaltoren in (alleen bij de allereerste start)
+// ============================================================
+// Drie shots. Elk shot is een camerabeweging van een paar seconden die daarna stil blijft staan tot de speler verder gaat.
+// Wereld: de gevel van de fabriek is vlak 0 (eenheden: ongeveer css-px bij k = 1), de kade ligt op y 0, omhoog is negatief.
+// Lagen met een eigen diepte (dz: achter of voor de gevel) schuiven en schalen mee zoals bij een echte camera die naar de
+// gevel toe vliegt (brandpunt IF). Lucht en wolken staan één keer op offscreen-canvassen; stad, fabriek, schip en voorgrond
+// zijn vooraf gebouwde Path2D-vormen, één per kleur, dus één fill per kleur per frame, en ook ingezoomd blijven ze scherp.
+// Shot 3 vliegt door het middelste raam bovenin de toren: de binnenkant (iShaft) staat al achter dat raam en vult het
+// scherm zodra het raam groter is dan het scherm. Daarna kantelt de blik naar beneden, de schacht in.
+const INTRO_SHOTS = [
+  { kicker: 'Waar je bent', dur: 4.8,
+    text: 'Leeuwarden, aan het Nieuwe Kanaal. Hier maakt Royal Koopmans dag en nacht bloem van tarwe, voor bakkers en de voedingsindustrie.',
+    desc: 'Beeld: de meelfabriek van Royal Koopmans aan het water, met hoge silo’s, de maaltoren met het logo en een graanschip aan de kade.' },
+  { kicker: 'De maaltoren', dur: 5,
+    text: 'Graan komt per schip aan. De reiniging haalt er stenen en metaal uit. Dan gaan de korrels in de maaltoren door walsen en zeven, steeds fijner, tot er bloem is.',
+    desc: 'Beeld: het schip wordt gelost, het graan gaat de silo’s in en de camera stijgt langs de maaltoren naar een raam bovenin.' },
+  { kicker: 'Naar binnen', dur: 4.6,
+    text: 'Jij bent één van die korrels. Eerst val je terug in de tijd, naar de eerste molen van Koopmans.', // wie, waar en wanneer staat op de introband van molen 1
+    desc: 'Beeld: door het raam kijk je in de maaltoren naar beneden, langs verdiepingen met walsenstoelen. Bovenaan kijkt één korrel je aan.' },
+];
+// cameravakken [x0, x1, y0, y1, ooghoogte]: het vak past precies in het beeld boven het paneel (staand: op breedte, liggend: op hoogte)
+const IBOX = [
+  [-640, 720, -980, 200, -700], // shot 1 begin: hoog boven het kanaal, stad, oever en de fabriek nog klein
+  [-170, 300, -440, 100, -240], //  shot 1 eind: iets dichterbij en lager
+  [150, 420, -270, 40, -60], //   shot 2 halverwege: het schip wordt gelost
+  [-80, 80, -372, -232, -275], // shot 2 eind: logo en het raam bovenin de toren
+];
+const IF = 1000, IWIN = 1.5, IDIVE = 0.75; // brandpunt; s door het raam (shot 3); s duik de schacht in na It giet oan!
+const IWINR = [-14, -292, 28, 34], IWINP = 3, IWINS = 4; // het raam bovenin waar de camera door vliegt (x, y, b, h); kozijn en vensterbank
+const IN = { still: null, from: 'start', i: 0, t: 0, amb: 0, last: 0, raf: 0, frames: 0, dive: -1, w: 1, h: 1, d: 1, picH: 1, u: 1,
+  geo: null, pal: null, sky: null, clouds: null, fl: null, logo: null, cams: null, wind: null, dark: null };
+const iCv = $('introCv'), ig = iCv.getContext('2d');
+const eio = t => 0.5 - 0.5 * Math.cos(Math.PI * clamp(t, 0, 1)); // zacht op gang, zacht tot stilstand
+// Kleuren: licht thema = daglicht, donker thema = avond met verlichte ramen. Rollen met B zijn 's avonds verlicht.
+const ICOL = {
+  light: { sky: ['#8EC3DB', '#CBE4EC', '#F3EEE0'], sun: '#FFF6D8', cloud: '#FFFFFF', cloudSh: '#DCE7EA',
+    far: '#B5C5C7', farLit: null, midGround: '#AFC0A3', midWall: '#BDBDB0', midRoof: '#8C8A84', midTree: '#8BA884', midLit: null,
+    ware: '#D8D3C6', wareDark: '#B1AA98', wareWinA: '#6F808B', wareWinB: '#6F808B', brick: '#9C5236', brickDark: '#783A2C', brickWinA: '#34414A', brickWinB: '#34414A',
+    silo: '#E3E1DA', siloLight: '#F7F7F7', siloShade: '#C8C3B4', siloLine: '#D3CEC1', gallery: '#B9B2A0', galleryWin: '#6F808B',
+    tower: '#2C2E31', towerLight: '#3E4145', towerShade: '#1D1E1F', orange: '#E78A01', winA: '#8FA9BC', winB: '#8FA9BC', target: '#F6DC93', frame: '#5A5E63',
+    steel: '#E78A01', steelDark: '#B56C00', pipe: '#8D959E', quay: '#A29E93', quayTop: '#CBC6B8', bollard: '#2C2E31',
+    water: '#5C8EA5', ripple: 'rgba(214,234,242,.55)', refl: 'rgba(29,30,31,.16)', lit: null, dot: '#D9A441',
+    hull: '#2E3A42', stripe: '#E78A01', grainHeap: '#D9A441', deck: '#C9C4B5', cabin: '#F7F7F7', cabinWin: '#2E3A42', mast: '#2E3A42',
+    grass: '#86A66E', path: '#D8CFB8', trunk: '#5A3F26', treeDark: '#4D7541', tree: '#5F8A4E', houseA: '#A55B3D', houseB: '#8E4A32', houseC: '#C07A55',
+    roof: '#4A4D52', houseWinA: '#F3EEE2', houseWinB: '#F3EEE2', gull: '#3A3D41' },
+  dark: { sky: ['#0D1720', '#1C2B34', '#57442E'], sun: '#F2D35B', cloud: '#2B3843', cloudSh: '#222E37',
+    far: '#1D2930', farLit: 'rgba(242,211,91,.55)', midGround: '#1A241F', midWall: '#252F33', midRoof: '#1B2226', midTree: '#16231C', midLit: 'rgba(242,211,91,.7)',
+    ware: '#3A3C3D', wareDark: '#2D2F30', wareWinA: '#1C2227', wareWinB: '#F2D35B', brick: '#4A2A21', brickDark: '#391F19', brickWinA: '#1C2227', brickWinB: '#F2D35B',
+    silo: '#6C6B65', siloLight: '#7F7E77', siloShade: '#53524D', siloLine: '#605F59', gallery: '#4B4A45', galleryWin: '#F2D35B',
+    tower: '#18191B', towerLight: '#232528', towerShade: '#0F1011', orange: '#E78A01', winA: '#262D33', winB: '#F2D35B', target: '#FFD978', frame: '#3A3D41',
+    steel: '#C77A06', steelDark: '#8E5200', pipe: '#6E757C', quay: '#3D3C39', quayTop: '#56544E', bollard: '#111213',
+    water: '#13252F', ripple: 'rgba(90,130,150,.45)', refl: 'rgba(0,0,0,.25)', lit: 'rgba(242,211,91,.32)', dot: '#FFF0C9',
+    hull: '#141B20', stripe: '#C77A06', grainHeap: '#A07C36', deck: '#4B4A45', cabin: '#C9C4B5', cabinWin: '#F2D35B', mast: '#141B20',
+    grass: '#1E2B21', path: '#2D2B26', trunk: '#1E1A15', treeDark: '#111C15', tree: '#17261B', houseA: '#3E241B', houseB: '#33201A', houseC: '#4A2E22',
+    roof: '#141517', houseWinA: '#1C2227', houseWinB: '#F2D35B', gull: '#B9C0C6' },
+};
+function introDark() {
+  const t = document.documentElement.getAttribute('data-theme');
+  if (t === 'dark' || t === 'light') return t === 'dark';
+  try { return matchMedia('(prefers-color-scheme: dark)').matches; } catch (e) { return false; }
+}
+// Het logo komt uit de inline SVG van het titelscherm: dezelfde paden, op de gevel getekend (wit, de kroon en de lijn in goud)
+function introLogo() {
+  const out = [], svg = document.querySelector('.rk-logo');
+  if (!svg) return out;
+  for (const el of svg.querySelectorAll('path,polygon,rect')) {
+    const f = el.getAttribute('fill'); if (!f || f === 'none') continue; // zonder fill is het in de SVG ook onzichtbaar
+    let d = el.getAttribute('d') || '';
+    if (el.tagName === 'polygon') { const n = el.getAttribute('points').trim().split(/[\s,]+/).map(Number); d = 'M' + n.slice(0, 2).join(' ') + 'L' + n.slice(2).join(' ') + 'Z'; }
+    else if (el.tagName === 'rect') { const a = ['x', 'y', 'width', 'height'].map(k => +el.getAttribute(k) || 0); d = `M${a[0]} ${a[1]}h${a[2]}v${a[3]}h${-a[2]}Z`; }
+    try { out.push({ gold: f !== 'currentColor', p: new Path2D(d) }); } catch (e) { /* oude browser: geen logo */ }
+  }
+  return out;
+}
+// Alle vormen één keer, in wereldcoördinaten. Per laag een vaste tekenvolgorde van kleurrollen.
+function introGeo() {
+  const rnd = mulberry32(1846);
+  const layer = (dz, roles) => { const m = {}; return { dz, m, parts: roles.map(r => [r, m[r] = new Path2D()]) }; };
+  const R = (p, x, y, w, h) => p.rect(x, y, w, h);
+  const P = (p, ...a) => { p.moveTo(a[0], a[1]); for (let i = 2; i < a.length; i += 2) p.lineTo(a[i], a[i + 1]); p.closePath(); };
+  const C = (p, x, y, r) => { p.moveTo(x + r, y); p.arc(x, y, r, 0, TAU); };
+  // ver weg: de stad in de nevel (dakjes, een paar blokken, bomen)
+  const far = layer(2400, ['far', 'farLit']);
+  for (let x = -3000; x < 2900;) {
+    const big = rnd() < 0.16, w = big ? 70 + rnd() * 90 : 26 + rnd() * 30, h = big ? 100 + rnd() * 110 : 40 + rnd() * 40;
+    R(far.m.far, x, -h, w, h + 10);
+    if (!big) P(far.m.far, x, -h, x + w / 2, -h - w * 0.5, x + w, -h);
+    for (let k = 0; k < (big ? 4 : 1); k++) if (rnd() < 0.55) R(far.m.farLit, x + 5 + rnd() * (w - 12), -h + 6 + rnd() * (h - 14), 4, 5);
+    if (rnd() < 0.3) C(far.m.far, x + w + 12, -20, 16 + rnd() * 12);
+    x += w + rnd() * 14;
+  }
+  // middenplan: de buurt achter de fabriek
+  const mid = layer(700, ['midWall', 'midRoof', 'midTree', 'midLit']);
+  for (let x = -1800; x < 1800;) {
+    if (rnd() < 0.42) { const r = 16 + rnd() * 16; C(mid.m.midTree, x + r, -r - 4 - rnd() * 10, r); x += r * 2 + rnd() * 8; continue; }
+    const blk = rnd() < 0.18, w = blk ? 80 + rnd() * 60 : 34 + rnd() * 40, h = blk ? 100 + rnd() * 70 : 40 + rnd() * 50;
+    R(mid.m.midWall, x, -h, w, h);
+    if (blk) { R(mid.m.midRoof, x - 2, -h - 5, w + 4, 6); for (let yy = -h + 12; yy < -10; yy += 18) for (let xx = x + 8; xx < x + w - 10; xx += 16) if (rnd() < 0.5) R(mid.m.midLit, xx, yy, 6, 7); }
+    else { P(mid.m.midRoof, x - 2, -h, x + w / 2, -h - 18 - rnd() * 10, x + w + 2, -h); if (rnd() < 0.6) R(mid.m.midLit, x + w * 0.3, -h * 0.65, 6, 7); }
+    x += w + 4 + rnd() * 20;
+  }
+  // de gevel: loodsen, oud bakstenen gebouw, maaltoren, silo's, loskraan en kade
+  const fac = layer(0, ['ware', 'wareDark', 'wareWinA', 'wareWinB', 'brick', 'brickDark', 'brickWinA', 'brickWinB', 'silo', 'siloLight', 'siloShade', 'siloLine',
+    'gallery', 'galleryWin', 'tower', 'towerLight', 'towerShade', 'orange', 'winA', 'winB', 'target', 'steel', 'steelDark', 'pipe', 'quay', 'quayTop', 'bollard']);
+  const m = fac.m, win = (x, y, w, h, a, b) => R(rnd() < 0.45 ? b : a, x, y, w, h);
+  R(m.ware, -800, -122, 380, 122); R(m.wareDark, -800, -128, 380, 8);
+  for (let x = -782; x < -440; x += 34) { win(x, -98, 18, 14, m.wareWinA, m.wareWinB); win(x, -62, 18, 14, m.wareWinA, m.wareWinB); }
+  R(m.brickDark, -432, -112, 104, 112); for (let x = -420; x < -340; x += 26) win(x, -88, 14, 24, m.brickWinA, m.brickWinB);
+  R(m.brick, -330, -178, 262, 178); R(m.brickDark, -334, -188, 270, 11); R(m.brickDark, -330, -7, 262, 7);
+  for (let r = 0; r < 3; r++) for (let x = -316; x < -90; x += 29) win(x, -160 + r * 50, 15, 28, m.brickWinA, m.brickWinB);
+  R(m.tower, -70, -362, 140, 362); R(m.towerLight, -70, -362, 9, 362); R(m.towerShade, 60, -362, 10, 362);
+  R(m.tower, -36, -394, 66, 34); R(m.towerShade, 22, -394, 8, 34); // kop op het dak
+  R(m.orange, -74, -367, 148, 6); R(m.orange, -38, -399, 70, 5);
+  R(m.towerShade, -58, -298, 116, 46); // donkere band om de bovenste ramen
+  R(m.winA, -52, -290, 26, 30); R(m.target, IWINR[0], IWINR[1], IWINR[2], IWINR[3]); R(m.winA, 26, -290, 26, 30);
+  for (let y = -236; y < -20; y += 28) for (const x of [-50, -22, 8, 36]) win(x, y, 14, 16, m.winA, m.winB);
+  R(m.gallery, 78, -302, 192, 28); for (let x = 86; x < 262; x += 18) R(m.galleryWin, x, -295, 9, 9);
+  R(m.gallery, 70, -290, 10, 9); // loopbrug van de silo's naar de toren
+  for (let i = 0; i < 4; i++) { const x = 80 + i * 46; R(m.silo, x, -274, 44, 274); R(m.siloLight, x + 4, -274, 7, 274); R(m.siloShade, x + 34, -274, 10, 274); }
+  for (let y = -246; y < -8; y += 32) R(m.siloLine, 80, y, 182, 2);
+  R(m.ware, 266, -96, 230, 96); R(m.wareDark, 266, -102, 230, 8); for (let x = 282; x < 480; x += 30) win(x, -76, 16, 14, m.wareWinA, m.wareWinB);
+  R(m.brick, 496, -150, 300, 150); R(m.brickDark, 492, -158, 308, 10);
+  for (let r = 0; r < 2; r++) for (let x = 510; x < 780; x += 28) win(x, -132 + r * 52, 14, 26, m.brickWinA, m.brickWinB);
+  R(m.steel, 340, -240, 8, 240); R(m.steel, 376, -240, 8, 240); // loskraan
+  for (let y = -200; y < -10; y += 46) P(m.steelDark, 348, y, 376, y + 38, 376, y + 44, 348, y + 6);
+  R(m.steel, 330, -264, 64, 26); R(m.steelDark, 330, -240, 64, 4);
+  R(m.steel, 204, -224, 140, 9); // arm boven het ruim
+  R(m.pipe, 205, -215, 12, 228); // zuigbuis het ruim in
+  P(m.gallery, 330, -260, 330, -250, 268, -284, 268, -294); // transportbrug naar de silo's
+  R(m.quay, -1900, 0, 3800, 27); R(m.quayTop, -1900, 0, 3800, 4);
+  for (const x of [-260, -120, 40, 300, 450]) R(m.bollard, x, -7, 8, 7);
+  // het graanschip aan de loskade (na het water getekend)
+  const ship = layer(0, ['hull', 'stripe', 'grainHeap', 'deck', 'cabin', 'cabinWin', 'mast']), s = ship.m;
+  P(s.hull, 84, -17, 430, -15, 426, 28, 102, 28, 86, 6);
+  R(s.stripe, 92, 5, 332, 4);
+  P(s.grainHeap, 124, -21, 170, -31, 230, -35, 290, -30, 328, -21);
+  R(s.deck, 120, -23, 210, 7); R(s.deck, 86, -17, 344, 3);
+  R(s.hull, 358, -60, 58, 5); R(s.cabin, 362, -56, 50, 40); R(s.cabinWin, 368, -50, 38, 8);
+  R(s.mast, 104, -46, 3, 30);
+  // voorgrond aan deze kant van het water: oever, huizen met trapgevels en bomen
+  const fg = layer(-420, ['grass', 'path', 'trunk', 'treeDark', 'tree', 'houseA', 'houseB', 'houseC', 'roof', 'houseWinA', 'houseWinB']), f = fg.m;
+  R(f.grass, -4000, 70, 8000, 2000); R(f.path, -4000, 73, 8000, 7);
+  const house = (x, w, h, role) => {
+    const top = 70 - h, st = 13;
+    R(f[role], x, top, w, h); R(f[role], x + w * 0.14, top - st, w * 0.72, st + 1); R(f[role], x + w * 0.3, top - 2 * st, w * 0.4, st + 1);
+    R(f.roof, x - 2, top - 3, w + 4, 4); R(f.roof, x + w * 0.14 - 2, top - st - 3, w * 0.72 + 4, 4); R(f.roof, x + w * 0.3 - 2, top - 2 * st - 3, w * 0.4 + 4, 4);
+    for (const fx of [0.2, 0.6]) for (const fy of [0.18, 0.55]) R(rnd() < 0.5 ? f.houseWinB : f.houseWinA, x + w * fx, top + h * fy, w * 0.2, h * 0.22);
+    R(f.houseWinA, x + w * 0.42, top - st + 3, w * 0.16, st - 5);
+  };
+  house(-470, 62, 72, 'houseA'); house(-406, 56, 88, 'houseB'); house(-348, 64, 66, 'houseC'); house(-282, 58, 80, 'houseA');
+  house(272, 60, 82, 'houseB'); house(334, 66, 64, 'houseC'); house(402, 56, 90, 'houseA'); house(460, 62, 70, 'houseB');
+  for (const [x, y, r] of [[-640, -6, 54], [-176, 6, 42], [-110, 26, 30], [196, 14, 40], [580, -4, 52], [700, 6, 44]]) {
+    R(f.trunk, x - 4, y, 8, 72 - y); C(f.treeDark, x + 5, y + 5, r); C(f.tree, x - 3, y - 3, r * 0.9);
+  }
+  // graan onderweg: uit het ruim omhoog, over de transportbrug de silo's in, en over de loopbrug de toren in
+  const pts = [[211, 12], [211, -218], [338, -218], [338, -256], [268, -290], [86, -290], [72, -286]], segs = []; let len = 0;
+  for (let i = 1; i < pts.length; i++) { const l = Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]); segs.push([pts[i - 1], pts[i], len, l]); len += l; }
+  const gulls = [[-170, -440, 1.0, 0], [-110, -478, 0.8, 1.7], [170, -500, 1.2, 0.6], [250, -452, 0.9, 2.4], [470, -520, 1.1, 1.1]];
+  const clouds = [[-900, -900, 380, 11], [-260, -1010, 300, 22], [420, -930, 420, 33], [1150, -1000, 340, 44], [1900, -920, 380, 55], [-1700, -980, 360, 66]];
+  far.box = [-3000, -260, 6000, 270, 0.32]; mid.box = [-1820, -210, 3740, 220, 0.62]; // vast plaatje: x, y, breedte, hoogte, px per eenheid (x dpr)
+  return { far, mid, fac, ship, fg, dots: { segs, len }, gulls, clouds };
+}
+// Eén wolk: platte onderkant, ronde bolletjes, een smalle schaduwrand; als los plaatje (sprite) op cs px per eenheid
+function iCloud(seed, wu, col, sh, cs) {
+  const r = mulberry32(seed), hu = wu * 0.46, c = document.createElement('canvas');
+  c.width = Math.ceil(wu * cs); c.height = Math.ceil(hu * cs);
+  const g = c.getContext('2d'); g.scale(cs, cs);
+  const base = hu * 0.9, n = 4 + Math.floor(r() * 2), shape = dy => {
+    g.beginPath(); g.rect(wu * 0.1, base - hu * 0.3 + dy, wu * 0.8, hu * 0.3);
+    for (let i = 0; i < n; i++) { const t = (i + 0.5) / n, rr = hu * (0.22 + 0.2 * Math.sin(t * Math.PI) + r() * 0.08); g.moveTo(wu * (0.1 + 0.8 * t) + rr, base - rr * 0.7 + dy); g.arc(wu * (0.1 + 0.8 * t), base - rr * 0.7 + dy, rr, 0, TAU); }
+    g.fill();
+  };
+  g.save(); g.beginPath(); g.rect(0, 0, wu, base); g.clip();
+  g.fillStyle = sh; shape(0); g.fillStyle = col; shape(-hu * 0.07);
+  g.restore();
+  return { c, wu, hu };
+}
+// Offscreen: lucht (verloop, zon of maan, sterren) en de wolken, per canvasformaat en thema één keer
+function introCaches() {
+  IN.dark = introDark(); IN.still = null; const c = IN.pal = IN.dark ? ICOL.dark : ICOL.light;
+  if (!IN.geo) { IN.geo = introGeo(); IN.logo = introLogo(); }
+  const d = IN.d, W2 = iCv.width, H2 = iCv.height, sky = IN.sky || (IN.sky = document.createElement('canvas'));
+  sky.width = W2; sky.height = H2;
+  const g = sky.getContext('2d'), gr = g.createLinearGradient(0, 0, 0, IN.picH * 0.95 * d);
+  gr.addColorStop(0, c.sky[0]); gr.addColorStop(0.55, c.sky[1]); gr.addColorStop(1, c.sky[2]);
+  g.fillStyle = gr; g.fillRect(0, 0, W2, H2);
+  const sx = Math.min(IN.w * 0.17, 120) * d, sy = IN.picH * 0.15 * d, sr = 20 * d;
+  if (IN.dark) {
+    const rnd = mulberry32(7); g.fillStyle = 'rgba(247,247,247,.7)';
+    for (let i = 0; i < 60; i++) g.fillRect(rnd() * W2, rnd() * IN.picH * 0.5 * d, 1.4 * d, 1.4 * d); // sterren
+    const mc = document.createElement('canvas'); mc.width = mc.height = Math.ceil(sr * 2.4); const mg = mc.getContext('2d');
+    mg.fillStyle = c.sun; mg.beginPath(); mg.arc(sr * 1.2, sr * 1.2, sr * 0.7, 0, TAU); mg.fill();
+    mg.globalCompositeOperation = 'destination-out'; mg.beginPath(); mg.arc(sr * 0.92, sr * 0.98, sr * 0.62, 0, TAU); mg.fill(); // maansikkel
+    g.drawImage(mc, sx - sr * 1.2, sy - sr * 1.2);
+  } else {
+    g.fillStyle = 'rgba(255,251,234,.45)'; g.beginPath(); g.arc(sx, sy, sr * 1.7, 0, TAU); g.fill();
+    g.fillStyle = c.sun; g.beginPath(); g.arc(sx, sy, sr, 0, TAU); g.fill();
+  }
+  introImgs(d, c);
+  const cs = 0.5 * d, ck = d + '|' + c.cloud; // wolken alleen opnieuw bij een andere resolutie of een ander thema
+  if (!IN.clouds || IN.cloudKey !== ck) IN.cloudKey = ck, IN.clouds = IN.geo.clouds.map(([x, y, wu, seed]) => ({ x, y, v: 6 + (seed % 5), s: iCloud(seed, wu, c.cloud, c.cloudSh, cs), cs }));
+  // binnen in de toren: per verdieping de kleur, donkerder naar beneden (vooraf gemengd, geen verloop per verdieping)
+  const bot = '#08090A';
+  IN.fl = [];
+  for (let i = 0; i < 9; i++) {
+    const D = 1 + 0.62 * i, fo = clamp(1 - 1 / Math.pow(D, 0.95), 0, 0.92);
+    IN.fl.push({ D, slab: mixHex('#3A3D41', bot, fo), top: mixHex('#5A5E63', bot, fo), edge: mixHex('#E78A01', bot, fo), roll: mixHex('#C4CBD3', bot, fo),
+      hi: mixHex('#FFFFFF', bot, Math.min(1, fo * 1.2)), rim: mixHex('#2A3036', bot, fo), off: [0, 64, -70, 30, -84, 76, -40, 70, -10][i] });
+  }
+}
+// stad ver weg en de buurt achter de fabriek: één keer als plaatje (ze veranderen nauwelijks van schaal); per resolutie en thema
+function introImgs(d, c) {
+  if (!IN.geo) { IN.geo = introGeo(); IN.logo = introLogo(); }
+  for (const L of [IN.geo.far, IN.geo.mid]) {
+    const key = d + '|' + c.far; if (L.key === key) continue; L.key = key;
+    const [x0, y0, bw, bh, ps] = L.box, k = ps * d, cv = L.img || (L.img = document.createElement('canvas'));
+    cv.width = Math.ceil(bw * k); cv.height = Math.ceil(bh * k);
+    const lg = cv.getContext('2d'); lg.setTransform(k, 0, 0, k, -x0 * k, -y0 * k);
+    for (const [r, p] of L.parts) { const col = c[r]; if (col) { lg.fillStyle = col; lg.fill(p); } }
+  }
+}
+// bij een eerste bezoek alvast klaarzetten zodra het titelscherm rustig is, zodat It giet oan! meteen de intro toont
+function introWarm() {
+  if (!introWanted() || S.screen !== 'title') return;
+  try { introImgs(V.dpr, introDark() ? ICOL.dark : ICOL.light); } catch (e) { /* dan bij het openen */ }
+}
+function iCam(b) { const k = Math.min(IN.w / (b[1] - b[0]), IN.picH / (b[3] - b[2])); return { fx: (b[0] + b[1]) / 2, fy: (b[2] + b[3]) / 2, lk: Math.log(k), ey: b[4] }; }
+function iCamFull(c) { const k = Math.exp(c.lk), sx = IN.w / 2, sy = IN.picH / 2; return { fx: c.fx, fy: c.fy, k, ey: c.ey, sx, sy, hy: sy + (c.ey - c.fy) * k }; }
+// camera op tijd T (s) in shot i; shot 2 volgt een gebogen baan langs het schip (even langzamer daar) naar het raam bovenin
+function iCamAt(i, T) {
+  const C = IN.cams, t = clamp(T / INTRO_SHOTS[i].dur, 0, 1), mix = (a, b, u, uk) => ({ fx: lerp(a.fx, b.fx, u), fy: lerp(a.fy, b.fy, u), ey: lerp(a.ey, b.ey, u), lk: lerp(a.lk, b.lk, uk === undefined ? u : uk) });
+  if (i === 0) return mix(C[0], C[1], eio(t));
+  if (i === 1) {
+    let u = eio(t); u += 0.6 * Math.sin(TAU * u) / TAU;
+    const A = C[1], M = C[2], B = C[3], q = k => { const c = 2 * M[k] - (A[k] + B[k]) / 2; return (1 - u) * (1 - u) * A[k] + 2 * u * (1 - u) * c + u * u * B[k]; };
+    return { fx: q('fx'), fy: q('fy'), lk: q('lk'), ey: q('ey') };
+  }
+  const a = clamp(T / IWIN, 0, 1);
+  return mix(C[3], C[4], eio(a), Math.pow(a, 2.3)); // steeds sneller op het raam af
+}
+// binnen: kanteling, schaal en de korrel op tijd T in shot 3
+// Z: pas als het raam het beeld vult vlieg je binnen door (zelfde vaart als de nadering), daarna remt het af
+const iInside = T => ({ Z: Math.pow(0.35, Math.pow(1 - clamp((T - 1.3) / 1.2, 0, 1), 3)), pitch: lerp(0.32, 1, eio((T - 0.7) / 2.7)), gT: T - 2.9 });
+// laag tekenen met de camera: schaal s volgt uit de diepte; geeft de transformatie terug (of null als de camera er al voorbij is)
+function iLayer(g, L, cam) {
+  const dist = L.dz + IF / cam.k; if (dist <= 1) return null;
+  const s = IF / dist, X0 = cam.sx - cam.fx * s, Y0 = cam.hy - cam.ey * s, d = IN.d, c = IN.pal;
+  g.setTransform(s * d, 0, 0, s * d, X0 * d, Y0 * d);
+  for (const [r, p] of L.parts) { const col = c[r]; if (col) { g.fillStyle = col; g.fill(p); } }
+  return { s, X0, Y0, dist };
+}
+// graan onderweg, alleen als stipjes (bij verminderde beweging staan ze stil); over: boven op een bewaard eindbeeld, dan niet in het ruim
+function iDots(g, cam, A, over) {
+  const D = IN.geo.dots, d = IN.d; g.setTransform(cam.k * d, 0, 0, cam.k * d, (cam.sx - cam.fx * cam.k) * d, (cam.hy - cam.ey * cam.k) * d);
+  g.fillStyle = IN.pal.dot; g.beginPath();
+  for (let i = 0; i < 26; i++) {
+    const p = (i / 26 * D.len + A * 70) % D.len, sg = D.segs.find(q => p >= q[2] && p < q[2] + q[3]) || D.segs[D.segs.length - 1];
+    const u = (p - sg[2]) / sg[3], y = lerp(sg[0][1], sg[1][1], u); if (over && y > -24) continue;
+    const x = lerp(sg[0][0], sg[1][0], u); g.moveTo(x + 1.6, y); g.arc(x, y, 1.6, 0, TAU);
+  }
+  g.fill();
+}
+// meeuwen (iets voor de gevel)
+function iGulls(g, cam, A) {
+  const gs = IF / (-150 + IF / cam.k), d = IN.d; if (!(gs > 0)) return;
+  g.setTransform(d, 0, 0, d, 0, 0); g.strokeStyle = IN.pal.gull; g.lineWidth = Math.max(1.3, 1.6 * gs); g.lineCap = 'round'; g.lineJoin = 'round'; g.beginPath();
+  for (const [x0, y0, v, ph] of IN.geo.gulls) {
+    const x = cam.sx + (x0 + Math.sin(A * 0.25 * v + ph) * 40 + A * 8 * v - cam.fx) * gs, y = cam.hy + (y0 + Math.sin(A * 0.6 + ph) * 8 - cam.ey) * gs;
+    const f = Math.sin(A * 5 * v + ph * 3), s = 9 * gs, lift = s * (0.35 + 0.3 * f);
+    g.moveTo(x - s, y - lift); g.quadraticCurveTo(x - s * 0.45, y - lift * 1.4, x, y); g.quadraticCurveTo(x + s * 0.45, y - lift * 1.4, x + s, y - lift);
+  }
+  g.stroke();
+}
+// live: met meeuwen en graanstipjes (anders komen die er later bovenop, op een bewaard eindbeeld)
+function iLayerImg(g, L, cam) {
+  const s = IF / (L.dz + IF / cam.k), [x0, y0, bw, bh] = L.box, d = IN.d;
+  g.setTransform(1, 0, 0, 1, 0, 0);
+  g.drawImage(L.img, (cam.sx + (x0 - cam.fx) * s) * d, (cam.hy + (y0 - cam.ey) * s) * d, bw * s * d, bh * s * d);
+}
+function iOutside(g, cam, ins, a3, A, live) {
+  const c = IN.pal, d = IN.d, w = IN.w, h = IN.h, geo = IN.geo;
+  g.setTransform(1, 0, 0, 1, 0, 0); g.globalAlpha = 1;
+  // alles onder de kaderand wordt toch overgeschilderd (kade, water, oever): lucht en grond alleen tot daar
+  const yq = clamp(cam.hy - cam.ey * cam.k, 0, h), sF = IF / (geo.far.dz + IF / cam.k), sM = IF / (geo.mid.dz + IF / cam.k);
+  const yF = clamp(cam.hy + (-8 - cam.ey) * sF, 0, yq), yM = clamp(cam.hy + (-4 - cam.ey) * sM, 0, yq);
+  if (yF > 0) g.drawImage(IN.sky, 0, 0, iCv.width, Math.ceil(yF * d), 0, 0, iCv.width, Math.ceil(yF * d));
+  g.fillStyle = c.far; g.fillRect(0, Math.floor(yF * d), iCv.width, Math.ceil((yq - yF) * d) + 2);
+  g.fillStyle = c.midGround; g.fillRect(0, Math.floor(yM * d), iCv.width, Math.ceil((yq - yM) * d) + 2);
+  const sc = IF / (2000 + IF / cam.k); // wolken drijven ver weg
+  for (const cl of IN.clouds) {
+    const x = ((cl.x + A * cl.v + 2600) % 5200 + 5200) % 5200 - 2600, sw = cl.s.wu * sc, shh = cl.s.hu * sc;
+    const X = cam.sx + (x - cam.fx) * sc, Y = cam.hy + (cl.y - cam.ey) * sc;
+    if (X + sw / 2 < 0 || X - sw / 2 > w) continue;
+    g.drawImage(cl.s.c, (X - sw / 2) * d, (Y - shh) * d, sw * d, shh * d);
+  }
+  iLayerImg(g, geo.far, cam); iLayerImg(g, geo.mid, cam);
+  const F = iLayer(g, geo.fac, cam);
+  if (IN.logo.length) { // logo op de gevel, boven de bovenste ramen
+    g.save(); g.translate(-64, -353); g.scale(128 / 426, 128 / 426);
+    for (const q of IN.logo) { g.fillStyle = q.gold ? '#CFAB00' : '#F7F7F7'; g.fill(q.p); }
+    g.restore();
+  }
+  if (live) iDots(g, cam, A, false);
+  // het raam waar we doorheen vliegen: daarachter de binnenkant van de toren
+  const wx0 = cam.sx + (IWINR[0] - cam.fx) * cam.k, wy0 = cam.sy + (IWINR[1] - cam.fy) * cam.k, ww = IWINR[2] * cam.k, wh = IWINR[3] * cam.k;
+  if (ins) {
+    g.save(); g.setTransform(d, 0, 0, d, 0, 0); g.beginPath(); g.rect(wx0, wy0, ww, wh); g.clip();
+    iShaft(g, wx0 + ww / 2, wy0 + wh / 2, ins, -1, true);
+    g.setTransform(d, 0, 0, d, 0, 0); g.fillStyle = `rgba(246,220,147,${clamp(1 - a3 * 1.7, 0, 1).toFixed(3)})`; g.fillRect(wx0, wy0, ww, wh); // glans van het glas
+    g.restore();
+  }
+  { // kozijn met een oranje vensterbank: schuift bij de vlucht naar binnen langs de randen van het beeld
+    const p = IWINP * cam.k, sb = IWINS * cam.k; g.setTransform(d, 0, 0, d, 0, 0); g.fillStyle = c.frame;
+    g.fillRect(wx0, wy0, ww, p); g.fillRect(wx0, wy0, p, wh); g.fillRect(wx0 + ww - p, wy0, p, wh);
+    g.fillStyle = c.orange; g.fillRect(wx0, wy0 + wh - sb, ww, sb);
+  }
+  // water: van de kade tot de oever aan deze kant, met rimpels en weerspiegeling
+  const yw = cam.hy + (27 - cam.ey) * cam.k;
+  const fgD = geo.fg.dz + IF / cam.k, fgS = fgD > 1 ? IF / fgD : 0, yb = fgS ? Math.min(h, cam.hy + (70 - cam.ey) * fgS) : h;
+  g.setTransform(d, 0, 0, d, 0, 0);
+  if (yw < h) {
+    g.fillStyle = c.water; g.fillRect(0, yw, w, (fgS && fgD > 60 && IN.i === 0 ? yb + 2 : h) - yw);
+    const X = x => cam.sx + (x - cam.fx) * cam.k, rl = Math.min(90, (yb - yw) * 0.8);
+    g.fillStyle = c.refl; g.beginPath(); // weerspiegeling van toren en silo's: gebroken strepen, steeds korter
+    for (let j = 0, y = yw + 2; y < yw + rl; j++, y += 7) { const q = 1 - (y - yw) / rl, sh = Math.sin(j * 1.7 + A * 1.3) * 4 * cam.k;
+      g.rect(X(-70) + sh + (1 - q) * 30 * cam.k, y, 140 * cam.k * (0.4 + 0.6 * q), 2.5); g.rect(X(80) - sh + (1 - q) * 40 * cam.k, y, 182 * cam.k * (0.3 + 0.6 * q), 2.5); }
+    g.fill();
+    if (c.lit) { g.fillStyle = c.lit; g.beginPath(); for (const x of [-43, -15, 15, 43]) for (let y = yw + 3; y < yw + rl * 0.9; y += 6) g.rect(X(x) - 1.5 * cam.k + Math.sin(y * 0.3 + A * 2) * 2, y, 3 * cam.k, 3); g.fill(); }
+    g.fillStyle = c.ripple; g.beginPath();
+    const rnd = mulberry32(5);
+    for (let i = 0; i < 28; i++) {
+      const q = rnd(), y = yw + 4 + (yb - yw - 6) * Math.pow(q, 1.4), len = 8 + 30 * q, x = ((rnd() * (w + 80) + A * (5 + 12 * q)) % (w + 80)) - 40;
+      if (y < h) g.rect(x, y, len, 1.5 + q);
+    }
+    g.fill();
+  }
+  iLayer(g, geo.ship, cam);
+  if (live) iGulls(g, cam, A);
+  // voorgrond: oever met huizen en bomen; vervaagt zodra de camera erover vliegt
+  if (fgD > 60) {
+    // in shot 2 vliegt de camera over de oever: die schuift dicht en in 0,9 s omlaag uit beeld (geen doorzichtige spookhuizen)
+    const drop = IN.i === 1 ? eio(IN.t / 0.9) * IN.picH * 1.2 : 0, fa = IN.i <= 1 ? 1 : 0;
+    g.globalAlpha = clamp((fgD - 60) / 200, 0, 1) * fa; if (g.globalAlpha > 0.01) iLayer(g, geo.fg, drop ? Object.assign({}, cam, { hy: cam.hy + drop }) : cam); g.globalAlpha = 1;
+  }
+  return F;
+}
+// Binnen in de maaltoren, schuin naar beneden de schacht in. Verdiepingen met walsenstoelen zoals in het spel (Molen B-kleuren),
+// steeds kleiner en donkerder naar het verdwijnpunt. pitch 0 = recht vooruit (alles op een kluitje), 1 = naar beneden gekanteld.
+const iShaftGeo = (cy, ins) => { const u = IN.u * ins.Z, top = cy - 56 * u; return { u, top, vy: top + lerp(30, 440, ins.pitch) * u }; };
+function iShaft(g, cx, cy, ins, dive, grain) {
+  const d = IN.d, { u, top, vy } = iShaftGeo(cy, ins), yAt = D => vy - (vy - top) / D;
+  const dv = dive > 0 ? dive : 0, m = 1 + 3.2 * dv * dv; // duik: inzoomen op het verdwijnpunt
+  g.setTransform(d * m, 0, 0, d * m, d * cx * (1 - m), d * vy * (1 - m));
+  g.fillStyle = '#2C2E31'; g.fillRect(cx - 2000, cy - 2000, 4000, 4000); // zijwanden
+  // buizen op de zijwanden, die ook naar het verdwijnpunt lopen
+  g.fillStyle = '#323438'; g.beginPath();
+  for (const o of [250, 330]) for (const sd of [-1, 1]) {
+    const x1 = cx + sd * o * u / 0.25, y1 = yAt(0.25), x2 = cx + sd * (o + 16) * u / 0.25;
+    g.moveTo(x1, y1); g.lineTo(x2, y1); g.lineTo(cx, vy); g.closePath();
+  }
+  g.fill();
+  // de verdiepingen lopen door in de zijwanden: per vloer een balk tot de rand van het beeld
+  for (let i = IN.fl.length - 1; i >= 0; i--) { const f = IN.fl[i], k = u / f.D, y = yAt(f.D), th = 22 * k; g.fillStyle = f.slab; g.fillRect(cx - 3000, y - th / 2, 6000, th); }
+  // onder het verdwijnpunt loopt de schacht door: dezelfde balken gespiegeld en samengedrukt, en naar onder toe iets donkerder
+  for (let i = IN.fl.length - 1; i >= 0; i--) { const f = IN.fl[i], k = u / f.D, y2 = vy + (vy - yAt(f.D)) * 0.4, th = 22 * k * 0.4; g.fillStyle = f.slab; g.fillRect(cx - 3000, y2 - th / 2, 6000, th); }
+  const sh = g.createLinearGradient(0, vy, 0, vy + 150 * u); sh.addColorStop(0, 'rgba(18,19,20,0)'); sh.addColorStop(1, 'rgba(18,19,20,.55)');
+  g.fillStyle = sh; g.fillRect(cx - 3000, vy, 6000, 150 * u); g.fillStyle = 'rgba(18,19,20,.55)'; g.fillRect(cx - 3000, vy + 150 * u, 6000, 4000);
+  // achterwand van de schacht: twee vlakke tinten, donkerder naar het verdwijnpunt (geen verloop per frame)
+  g.fillStyle = '#25272A'; g.beginPath(); g.moveTo(cx - 200 * u / 0.2, yAt(0.2)); g.lineTo(cx + 200 * u / 0.2, yAt(0.2)); g.lineTo(cx, vy); g.closePath(); g.fill();
+  g.fillStyle = '#0E0F10'; g.beginPath(); g.moveTo(cx - 200 * u / 2.2, yAt(2.2)); g.lineTo(cx + 200 * u / 2.2, yAt(2.2)); g.lineTo(cx, vy); g.closePath(); g.fill();
+  g.fillStyle = 'rgba(111,211,224,.22)'; // dunne lichtlijn langs de schachtwand, zoals in Molen B
+  g.beginPath(); for (const sd of [-1, 1]) { g.moveTo(cx + sd * 200 * u / 0.2, yAt(0.2)); g.lineTo(cx + sd * 203 * u / 0.2, yAt(0.2)); g.lineTo(cx, vy); g.closePath(); } g.fill();
+  for (let i = IN.fl.length - 1; i >= 0; i--) {
+    const f = IN.fl[i], D = f.D, k = u / D, y = yAt(D), hw = 200 * k, gx = cx + f.off * k, gw = 30 * k, r = 25 * k, th = 22 * k;
+    if (y - th > IN.h + 20) continue;
+    const xl = gx - gw - r, xr = gx + gw + r, tp = 9 * k * ins.pitch; // tp: hoe ver je op de bovenkant van de vloer kijkt
+    if (tp > 0.5) { g.fillStyle = f.top; g.fillRect(cx - hw, y - th / 2 - tp, xl - (cx - hw), tp); g.fillRect(xr, y - th / 2 - tp, cx + hw - xr, tp); }
+    g.fillStyle = f.slab; g.fillRect(cx - hw, y - th / 2, xl - (cx - hw), th); g.fillRect(xr, y - th / 2, cx + hw - xr, th);
+    g.fillStyle = f.edge; g.fillRect(cx - hw, y - th / 2, xl - (cx - hw), Math.max(1, 2.4 * k)); g.fillRect(xr, y - th / 2, cx + hw - xr, Math.max(1, 2.4 * k));
+    // twee walsen aan weerszijden van de spleet
+    g.fillStyle = f.roll; g.beginPath(); g.arc(xl, y, r, 0, TAU); g.moveTo(xr + r, y); g.arc(xr, y, r, 0, TAU); g.fill();
+    g.fillStyle = f.hi; g.fillRect(xl - r * 0.4, y - r * 0.85, Math.max(1, 2.2 * k), r * 1.7); g.fillRect(xr - r * 0.4, y - r * 0.85, Math.max(1, 2.2 * k), r * 1.7);
+    g.strokeStyle = f.rim; g.lineWidth = Math.max(1, 2 * k); g.beginPath(); g.arc(xl, y, r, 0, TAU); g.moveTo(xr + r, y); g.arc(xr, y, r, 0, TAU); g.stroke();
+  }
+  // lampjes langs de wand
+  g.fillStyle = '#F2D35B'; g.beginPath();
+  for (let i = 1; i < 6; i++) { const D = 1.31 + 0.62 * i, k = u / D, y = yAt(D); for (const sd of [-1, 1]) { g.moveTo(cx + sd * 214 * k + 3 * k, y); g.arc(cx + sd * 214 * k, y, 3 * k, 0, TAU); } }
+  g.fill();
+  // stortkoker en de korrel: één korrel uit de koker, die je aankijkt
+  const gy = top - 62 * u, mouth = gy - 34 * u;
+  g.fillStyle = '#8D959E'; g.fillRect(cx - 16 * u, mouth - 2000, 32 * u, 2000); g.fillStyle = 'rgba(255,255,255,.18)'; g.fillRect(cx - 12 * u, mouth - 2000, 5 * u, 2000);
+  g.fillStyle = '#5D646C'; g.fillRect(cx - 21 * u, mouth - 10 * u, 42 * u, 10 * u);
+  if (grain) iShaftGrain(g, cx, cy, ins, dv);
+  if (dv > 0.4) { g.setTransform(1, 0, 0, 1, 0, 0); g.fillStyle = `rgba(11,12,13,${clamp((dv - 0.4) / 0.6, 0, 1).toFixed(3)})`; g.fillRect(0, 0, iCv.width, iCv.height); }
+}
+// de korrel komt uit de stortkoker, veert even na, lacht en kijkt je dan aan (knipperend); bij de duik valt hij de schacht in
+function iShaftGrain(g, cx, cy, ins, dv) {
+  const d = IN.d, { u, top, vy } = iShaftGeo(cy, ins), gy = top - 62 * u, mouth = gy - 34 * u, m = 1 + 3.2 * dv * dv, gT = ins.gT;
+  g.setTransform(d * m, 0, 0, d * m, d * cx * (1 - m), d * vy * (1 - m));
+  if (gT >= 0) {
+    const e = clamp(gT / 0.55, 0, 1), back = 1 + 2.4 * Math.pow(e - 1, 3) + 1.4 * Math.pow(e - 1, 2); // even doorschieten en terugveren
+    let x = cx, y = lerp(mouth - 10 * u, gy, back), sc = 3.1 * u;
+    if (dv > 0) { // bij de duik valt de korrel de schacht in, de camera erachteraan
+      const fe = dv * dv; g.setTransform(d, 0, 0, d, 0, 0); y = lerp(y, vy, fe); x = cx; sc *= 1 - 0.75 * fe;
+    }
+    g.save(); g.translate(x, y); g.scale(sc, sc);
+    drawGrain(0, 0, g, { joy: gT > 0.45 && gT < 1.35, blink: !reduced.matches && gT > 1.35 && (IN.amb % 3.1) < 0.12 });
+    g.restore();
+  }
+}
+// stilstaand eindbeeld: één keer op een offscreen canvas, daarna elk frame alleen een kopie (key: shot, formaat, thema)
+function iStill(key, paint) {
+  let c = IN.still;
+  if (!c || c.key !== key) { const cv = (c && c.cv) || document.createElement('canvas'); cv.width = iCv.width; cv.height = iCv.height; paint(cv.getContext('2d')); IN.still = c = { key, cv }; }
+  ig.setTransform(1, 0, 0, 1, 0, 0); ig.drawImage(c.cv, 0, 0);
+}
+function introDraw() {
+  if (!IN.geo || S.screen !== 'intro') return;
+  const g = ig, sh = IN.i, T = IN.t;
+  g.setTransform(1, 0, 0, 1, 0, 0); g.globalAlpha = 1;
+  const still = T >= INTRO_SHOTS[sh].dur && IN.dive < 0, key = `${sh}|${iCv.width}|${iCv.height}|${IN.dark}`;
+  if (sh < 2) {
+    const cam = iCamFull(iCamAt(sh, T));
+    if (!still) { iOutside(g, cam, null, 0, IN.amb, true); return; }
+    iStill(key, gg => iOutside(gg, cam, null, 0, IN.amb, false)); // camera staat stil: alleen meeuwen en graan bewegen nog
+    iDots(g, cam, IN.amb, true); iGulls(g, cam, IN.amb); return;
+  }
+  const ins = iInside(T), a3 = clamp(T / IWIN, 0, 1), cam = iCamFull(iCamAt(2, T));
+  const x0 = cam.sx + (IWINR[0] - cam.fx) * cam.k, y0 = cam.sy + (IWINR[1] - cam.fy) * cam.k;
+  const p = IWINP * cam.k, covers = IN.dive >= 0 || (x0 + p <= 0 && y0 + p <= 0 && x0 + IWINR[2] * cam.k - p >= IN.w && y0 + (IWINR[3] - IWINS) * cam.k >= IN.h); // de opening binnen het kozijn vult het beeld
+  if (covers && still) { iStill(key, gg => iShaft(gg, IN.w / 2, IN.picH / 2, ins, -1, false)); iShaftGrain(g, IN.w / 2, IN.picH / 2, ins, 0); }
+  else if (covers) iShaft(g, IN.w / 2, IN.picH / 2, ins, IN.dive >= 0 ? IN.dive / IDIVE : -1, true);
+  else iOutside(g, cam, ins, a3, IN.amb, true);
+}
+// formaat: canvas, hoogte van het beeld boven het paneel, cameravakken en offscreen-lagen (ook bij draaien of een ander thema)
+function introLayout() {
+  if (S.screen !== 'intro') return;
+  const w = app.clientWidth || innerWidth, h = app.clientHeight || innerHeight, d = V.dpr;
+  iCv.width = Math.max(1, Math.round(w * d)); iCv.height = Math.max(1, Math.round(h * d));
+  Object.assign(IN, { w, h, d });
+  // ondertitel even hoog voor alle drie de shots, zodat het beeld niet verspringt; meten op een onzichtbare kopie (niet in de live-regio)
+  const p = $('introText'), mz = p.cloneNode(false); mz.removeAttribute('id'); mz.setAttribute('aria-hidden', 'true');
+  mz.style.position = 'absolute'; mz.style.visibility = 'hidden'; mz.style.left = '0'; mz.style.top = '0'; mz.style.width = p.clientWidth + 'px';
+  $('introPanel').appendChild(mz); let mx = 0; for (const s of INTRO_SHOTS) { mz.textContent = s.text; mx = Math.max(mx, mz.offsetHeight); } mz.remove();
+  p.style.minHeight = mx + 'px';
+  IN.picH = clamp($('introPanel').getBoundingClientRect().top - app.getBoundingClientRect().top, 120, h);
+  IN.u = Math.min(w, IN.picH * 0.9) / 400;
+  const ox = IWINR[2] / 2 - IWINP, oy = IWINR[3] / 2 - IWINS; // halve opening binnen het kozijn
+  const kw = 1.15 * Math.max(w / 2 / ox, IN.picH / 2 / oy, (h - IN.picH / 2) / oy);
+  IN.cams = IBOX.map(iCam).concat([{ fx: IWINR[0] + IWINR[2] / 2, fy: IWINR[1] + IWINR[3] / 2, ey: IWINR[1] + IWINR[3] / 2, lk: Math.log(kw) }]);
+  introCaches();
+  if (!IN.raf) introDraw();
+}
+function introShot(i) {
+  // verminderde beweging: meteen het eindbeeld. Shot 1 staat eerst 0,3 s stil, zodat een trage start niet midden in de beweging hapert.
+  IN.i = i; IN.t = reduced.matches ? INTRO_SHOTS[i].dur : i === 0 ? -0.3 : 0;
+  const s = INTRO_SHOTS[i];
+  $('introKicker').textContent = s.kicker; $('introStep').textContent = `Stap ${i + 1} van 3.`;
+  $('introText').textContent = s.text; $('introDesc').textContent = s.desc;
+  announce(`${s.kicker}. Stap ${i + 1} van 3. ${s.text} ${s.desc}`); // #sr staat altijd in de DOM, dus ook shot 1 wordt voorgelezen
+  [...$('introDots').querySelectorAll('i')].forEach((e, j) => e.classList.toggle('on', j <= i));
+  $('bIntroNext').textContent = i === 2 ? 'It giet oan!' : 'Verder';
+}
+const introWanted = () => !save.introSeen; // iedereen één keer, ook wie al eerder speelde; hij is kort en je kunt hem overslaan
+function openIntro(from) {
+  // tEnd: de eerste 0,4 s telt een tik niet als Verder (tweede tik van een dubbeltik op It giet oan!)
+  Object.assign(IN, { from, t: 0, amb: 0, dive: -1, last: 0, hold: false, quick: 0, qsum: 0, tEnd: performance.now() + 50, capBefore: dprCap });
+  const again = from === 'again';
+  $('bIntroSkip').textContent = again ? 'Terug naar het menu' : 'Overslaan';
+  $('bIntroSkipTop').textContent = again ? 'Menu' : 'Overslaan';
+  $('bIntroSkipTop').setAttribute('aria-label', again ? 'Terug naar het menu' : 'Intro overslaan');
+  // was de titeldemo al te traag, dan meteen op resolutie 1 (één herbouw); daarna meet de intro zelf
+  const slow = fps.n > 10 && fps.sum / fps.n > CONFIG.slowFrame && V.dpr > 1; fps.n = fps.sum = 0;
+  show('intro'); if (slow) { dprCap = 1; layout(); } else introLayout(); introShot(0); introWind(true); introLoop();
+}
+function introLoop() {
+  if (S.screen !== 'intro') return;
+  if (reduced.matches) { introDraw(); return; } // geen lus: elk shot is één stilstaand beeld
+  if (!IN.raf && !offscreen) { IN.last = 0; IN.raf = requestAnimationFrame(introFrame); }
+}
+function introFrame(ts) {
+  IN.raf = 0;
+  if (S.screen !== 'intro' || offscreen) return; // weg uit de intro of uit beeld: de lus stopt
+  if (!$('rotate').hidden) { IN.last = ts; IN.raf = requestAnimationFrame(introFrame); return; } // telefoon dwars: de vlucht wacht
+  const raw = IN.last ? ts - IN.last : 0, dt = Math.min(raw / 1000, 0.05); IN.last = ts; IN.frames++; IN.amb += dt;
+  // zwakke telefoon: net als in het spel zakt de canvasresolutie (frameSample, layout() bouwt de intro opnieuw op). De eerste twaalf
+  // frames tellen apart: zijn die gemiddeld veel te traag, dan meteen naar 1, zodat shot 1 niet eerst een seconde hapert.
+  if (raw > 0 && raw < 100 && IN.quick < 12 && ++IN.quick) { IN.qsum += raw; if (IN.quick === 12 && IN.qsum / 12 > CONFIG.slowFrame * 1.5 && V.dpr > 1) { dprCap = 1; layout(); } }
+  frameSample(raw);
+  if (IN.dive >= 0) { IN.dive += dt; if (IN.dive >= IDIVE) { IN.dive = IDIVE; introDraw(); introGo(true); return; } }
+  else if (!IN.hold) IN.t = Math.min(IN.t + dt, INTRO_SHOTS[IN.i].dur);
+  if (!IN.hold) introDraw();
+  IN.raf = requestAnimationFrame(introFrame);
+}
+function introStop() {
+  if (IN.raf) cancelAnimationFrame(IN.raf); IN.raf = 0; introWind(false);
+  // offscreen-beelden vrijgeven (bij opnieuw bekijken zijn ze snel weer gebouwd)
+  IN.still = null; if (IN.sky) IN.sky.width = IN.sky.height = 0; IN.sky = null; IN.clouds = null; IN.cloudKey = null;
+  if (IN.geo) for (const L of [IN.geo.far, IN.geo.mid]) { if (L.img) L.img.width = L.img.height = 0; L.img = null; L.key = null; }
+}
+// na de intro meet het spel zelf opnieuw: een lagere resolutie voor de intro geldt niet voor het spel
+function introCap() { fps.n = fps.sum = 0; if (IN.capBefore && dprCap !== IN.capBefore) { dprCap = IN.capBefore; layout(); } }
+// Verder (knop, tik op het beeld, spatie, Enter, pijltje rechts): beweegt de camera nog, dan eerst naar het eindbeeld van dit shot
+// Vlak na het openen of na de sprong naar het eindbeeld telt een tweede druk niet (dubbeltik), zodat je het eindbeeld ziet.
+function introNext() {
+  if (S.screen !== 'intro' || IN.dive >= 0 || performance.now() - IN.tEnd < 350) return;
+  if (IN.t < INTRO_SHOTS[IN.i].dur) { IN.t = INTRO_SHOTS[IN.i].dur; IN.tEnd = performance.now(); introLoop(); return; }
+  if (IN.i < 2) { introShot(IN.i + 1); IN.tEnd = performance.now(); introLoop(); return; }
+  if (reduced.matches) { introGo(false); return; }
+  IN.dive = 0; introLoop(); // It giet oan!: de camera duikt de schacht in, daarna molen 1
+}
+// pijltje links: terug naar het eindbeeld van het vorige shot
+function introPrev() {
+  if (S.screen !== 'intro' || IN.dive >= 0 || IN.i === 0) return;
+  introShot(IN.i - 1); IN.t = INTRO_SHOTS[IN.i].dur; introLoop();
+}
+function introSkip() { // Overslaan of Esc; bij opnieuw bekijken: terug naar het menu
+  if (S.screen !== 'intro') return;
+  if (IN.from === 'again') { introStop(); toTitle(); introCap(); } else introGo(false);
+}
+function introGo(dived) {
+  introStop(); save.introSeen = true; persist();
+  const veil = $('introVeil');
+  if (dived) { veil.hidden = false; veil.style.transition = 'none'; veil.style.opacity = '1'; }
+  startCampaign(0, 2026); // de jaarteller van molen 1 rolt van 2026 terug naar 1846
+  introCap();
+  if (dived) { void veil.offsetWidth; veil.style.transition = 'opacity .45s ease-out'; veil.style.opacity = '0'; setTimeout(() => { veil.hidden = true; }, 500); }
+}
+// geluid (alleen als het aan staat): zacht windje en een meeuw
+function introWind(on, quiet) { // quiet: zonder meeuw (weer in beeld gescrold)
+  try {
+    if (on && !IN.wind && AU.ctx && save.sound && !document.hidden) {
+      const c = AU.ctx, s = c.createBufferSource(), f = c.createBiquadFilter(), gn = c.createGain();
+      s.buffer = AU.brown; s.loop = true; f.type = 'bandpass'; f.frequency.value = 420; f.Q.value = 0.6; gn.gain.value = 0.0001;
+      s.connect(f); f.connect(gn); gn.connect(AU.master); s.start(); gn.gain.setTargetAtTime(0.1, c.currentTime, 0.6); IN.wind = { s, gn };
+      if (!quiet) { AU.tone(1480, 1040, 0.22, 'triangle', 0.035, 0.9); AU.tone(1520, 1100, 0.18, 'triangle', 0.03, 1.22); }
+    } else if (!on && IN.wind) {
+      const wd = IN.wind; IN.wind = null; wd.gn.gain.setTargetAtTime(0.0001, AU.ctx.currentTime, 0.12);
+      setTimeout(() => { try { wd.s.stop(); } catch (e) { /* al gestopt */ } }, 600);
+    }
+  } catch (e) { IN.wind = null; }
+}
+function introTheme() { if (S.screen === 'intro' && IN.geo) { introCaches(); if (!IN.raf) introDraw(); } }
+try { matchMedia('(prefers-color-scheme: dark)').addEventListener('change', introTheme); } catch (e) { /* oudere browsers */ }
+try { new MutationObserver(introTheme).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] }); } catch (e) { /* idem */ }
+$('bIntroNext').onclick = introNext;
+$('bIntroSkip').onclick = $('bIntroSkipTop').onclick = introSkip;
+$('bIntroAgain').onclick = () => openIntro('again');
+iCv.addEventListener('click', introNext); // tik op het beeld = Verder
+
 function primary() { const b = SCR[S.screen] && SCR[S.screen].querySelector('[data-primary]'); if (b && !b.disabled) b.click(); }
 // Toetsen die de pagina eromheen laten scrollen (iframe op de site): tijdens het spelen en de wachtende introband doen ze niets
 const SCROLL_KEYS = new Set([' ', 'ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home', 'End']);
 addEventListener('keydown', e => {
   AU.ensure(); lastKey = true; acted = true; idleT0 = performance.now();
   const k = e.key;
-  if (S.screen === 'play' && SCROLL_KEYS.has(k) && !(e.target && e.target.tagName === 'BUTTON')) e.preventDefault();
+  if ((S.screen === 'play' || S.screen === 'intro') && SCROLL_KEYS.has(k) && !(k === ' ' && e.target && e.target.tagName === 'BUTTON')) e.preventDefault(); // spatie blijft voor de knop zelf
   // verhaalkaart: het indrukken telt (spatie klikt pas bij loslaten); een ingehouden toets (repeat) is geen nieuwe indruk
   if (S.screen === 'story' && (k === ' ' || k === 'Enter')) { if (e.repeat) storyArm = false; else armStory(); }
   if (S.screen === 'over' && pickerEntry && (k === 'ArrowUp' || k === 'ArrowDown' || k === 'ArrowLeft' || k === 'ArrowRight')) {
@@ -2790,6 +3412,8 @@ addEventListener('keydown', e => {
   if (introWaiting() && (k === ' ' || k === 'Enter' || k.startsWith('Arrow') || /^[ad]$/i.test(k))) {
     e.preventDefault(); if (!e.repeat) dismissIntro(); return;
   }
+  // intro: pijltje rechts = Verder, links = vorig shot, Esc = Overslaan (of terug naar het menu bij opnieuw bekijken); spatie en Enter doen de hoofdknop
+  if (S.screen === 'intro' && (k === 'ArrowRight' || k === 'ArrowLeft' || k === 'Escape')) { e.preventDefault(); if (!e.repeat) { if (k === 'Escape') introSkip(); else if (k === 'ArrowLeft') introPrev(); else introNext(); } return; }
   if (k === 'ArrowLeft' || k === 'a' || k === 'A') { keys.left = true; if (S.screen === 'play') e.preventDefault(); return; }
   if (k === 'ArrowRight' || k === 'd' || k === 'D') { keys.right = true; if (S.screen === 'play') e.preventDefault(); return; }
   if (S.screen === 'boek' && k === ' ' && !(e.target && /^bBookAll(Yes|No)?$/.test(e.target.id) && focusByKey)) {
@@ -2809,7 +3433,7 @@ addEventListener('keydown', e => {
   if (k === 'p' || k === 'P') { if (S.screen === 'play') pause(); else if (S.screen === 'pause') resume(); return; }
   if (k === 'm' || k === 'M') { AU.setSound(!save.sound); return; }
   // Esc op de verhaalkaart doet niets: die kaart gaat alleen dicht met Verder malen (knop, spatie of Enter)
-  if (k === 'Escape') { if (S.screen === 'play') pause(); else if (S.screen === 'boek') closeBook(); else if (S.screen === 'night') closeNightBrief(); else if (S.screen === 'scores' || S.screen === 'about') { show('title'); refreshTitle(); } else if (S.screen !== 'title' && S.screen !== 'story') toMenu(); return; }
+  if (k === 'Escape') { if (S.screen === 'play') pause(); else if (S.screen === 'boek') closeBook(); else if (S.screen === 'night') closeNightBrief(); else if (S.screen === 'scores' || S.screen === 'about' || S.screen === 'pick' || S.screen === 'settings') toTitle(); else if (S.screen !== 'title' && S.screen !== 'story') toMenu(); return; }
   if ((k === '`' || e.code === 'Backquote') && S.screen === 'play') debug = !debug;
 });
 addEventListener('keyup', e => {
@@ -2855,7 +3479,7 @@ function frame(ts) {
     render(clamp(acc / CONFIG.step, 0, 1)); still = false;
   } else {
     Wd.pcam = Wd.camY; G.px = G.x; acc = 0;
-    if (!still) { render(1); still = true; }
+    if (!still) { if (S.screen !== 'intro') render(1); still = true; } // achter de intro ligt het veld verborgen
   }
   if (S.screen === 'story') { syncStoryBtn(); if (!reduced.matches) drawStoryArt((ts - storyT0) / 1000); } // knop na 0,6 s actief; paardje loopt rond, stoom stijgt op
   if (offscreen && still) { looping = false; return; } // uit beeld: geen frames meer tot het spel weer in beeld komt (loop())
@@ -2869,6 +3493,7 @@ try {
     if (e.intersectionRatio < 0.5) pause();
     offscreen = !e.isIntersecting;
     if (!offscreen && looping === false) { still = false; loop(); }
+    if (S.screen === 'intro') { introWind(!offscreen, true); if (!offscreen) introLoop(); } // de intro heeft een eigen lus; uit beeld ook geen wind
   }, { threshold: [0, 0.5] }).observe(document.documentElement);
 } catch (e) { /* zonder IntersectionObserver loopt het spel gewoon door */ }
 // Muiswiel boven het spel: tijdens het spelen scrolt de pagina eromheen niet mee
@@ -2894,10 +3519,12 @@ function start(data) {
   if (window.visualViewport) visualViewport.addEventListener('resize', layout);
   startDemo();
   if (data && typeof data.screen === 'string' && data.screen === 'about') show('about');
-  whenFonts(() => { if (looping === null) looping = false; loop(); }); // loop() start de lus hooguit één keer
+  whenFonts(() => { if (looping === null) looping = false; loop(); setTimeout(() => { if ('requestIdleCallback' in window) requestIdleCallback(introWarm, { timeout: 1500 }); else introWarm(); }, 400); }); // loop() start de lus hooguit één keer
 }
 window.claude?.hot?.snapshot?.(() => ({ screen: S.screen, lvl: run && run.lvl }));
-window.__korrelval = { state: () => ({ screen: S.screen, mode: run.mode, lvl: run.lvl, score: run.score, lives: run.lives, streak: run.streak, bestStreak: run.bestStreak, x: G.x, passed: run.passed, total: run.total, perfects: run.perfects, hits: lvS.hits, t: Wd.t, intro: Wd.intro, camY: Wd.camY, nFloors: Wd.floors.length + Wd.sched.length + Wd.haz.length, gezel: run.gezel, inv: G.inv,
+window.__korrelval = { introAt: (i, t) => { IN.hold = i !== null; if (IN.hold) { introShot(i); IN.t = t; IN.amb = t; introDraw(); } }, // alleen voor de zelftest: shot i op tijd t vasthouden
+  intro: () => ({ open: S.screen === 'intro', shot: IN.i, t: +IN.t.toFixed(3), dur: INTRO_SHOTS[IN.i].dur, moving: IN.t < INTRO_SHOTS[IN.i].dur, frames: IN.frames, loop: !!IN.raf, dive: IN.dive, seen: !!save.introSeen, from: IN.from, picH: IN.picH }),
+  state: () => ({ screen: S.screen, mode: run.mode, lvl: run.lvl, score: run.score, lives: run.lives, streak: run.streak, bestStreak: run.bestStreak, x: G.x, passed: run.passed, total: run.total, perfects: run.perfects, hits: lvS.hits, t: Wd.t, intro: Wd.intro, camY: Wd.camY, nFloors: Wd.floors.length + Wd.sched.length + Wd.haz.length, gezel: run.gezel, inv: G.inv,
   zone: run.mode === 'night' ? nightZone(run.passed) : null, nightOpen: save.night, nightBrief: save.nightBrief, // Nachtploeg: zone (0 = Slotermeer) en het dienstbriefje
   // verhaalpauze: open = kaart in beeld, seen = molens met getoond verhaal (deze run), at = verdieping op de helft, shownAt = verdieping waarna het verscheen,
   // skipped = uitgestelde verdiepingen met reden, cleared = weggehaalde stenen/moederkoren vlak na de pauze,

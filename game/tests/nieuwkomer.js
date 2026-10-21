@@ -2,17 +2,20 @@
 // Nieuwkomertest voor Korrelval: speelt zoals een nieuwe collega op een telefoon.
 //
 // Wat hij doet (400x800, touch, lege opslag, alle verbindingen naar buiten geblokkeerd):
-//   titelscherm > It giet oan! > introband wegtikken > molen 1 spelen door te SLEPEN (echte touch-events)
-//   > verhaalpauze lezen en Verder malen > weegbon > Molenboek open en terug > Menu > Korrel van de dag
-//   (eerste tik opent het dienstbriefje van de Nachtploeg) > Terug.
+//   titelscherm > It giet oan! > intro (vlucht de maaltoren in: shot 1 en 2 met Verder, It giet oan! op shot 3) > introband wegtikken > molen 1 spelen door te SLEPEN (echte touch-events)
+//   > verhaalpauze lezen en Verder malen > weegbon > Molenboek open en terug > Menu > Kies een molen en terug
+//   > Nachtploeg (opent het dienstbriefje) > Terug. Daarna het titelscherm nog eens op 360x640.
 // Wat hij controleert:
 //   - geen console-fouten en geen paginafouten;
 //   - geen enkele request naar een andere host (geen lettertypen of iets anders van buiten);
-//   - de kaarten (titel, verhaal, weegbon, dienstbriefje) passen zonder scrollen, en nergens horizontaal scrollen;
+//   - de kaarten (titel, ook op 360x640, verhaal, weegbon, Kies een molen, dienstbriefje) passen zonder scrollen, en nergens horizontaal scrollen;
 //     het Molenboek mag in zichzelf scrollen, maar Terug moet in beeld staan;
 //   - geen leestekst tijdens het spelen: geen kaart of melding in beeld, zwevende teksten en labels hooguit drie woorden,
 //     en voor wie sleept geen duimpje;
-//   - bij een eerste bezoek staat het geluid uit.
+//   - bij een eerste bezoek staat het geluid uit;
+//   - de intro: verschijnt bij lege opslag, Overslaan staat in elk shot in beeld, Verder tijdens de camerabeweging springt eerst
+//     naar het eindbeeld, de animatielus stopt na de intro, en de intro komt niet terug na Nog een korrel? of na herladen;
+//     Bekijk de intro opnieuw (Over dit spel) werkt en Terug naar het menu brengt je naar de titel.
 //
 // Zo draai je hem (vanuit de map van de repository, met Playwright en Chromium geïnstalleerd):
 //   NODE_PATH="$(npm root -g)" node game/tests/nieuwkomer.js
@@ -76,7 +79,36 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
   check(/^Geluid:? uit$/.test(await page.textContent('#bSound')), 'eerste bezoek: geluid staat uit', await page.textContent('#bSound'));
 
   // ---------- molen 1 spelen door te slepen ----------
-  await tapSel('#bStart'); await sleep(1100);
+  await tapSel('#bStart'); await sleep(300);
+  const intro = () => page.evaluate(() => window.__korrelval.intro());
+  const inBeeld = sel => page.evaluate(q => { const e = document.querySelector(q); if (!e || e.hidden) return false; const r = e.getBoundingClientRect(); return r.width > 0 && r.top >= 0 && r.bottom <= innerHeight + 0.5 && r.left >= 0 && r.right <= innerWidth + 0.5 && r.height >= 44; }, sel);
+  const stil = async () => { for (let i = 0; i < 80; i++) { if (!(await intro()).moving) return true; await sleep(100); } return false; };
+  let iv = await intro();
+  check(iv.open && iv.shot === 0, 'intro verschijnt bij lege opslag', iv);
+  const overslaan = [];
+  overslaan.push(await inBeeld('#bIntroSkipTop') && await inBeeld('#bIntroSkip'));
+  await shot('02a-intro-shot1-begin');
+  // shot 1: Verder terwijl de camera nog beweegt > eerst het eindbeeld, nog niet door
+  const voor = await intro();
+  await tapSel('#bIntroNext'); await sleep(150);
+  iv = await intro();
+  check(voor.moving && iv.shot === 0 && !iv.moving, 'Verder tijdens de camerabeweging springt naar het eindbeeld, niet meteen door', { voor: { t: voor.t, moving: voor.moving }, na: { shot: iv.shot, t: iv.t, moving: iv.moving } });
+  await shot('02b-intro-shot1-eind');
+  await tapSel('#bIntroNext'); await sleep(150);
+  iv = await intro(); overslaan.push(await inBeeld('#bIntroSkipTop') && await inBeeld('#bIntroSkip'));
+  const s2 = iv.shot === 1;
+  await stil(); await shot('02c-intro-shot2-eind');
+  await tapSel('#bIntroNext'); await sleep(150);
+  iv = await intro(); overslaan.push(await inBeeld('#bIntroSkipTop') && await inBeeld('#bIntroSkip'));
+  await stil(); await shot('02d-intro-shot3-eind');
+  const knop = (await page.textContent('#bIntroNext')).trim();
+  const paneel = await page.evaluate(() => { const p = document.getElementById('introPanel'), r = p.getBoundingClientRect(); return { past: p.scrollHeight <= p.clientHeight + 1 && r.bottom <= innerHeight + 0.5 && r.top >= 0, boven: Math.round(r.top) }; });
+  check(s2 && iv.shot === 2 && knop === 'It giet oan!', 'de nieuwkomer kijkt shot 1 en 2 met Verder; op shot 3 heet de knop It giet oan!', { shot: iv.shot, knop });
+  check(overslaan.every(Boolean), 'Overslaan staat in elk shot in beeld (rechtsboven en onder Verder)', overslaan);
+  check(paneel.past && await geenX(), 'intro: paneel past zonder scrollen, geen horizontaal scrollen', paneel);
+  await tapSel('#bIntroNext'); await sleep(1300);
+  const f1 = (await intro()).frames; await sleep(600); const na = await intro();
+  check(!na.open && !na.loop && na.frames === f1 && na.seen, 'na It giet oan! is de intro dicht, gezien bewaard, en loopt er geen animatielus meer', { open: na.open, loop: na.loop, frames: [f1, na.frames], seen: na.seen });
   s = await st();
   check(s.screen === 'play' && s.intro === 'wait', 'introband wacht op een tik', { screen: s.screen, intro: s.intro });
   await shot('02-introband');
@@ -89,8 +121,10 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
   // status en DOM in één evaluate, zodat ze bij hetzelfde moment horen (anders telt een weegbon die er net tussen komt als kaart tijdens het spelen)
   const stDom = () => page.evaluate(() => ({ ...window.__korrelval.state(), fl: window.__korrelval.floors(),
     dom: [...document.querySelectorAll('.screen')].filter(e => !e.hidden).map(e => e.id).concat(document.getElementById('toast').hidden ? [] : ['toast']) }));
+  let introTerug = false;
   while (Date.now() - t0 < 150000) {
     s = await stDom();
+    if (s.screen === 'intro') introTerug = true;
     if (s.screen === 'story') { // verhaalpauze: even lezen, dan Verder malen
       await lift();
       if (!verhaal) { verhaal = await past('#scrStory'); await shot('03-verhaalpauze'); }
@@ -100,7 +134,7 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
     if (s.screen === 'over') { // korrels op: nog een keer, zoals een echte speler
       await lift(); await shot(`03-game-over-${pogingen}`);
       if (pogingen >= 4) break;
-      pogingen++; await tapSel('#bAgain'); await sleep(300); continue;
+      pogingen++; await tapSel('#bAgain'); await sleep(300); if ((await st()).screen === 'intro') introTerug = true; continue;
     }
     if (s.screen !== 'play' || s.intro === 'wait') { await lift(); await sleep(100); continue; }
     // tijdens het spelen: geen kaart of melding in beeld, korte zwevende teksten en labels, geen duimpje
@@ -118,6 +152,7 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
   await lift();
   s = await st();
   check(s.screen === 'level', 'molen 1 gehaald met slepen (weegbon)', { scherm: s.screen, pogingen });
+  check(!introTerug, 'na een game-over en Nog een korrel? komt de intro niet terug', { pogingen });
   check(!!verhaal, 'verhaalpauze verscheen');
   if (verhaal) check(verhaal.past, 'verhaalkaart past zonder scrollen', verhaal);
   check(leestekst.length === 0, 'geen leestekst tijdens het spelen', leestekst.slice(0, 5).join(' | ') || `langste zwevende tekst of label: ${maxWoorden} woorden`);
@@ -140,13 +175,57 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
     check((await st()).screen === 'level', 'Terug brengt je naar de weegbon');
     // ---------- dienstbriefje van de Nachtploeg ----------
     await tapSel('#bLMenu'); await sleep(500);
-    await tapSel('#bDaily'); await sleep(500);
-    s = await st(); check(s.screen === 'night' && s.nightOpen, 'eerste tik op Korrel van de dag opent het dienstbriefje', { scherm: s.screen, open: s.nightOpen });
-    await shot('06-dienstbriefje');
+    // ---------- Kies een molen (alleen na molen 1) ----------
+    check(await page.isVisible('#bPick'), 'na molen 1 staat Kies een molen op het titelscherm');
+    await tapSel('#bPick'); await sleep(400);
+    const kies = await page.evaluate(() => [...document.querySelectorAll('#lvlChips button')].map(b => b.textContent));
+    s = await st(); check(s.screen === 'pick' && kies.length === 2, 'Kies een molen toont de gehaalde molens', { scherm: s.screen, molens: kies });
+    await shot('06-kies-een-molen');
+    const kp = await past('#scrPick'); check(kp.past, 'Kies een molen past zonder scrollen', kp);
+    await tapSel('#bPickBack'); await sleep(300);
+    // ---------- dienstbriefje van de Nachtploeg ----------
+    await tapSel('#bNight'); await sleep(500);
+    s = await st(); check(s.screen === 'night' && s.nightOpen, 'tik op Nachtploeg opent het dienstbriefje', { scherm: s.screen, open: s.nightOpen });
+    await shot('07-dienstbriefje');
     const brief = await past('#scrNight'); check(brief.past, 'dienstbriefje past zonder scrollen', brief);
     check(await geenX(), 'dienstbriefje: geen horizontaal scrollen');
     await tapSel('#bNbBack'); await sleep(300);
     check((await st()).screen === 'title', 'Terug brengt je naar het titelscherm');
+  }
+
+  // ---------- herladen: de intro komt niet terug; opnieuw bekijken via Over dit spel ----------
+  {
+    await page.reload(); await sleep(1200);
+    await tapSel('#bAbout'); await sleep(300);
+    await tapSel('#bIntroAgain'); await sleep(300);
+    let iv2 = await intro();
+    const link = (await page.textContent('#bIntroSkip')).trim();
+    check(iv2.open && iv2.from === 'again' && link === 'Terug naar het menu', 'Bekijk de intro opnieuw opent de intro, met Terug naar het menu', { open: iv2.open, from: iv2.from, link });
+    await tapSel('#bIntroSkip'); await sleep(300);
+    s = await st(); iv2 = await intro();
+    check(s.screen === 'title' && !iv2.loop, 'Terug naar het menu brengt je naar de titel', { scherm: s.screen, loop: iv2.loop });
+    await tapSel('#bStart'); await sleep(500);
+    s = await st();
+    check(s.screen === 'play' && s.lvl === 0, 'na herladen (intro gezien) start It giet oan! meteen molen 1, zonder intro', s.screen);
+  }
+
+  // ---------- titelscherm op een kleine telefoon (360x640, lege opslag) ----------
+  {
+    const c2 = await browser.newContext({ viewport: { width: 360, height: 640 }, hasTouch: true, isMobile: true, deviceScaleFactor: 2, colorScheme: 'light' });
+    await c2.route('**/*', r => { const u = r.request().url(); if (/^(file|data|blob|about):/.test(u)) return r.continue(); extern.push(u); return r.abort('blockedbyclient'); });
+    const p2 = await c2.newPage();
+    p2.on('pageerror', e => fouten.push('paginafout (360x640): ' + e.message));
+    p2.on('console', m => { if (m.type() === 'error') fouten.push('console (360x640): ' + m.text()); });
+    await p2.goto('file://' + wrapped); await sleep(1000);
+    const klein = await p2.evaluate(() => { const c = document.querySelector('#scrTitle .card'); return { past: c.scrollHeight <= c.clientHeight + 1, hoog: c.scrollHeight, ruimte: c.clientHeight, x: document.documentElement.scrollWidth <= document.documentElement.clientWidth + 1 }; });
+    await p2.screenshot({ path: path.join(out, '08-titel-360x640.png') });
+    check(klein.past && klein.x, 'titelscherm past zonder scrollen op 360x640', klein);
+    await p2.click('#bStart'); await sleep(400);
+    const ki = await p2.evaluate(() => { const p = document.getElementById('introPanel'), r = p.getBoundingClientRect(), i = window.__korrelval.intro();
+      return { open: i.open, past: p.scrollHeight <= p.clientHeight + 1 && r.bottom <= innerHeight + 0.5, beeld: Math.round(i.picH), x: document.documentElement.scrollWidth <= document.documentElement.clientWidth + 1 }; });
+    await p2.screenshot({ path: path.join(out, '09-intro-360x640.png') });
+    check(ki.open && ki.past && ki.x && ki.beeld >= 300, 'intro past zonder scrollen op 360x640, met minstens 300 px beeld boven het paneel', ki);
+    await c2.close();
   }
 
   // ---------- algemeen ----------
