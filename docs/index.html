@@ -43,7 +43,8 @@ img{max-width:100%}
   /* huisstijl van royalkoopmans.com: hover en ingedrukt van de oranje knop (donkere tekst, minstens 4,5:1), gloed van de tijdlijnstip,
      vulling van Verder malen, mosterdgoud (rand van de holle knop, voetstrook), donkerbruin op mosterd (5:1), papier en stempel van de weegbon */
   --accent-hover:#D07C01; --accent-press:#C47501; --ui-glow:rgba(231,138,1,.2); --ui-fill:rgba(231,138,1,.42);
-  --ui-edge:#C5AA20; --ui-edge-hover:#9E881A; --ui-mustard:#C5AA20; --ui-brown:#4A3200;
+  --ui-edge:#9E881A; --ui-edge-hover:#7A6500; --ui-mustard:#C5AA20; --ui-brown:#4A3200; /* rand van de holle knop: 3,3:1 op de kaart, hover 5,4:1 */
+  --ui-voet:var(--ui-mustard); --ui-voet-ink:var(--ui-brown); --ui-voet-aar:#F3EED2; /* voetstrook van de titel: mosterd met crème aar */
   --ui-paper:#FFFFFF; --ui-paper-shadow:rgba(29,30,31,.22); --ui-stamp:#9E5E00;
   /* eigen tekeningen (data-URI): korenaarpatroon op de kaarten (lijntekening, circa 5 procent), crème aar voor de voetstrook,
      groot aanhalingsteken en potloodstreep (maskers: de kleur komt uit de CSS) */
@@ -61,6 +62,7 @@ img{max-width:100%}
   --accent-hover:#DB8812; --accent-press:#C77A06; --ui-glow:rgba(242,154,28,.24); --ui-fill:rgba(242,154,28,.4);
   --ui-edge:#8F7B2A; --ui-edge-hover:#C5AA20; --ui-paper:#2F2C28; --ui-paper-shadow:rgba(0,0,0,.55); --ui-stamp:#F29A1C;
   --ui-grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='152' viewBox='0 0 120 152'%3E%3Cg fill='none' stroke='%23F3EED2' stroke-opacity='.045' stroke-width='1.3' stroke-linejoin='round' stroke-linecap='round'%3E%3Cpath transform='translate(30 140) rotate(-10)' d='M0 2V-50M0.9 -6L7.4 -10.6V-6L0.9 -1.4ZM-0.9 -6L-7.4 -10.6V-6L-0.9 -1.4ZM0.9 -13.2L6.95 -17.55V-13.2L0.9 -8.85ZM-0.9 -13.2L-6.95 -17.55V-13.2L-0.9 -8.85ZM0.9 -20.4L6.5 -24.5V-20.4L0.9 -16.3ZM-0.9 -20.4L-6.5 -24.5V-20.4L-0.9 -16.3ZM0.9 -27.6L6.05 -31.45V-27.6L0.9 -23.75ZM-0.9 -27.6L-6.05 -31.45V-27.6L-0.9 -23.75ZM0.9 -34.8L5.6 -38.4V-34.8L0.9 -31.2ZM-0.9 -34.8L-5.6 -38.4V-34.8L-0.9 -31.2ZM0.9 -42L5.15 -45.35V-42L0.9 -38.65ZM-0.9 -42L-5.15 -45.35V-42L-0.9 -38.65ZM0 -49.5L2.3 -55.5L0 -63L-2.3 -55.5Z'/%3E%3Cpath transform='translate(88 70) rotate(9)' d='M0 2V-50M0.9 -6L7.4 -10.6V-6L0.9 -1.4ZM-0.9 -6L-7.4 -10.6V-6L-0.9 -1.4ZM0.9 -13.2L6.95 -17.55V-13.2L0.9 -8.85ZM-0.9 -13.2L-6.95 -17.55V-13.2L-0.9 -8.85ZM0.9 -20.4L6.5 -24.5V-20.4L0.9 -16.3ZM-0.9 -20.4L-6.5 -24.5V-20.4L-0.9 -16.3ZM0.9 -27.6L6.05 -31.45V-27.6L0.9 -23.75ZM-0.9 -27.6L-6.05 -31.45V-27.6L-0.9 -23.75ZM0.9 -34.8L5.6 -38.4V-34.8L0.9 -31.2ZM-0.9 -34.8L-5.6 -38.4V-34.8L-0.9 -31.2ZM0.9 -42L5.15 -45.35V-42L0.9 -38.65ZM-0.9 -42L-5.15 -45.35V-42L-0.9 -38.65ZM0 -49.5L2.3 -55.5L0 -63L-2.3 -55.5Z'/%3E%3C/g%3E%3C/svg%3E");
+  --ui-voet:var(--gold-soft); --ui-voet-ink:var(--gold-ink); --ui-voet-aar:var(--ui-mustard); /* voetstrook gedempt: 7,2:1, niet het helderste vlak */
   color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#121314; --card:#24221F; --card2:#2D2A26; --ink:#F4EFE3; --muted:#BFB7A6; --line:#48423A;
@@ -70,6 +72,7 @@ img{max-width:100%}
   --accent-hover:#DB8812; --accent-press:#C77A06; --ui-glow:rgba(242,154,28,.24); --ui-fill:rgba(242,154,28,.4);
   --ui-edge:#8F7B2A; --ui-edge-hover:#C5AA20; --ui-paper:#2F2C28; --ui-paper-shadow:rgba(0,0,0,.55); --ui-stamp:#F29A1C;
   --ui-grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='152' viewBox='0 0 120 152'%3E%3Cg fill='none' stroke='%23F3EED2' stroke-opacity='.045' stroke-width='1.3' stroke-linejoin='round' stroke-linecap='round'%3E%3Cpath transform='translate(30 140) rotate(-10)' d='M0 2V-50M0.9 -6L7.4 -10.6V-6L0.9 -1.4ZM-0.9 -6L-7.4 -10.6V-6L-0.9 -1.4ZM0.9 -13.2L6.95 -17.55V-13.2L0.9 -8.85ZM-0.9 -13.2L-6.95 -17.55V-13.2L-0.9 -8.85ZM0.9 -20.4L6.5 -24.5V-20.4L0.9 -16.3ZM-0.9 -20.4L-6.5 -24.5V-20.4L-0.9 -16.3ZM0.9 -27.6L6.05 -31.45V-27.6L0.9 -23.75ZM-0.9 -27.6L-6.05 -31.45V-27.6L-0.9 -23.75ZM0.9 -34.8L5.6 -38.4V-34.8L0.9 -31.2ZM-0.9 -34.8L-5.6 -38.4V-34.8L-0.9 -31.2ZM0.9 -42L5.15 -45.35V-42L0.9 -38.65ZM-0.9 -42L-5.15 -45.35V-42L-0.9 -38.65ZM0 -49.5L2.3 -55.5L0 -63L-2.3 -55.5Z'/%3E%3Cpath transform='translate(88 70) rotate(9)' d='M0 2V-50M0.9 -6L7.4 -10.6V-6L0.9 -1.4ZM-0.9 -6L-7.4 -10.6V-6L-0.9 -1.4ZM0.9 -13.2L6.95 -17.55V-13.2L0.9 -8.85ZM-0.9 -13.2L-6.95 -17.55V-13.2L-0.9 -8.85ZM0.9 -20.4L6.5 -24.5V-20.4L0.9 -16.3ZM-0.9 -20.4L-6.5 -24.5V-20.4L-0.9 -16.3ZM0.9 -27.6L6.05 -31.45V-27.6L0.9 -23.75ZM-0.9 -27.6L-6.05 -31.45V-27.6L-0.9 -23.75ZM0.9 -34.8L5.6 -38.4V-34.8L0.9 -31.2ZM-0.9 -34.8L-5.6 -38.4V-34.8L-0.9 -31.2ZM0.9 -42L5.15 -45.35V-42L0.9 -38.65ZM-0.9 -42L-5.15 -45.35V-42L-0.9 -38.65ZM0 -49.5L2.3 -55.5L0 -63L-2.3 -55.5Z'/%3E%3C/g%3E%3C/svg%3E");
+  --ui-voet:var(--gold-soft); --ui-voet-ink:var(--gold-ink); --ui-voet-aar:var(--ui-mustard); /* voetstrook gedempt: 7,2:1, niet het helderste vlak */
   color-scheme:dark}
 [hidden]{display:none!important} /* ook zonder het skelet van de host: .screen{display:flex} mag hidden niet overschrijven */
 html,body{height:100%;margin:0;overflow:hidden;overscroll-behavior:none;touch-action:none}
@@ -114,18 +117,24 @@ h2{font:800 calc(26px*var(--s,1))/1.1 var(--ui);margin:0;letter-spacing:-.01em}
 #lvEra{margin-top:calc(5px*var(--s,1))} /* ruimte onder de stempel Tsjoch! */
 /* Knoppen zoals op royalkoopmans.com: hoofdletters, iets kleiner, met wat letterafstand. Hol met een rustige mosterdgouden rand;
    de hoofdknop oranje met donkere tekst (hover #D07C01, ingedrukt iets donkerder, allebei minstens 4,5:1). Tikvlak minstens 44 px.
-   Hoofdletters alleen via CSS: textContent blijft gewoon (It giet oan!). Let op: Chrome geeft de hoofdletters wel door aan de schermlezer. */
+   De hoofdletters zijn kleine kapitalen (all-small-caps), geen text-transform: dan hoort de schermlezer de gewone tekst (Verder malen,
+   niet V-E-R-D-E-R). Chrome tekent kleine kapitalen op 0,7 keer de letter, dus letter, regelhoogte en letterafstand zijn 1/0,7 keer
+   zo groot of klein als bij de hoofdletters van eerst (13,5 px wordt 19,3 px); zo ziet het er hetzelfde uit. Letter- en woordafstand zijn
+   gemeten: zo is elke knoptekst even breed als eerst. Kleine kapitalen staan lager in hun regel: padding 5/7 (hoofdknop 3/9) zet de
+   tekst op precies dezelfde hoogte als eerst (gemeten op dpr 1, 2 en 3). */
 .btn{appearance:none;-webkit-appearance:none;display:inline-flex;align-items:center;justify-content:center;gap:8px;box-sizing:border-box;
-  min-height:46px;padding:6px 14px;border:2px solid var(--ui-edge);background:transparent;color:var(--ink);font:800 calc(13.5px*var(--s,1))/1.15 var(--ui);
-  letter-spacing:.07em;text-transform:uppercase;text-wrap:balance;
+  min-height:46px;padding:5px 14px 7px;border:2px solid var(--ui-edge);background:transparent;color:var(--ink);font:800 calc(19.3px*var(--s,1))/.8 var(--ui);
+  font-variant-caps:all-small-caps;letter-spacing:.04em;word-spacing:-.03em;text-wrap:balance;
   border-radius:3px;cursor:pointer;pointer-events:auto;touch-action:manipulation;text-align:center;overflow-wrap:anywhere;hyphens:auto;
   transition:background-color .15s ease-out,border-color .15s ease-out,color .15s ease-out,box-shadow .12s ease-out,transform .12s ease-out}
-.btn:hover{background:var(--chip);border-color:var(--ui-edge-hover)}
+@media (hover:hover) and (pointer:fine){.btn:hover{background:var(--chip);border-color:var(--ui-edge-hover)}} /* hover alleen met een muis: op touch blijft hij na een tik hangen */
 .btn:active{transform:translateY(1px)}
-.btn.primary{display:flex;width:100%;min-height:calc(54px*var(--s,1));font-size:calc(17px*var(--s,1));letter-spacing:.08em;background:var(--accent);border-color:var(--accent);color:var(--accent-ink);
+.btn.primary{display:flex;width:100%;min-height:calc(54px*var(--s,1));font-size:calc(24.3px*var(--s,1));letter-spacing:.045em;padding-top:3px;padding-bottom:9px;background:var(--accent);border-color:var(--accent);color:var(--accent-ink);
   box-shadow:0 3px 0 var(--accent-edge);margin-bottom:3px}
-.btn.primary:hover{background:var(--accent-hover);border-color:var(--accent-hover)}
+@media (hover:hover) and (pointer:fine){.btn.primary:hover{background:var(--accent-hover);border-color:var(--accent-hover)}}
 .btn.primary:active{background:var(--accent-press);border-color:var(--accent-press);transform:translateY(2px);box-shadow:0 1px 0 var(--accent-edge)}
+/* It giet oan! (Fries) in gewone letters: in hoofdletters wordt de slogan een schreeuw. Op de titel en op het laatste intro-shot (ui-fries) */
+#bStart,#bIntroNext.ui-fries{font-variant-caps:normal;font-size:calc(21px*var(--s,1));line-height:1.1;letter-spacing:.01em;word-spacing:normal;padding-top:6px;padding-bottom:6px}
 .btn:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
 .btn[disabled]{opacity:.42;cursor:not-allowed}
 .btn[aria-pressed="true"],.btn.on{background:var(--ink);border-color:var(--ink);color:var(--card)}
@@ -139,17 +148,17 @@ h2{font:800 calc(26px*var(--s,1))/1.1 var(--ui);margin:0;letter-spacing:-.01em}
 .chips{display:flex;flex-direction:column;gap:2px;position:relative}
 .chips::before{content:'';position:absolute;left:16px;top:24px;bottom:24px;width:2px;margin-left:-1px;background:var(--line)}
 .chips .btn{position:relative;justify-content:flex-start;gap:14px;min-height:48px;padding:2px 10px 2px 40px;border:0;background:transparent;
-  text-transform:none;letter-spacing:0;text-align:left}
+  font-variant-caps:normal;letter-spacing:0;text-align:left}
 .chips .btn::before{content:'';position:absolute;left:10px;top:50%;width:12px;height:12px;margin-top:-6px;border-radius:50%;background:var(--accent);
   box-shadow:0 0 0 5px var(--ui-glow);transition:box-shadow .15s ease-out}
 .chips .btn .hand{font-size:calc(30px*var(--s,1));line-height:1;min-width:2.9em;padding-top:.14em;color:var(--ink)}
 .chips .btn small{font:800 11.5px/1.2 var(--ui);letter-spacing:.1em;text-transform:uppercase;opacity:1;color:var(--muted);margin:0}
-.chips .btn:hover{background:var(--chip)}
-.chips .btn:hover::before{box-shadow:0 0 0 7px var(--ui-glow)}
-.btn small{display:block;font:600 11px/1.15 var(--ui);letter-spacing:0;text-transform:none;opacity:.8;margin-top:3px;text-wrap:balance}
+@media (hover:hover) and (pointer:fine){.chips .btn:hover{background:var(--chip)}
+.chips .btn:hover::before{box-shadow:0 0 0 7px var(--ui-glow)}}
+.btn small{display:block;font:600 11px/1.15 var(--ui);letter-spacing:0;word-spacing:normal;text-transform:none;opacity:.8;margin-top:5px;text-wrap:balance} /* 5 px (was 3): kleine kapitalen staan lager in hun regel */
 /* smalle telefoons: knoppen naast elkaar krijgen minder zijmarge */
 @media (max-width:390px){.row>.btn{padding-left:5px;padding-right:5px}}
-#bGezel,.subbtn,.bookbtn{flex-direction:column;gap:0}
+#bGezel,.subbtn,.bookbtn{flex-direction:column;gap:0;padding-top:4px;padding-bottom:6px} /* met kleine tweede regel: zelfde hoogte en inktpositie als eerst */
 .hint{font:600 12px/1.4 var(--ui);color:var(--muted);margin:0}
 .card>.hint{margin-top:10px}
 .fine{font:600 11.5px/1.4 var(--ui);color:var(--muted);margin:0;border-top:1px solid var(--line);padding-top:8px}
@@ -199,6 +208,7 @@ button.badge:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
 .easy b{display:block;font:800 12px/1.2 var(--ui);letter-spacing:.1em;text-transform:uppercase;color:var(--gold-ink);margin-bottom:3px}
 .easy p{margin:0;font:600 calc(14px*var(--s,1))/1.4 var(--ui)}
 .easy .btn{width:100%;margin-top:calc(8px*var(--s,1));min-height:44px}
+.easy,.picker{--ui-edge:var(--ui-edge-hover)} /* op goud en grijs vlak: de donkerdere rand, zodat hij ook daar minstens 3:1 haalt */
 #bookAllAsk:focus{outline:none}
 .easy .btn.pick{background:var(--ink);border-color:var(--ink);color:var(--card)}
 #scrOver.tight1 #overBon tr:not(.big){display:none}
@@ -218,7 +228,7 @@ button.badge:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
 .share input{grid-column:1;grid-row:2;min-width:0;width:100%;height:28px;box-sizing:border-box;font:600 11px/1 var(--ui);background:var(--card2);color:var(--ink);
   border:1px solid var(--line);border-radius:2px;padding:0 5px;user-select:text;-webkit-user-select:text;touch-action:auto}
 .share input:focus-visible{outline:3px solid var(--focus);outline-offset:1px}
-.share .btn{grid-column:2;grid-row:1/3;min-height:44px;padding:4px 10px;font-size:calc(12px*var(--s,1))}
+.share .btn{grid-column:2;grid-row:1/3;min-height:44px;padding:3px 10px 5px;font-size:calc(17.1px*var(--s,1))}
 @media (pointer:fine){.share .btn{min-height:38px}.share input{height:22px}}
 textarea.copy{width:100%;box-sizing:border-box;font:600 13px/1.35 var(--ui);background:var(--card2);color:var(--ink);border:1px solid var(--line);padding:8px;resize:none;user-select:text;-webkit-user-select:text}
 .toplist{list-style:none;padding:0;margin:0;counter-reset:n}
@@ -234,8 +244,8 @@ textarea.copy{width:100%;box-sizing:border-box;font:600 13px/1.35 var(--ui);back
 .about #bAboutBack{position:sticky;bottom:0;z-index:1;box-shadow:0 3px 0 var(--accent-edge),0 20px 0 2px var(--card),0 -14px 14px 4px var(--card)}
 .about #bAboutBack{margin-top:calc(30px*var(--s,1))} /* helemaal onderaan valt de laatste regel (lettertypen) niet onder de vervaging van de knop */
 /* Weegbon: Tsjoch! (proost) als stempel voor de kop, met een dubbele rand. Hij komt zacht neer als het totaal is opgeteld (0,9 s). */
-.tsjoch{display:inline-block;font:800 .6em/1 var(--ui);letter-spacing:.1em;text-transform:uppercase;color:var(--ui-stamp);
-  border:2.5px solid currentColor;border-radius:3px;padding:.34em .5em .28em;margin-right:.3em;vertical-align:.28em;transform:rotate(-4deg);
+.tsjoch{display:inline-block;font:800 .86em/.7 var(--ui);font-variant-caps:all-small-caps;letter-spacing:.055em;color:var(--ui-stamp);
+  border:2.5px solid currentColor;border-radius:3px;padding:.14em .35em .3em;margin-right:.21em;vertical-align:.2em;transform:rotate(-4deg);
   box-shadow:inset 0 0 0 1.5px var(--card),inset 0 0 0 3px currentColor;animation:uiStempel .34s cubic-bezier(.2,.8,.25,1) .9s backwards}
 /* Verhaalpauze halverwege een molen: kop met klein tijdperkplaatje ernaast, daaronder de tekst over de hele breedte */
 .story .story-head{margin-top:calc(6px*var(--s,1))}
@@ -257,8 +267,9 @@ textarea.copy{width:100%;box-sizing:border-box;font:600 13px/1.35 var(--ui);back
 .brief .story-text+.story-text{margin-top:calc(9px*var(--s,1))}
 .brief .story-text b{font-weight:800}
 .brief .row>.btn{min-height:calc(52px*var(--s,1))}
+.brief .row>.btn.go{flex-basis:8.7em} /* Korrel van de dag krijgt meer ruimte: vanaf 360 px breed op één regel */
 .btn.go{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);box-shadow:0 3px 0 var(--accent-edge)}
-.btn.go:hover{background:var(--accent-hover);border-color:var(--accent-hover)}
+@media (hover:hover) and (pointer:fine){.btn.go:hover{background:var(--accent-hover);border-color:var(--accent-hover)}}
 .btn.go:active{background:var(--accent-press);border-color:var(--accent-press);transform:translateY(2px);box-shadow:0 1px 0 var(--accent-edge)}
 .nb-lock{background:var(--gold-soft);padding:calc(10px*var(--s,1)) 12px;border-left:4px solid var(--gold);font:700 calc(14px*var(--s,1))/1.4 var(--ui);margin:calc(12px*var(--s,1)) 0 0}
 .brief .linkbtn{text-align:center}
@@ -270,17 +281,17 @@ textarea.copy{width:100%;box-sizing:border-box;font:600 13px/1.35 var(--ui);back
 .duo>.btn{flex:1 1 0;min-height:calc(54px*var(--s,1))}
 .links{display:flex;flex-wrap:wrap;justify-content:center;column-gap:4px}
 .links .linkbtn{width:auto;flex:1 1 auto;text-align:center;padding:6px 4px;color:var(--ink);font-weight:700;text-decoration-color:var(--line)}
-.links .linkbtn:hover{text-decoration-color:currentColor}
+@media (hover:hover) and (pointer:fine){.links .linkbtn:hover{text-decoration-color:currentColor}}
 .title .fine{text-align:center}
 /* Voetstrook zoals de footer van de site: mosterdgoud tot de randen van de kaart, donkerbruine tekst en een crème korenaar */
-.title .ui-voet{display:flex;align-items:center;justify-content:center;gap:9px;margin:calc(14px*var(--s,1)) calc(-18px*var(--s,1)) calc(-16px*var(--s,1));
-  padding:calc(9px*var(--s,1)) 16px;border:0;background:var(--ui-mustard);color:var(--ui-brown);font:700 12.5px/1.3 var(--ui)}
-.title .ui-voet::before{content:'';flex:none;width:15px;height:18px;background:var(--ui-aar) 50% 50%/contain no-repeat}
+.title .ui-voet{display:flex;align-items:center;justify-content:center;gap:8px;margin:calc(14px*var(--s,1)) calc(-18px*var(--s,1)) calc(-16px*var(--s,1));
+  padding:calc(7px*var(--s,1)) 16px;border:0;background:var(--ui-voet);color:var(--ui-voet-ink);font:700 12px/1.3 var(--ui)} /* donker: gedempt, zie --ui-voet */
+.title .ui-voet::before{content:'';flex:none;width:13px;height:16px;background:var(--ui-voet-aar);-webkit-mask:var(--ui-aar) 50% 50%/contain no-repeat;mask:var(--ui-aar) 50% 50%/contain no-repeat}
 .btn.wide{display:flex;width:100%}
 /* Nachtploeg nog dicht: knoppen zien er dicht uit, maar een tik opent het briefje. Alleen tekst en rand gedimd, niet de hele knop,
    zodat de focusring vol blijft. */
 .btn[aria-disabled="true"]{color:var(--muted);color:color-mix(in srgb,var(--ink) 42%,var(--card));border-color:currentColor;border-style:dashed}
-.btn[aria-disabled="true"]:hover{background:transparent}
+@media (hover:hover) and (pointer:fine){.btn[aria-disabled="true"]:hover{background:transparent}}
 /* Molenboek: lange kaart die binnen zichzelf scrollt; Terug plakt onderin, net als bij Over dit spel */
 .boek .sect{padding-top:12px}
 .boek .sect-h{font-size:15px;margin-bottom:2px}
@@ -319,7 +330,7 @@ textarea.copy{width:100%;box-sizing:border-box;font:600 13px/1.35 var(--ui);back
    voortgangsbalk in de knop (duur --ui-wait = CONFIG.story.minWait, gezet bij het starten). De tekst blijft goed leesbaar: var(--ink)
    op crème en op de vulling, minstens 6:1. Daarna is het een gewone oranje knop. Bij verminderde beweging: alleen de oranje rand. */
 .story #bStory[aria-disabled="true"]{background:var(--card);border-color:var(--accent);border-style:solid;color:var(--ink);box-shadow:0 3px 0 var(--line);
-  cursor:default;transform:none;overflow:hidden;isolation:isolate}
+  cursor:default;transform:none;overflow:hidden;isolation:isolate;transition:none} /* geen overgang: anders flitst hij bij het openen oranje */
 .story #bStory[aria-disabled="true"]::before{content:'';position:absolute;inset:0;z-index:-1;background:var(--ui-fill);transform-origin:0 50%;
   animation:uiVul var(--ui-wait,.6s) linear backwards}
 @keyframes uiVul{from{transform:scaleX(0)}}
@@ -363,11 +374,14 @@ textarea.copy{width:100%;box-sizing:border-box;font:600 13px/1.35 var(--ui);back
 .intro-text{font:600 calc(15px*var(--s,1))/1.45 var(--ui);margin:calc(8px*var(--s,1)) 0 0;text-wrap:pretty}
 .intro-panel .btn.primary{margin-bottom:0}
 .intro-panel .linkbtn{text-align:center;margin-top:calc(4px*var(--s,1))}
-.intro-skip{position:absolute;top:max(12px,env(safe-area-inset-top,0px));right:max(12px,env(safe-area-inset-right,0px));min-height:44px;min-width:44px;
-  padding:0 16px;border:0;border-radius:22px;background:rgba(29,30,31,.88);color:#F7F7F7;font:800 12.5px/1 var(--ui);letter-spacing:.08em;text-transform:uppercase;
-  cursor:pointer;touch-action:manipulation}
-.intro-skip:hover{background:rgba(29,30,31,.96)}
-.intro-skip:focus-visible{outline:3px solid #CFAB00;outline-offset:0;box-shadow:0 0 0 6px #1D1E1F} /* goud met een donkere band: zichtbaar op lucht en wolk */
+.intro-skip{position:absolute;top:max(9px,calc(env(safe-area-inset-top,0px) - 5px));right:max(12px,env(safe-area-inset-right,0px));min-height:44px;min-width:44px;
+  padding:0 13px;border:0;background:transparent;color:#F7F7F7;font:800 13px/1 var(--ui);letter-spacing:0;
+  cursor:pointer;touch-action:manipulation;isolation:isolate}
+/* De knop zelf is het tikvlak (44 px hoog); de zichtbare pil is ::before: circa 88 x 34 px, dekking .64 (wit op de lichtste lucht nog 4,7:1) */
+.intro-skip::before{content:'';position:absolute;left:0;right:0;top:5px;bottom:5px;z-index:-1;border-radius:17px;background:rgba(29,30,31,.64);transition:background-color .15s ease-out}
+@media (hover:hover) and (pointer:fine){.intro-skip:hover::before{background:rgba(29,30,31,.78)}}
+.intro-skip:focus-visible{outline:none}
+.intro-skip:focus-visible::before{outline:3px solid #CFAB00;outline-offset:0;box-shadow:0 0 0 6px #1D1E1F} /* goud met een donkere band: zichtbaar op lucht en wolk */
 .veil{position:absolute;inset:0;z-index:4;background:#0b0c0d;pointer-events:none}
 @media (max-height:700px){.btn{min-height:44px}
   /* weegbon op kleine telefoons: de zakkenregel (staat ook op het jaarverslag) wijkt voor de langste reeks */
@@ -376,6 +390,8 @@ textarea.copy{width:100%;box-sizing:border-box;font:600 13px/1.35 var(--ui);back
   /* jaarverslag: iets minder witruimte tussen de blokken die marge hebben (.muted, .uit en .fact hebben er geen),
      zodat bon en kernwaarden op een kleine telefoon zonder scrollen passen */
   #scrDone .card>:is(h2,.ui-bon,.badges,.btn,.row){margin-top:calc(9px*var(--s,1))}}
+/* heel kleine telefoons (320x568): bon nog platter, kleinere kartels */
+@media (max-height:600px){.bon{--z:6px;padding-top:3px;padding-bottom:3px}.bon td{padding-top:2px;padding-bottom:2px}}
 /* lage vensters: Nog een korrel? bovenaan, bon weg */
 @media (max-height:480px){#scrOver .card{display:flex;flex-direction:column;gap:8px}#scrOver .card>*{margin-top:0;flex:none}#bAgain{order:-1}#scrOver .ui-bon{display:none}}
 @media (prefers-reduced-motion:reduce){.btn:active,.btn.primary:active,.btn.go:active{transform:none}
@@ -891,13 +907,14 @@ function layout() {
   const dpr = Math.min(window.devicePixelRatio || 1, dprCap);
   fps.n = fps.sum = 0; // nieuw formaat: opnieuw meten
   cv.width = Math.max(1, Math.round(cw * dpr)); cv.height = Math.max(1, Math.round(ch * dpr));
-  const s = Math.min(cw / W, ch / H);
+  const s = Math.min(cw / W, ch / H), k0 = V.s * V.dpr, lower = cw === V.cw && ch === V.ch && dpr < V.dpr; // lower: alleen de resolutie zakt
   Object.assign(V, { cw, ch, dpr, s, ox: (cw - W * s) / 2, oy: (ch - H * s) / 2 });
   app.style.setProperty('--s', clamp(Math.min(cw / 400, ch / 790), 0.86, 1).toFixed(3));
   const bp = $('btnPause'), bs = Math.max(44, Math.round(40 * s)); // tikdoel minstens 44 px
   bp.style.width = bp.style.height = bs + 'px'; V.pb = bs / s;
   bp.style.left = Math.round(V.ox + (W - 6) * s - bs) + 'px'; bp.style.top = Math.round(V.oy + 6 * s) + 'px';
-  tiles = {}; still = false; // nieuw canvasformaat: het veld opnieuw tekenen, ook achter een kaart
+  if (lower) gxRescale(k0); else tiles = {}; // zakt alleen de resolutie: de plaatjes verkleinen (gxRescale) in plaats van alles opnieuw
+  still = false; // nieuw canvasformaat: het veld opnieuw tekenen, ook achter een kaart
   buildLetterbox();
   // telefoon dwars: speelveld wordt te klein, dus pauzeren en vragen om te draaien (tablets houden het veld)
   const land = isCoarse() && cw > ch && ch < 600;
@@ -910,29 +927,41 @@ function layout() {
 // Merkkader: warme achtergrond (licht of donker thema) met een korenaarpatroon op lage dekking, een zachte schaduw rond het veld, en op
 // brede schermen links de tijdlijn en rechts het tijdperkplaatje (gxLbPanels). Verandert alleen het tijdperk of de zone, dan tekent
 // gxLetterbox() alleen de twee zijpanelen opnieuw.
+// Zonder zijpanelen (telefoon, smalle vensters) is het kader in beide thema's donker, als een rand om het veld en de HUD; een lichte
+// strook boven en onder het donkere veld leest dan als een fout. Het korenaarpatroon alleen in stroken van minstens 24 px.
 function buildLetterbox() {
   const c = $('lb'); c.width = cv.width; c.height = cv.height;
   const g = c.getContext('2d'), d = V.dpr, dark = gxDark();
-  gxSt.lb = gxLbKey(); gxSt.lbDark = dark;
+  gxSt.lb = gxLbKey(); gxSt.lbDark = dark; gxSt.lbD = d; gxSt.lbCv = cv.width + 'x' + cv.height;
   g.setTransform(1, 0, 0, 1, 0, 0);
-  gxLbFill(g, 0, 0, c.width, c.height, dark);
   const fx = V.ox * d, fy = V.oy * d, fw = W * V.s * d, fh = H * V.s * d;
+  if (!gxLbWide()) { // boven de kleur van de HUD (die loopt dan door tot de rand), verder donker; geen schaduw, die zou een naad geven
+    g.fillStyle = '#1A1815'; g.fillRect(0, 0, c.width, c.height);
+    g.fillStyle = '#262421'; g.fillRect(0, 0, c.width, Math.ceil(fy));
+    const strip = (x, y, w, h) => { if (w >= 24 * d && h >= 24 * d) gxLbPat(g, x, y, w, h, true); };
+    strip(0, Math.ceil(fy + fh), c.width, c.height - Math.ceil(fy + fh)); strip(0, 0, Math.floor(fx), c.height); strip(Math.ceil(fx + fw), 0, c.width - Math.ceil(fx + fw), c.height);
+    return;
+  }
+  gxLbFill(g, 0, 0, c.width, c.height, dark);
   g.save(); g.shadowColor = dark ? 'rgba(0,0,0,.75)' : 'rgba(70,52,20,.38)'; g.shadowBlur = 30 * d; g.shadowOffsetY = 8 * d; g.fillStyle = '#000'; g.fillRect(fx, fy, fw, fh); g.restore();
   gxLbPanels(g, dark);
 }
-// Achtergrond per tijdperk: één keer naar een offscreen canvas (gxBG), daarna op hele schermpixels gekopieerd en trager gescrold dan
-// de verdiepingen. Alleen het tijdperk van nu blijft in het geheugen. B.motes: de stofjes die in het licht van deze wand zweven.
+// Achtergrond per tijdperk: één keer naar een offscreen canvas (gxBgTile), daarna op hele schermpixels gekopieerd en trager gescrold
+// dan de verdiepingen. Meestal heeft gxPrewarm hem al in een rustig moment klaargezet (titel, Kies een molen, weegbon). Zo niet, dan
+// nu alleen de zijwanden en de achterwand op halve resolutie (een kwart van het rasterwerk; achter de introband zie je dat niet). De
+// achterwand op volle resolutie, vloeren, walsen en platen volgen in de rustige momenten achter de introband, of op het moment dat
+// ze voor het eerst in beeld komen.
 function getTile(style, pal) {
-  const era = gxEra(style, pal), key = 'bg:' + era;
-  if (tiles[key]) return tiles[key];
-  for (const q in tiles) if (q.startsWith('bg:')) delete tiles[q];
-  const k = V.s * V.dpr, P = gxP, w = gxBW, { c, g } = gxCv(w, P, k, true), rnd = mulberry32(hashStr(key)), M = [];
-  g.fillStyle = pal.wall; g.fillRect(0, 0, w, P);
-  (gxBG[era] || gxBG.digi)(g, rnd, pal, M, w, P);
-  gxBgShade(g, w, P, era);
-  tiles[key] = { c, P, motes: gxMotesIn(M, rnd, era === 'digi' || era === 'night' ? 14 : 30) };
-  gxWarm(style, pal); // de rest van dit tijdperk in hetzelfde frame (dat telt niet mee voor frameSample), niet verspreid over de eerste frames
-  return tiles[key];
+  const era = gxEra(style, pal), B = tiles['bg:' + era];
+  if (era !== gxSt.cur && run.mode !== 'demo' && era !== gxSt.pre) { gxSt.pre = era; gxSt.preLv = null; gxSt.jobs = []; } // een andere molen gekozen dan klaargezet: dat klaarzetten vervalt
+  gxSt.cur = era;
+  if (B && !B.lo && B.k === V.s * V.dpr) return B;
+  // de rest van dit tijdperk eerst, daarna wat gxPrewarm nog klaar wilde zetten (ook opnieuw als het vorige rijtje niet afkwam).
+  // Na het zakken van de resolutie (B.k is de oude schaal): de banden alleen verkleinen, één per rustig moment, niet opnieuw tekenen.
+  if (!B || !gxSt.now.length) { gxSt.now = B && !B.lo ? B.bands.map((c, i) => () => gxShrinkBand(B, i)) : gxJobs(style, pal); if (!gxSt.idle) gxIdle(); }
+  if (B) return B;
+  gxSides(style, pal);
+  return gxBgTile(style, pal);
 }
 // Iconen uit canvas-primitieven (geen emoji, geen plaatjes).
 function icon(g, name, x, y, s, col) {
@@ -1836,7 +1865,8 @@ function siloLanded() {
 // Feitelijk: geen walsen of plansichters vóór 1920, dus in 1846 en 1867 ook niet op de achtergrond.
 const gxP = 960, gxPS = 320, gxPar = 0.42, gxBW = R - L; // periode achterwand, periode zijwanden, parallax, breedte achterwand
 // gxSt: spoor (trail, tn, ti, cam), perfecte passages (pf), merkkader (lb = sleutel, lbDark, lbEl, lbPat = korenaarpatroon)
-const gxSt = { trail: [], tn: 0, ti: 0, cam: 0, pf: 0, lb: '', lbDark: false, lbEl: null, lbPat: null };
+const gxSt = { trail: [], tn: 0, ti: 0, cam: 0, pf: 0, lb: '', lbDark: false, lbEl: null, lbPat: null,
+  cur: '', pre: '', preLv: null, now: [], jobs: [], idle: false, prime: null, pend: null, fontW: '', fontI: 0, lbD: 1, lbCv: '' }; // tijdperken in het geheugen (gxEvict), klaarzetten (gxPrewarm)
 function gxDark() {
   const t = document.documentElement.getAttribute('data-theme');
   if (t === 'dark' || t === 'light') return t === 'dark';
@@ -1929,18 +1959,19 @@ const gxBG = {
     g.strokeStyle = 'rgba(20,12,4,.32)'; g.lineWidth = 1; g.beginPath(); for (const o of [-5, 3, 8]) { g.moveTo(sx + o, 0); g.lineTo(sx + o, P); } g.stroke();
     for (let y = 70; y < P; y += 160) { g.fillStyle = '#1a1a1a'; g.fillRect(sx - sw / 2 - 1.5, y, sw + 3, 6); g.fillStyle = 'rgba(210,210,210,.13)'; g.fillRect(sx - sw / 2 - 1.5, y, sw + 3, 1.2); }
     gxHaze(g, w, P, '#2c1d0f', 0.3);
-    // daglicht: spleten tussen de planken en een klein luik, met schuine zonnestralen naar rechtsonder
-    const light = [[seams[1], 60, 150], [seams[2], 420, 120], [seams[3], 760, 130]];
+    // daglicht: een spleet tussen de planken langs de linkerwand en een klein luik, met schuine zonnestralen naar rechtsonder.
+    // Lichtbronnen alleen langs de wanden en zacht: niets helders in de valbaan dat op het spoortje van de korrel of een pick-up lijkt.
+    const lx0 = seams.find(x => x > 12) || 22, light = [[lx0, 60, 150], [lx0, 420, 120], [lx0, 760, 130]];
     for (const [lx, y0, h] of light) gxWrap(P, y0 - 10, h + 300, yy => {
       gxRay(g, lx, yy, h, 190, 230, '255,214,150', 0.07);
-      g.fillStyle = 'rgba(255,226,170,.62)'; g.fillRect(lx - 0.2, yy, 1.3, h); gxGlow(g, lx, yy + h / 2, 18, '255,214,150', 0.14);
+      g.fillStyle = 'rgba(255,226,170,.3)'; g.fillRect(lx - 0.2, yy, 1.3, h); gxGlow(g, lx, yy + h / 2, 18, '255,214,150', 0.1);
     });
     for (const [lx, y0, h] of light) for (let i = 0; i < 3; i++) M.push([lx + 50 + i * 40, (y0 + h / 2 + 60 + i * 55) % P, 34, 46]);
     gxWrap(P, 640, 260, yy => {
-      const lx = 92, ly = yy + 6; g.fillStyle = 'rgba(24,15,7,.9)'; g.fillRect(lx - 3, ly - 3, 30, 28);
-      const lg = g.createLinearGradient(lx, ly, lx, ly + 22); lg.addColorStop(0, 'rgba(240,226,190,.75)'); lg.addColorStop(1, 'rgba(214,196,150,.6)'); g.fillStyle = lg; g.fillRect(lx, ly, 24, 22);
+      const lx = 8, ly = yy + 6; g.fillStyle = 'rgba(24,15,7,.9)'; g.fillRect(lx - 3, ly - 3, 30, 28); // luik tegen de linkerwand
+      const lg = g.createLinearGradient(lx, ly, lx, ly + 22); lg.addColorStop(0, 'rgba(240,226,190,.4)'); lg.addColorStop(1, 'rgba(214,196,150,.32)'); g.fillStyle = lg; g.fillRect(lx, ly, 24, 22);
       g.fillStyle = '#1c1209'; g.fillRect(lx + 11, ly, 2, 22); g.fillRect(lx, ly + 10, 24, 2);
-      gxGlow(g, lx + 12, ly + 11, 40, '255,220,160', 0.14);
+      gxGlow(g, lx + 12, ly + 11, 40, '255,220,160', 0.1);
       gxBeam(g, lx + 12, ly + 22, lx + 96, ly + 250, 24, 120, '255,214,150', 0.045);
     });
     M.push([140, 800, 40, 60], [170, 860, 40, 50]);
@@ -1983,13 +2014,15 @@ const gxBG = {
       g.fillStyle = 'rgba(30,32,35,.7)'; g.fillRect(96, yy + 8, 24, 14); g.fillStyle = 'rgba(190,190,180,.1)'; g.fillRect(96, yy + 8, 24, 1.2);
     });
     gxHaze(g, w, P, '#2a130c', 0.32);
-    for (const [lx, ly, sd] of [[76, 196, 1], [228, 470, -1], [112, 800, 1]]) gxWrap(P, ly - 90, 180, yy => { // gaslampen aan een arm: warm geel licht
-      gxGlow(g, lx, yy + 6, 96, '255,180,84', 0.24); gxGlow(g, lx, yy + 6, 26, '255,226,160', 0.38);
-      g.strokeStyle = '#141414'; g.lineWidth = 2.2; g.beginPath(); g.moveTo(lx - sd * 22, yy - 12); g.lineTo(lx, yy - 12); g.lineTo(lx, yy - 6); g.stroke();
-      g.fillStyle = '#141414'; g.fillRect(lx - sd * 24 - 2, yy - 16, 4, 9);
+    // gaslampen aan een arm van de gietijzeren kolom langs de wand: warm, gedempt licht (de gouden korrel blijft het helderst)
+    for (const [lx, ly, sd] of [[38, 196, 1], [262, 470, -1], [38, 800, 1]]) gxWrap(P, ly - 90, 180, yy => {
+      const cx = sd > 0 ? 18 : 282;
+      gxGlow(g, lx, yy + 6, 80, '255,180,84', 0.13); gxGlow(g, lx, yy + 6, 24, '255,226,160', 0.2);
+      g.strokeStyle = '#141414'; g.lineWidth = 2.2; g.beginPath(); g.moveTo(cx, yy - 12); g.lineTo(lx, yy - 12); g.lineTo(lx, yy - 6); g.stroke();
+      g.fillStyle = '#141414'; g.fillRect(cx - 2, yy - 16, 4, 9);
       g.fillStyle = '#1d1d1d'; g.beginPath(); g.moveTo(lx - 6, yy - 6); g.lineTo(lx + 6, yy - 6); g.lineTo(lx + 3, yy - 9); g.lineTo(lx - 3, yy - 9); g.closePath(); g.fill();
-      g.fillStyle = 'rgba(255,236,190,.85)'; g.beginPath(); g.moveTo(lx - 5, yy - 6); g.lineTo(lx + 5, yy - 6); g.lineTo(lx + 4, yy + 8); g.lineTo(lx - 4, yy + 8); g.closePath(); g.fill();
-      g.fillStyle = '#FFF6D8'; g.beginPath(); g.ellipse(lx, yy + 2, 1.8, 3.2, 0, 0, TAU); g.fill();
+      g.fillStyle = 'rgba(255,236,190,.45)'; g.beginPath(); g.moveTo(lx - 5, yy - 6); g.lineTo(lx + 5, yy - 6); g.lineTo(lx + 4, yy + 8); g.lineTo(lx - 4, yy + 8); g.closePath(); g.fill();
+      g.fillStyle = 'rgba(255,246,216,.7)'; g.beginPath(); g.ellipse(lx, yy + 2, 1.8, 3.2, 0, 0, TAU); g.fill();
       g.fillStyle = '#1d1d1d'; g.fillRect(lx - 5, yy + 8, 10, 2);
       M.push([lx, yy + 40, 56, 52]);
     });
@@ -2015,14 +2048,14 @@ const gxBG = {
       }
     }
     gxHaze(g, w, P, '#1f3327', 0.3);
-    for (const [lx, s] of [[74, 0], [222, 0], [140, 1], [60, 2], [236, 2]]) { // gloeilampen onder een geëmailleerde kap, warm licht naar beneden
+    for (const [lx, s] of [[32, 0], [268, 1], [32, 2]]) { // gloeilampen onder een geëmailleerde kap langs de wanden, om en om: warm licht naar beneden
       const ys = s * 320;
-      gxBeam(g, lx, ys + 60, lx, ys + 250, 18, 150, '255,214,150', 0.045);
-      gxGlow(g, lx, ys + 60, 70, '255,204,120', 0.22);
+      gxBeam(g, lx, ys + 60, lx, ys + 250, 18, 150, '255,214,150', 0.04);
+      gxGlow(g, lx, ys + 60, 64, '255,204,120', 0.14);
       g.strokeStyle = '#111'; g.lineWidth = 1; g.beginPath(); g.moveTo(lx, ys + 9); g.lineTo(lx, ys + 48); g.stroke();
       g.fillStyle = '#1e3326'; g.beginPath(); g.moveTo(lx - 3, ys + 48); g.lineTo(lx + 3, ys + 48); g.lineTo(lx + 13, ys + 58); g.lineTo(lx - 13, ys + 58); g.closePath(); g.fill();
-      g.fillStyle = '#E9E3CF'; g.fillRect(lx - 13, ys + 57, 26, 2);
-      g.fillStyle = '#FFF0C2'; g.beginPath(); g.ellipse(lx, ys + 62, 3.6, 4.4, 0, 0, TAU); g.fill();
+      g.fillStyle = 'rgba(233,227,207,.55)'; g.fillRect(lx - 13, ys + 57, 26, 2);
+      g.fillStyle = 'rgba(255,240,194,.6)'; g.beginPath(); g.ellipse(lx, ys + 62, 3.6, 4.4, 0, 0, TAU); g.fill();
       M.push([lx, ys + 130, 40, 60]);
     }
   },
@@ -2046,12 +2079,13 @@ const gxBG = {
       g.fillStyle = '#25282b'; g.fillRect(26, ys + 120, 18, 4);
     }
     gxHaze(g, w, P, '#2a190d', 0.3);
-    for (const [lx, s] of [[100, 0], [214, 1], [86, 2], [204, 2]]) { // TL-buizen onder elke balk: koel wit licht
-      const ys = s * 320 + 14;
-      gxBeam(g, lx, ys + 8, lx, ys + 150, 80, 170, '214,236,255', 0.035);
-      g.save(); g.translate(lx, ys + 6); g.scale(2.4, 1); gxGlow(g, 0, 0, 28, '214,236,255', 0.18); g.restore();
-      g.fillStyle = '#4e4d49'; g.fillRect(lx - 42, ys, 84, 5); g.fillStyle = 'rgba(236,246,242,.9)'; g.fillRect(lx - 39, ys + 4, 78, 2.4);
-      M.push([lx, ys + 70, 50, 40, false]);
+    // TL-buizen rechtop tegen de zijwand (om en om, nooit twee op dezelfde hoogte): koel, gedempt licht dat niet op een vloer of plaat lijkt
+    for (const [lx, s] of [[14, 0], [288, 1], [14, 2]]) {
+      const ys = s * 320 + 70, sd = lx < 150 ? 1 : -1;
+      g.save(); g.translate(lx, ys + 32); g.scale(1, 2.4); gxGlow(g, 0, 0, 30, '214,236,255', 0.1); g.restore();
+      gxGlow(g, lx + sd * 10, ys + 32, 70, '214,236,255', 0.035);
+      g.fillStyle = '#3e3d3a'; g.fillRect(lx - 3.5, ys - 2, 7, 68); g.fillStyle = 'rgba(236,246,242,.4)'; g.fillRect(lx - 1.2, ys, 2.4, 64);
+      M.push([lx + sd * 34, ys + 32, 26, 50, false]);
     }
   },
   // 2008, de nieuwe molen: staal en glas, koel daglicht; RVS-pijpen langs de gevel
@@ -2075,12 +2109,13 @@ const gxBG = {
       g.strokeStyle = 'rgba(230,240,248,.18)'; g.lineWidth = 1.4; g.beginPath(); g.moveTo(px - 2.5, 0); g.lineTo(px + dx - 2.5, P); g.stroke();
     }
     gxHaze(g, w, P, '#121c27', 0.34);
-    for (const [lx, s] of [[150, 0], [60, 1], [240, 1], [150, 2]]) { // lichtpanelen aan het plafond: helder en koel
-      const ys = s * 320 + 14;
-      gxBeam(g, lx, ys + 6, lx, ys + 170, 64, 170, '220,238,255', 0.04);
-      g.save(); g.translate(lx, ys + 4); g.scale(2.2, 1); gxGlow(g, 0, 0, 32, '220,238,255', 0.2); g.restore();
-      g.fillStyle = 'rgba(233,244,255,.92)'; g.fillRect(lx - 30, ys + 1, 60, 3.4);
-      M.push([lx, ys + 80, 50, 50, false]);
+    // ledlijnen rechtop langs de wand (om en om, nooit twee op dezelfde hoogte): koel licht, gedempt, nooit midden in de valbaan
+    for (const [lx, s] of [[16, 0], [284, 1], [16, 2]]) {
+      const ys = s * 320 + 60, sd = lx < 150 ? 1 : -1;
+      g.save(); g.translate(lx, ys + 40); g.scale(1, 2.6); gxGlow(g, 0, 0, 30, '220,238,255', 0.1); g.restore();
+      gxGlow(g, lx + sd * 12, ys + 40, 80, '220,238,255', 0.035);
+      g.fillStyle = 'rgba(26,39,53,.9)'; g.fillRect(lx - 3, ys - 2, 6, 84); g.fillStyle = 'rgba(233,244,255,.4)'; g.fillRect(lx - 1, ys, 2, 80);
+      M.push([lx + sd * 36, ys + 40, 26, 56, false]);
     }
   },
   // 2026, Molen B: donkere panelen, kabelgoten, RVS-buizen, schermpjes met zacht licht en ledjes. Rustig, niets beweegt.
@@ -2132,12 +2167,56 @@ function gxDigi(g, rnd, M, w, P, night) {
   for (let y = 100; y < P; y += 320) { g.fillStyle = '#2a2d31'; g.fillRect(260, y, 30, 5); g.fillStyle = 'rgba(255,255,255,.08)'; g.fillRect(260, y, 30, 1); }
   g.fillStyle = night ? 'rgba(0,0,0,.12)' : 'rgba(0,0,0,.04)'; g.fillRect(0, 0, w, P);
 }
-// zachte schaduw langs de zijwanden op de achterwand, en een iets lichter midden waar de korrel valt
+// zachte schaduw langs de zijwanden op de achterwand, en een iets lichter midden waar de korrel valt.
+// Alleen de twee randen vullen (het midden van het verloop is doorzichtig): een verloop over de hele tegel kost veel rasterwerk.
 function gxBgShade(g, w, P, era) {
   const gr = g.createLinearGradient(0, 0, w, 0), a = era === 'staal' ? 0.32 : 0.45;
   gr.addColorStop(0, `rgba(0,0,0,${a})`); gr.addColorStop(0.1, `rgba(0,0,0,${a * 0.35})`); gr.addColorStop(0.22, 'rgba(0,0,0,0)'); gr.addColorStop(0.78, 'rgba(0,0,0,0)'); gr.addColorStop(0.9, `rgba(0,0,0,${a * 0.35})`); gr.addColorStop(1, `rgba(0,0,0,${a})`);
-  g.fillStyle = gr; g.fillRect(0, 0, w, P);
+  g.fillStyle = gr; g.fillRect(0, 0, Math.ceil(w * 0.22), P); g.fillRect(Math.floor(w * 0.78), 0, w - Math.floor(w * 0.78), P);
 }
+// De achterwand van een tijdperk bouwen. M: lichtplekken voor de stofjes; mg: de stofjes in vier groepen (gxMotesDraw).
+// gxBgTile (getTile, als hij nog niet klaarstond): voorlopig in één canvas op halve resolutie (lo; drawTiles schaalt hem).
+// gxBgBand (gxPrewarm): op volle resolutie in drie banden van één verdieping hoog, elke band in een eigen rustig moment. De browser
+// rastert een canvas aan het eind van de taak waarin erop getekend is; met drie banden duurt geen enkel rustig moment lang. Pas als
+// de derde band klaar is (en de schaal niet veranderd is) vervangt hij de voorlopige.
+function gxBgTile(style, pal) {
+  const era = gxEra(style, pal), key = 'bg:' + era;
+  if (tiles[key]) return tiles[key];
+  gxEvict('bg:', era);
+  const k = V.s * V.dpr * 0.5, { c, g } = gxCv(gxBW, gxP, k, true), B = gxBgDraw(g, style, pal, true);
+  return (tiles[key] = Object.assign(B, { c, lo: true, k: V.s * V.dpr }));
+}
+function gxBgBand(style, pal, i) {
+  const era = gxEra(style, pal), key = 'bg:' + era, B = tiles[key], k = V.s * V.dpr, n = 3, bh = gxP / n;
+  if (B && !B.lo && B.k === k) { gxSt.pend = null; return null; }
+  if (i === 0 || !gxSt.pend || gxSt.pend.key !== key || gxSt.pend.k !== k) gxSt.pend = { key, k, bands: [] };
+  const p = gxSt.pend; if (p.bands.length !== i) return null;
+  const { c, g } = gxCv(gxBW, bh, k, true); g.translate(0, -i * bh);
+  const D = gxBgDraw(g, style, pal, i === 0); p.bands.push(c); if (i === 0) Object.assign(p, D);
+  if (p.bands.length === n) { gxSt.pend = null; gxEvict('bg:', era); tiles[key] = { bands: p.bands, P: gxP, motes: p.motes, mg: p.mg, lo: false, k }; }
+  return c;
+}
+function gxShrinkBand(B, i) {
+  const k = V.s * V.dpr; if (B.k === k) return null;
+  const nb = B.nb && B.nk === k ? B.nb : (B.nb = [], B.nk = k, B.nb);
+  nb[i] = gxShrink(B.bands[i], k / B.k);
+  if (nb.filter(Boolean).length === B.bands.length) { B.bands = nb; B.k = k; B.nb = null; }
+  return nb[i];
+}
+// een kopie op een andere schaal (één drawImage), voor het zakken van de resolutie
+function gxShrink(c, f) { const n = document.createElement('canvas'); n.width = Math.max(1, Math.round(c.width * f)); n.height = Math.max(1, Math.round(c.height * f)); const g = n.getContext('2d'); g.imageSmoothingQuality = 'low'; g.drawImage(c, 0, 0, n.width, n.height); return n; }
+function gxBgDraw(g, style, pal, motes) {
+  const era = gxEra(style, pal), P = gxP, w = gxBW, rnd = mulberry32(hashStr('bg:' + era)), M = [];
+  g.fillStyle = pal.wall; g.fillRect(0, 0, w, P);
+  (gxBG[era] || gxBG.digi)(g, rnd, pal, M, w, P);
+  gxBgShade(g, w, P, era);
+  if (!motes) return {};
+  const ms = gxMotesIn(M, rnd, era === 'digi' || era === 'night' ? 14 : 30), mg = [[], [], [], []];
+  for (const m of ms) mg[(m.warm ? 0 : 2) + (m.a > 0.3 ? 1 : 0)].push(m);
+  return { P, motes: ms, mg };
+}
+// van de grote plaatjes per tijdperk (achterwand, zijwanden) blijven er hooguit twee: dat van nu (gxSt.cur) en dat van gxPrewarm (gxSt.pre)
+function gxEvict(pre, era) { for (const q in tiles) if (q.startsWith(pre)) { const e = q.slice(pre.length); if (e !== era && e !== gxSt.cur && e !== gxSt.pre) delete tiles[q]; } }
 
 // ---------- zijwanden (dichtbij): schuiven 1:1 met de verdiepingen mee; de vloeren verdwijnen erin ----------
 const gxSIDE = {
@@ -2193,7 +2272,7 @@ function gxPipe(g, x, P, col, ys, clamp2) {
 function gxSides(style, pal) {
   const era = gxEra(style, pal), key = 'side:' + era;
   if (tiles[key]) return tiles[key];
-  for (const q in tiles) if (q.startsWith('side:')) delete tiles[q];
+  gxEvict('side:', era);
   const k = V.s * V.dpr, out = [];
   for (const right of [false, true]) {
     const w = right ? W - R : L, { c, g } = gxCv(w, gxPS, k, true), rnd = mulberry32(hashStr(key));
@@ -2271,7 +2350,8 @@ function gxPlate(style, pal, buil) {
 }
 // zachte schaduw onder een rol, in het plaatje van de rol zelf (onder het lijf, iets naar beneden)
 function gxRollShadow(g, Rr, dy) { g.save(); g.translate(0, dy); g.scale(1, 0.34); const rg = g.createRadialGradient(0, 0, 0, 0, 0, Rr); rg.addColorStop(0, 'rgba(0,0,0,.42)'); rg.addColorStop(1, 'rgba(0,0,0,0)'); g.fillStyle = rg; g.beginPath(); g.arc(0, 0, Rr, 0, TAU); g.fill(); g.restore(); }
-// stilstaand deel van een wals (lijf, glans, as, rand, schaduw); de draaiende groeven komen er per frame overheen. Middelpunt op (m, m).
+// stilstaand deel van een gladde stalen wals: cilinderglans met een lichtband (zoals vóór de mooimaakronde), rand en schaduw.
+// Geen as of spie in het midden: dan leest hij als een schijf of zaagblad. De fijne ribbels komen er per frame overheen. Middelpunt op (m, m).
 function gxRollSpr(st, Rr, e, digi) {
   const key = 'roll:' + st + ':' + Rr; if (tiles[key]) return tiles[key];
   const m = Rr + 3, { c, g } = gxCv(2 * m, 2 * m + 16, V.s * V.dpr); g.translate(m, m);
@@ -2279,10 +2359,6 @@ function gxRollSpr(st, Rr, e, digi) {
   const lg = g.createLinearGradient(-Rr, 0, Rr, 0);
   lg.addColorStop(0, e[0]); lg.addColorStop(0.2, e[1]); lg.addColorStop(digi ? 0.3 : 0.27, e[2]); lg.addColorStop(digi ? 0.38 : 0.42, e[1]); lg.addColorStop(0.8, e[1]); lg.addColorStop(1, e[0]);
   g.fillStyle = lg; g.beginPath(); g.arc(0, 0, Rr, 0, TAU); g.fill();
-  const rg = g.createRadialGradient(-Rr * 0.3, -Rr * 0.35, Rr * 0.2, 0, 0, Rr); rg.addColorStop(0, 'rgba(255,255,255,.12)'); rg.addColorStop(0.7, 'rgba(255,255,255,0)'); rg.addColorStop(1, 'rgba(0,0,0,.22)');
-  g.fillStyle = rg; g.beginPath(); g.arc(0, 0, Rr, 0, TAU); g.fill();
-  g.fillStyle = e[3]; g.globalAlpha = 0.55; g.beginPath(); g.arc(0, 0, Rr * 0.17, 0, TAU); g.fill(); g.globalAlpha = 1; // de as
-  g.strokeStyle = 'rgba(255,255,255,.35)'; g.lineWidth = 1; g.beginPath(); g.arc(0, 0, Rr * 0.17, -2.6, -0.6); g.stroke();
   if (digi) { const hy = Rr * 0.9; g.fillStyle = 'rgba(255,255,255,.75)'; g.fillRect(-Rr * 0.36, -hy, 2, hy * 2); g.strokeStyle = 'rgba(111,211,224,.4)'; g.lineWidth = 2; g.beginPath(); g.arc(0, 0, Rr - 3, -0.5, 0.5); g.stroke(); }
   g.lineWidth = 2; g.strokeStyle = e[3]; g.beginPath(); g.arc(0, 0, Rr, 0, TAU); g.stroke();
   return (tiles[key] = { c, m });
@@ -2331,52 +2407,130 @@ function gxVigSpr() {
   return (tiles.vig = { t: t.c, b: b.c });
 }
 
-// Alle plaatjes van een tijdperk in één keer (na de achterwand): zijwanden, vloerbalken, platen, walsen of stenen, schaduwen,
-// gloed, vignet en HUD. Zo komt het tekenwerk in één lang frame, en niet in een reeks trage frames die de resolutie omlaag zouden zetten.
-function gxWarm(style, pal) {
-  const st = style, e = WALS_ERA[st] || WALS_ERA.hout2;
-  gxSides(style, pal); gxVigSpr(); gxHudBg(); gxGrainHalo(); gxShade(19, 17); gxShade(13, 20); gxShade(17, 15);
-  gxSlab(style, pal, CONFIG.roll.wals * CONFIG.roll.casing); gxPlate(style, pal, false); gxRollSpr(st, CONFIG.roll.wals, e, st === 'digi');
-  if (style === 'hout' || style === 'steen') { gxSlab(style, pal, CONFIG.roll.molen * CONFIG.roll.casing); gxStoneSpr(CONFIG.roll.molen); gxPlate(style, pal, true); }
-  for (const c of ['255,214,110', '250,246,236', '231,138,1']) gxDot(c);
-  // elk nieuw plaatje één keer op een canvasje van 1 px tekenen: de browser maakt dan nu al zijn kopie, niet in het eerste speelframe
+// Een tijdperk alvast klaarzetten in rustige tijd: op de titel molen 1 (startDemo), op Kies een molen de verste molen (openPick) en op
+// de weegbon de volgende molen (levelComplete); en achter de introband de rest van een tijdperk dat getTile nog niet had (getTile).
+// lv: een molen (LEVELS[i], NIGHT, of alleen { style, pal }) of een index in LEVELS. Per idle-moment één of meer plaatjes, en elk
+// plaatje meteen één keer als bron gebruikt (gxPrime): dan is het nu al gerasterd en niet pas in het eerste speelframe. Een nieuwe
+// opdracht vervangt de oude. Het werk telt niet mee voor frameSample: daarna begint de meting van de frametijd opnieuw.
+function gxPrewarm(lv) {
+  if (typeof lv === 'number') lv = LEVELS[lv];
+  if (!lv || !lv.pal) return;
+  gxSt.pre = gxEra(lv.style, lv.pal); gxSt.preLv = lv; gxSt.jobs = gxJobs(lv.style, lv.pal);
+  if (gxLbWide() && lv.year) gxSt.jobs.push(() => gxEraArt(lv)); // brede schermen: ook het plaatje in het merkkader
+  if (!gxSt.idle) gxIdle();
+}
+// alle plaatjes van een tijdperk, als losse opdrachten: eerst wat de vloeren nodig hebben (dat komt zo in beeld), dan de achterwand
+// op volle resolutie in drie banden (tot dan staat er de voorlopige)
+function gxJobs(st, pal) {
+  const Rc = CONFIG.roll, old = st === 'hout' || st === 'steen';
+  return [() => gxSides(st, pal), () => gxHudBg(), () => gxVigSpr(), () => gxSlab(st, pal, Rc.wals * Rc.casing),
+    () => gxRollSpr(st, Rc.wals, WALS_ERA[st] || WALS_ERA.hout2, st === 'digi'), () => gxPlate(st, pal, false),
+    () => old && gxSlab(st, pal, Rc.molen * Rc.casing), () => old && gxStoneSpr(Rc.molen), () => old && gxPlate(st, pal, true), () => gxGrainHalo(),
+    () => [gxShade(19, 17), gxShade(13, 20), gxShade(17, 15), gxDot('255,214,110'), gxDot('250,246,236'), gxDot('231,138,1')],
+    ...[0, 1, 2].map(i => () => gxBgBand(st, pal, i))];
+}
+// De letters van HUD, introband en labels één keer onzichtbaar (dekking 0) op het speelveld zelf zetten: dan heeft het canvas ze al
+// klaarstaan als de eerste introband verschijnt (dat scheelde in het eerste frame van een molen 20 tot 30 ms bij CPU 4x; op een
+// ander canvas helpt het minder). In render, één letter(grootte) per frame (een frame tekent het canvas toch al), opnieuw na een
+// ander canvasformaat. Buiten een frame zou het canvas een extra keer naar het scherm moeten.
+const gxFONTS = ['800 24px', '600 13px', '800 26px', '600 11.5px', '600 11px', '800 10.5px', '800 11.5px', '800 11px', '800 13px', '800 20px', '800 14.5px', '600 13.5px', '600 12.5px', '800 14px']
+  .map(f => [`${f} ${F_UI}`, 0]).concat([[`400 25px ${F_HAND}`, 0], [`800 10.5px ${F_UI}`, 0.6], [`800 11.5px ${F_UI}`, 0.8]]); // [letter, letterafstand]
+const gxGLYPHS = ['abcdefghijklm', 'nopqrstuvwxyz', 'ABCDEFGHIJKLM', 'NOPQRSTUVWXYZ', '0123456789.,:;', '·+-!?()éë '];
+function gxFontWarm() {
+  if (gxSt.fontW !== cv.width + 'x' + cv.height) { gxSt.fontW = cv.width + 'x' + cv.height; gxSt.fontI = 0; }
+  if (gxSt.fontI >= gxFONTS.length) return;
+  const [f, ls] = gxFONTS[gxSt.fontI++];
+  ctx.save(); ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.globalAlpha = 0; ctx.font = f;
+  if (ls) try { ctx.letterSpacing = ls + 'px'; } catch (e) { /* oudere browsers */ }
+  for (const t of gxGLYPHS) ctx.fillText(t, 0, 0);
+  ctx.restore(); try { ctx.letterSpacing = '0px'; } catch (e) { /* idem */ } // letterSpacing hoort niet bij save/restore in elke browser
+}
+function gxIdle() {
+  gxSt.idle = true;
+  const step = dl => {
+    const Q = () => gxSt.now.length ? gxSt.now : gxSt.jobs, t0 = performance.now();
+    let n = 0, pre = false; // wat al klaarstond kost bijna niets: die opdrachten achter elkaar, de zware één per rustig moment
+    while (Q().length && (n === 0 || dl.timeRemaining() > 10 || performance.now() - t0 < 2)) { const q = Q(); pre = pre || q === gxSt.jobs; gxPrime(q.shift()()); n++; }
+    // zwaar klaarzetten voor een andere molen telt niet mee voor de resolutie (frameSample); werk voor de molen van nu wel
+    if (pre && performance.now() - t0 > 6) fps.n = fps.sum = 0;
+    if (Q().length) gxIdle(); else gxSt.idle = false;
+  };
+  // voor de molen van nu vlot (hooguit 250 ms wachten), klaarzetten voor een andere molen liefst in echt rustige momenten (600 ms)
+  if ('requestIdleCallback' in window) requestIdleCallback(step, { timeout: gxSt.now.length ? 250 : 600 }); else setTimeout(() => step({ timeRemaining: () => 0 }), gxSt.now.length ? 50 : 150);
+}
+// een plaatje (of een tegel met .c, .t/.b, of een lijst) één keer als bron gebruiken op een canvasje van 1 px, zonder te schalen
+function gxPrime(t) {
   const pr = gxSt.prime || (gxSt.prime = document.createElement('canvas').getContext('2d'));
-  for (const q in tiles) { const t = tiles[q], cs = t && (t.getContext ? [t] : t.c ? [t.c] : Array.isArray(t) ? t : t.t ? [t.t, t.b] : []); for (const c of cs) if (c && c.getContext) pr.drawImage(c, 0, 0, 1, 1); }
+  for (const c of gxCanvases(t)) pr.drawImage(c, 0, 0, 1, 1, 0, 0, 1, 1);
+}
+function gxCanvases(t) { return !t ? [] : t.getContext ? [t] : Array.isArray(t) ? t : [t.c, t.t, t.b, ...(t.bands || [])].filter(Boolean); }
+// De resolutie zakt (frameSample), het formaat blijft: de plaatjes verkleinen met één kopie per plaatje in plaats van alles opnieuw
+// te tekenen (dat gaf midden in het spel een stilstand van 100 tot 250 ms). k0: de oude schaal (V.s * V.dpr).
+// De achterwand van nu blijft staan: drawTiles tekent hem even geschaald tot zijn drie banden in rustige momenten verkleind zijn
+// (getTile zet dat klaar, gxShrinkBand). Achterwand en zijwanden van een ander tijdperk vervallen en worden opnieuw klaargezet.
+// Het merkkader wordt wel opnieuw getekend (layout): de browser stuurt #lb elk frame mee, dus op de lagere resolutie is dat goedkoper.
+function gxRescale(k0) {
+  const k1 = V.s * V.dpr, f = k1 / k0; if (!(f > 0) || f === 1) return;
+  const sc = c => gxShrink(c, f);
+  for (const q in tiles) {
+    const t = tiles[q], big = q.startsWith('bg:') || q.startsWith('side:');
+    if (!t) continue;
+    if (big && q.slice(q.indexOf(':') + 1) !== gxSt.cur) { delete tiles[q]; continue; }
+    if (q.startsWith('bg:')) continue;
+    if (q.startsWith('ep:')) { delete tiles[q]; continue; } // het merkkader wordt toch opnieuw getekend, op de nieuwe resolutie
+    if (t.getContext) tiles[q] = sc(t);
+    else if (Array.isArray(t)) tiles[q] = t.map(sc);
+    else { for (const p of ['c', 't', 'b']) if (t[p]) t[p] = sc(t[p]); if (t.k) t.k = k1; }
+  }
+  if (lampC && lampK === k0) { lampC = sc(lampC); lampK = k1; }
+  gxSt.pend = null;
+  if (gxSt.preLv && gxSt.pre !== gxSt.cur) gxPrewarm(gxSt.preLv);
 }
 // ---------- per frame ----------
 // Kale kopie op hele schermpixels: een plaatje dat al op schermresolutie getekend is, linksboven op (lx, ly) in de huidige coördinaten.
 // Zonder schalen en filteren is dat op een telefoon die het canvas op de CPU tekent veel sneller dan een geschaalde drawImage.
+// render houdt de transformatie zelf bij in gxT (schaal a, verschuiving e en f in schermpixels; gxMove), dus geen getTransform per kopie.
+// Tussen gxId(true) en gxId(false) staat het canvas op schermpixels voor een hele reeks kopieën (vloeren, schaduwvlekken, vignet),
+// in plaats van twee wissels van transformatie per kopie. Buiten render (gxT.on uit) werkt gxBlit zoals eerst.
+const gxT = { a: 1, e: 0, f: 0, on: false, id: false };
+function gxMove(dx, dy) { gxT.e += dx * gxT.a; gxT.f += dy * gxT.a; }
+function gxId(on) { gxT.id = on; if (on) ctx.setTransform(1, 0, 0, 1, 0, 0); else ctx.setTransform(gxT.a, 0, 0, gxT.a, gxT.e, gxT.f); }
 function gxBlit(c, lx, ly) {
-  const m = ctx.getTransform(); ctx.setTransform(1, 0, 0, 1, 0, 0);
-  ctx.drawImage(c, Math.round(m.e + lx * m.a), Math.round(m.f + ly * m.d));
-  ctx.setTransform(m);
+  if (!gxT.on) { const m = ctx.getTransform(); ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.drawImage(c, Math.round(m.e + lx * m.a), Math.round(m.f + ly * m.d)); ctx.setTransform(m); return; }
+  const x = Math.round(gxT.e + lx * gxT.a), y = Math.round(gxT.f + ly * gxT.a);
+  if (gxT.id) { ctx.drawImage(c, x, y); return; }
+  ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.drawImage(c, x, y); ctx.setTransform(gxT.a, 0, 0, gxT.a, gxT.e, gxT.f);
 }
 // idem, een uitsnede: logische x sx0 tot sx0 + sw uit een strook op resolutie k, met de volle hoogte
 function gxBlitPart(c, k, sx0, sw, lx, ly) {
   const S = Math.max(0, Math.round(sx0 * k)), w = Math.min(Math.round(sw * k), c.width - S); if (w <= 0) return;
-  const m = ctx.getTransform(); ctx.setTransform(1, 0, 0, 1, 0, 0);
-  ctx.drawImage(c, S, 0, w, c.height, Math.round(m.e + lx * m.a), Math.round(m.f + ly * m.d), w, c.height);
-  ctx.setTransform(m);
+  if (!gxT.on) { const m = ctx.getTransform(); ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.drawImage(c, S, 0, w, c.height, Math.round(m.e + lx * m.a), Math.round(m.f + ly * m.d), w, c.height); ctx.setTransform(m); return; }
+  const x = Math.round(gxT.e + lx * gxT.a), y = Math.round(gxT.f + ly * gxT.a);
+  if (!gxT.id) ctx.setTransform(1, 0, 0, 1, 0, 0);
+  ctx.drawImage(c, S, 0, w, c.height, x, y, w, c.height);
+  if (!gxT.id) ctx.setTransform(gxT.a, 0, 0, gxT.a, gxT.e, gxT.f);
 }
 // stofjes in het licht van de achterwand: schuiven mee met de achterwand en zweven zacht (bij verminderde beweging stil).
-// Eén pad per kleur en helderheid: twee keer vullen in plaats van een plaatje per stofje.
+// De stofjes staan al in vier groepen (warm of koel, zacht of helder: B.mg), dus elk stofje één keer langs en vier keer vullen.
+// Is de resolutie al helemaal gezakt (dprCap 1, een trage telefoon), dan geen stofjes: ze zijn alleen sfeer.
+const gxMC = ['rgba(255,236,200,.24)', 'rgba(255,236,200,.42)', 'rgba(214,240,255,.24)', 'rgba(214,240,255,.42)'];
 function gxMotesDraw(B, cam) {
-  if (!B.motes.length) return;
+  if (!B.motes.length || dprCap <= 1) return;
   const T = reduced.matches ? 0 : performance.now() / 1000, off = -((cam * gxPar) % B.P);
-  for (const [warm, hi, col] of [[true, 0, '255,236,200'], [true, 1, '255,236,200'], [false, 0, '214,240,255'], [false, 1, '214,240,255']]) {
+  for (let i = 0; i < 4; i++) {
+    const grp = B.mg[i]; if (!grp.length) continue;
     ctx.beginPath(); let n = 0;
-    for (const m of B.motes) {
-      if (m.warm !== warm || (m.a > 0.3) !== !!hi) continue;
+    for (const m of grp) {
       let y = m.y + off + Math.cos(T * m.w * 0.8 + m.ph) * 5; if (y < -4) y += B.P; if (y > H + 4) continue;
       const x = L + m.x + Math.sin(T * m.w + m.ph) * 7, r = m.r * (0.85 + 0.25 * Math.sin(T * m.w * 1.9 + m.ph * 2));
       ctx.rect(x - r, y - r, 2 * r, 2 * r); n++; // zo klein is een vierkantje een stipje, en veel goedkoper dan een cirkel
     }
-    if (n) { ctx.fillStyle = `rgba(${col},${hi ? 0.42 : 0.24})`; ctx.fill(); }
+    if (n) { ctx.fillStyle = gxMC[i]; ctx.fill(); }
   }
 }
 // zacht vignet over de wanden (niet over het spel): schaduw onder de HUD en donkerder naar de onderrand. Niet in Molen B en de
 // Nachtploeg: die wand is al donker, en 's nachts geeft de werklamp de rand.
-function gxVignette(lv) { if (lv.style === 'digi') return; const v = gxVigSpr(); gxBlit(v.t, 0, CONFIG.HUD); gxBlit(v.b, 0, H - 120); }
+function gxVignette(lv) { if (lv.style === 'digi') return; const v = gxVigSpr(); gxId(true); gxBlit(v.t, 0, CONFIG.HUD); gxBlit(v.b, 0, H - 120); gxId(false); }
 // zacht spoor achter de korrel: een taps toelopend lint door de laatste posities (wereldcoördinaten), meelwit en doorschijnend
 // Elk derde punt is genoeg voor een vloeiende lijn; de twee randen staan in vaste arrays (geen nieuwe per frame).
 const gxTL = new Float32Array(32), gxTR = new Float32Array(32);
@@ -2431,15 +2585,16 @@ function gxEarTile(dark, d) {
   for (const [x, y, r] of [[30, 40, -0.25], [98, 112, 0.2], [100, 30, 0.12], [34, 124, -0.1], [66, 76, 0.3]]) gxEar(g, x, y, 1.05, r, 1.1);
   gxSt.lbPat = { key, c }; return c;
 }
-// tijdlijn (links): zes molens, of in de Nachtploeg de vijf zones; de huidige uitgelicht met een oranje stip met gloed
+// tijdlijn (links): zes molens, of in de Nachtploeg de vijf zones; de huidige uitgelicht met een oranje stip met gloed.
+// Alle tekst minstens 4,5:1 op de achtergrond (inkt op dekking .72); gehaald of nog niet gehaald zie je alleen aan de stip (vol of hol).
 function gxTimeline(g, x0, w, h, dark) {
   const night = run && run.mode === 'night', demo = !run || run.mode === 'demo';
   const items = night ? NIGHT.zones.map((z, i) => ({ big: z, small: 'zone ' + (i + 1) })) : LEVELS.map(l => ({ big: String(l.year), small: l.short }));
   const cur = night ? Math.floor(run.passed / 10) % NIGHT.zones.length : demo ? -1 : Math.min(run.lvl, LEVELS.length - 1);
   const n = items.length, compact = w < 200, span = Math.min(h * 0.66, n * (compact ? 78 : 100)), top = (h - span) / 2, dy = span / (n - 1);
-  const lx = x0 + (compact ? w * 0.34 : Math.min(w * 0.3, 80)), ink = dark ? '244,239,227' : '29,30,31', gold = dark ? '#E3C431' : '#7A6500';
+  const lx = x0 + (compact ? w * 0.34 : Math.min(w * 0.3, 80)), ink = dark ? '244,239,227' : '29,30,31', gold = dark ? '#E3C431' : '#6E5A00', soft = `rgba(${ink},.72)`;
   g.strokeStyle = `rgba(${ink},.16)`; g.lineWidth = 2; g.beginPath(); g.moveTo(lx, top - 26); g.lineTo(lx, top + span + 26); g.stroke();
-  if (!compact) { g.font = `800 11px ${F_UI}`; g.textAlign = 'left'; g.textBaseline = 'alphabetic'; g.fillStyle = `rgba(${ink},.5)`; try { g.letterSpacing = '1.5px'; } catch (e) { /* oud */ } g.fillText(night ? 'NACHTPLOEG' : 'SINDS 1846', lx - 4, top - 44); try { g.letterSpacing = '0px'; } catch (e) { /* oud */ } }
+  if (!compact) { g.font = `800 11px ${F_UI}`; g.textAlign = 'left'; g.textBaseline = 'alphabetic'; g.fillStyle = soft; try { g.letterSpacing = '1.5px'; } catch (e) { /* oud */ } g.fillText(night ? 'NACHTPLOEG' : 'SINDS 1846', lx - 4, top - 44); try { g.letterSpacing = '0px'; } catch (e) { /* oud */ } }
   for (let i = 0; i < n; i++) {
     const y = top + i * dy, on = i === cur, past = night ? false : (demo ? i <= save.maxLvl : i < cur);
     if (on) { g.fillStyle = 'rgba(231,138,1,.2)'; g.beginPath(); g.arc(lx, y, 17, 0, TAU); g.fill(); g.fillStyle = 'rgba(231,138,1,.12)'; g.beginPath(); g.arc(lx, y, 25, 0, TAU); g.fill(); }
@@ -2447,9 +2602,9 @@ function gxTimeline(g, x0, w, h, dark) {
     if (on || past) { g.fillStyle = '#E78A01'; g.fill(); } else { g.fillStyle = dark ? '#1c1a17' : '#F4EFE2'; g.fill(); g.strokeStyle = 'rgba(231,138,1,.75)'; g.lineWidth = 2; g.stroke(); }
     const tx = lx + (compact ? 16 : 24), bigF = night ? (compact ? 19 : 25) : (compact ? 22 : 30);
     g.textAlign = 'left'; g.textBaseline = 'middle';
-    g.font = `400 ${on ? bigF + 4 : bigF}px ${F_HAND}`; g.fillStyle = on ? gold : `rgba(${ink},${past || night ? 0.62 : 0.42})`;
+    g.font = `400 ${on ? bigF + 4 : bigF}px ${F_HAND}`; g.fillStyle = on ? gold : soft;
     g.fillText(items[i].big, tx, y - (compact ? 0 : 5), w - (tx - x0) - 8);
-    if (!compact) { g.font = `${on ? 800 : 700} 11.5px ${F_UI}`; g.fillStyle = on ? (dark ? '#F29A1C' : '#9E5E00') : `rgba(${ink},.45)`; try { g.letterSpacing = '1px'; } catch (e) { /* oud */ } g.fillText(items[i].small.toUpperCase(), tx + 2, y + 16, w - (tx - x0) - 8); try { g.letterSpacing = '0px'; } catch (e) { /* oud */ } }
+    if (!compact) { g.font = `${on ? 800 : 700} 11.5px ${F_UI}`; g.fillStyle = on ? (dark ? '#F29A1C' : '#8A5200') : soft; try { g.letterSpacing = '1px'; } catch (e) { /* oud */ } g.fillText(items[i].small.toUpperCase(), tx + 2, y + 16, w - (tx - x0) - 8); try { g.letterSpacing = '0px'; } catch (e) { /* oud */ } }
   }
 }
 // het merkkader opnieuw opbouwen als formaat, thema, tijdperk of zone verandert (zie buildLetterbox); per frame alleen een sleutel vergelijken
@@ -2601,27 +2756,30 @@ function gxHudBg() {
   const hb = CONFIG.HUD, { c, g } = gxCv(W, hb, V.s * V.dpr);
   const gr = g.createLinearGradient(0, 0, 0, hb); gr.addColorStop(0, 'rgba(38,36,33,.94)'); gr.addColorStop(1, 'rgba(22,22,23,.9)');
   g.fillStyle = gr; g.fillRect(0, 0, W, hb);
-  g.fillStyle = 'rgba(255,255,255,.05)'; g.fillRect(0, 0, W, 1);
+  if (gxLbWide()) { g.fillStyle = 'rgba(255,255,255,.05)'; g.fillRect(0, 0, W, 1); } // op de telefoon loopt de HUD door in de strook erboven: geen naad
   g.fillStyle = 'rgba(255,236,160,.2)'; g.fillRect(0, hb - 3, W, 1); g.fillStyle = 'rgba(207,171,0,.85)'; g.fillRect(0, hb - 2, W, 2);
   return (tiles.hud = c);
 }
-// paneel zoals de kaarten: warm antraciet, afgeronde hoeken, een zachte schaduw en een gouden bovenrand
+// paneel zoals de DOM-kaarten (verhaalkaart, weegbon): warm antraciet, hoekstraal 4, een zachte schaduw en een gouden band van 5 px
+// bovenaan, zonder binnenrand
 function gxPanel(x, y, w, h) {
-  ctx.fillStyle = 'rgba(0,0,0,.3)'; gxRR(ctx, x, y + 3, w, h + 2, 10); ctx.fill();
-  ctx.fillStyle = 'rgba(28,27,25,.93)'; gxRR(ctx, x, y, w, h, 9); ctx.fill();
-  ctx.save(); ctx.clip(); ctx.fillStyle = '#CFAB00'; ctx.fillRect(x, y, w, 3); ctx.fillStyle = 'rgba(255,255,255,.035)'; ctx.fillRect(x, y + 3, w, Math.min(40, h * 0.3)); ctx.restore();
-  ctx.strokeStyle = 'rgba(207,171,0,.2)'; ctx.lineWidth = 1; gxRR(ctx, x + 0.5, y + 0.5, w - 1, h - 1, 8.5); ctx.stroke();
+  ctx.fillStyle = 'rgba(0,0,0,.3)'; gxRR(ctx, x, y + 3, w, h + 2, 5); ctx.fill();
+  ctx.fillStyle = 'rgba(28,27,25,.93)'; gxRR(ctx, x, y, w, h, 4); ctx.fill();
+  ctx.save(); ctx.clip(); ctx.fillStyle = '#CFAB00'; ctx.fillRect(x, y, w, 5); ctx.fillStyle = 'rgba(255,255,255,.035)'; ctx.fillRect(x, y + 5, w, Math.min(40, h * 0.3)); ctx.restore();
 }
 // ---------- merkkader: vlakken, tijdperkpaneel en opnieuw opbouwen ----------
 function gxLbFill(g, x, y, w, h, dark) { // achtergrond in schermpixels: warme kleur en het korenaarpatroon
   if (w <= 0 || h <= 0) return;
   g.fillStyle = dark ? '#1A1815' : '#EEE7D7'; g.fillRect(x, y, w, h);
-  const p = g.createPattern(gxEarTile(dark, V.dpr), 'repeat'); if (p) { g.fillStyle = p; g.fillRect(x, y, w, h); }
+  gxLbPat(g, x, y, w, h, dark);
 }
+function gxLbPat(g, x, y, w, h, dark) { const p = g.createPattern(gxEarTile(dark, gxSt.lbD), 'repeat'); if (p) { g.fillStyle = p; g.fillRect(x, y, w, h); } }
+// brede schermen: naast het veld is ruimte voor de tijdlijn (en het tijdperkplaatje), met de warme achtergrond van het thema
+const gxLbWide = () => V.ox - 48 >= 110;
 // de twee zijpanelen naast het veld (alleen als er ruimte is): links de tijdlijn, rechts het tijdperkplaatje
 function gxLbPanels(g, dark) {
-  const d = V.dpr, m = 48, pw = V.ox - m, fw = W * V.s, h = V.ch;
-  if (pw < 110) return;
+  const d = gxSt.lbD, m = 48, pw = V.ox - m, fw = W * V.s, h = V.ch; // d: de resolutie waarop het merkkader gebouwd is
+  if (!gxLbWide()) return;
   g.setTransform(1, 0, 0, 1, 0, 0);
   gxLbFill(g, 0, 0, Math.floor(pw * d), Math.ceil(h * d), dark);
   const rx = Math.ceil((V.ox + fw + m) * d); gxLbFill(g, rx, 0, g.canvas.width - rx, Math.ceil(h * d), dark);
@@ -2639,32 +2797,40 @@ function gxEraPanel(g, x0, w, h, dark) {
     for (const [a, sc] of [[-0.5, 0.9], [0.5, 0.9], [0, 1.06]]) { g.save(); g.translate(cx, cy + 34 * s); g.rotate(a); gxEar(g, 0, -30 * s * sc, s * sc, 0, 1.4); g.restore(); }
     return;
   }
-  const lv = lvlCfg(), pw = Math.min(w * 0.84, 420), ph = pw / 2, px = x0 + (w - pw) / 2, py = h / 2 - ph / 2 - 24, d = Math.max(1, Math.min(2, V.dpr));
-  const off = document.createElement('canvas'); off.width = Math.ceil(pw * d); off.height = Math.ceil(ph * d);
+  const lv = lvlCfg(), pw = Math.min(w * 0.84, 420), ph = pw / 2, px = x0 + (w - pw) / 2, py = h / 2 - ph / 2 - 24, off = gxEraArt(lv, pw);
+  g.globalAlpha = dark ? 0.62 : 0.78; g.drawImage(off, px, py, pw, ph); g.globalAlpha = 1;
+  g.textAlign = 'center'; g.textBaseline = 'middle'; g.font = `400 ${Math.round(clamp(pw / 10, 22, 36))}px ${F_HAND}`; g.fillStyle = dark ? 'rgba(227,196,49,.85)' : '#6E5A00';
+  g.fillText(run.mode === 'night' ? 'Nachtploeg' : lv.title, x0 + w / 2, py + ph + 30, w - 24);
+  if (run.mode !== 'night') { g.font = `700 12px ${F_UI}`; g.fillStyle = dark ? 'rgba(244,239,227,.72)' : 'rgba(29,30,31,.72)'; try { g.letterSpacing = '1.5px'; } catch (e) { /* oud */ } g.fillText(String(lv.year), x0 + w / 2, py + ph + 58); try { g.letterSpacing = '0px'; } catch (e) { /* oud */ } }
+}
+// het tijdperkplaatje van het merkkader (zachte randen), één keer per molen en formaat; gxPrewarm zet dat van de volgende molen klaar
+function gxEraArt(lv, pw) {
+  pw = pw || Math.min((V.ox - 48) * 0.84, 420);
+  const d = Math.max(1, Math.min(2, V.dpr)), key = `ep:${lv.year}${lv === NIGHT ? 'n' : ''}:${Math.round(pw)}:${d}`; if (tiles[key]) return tiles[key];
+  const keep = [lv, lvlCfg(), gxSt.preLv].filter(Boolean).map(l => `ep:${l.year}${l === NIGHT ? 'n' : ''}:`); // alleen die van nu en de klaargezette
+  for (const q in tiles) if (q.startsWith('ep:') && !keep.some(p => q.startsWith(p))) delete tiles[q];
+  const off = document.createElement('canvas'); off.width = Math.ceil(pw * d); off.height = Math.ceil(pw / 2 * d);
   const og = off.getContext('2d'); og.scale(off.width / 92, off.height / 46); drawEraVignette(lv, 0, 0, 1.2, og);
   og.setTransform(1, 0, 0, 1, 0, 0); og.globalCompositeOperation = 'destination-in'; // zachte randen: vervagen naar alle vier de kanten
   for (const [x1, y1] of [[off.width, 0], [0, off.height]]) {
     const lg = og.createLinearGradient(0, 0, x1, y1); lg.addColorStop(0, 'rgba(0,0,0,0)'); lg.addColorStop(0.16, 'rgba(0,0,0,1)'); lg.addColorStop(0.84, 'rgba(0,0,0,1)'); lg.addColorStop(1, 'rgba(0,0,0,0)');
     og.fillStyle = lg; og.fillRect(0, 0, off.width, off.height);
   }
-  g.globalAlpha = dark ? 0.62 : 0.78; g.drawImage(off, px, py, pw, ph); g.globalAlpha = 1;
-  g.textAlign = 'center'; g.textBaseline = 'middle'; g.font = `400 ${Math.round(clamp(pw / 10, 22, 36))}px ${F_HAND}`; g.fillStyle = dark ? 'rgba(227,196,49,.85)' : 'rgba(122,101,0,.92)';
-  g.fillText(run.mode === 'night' ? 'Nachtploeg' : lv.title, x0 + w / 2, py + ph + 30, w - 24);
-  if (run.mode !== 'night') { g.font = `700 12px ${F_UI}`; g.fillStyle = dark ? 'rgba(244,239,227,.5)' : 'rgba(29,30,31,.55)'; try { g.letterSpacing = '1.5px'; } catch (e) { /* oud */ } g.fillText(String(lv.year), x0 + w / 2, py + ph + 58); try { g.letterSpacing = '0px'; } catch (e) { /* oud */ } }
+  return (tiles[key] = off);
 }
 // per frame: alleen een sleutel vergelijken; bij een ander tijdperk of een andere zone de zijpanelen opnieuw, anders (formaat, thema) alles
 function gxLetterbox() {
-  const key = gxLbKey(), c = gxSt.lbEl || (gxSt.lbEl = $('lb'));
-  if (key === gxSt.lb && c.width === cv.width && c.height === cv.height) return;
+  const key = gxLbKey(), c = gxSt.lbEl || (gxSt.lbEl = $('lb')), size = cv.width + 'x' + cv.height;
+  if (key === gxSt.lb && size === gxSt.lbCv) return;
   const dark = gxDark();
-  if (!gxSt.lb || c.width !== cv.width || c.height !== cv.height || dark !== gxSt.lbDark) { buildLetterbox(); return; }
+  if (!gxSt.lb || size !== gxSt.lbCv || dark !== gxSt.lbDark) { buildLetterbox(); return; }
   gxSt.lb = key; gxLbPanels(c.getContext('2d'), dark);
 }
 function render(alpha) {
   // het merkkader staat op #lb eronder; buiten het veld blijft #cv doorzichtig en wordt nooit beschilderd
   const k = V.s * V.dpr;
   gxLetterbox();
-  ctx.setTransform(k, 0, 0, k, V.ox * V.dpr, V.oy * V.dpr);
+  ctx.setTransform(k, 0, 0, k, V.ox * V.dpr, V.oy * V.dpr); Object.assign(gxT, { a: k, e: V.ox * V.dpr, f: V.oy * V.dpr, on: true, id: false });
   ctx.save(); ctx.beginPath(); ctx.rect(0, 0, W, H); ctx.clip();
   const cam = lerp(Wd.pcam, Wd.camY, alpha), gx = lerp(G.px, G.x, alpha), lv = lvlCfg(), pal = lv.pal, demo = run.mode === 'demo';
   let sx = 0, sy = 0;
@@ -2673,36 +2839,41 @@ function render(alpha) {
     sx = Math.sin(u * 17 + 0.4) * a * 0.45 * e; sy = Math.sin(u * 13 + 1.1) * a * e;
     ctx.fillStyle = pal.wall; ctx.fillRect(0, 0, W, H); // randen die de schok vrijlaat
   }
-  ctx.save(); ctx.translate(sx, sy);
+  ctx.save(); ctx.translate(sx, sy); gxMove(sx, sy);
   const bg = getTile(lv.style, pal);
   drawTiles(bg, -((cam * gxPar) % bg.P), sx, sy);
   gxMotesDraw(bg, cam);
   drawWalls(cam, pal, lv, sx, sy);
   gxVignette(lv); // alleen over de wanden: het spel zelf blijft helder
   drawSteam();
-  ctx.save(); ctx.translate(0, -cam);
+  ctx.save(); ctx.translate(0, -cam); gxMove(0, -cam);
   drawChute(lv);
   if (Wd.silo) drawSilo(Wd.silo, cam);
   // verdiepingen alleen binnen de schacht: stenen en walsen verdwijnen in de wand in plaats van eroverheen
+  // eerst alle kale kopieën (vloerbalken, platen en het stilstaande deel van walsen en stenen) op schermpixels, dan wat draait en schudt
   ctx.save(); ctx.beginPath(); ctx.rect(L, cam - 150, R - L, H + 300); ctx.clip();
-  for (const f of Wd.floors) if (f.y - cam > -140 && f.y - cam < H + 140) drawFloor(f, pal); // met hun schaduw op de achterwand
+  const vis = f => f.y - cam > -140 && f.y - cam < H + 140;
+  gxId(true); for (const f of Wd.floors) if (vis(f)) drawFloor(f, pal, 0); // met hun schaduw op de achterwand
+  gxId(false); for (const f of Wd.floors) if (vis(f)) drawFloor(f, pal, 1);
   ctx.restore();
   if (!demo) gxTrailDraw();
   // zachte schaduw onder pick-ups en gevaren: los van elke achterwand goed te zien
   const shP = gxShade(19, 17), shM = gxShade(13, 20), shH = gxShade(17, 15);
+  gxId(true);
   for (const p of Wd.picks) if (!p.got && p.y - cam > -30 && p.y - cam < H + 30) gxBlit(shP, p.x - 19, p.y + Math.sin(Wd.t * 3 + p.ph) * 4 - 15);
   for (const h of Wd.haz) if (h.anch) gxBlit(shM, h.sx - 13, h.y - 19);
+  gxId(false);
   for (const p of Wd.picks) if (!p.got && p.y - cam > -30 && p.y - cam < H + 30) drawPick(p.type, p.x, p.y + Math.sin(Wd.t * 3 + p.ph) * 4, Wd.t + p.ph);
   for (const h of Wd.haz) if (h.anch) drawHazard('moeder', h.sx, h.y, h.rot, null, 1);
   drawParticles();
   if (Wd.jg) drawJokeGrain(Wd.jg);
-  ctx.restore();
-  for (const h of Wd.haz) if (!h.anch && !h.fling) gxBlit(shH, h.sx - 17, h.sy - 13);
+  ctx.restore(); gxMove(0, cam);
+  gxId(true); for (const h of Wd.haz) if (!h.anch && !h.fling) gxBlit(shH, h.sx - 17, h.sy - 13); gxId(false);
   for (const h of Wd.haz) if (!h.anch) drawHazard(h.type, h.sx, h.sy, h.rot, h.pts, h.fling ? 0.5 : 1);
   drawTexts(); // zwevende punten onder de korrel, zodat ze nooit over zijn gezichtje vallen
   // wachtend op de start dobbert de korrel zacht onder de stortkoker
   if (!demo) { drawGrain(gx, CONFIG.GY + (Wd.intro === 'wait' && !reduced.matches ? Math.sin(Wd.it * 2.4) * 2 : 0)); drawThumb(); }
-  ctx.restore();
+  ctx.restore(); gxMove(-sx, -sy);
   drawWarnings();
   if (Wd.slow > 0) vignette('rgba(95,168,211,', 0.35 * clamp(Wd.slow, 0, 1));
   if (run.mode === 'night') drawNightLamp(gx);
@@ -2715,14 +2886,25 @@ function render(alpha) {
   // achter een kaart (pauze, weegbon, game-over, jaarverslag) het veld dimmen; de titeldemo blijft helder
   if (!demo && S.screen !== 'play') { ctx.fillStyle = 'rgba(0,0,0,.5)'; ctx.fillRect(0, 0, W, H); }
   if (debug) drawDebug(cam);
-  ctx.restore();
+  ctx.restore(); gxT.on = false;
+  gxFontWarm();
 }
 // Achterwand op hele schermpixels en zonder schalen (de tegel is al op schermresolutie getekend): dan is elke tegel een kale kopie in
 // plaats van een gefilterde, en dat scheelt op een telefoon die het canvas op de CPU tekent veel tijd per frame. Alleen de schacht (L tot R).
+// Op volle resolutie zijn het drie banden van één verdieping (gxBgBand). Geschaald: de voorlopige (lo, één canvas op halve resolutie)
+// en, na het zakken van de resolutie, de oude tot gxPrewarm hem op de nieuwe schaal heeft gebouwd (k: de schaal waarop hij gebouwd is).
 function drawTiles(tile, off, sx, sy) {
-  const d = V.dpr, x = Math.round((V.ox + (L + sx) * V.s) * d);
+  const d = V.dpr, x = Math.round((V.ox + (L + sx) * V.s) * d), Y = y => Math.round((V.oy + (y + sy) * V.s) * d);
+  const sc = tile.lo || tile.k !== V.s * d, dw = Math.ceil(gxBW * V.s * d);
   ctx.save(); ctx.setTransform(1, 0, 0, 1, 0, 0); // de clip op het speelveld blijft staan
-  for (let y = off; y < H; y += tile.P) ctx.drawImage(tile.c, x, Math.round((V.oy + (y + sy) * V.s) * d));
+  for (let y = off; y < H; y += tile.P) {
+    if (tile.lo) { ctx.drawImage(tile.c, x, Y(y), dw, Math.ceil(tile.P * V.s * d)); continue; }
+    const bh = tile.P / tile.bands.length;
+    for (let i = 0; i < tile.bands.length; i++) {
+      const by = y + i * bh; if (by >= H || by + bh <= 0) continue;
+      if (sc) ctx.drawImage(tile.bands[i], x, Y(by), dw, Y(by + bh) - Y(by) + 1); else ctx.drawImage(tile.bands[i], x, Y(by));
+    }
+  }
   ctx.restore();
 }
 // stoompufjes van de 2 pk-machine (1867): zachte wolkjes langs de wand, geen harde rondjes
@@ -2790,12 +2972,15 @@ function drawChute(lv) { // houten stortkoker (1846, 1867) of zuigbuis waaruit d
     ctx.fillStyle = '#5d646c'; ctx.fillRect(179, y1 - 10, 42, 10); ctx.fillStyle = 'rgba(255,255,255,.22)'; ctx.fillRect(179, y1 - 10, 42, 1.5);
   }
 }
-function drawFloor(f, pal) {
-  if (f.kind === 'plan' || f.kind === 'buil') return drawPlate(f, pal);
+// pass 0: alleen de kale kopieën (in render tussen gxId(true) en gxId(false)), pass 1: alleen wat draait en schudt; zonder pass allebei
+function drawFloor(f, pal, pass) {
+  if (f.kind === 'plan' || f.kind === 'buil') return drawPlate(f, pal, pass);
   const xl = f.cx - f.w / 2 - f.R, xr = f.cx + f.w / 2 + f.R, y = f.y, hh = f.R * CONFIG.roll.casing;
-  const S = gxSlab(lvlCfg().style, pal, hh), o = 10 + Math.floor(f.seed * 7) % 80; // elke verdieping een eigen uitsnede van de strook
-  for (const [a, b] of [[-10, xl], [xr, W + 10]]) if (b > a) gxBlitPart(S.c, S.k, a + o, b - a, a, y - hh);
-  drawRoll(f, xl, y, 1); drawRoll(f, xr, y, -1);
+  if (pass !== 1) {
+    const S = gxSlab(lvlCfg().style, pal, hh), o = 10 + Math.floor(f.seed * 7) % 80; // elke verdieping een eigen uitsnede van de strook
+    for (const [a, b] of [[-10, xl], [xr, W + 10]]) if (b > a) gxBlitPart(S.c, S.k, a + o, b - a, a, y - hh);
+  }
+  drawRoll(f, xl, y, 1, pass); drawRoll(f, xr, y, -1, pass);
 }
 // Alleen tekenwerk: de botsing blijft de cirkel (f.R) uit stepFloor/hitCirc. Verlopen worden per soort één keer
 // gemaakt in lokale coördinaten (na translate) en daarna hergebruikt: geen shadowBlur, geen nieuwe objecten per frame.
@@ -2805,9 +2990,10 @@ const WALS_ERA = { // [rand donker, lijf, glans, omtrek] per tijdperk; Molen B (
   staal: ['#56606b', '#B2BBC5', '#EAF0F5', '#36404a'], digi: ['#48515a', '#C4CBD3', '#FFFFFF', '#2a3036'] };
 function rollGrad(key, mk) { return ROLL_GRAD[key] || (ROLL_GRAD[key] = mk()); }
 // Stilstaand deel van een wals of molensteen als kale kopie (met zijn schaduw), daarna de draaiende delen
-function drawRoll(f, x, y, dir) {
-  const Rr = f.R, st = lvlCfg().style, S = f.kind === 'molen' ? gxStoneSpr(Rr) : gxRollSpr(st, Rr, WALS_ERA[st] || WALS_ERA.hout2, st === 'digi');
-  gxBlit(S.c, x - S.m, y - S.m);
+function drawRoll(f, x, y, dir, pass) {
+  const Rr = f.R, st = lvlCfg().style;
+  if (pass !== 1) { const S = f.kind === 'molen' ? gxStoneSpr(Rr) : gxRollSpr(st, Rr, WALS_ERA[st] || WALS_ERA.hout2, st === 'digi'); gxBlit(S.c, x - S.m, y - S.m); }
+  if (pass === 0) return;
   ctx.save(); ctx.translate(x, y);
   if (f.kind === 'molen') drawStone(f, Rr, dir); else drawWals(f, Rr, dir);
   ctx.restore();
@@ -2829,30 +3015,38 @@ function drawStone(f, Rr, dir) { // molensteen (loper op ligger), schuin van opz
   ctx.fillStyle = 'rgba(255,255,255,.22)'; for (let i = 0; i < 7; i++) { const g = f.seed + i * 2.1, d = Rr * (0.42 + (i % 3) * 0.1); ctx.fillRect(Math.cos(g) * d, Math.sin(g) * d, 2, 2); }
   ctx.restore();
 }
-// Stalen wals: lijf, glans en rand staan stil (het licht draait niet mee). Wat draait: fijne groeven in het vlak (geribbelde walsen
-// grover, gladde walsen vaag) en de as met zijn spie; links met de klok mee en rechts ertegenin, zodat ze de korrel de spleet in trekken
+// Gladde stalen wals: lijf, lichtband en rand staan stil (het licht draait niet mee). De draaiing zie je alleen aan fijne, vage ribbels:
+// verticale lijnen langs de wals die opzij schuiven en naar de randen vervagen, zoals vóór de mooimaakronde (gladde walsen nog vager).
+// Links schuiven ze de ene kant op, rechts de andere, zodat ze de korrel de spleet in trekken. Drie paden per wals (dekking in drie
+// stappen), lijnen precies binnen de cirkel: geen clip en geen nieuw verloop per frame.
 function drawWals(f, Rr, dir) {
-  const st = lvlCfg().style, e = WALS_ERA[st] || WALS_ERA.hout2;
-  const rot = dir * Wd.t * f.spin * 1.7, n = f.ribs || 10;
-  ctx.save(); ctx.rotate(rot); ctx.strokeStyle = e[3]; ctx.lineCap = 'round';
-  ctx.globalAlpha = f.ribs ? 0.3 : 0.16; ctx.lineWidth = n < 15 ? 1.6 : 1.15; ctx.beginPath();
-  for (let i = 0; i < n; i++) { const a = i / n * TAU, c = Math.cos(a), s = Math.sin(a); ctx.moveTo(c * Rr * 0.58, s * Rr * 0.58); ctx.lineTo(c * Rr * 0.84, s * Rr * 0.84); }
-  ctx.stroke();
-  ctx.globalAlpha = 0.7; ctx.lineWidth = 2.2; ctx.beginPath(); ctx.moveTo(Rr * 0.04, 0); ctx.lineTo(Rr * 0.15, 0); ctx.stroke(); // spie in de as
-  ctx.globalAlpha = 1; ctx.restore();
+  const n = f.ribs || 8, step = Math.PI / n, ph = ((dir * Wd.t * f.spin * 1.5) % step + step) % step, a0 = f.ribs ? (n < 15 ? 0.22 : 0.15) : 0.1;
+  ctx.strokeStyle = '#2b3138'; ctx.lineWidth = n < 15 ? 1.4 : 1;
+  for (let b = 0; b < 3; b++) {
+    ctx.beginPath();
+    for (let i = 0; i < n; i++) {
+      const th = i * step + ph, sn = Math.sin(th); if (Math.min(2, Math.floor(sn * 3)) !== b) continue;
+      const x = -Math.cos(th) * Rr, hy = Math.sqrt(Math.max(0, Rr * Rr - x * x)); ctx.moveTo(x, -hy); ctx.lineTo(x, hy);
+    }
+    ctx.globalAlpha = a0 * (b + 0.75) / 3; ctx.stroke();
+  }
+  ctx.globalAlpha = 1;
 }
-function drawPlate(f, pal) {
+function drawPlate(f, pal, pass) {
   const buil = f.kind === 'buil', hp = CONFIG.plate / 2, y = f.y;
   const jit = !buil && !reduced.matches ? Math.sin(Wd.t * TAU * 20 + f.seed) * 2 : 0;
   const hs = holesAt(f, Wd.t).map(h => h + jit), segs = [];
   let x = -20; for (const hx of hs) { segs.push([x, hx - f.w / 2]); x = hx + f.w / 2; } segs.push([x, W + 20]);
-  if (!buil) { // ophangstangen: de zeefkast hangt en schudt
+  if (!buil && pass !== 0) { // ophangstangen: de zeefkast hangt en schudt
     ctx.strokeStyle = 'rgba(0,0,0,.45)'; ctx.lineWidth = 2; ctx.beginPath();
     for (const rx of [hs[0] - 100, hs[hs.length - 1] + 100]) { ctx.moveTo(rx, y - hp); ctx.lineTo(rx + jit * 3, y - 70); }
     ctx.stroke();
   }
-  const S = gxPlate(lvlCfg().style, pal, buil), o = 32 + Math.floor(f.seed * 5) % 60 - jit; // de plaat schudt met zijn gaatjes mee
-  for (const [a, b] of segs) if (b > a) gxBlitPart(S.c, S.k, a + o, b - a, a, y - hp);
+  if (pass !== 1) {
+    const S = gxPlate(lvlCfg().style, pal, buil), o = 32 + Math.floor(f.seed * 5) % 60 - jit; // de plaat schudt met zijn gaatjes mee
+    for (const [a, b] of segs) if (b > a) gxBlitPart(S.c, S.k, a + o, b - a, a, y - hp);
+  }
+  if (pass === 0) return;
   ctx.fillStyle = buil ? pal.edge : '#E78A01';
   for (const hx of hs) { ctx.fillRect(hx - f.w / 2 - 3, y - hp, 3, hp * 2); ctx.fillRect(hx + f.w / 2, y - hp, 3, hp * 2); }
 }
@@ -3292,7 +3486,7 @@ function drawIntroNew(t, a) {
   }
   // startvraag in een goudgetinte strook onderaan, zacht pulserend (niet bij verminderde beweging)
   const sy = top + L0.h - 26, pulse = reduced.matches ? 1 : 0.62 + 0.38 * (0.5 + 0.5 * Math.cos(t * 3.4));
-  ctx.save(); gxRR(ctx, 22, top, W - 44, L0.h, 9); ctx.clip(); ctx.fillStyle = 'rgba(207,171,0,.2)'; ctx.fillRect(22, sy, W - 44, 26); ctx.fillStyle = 'rgba(207,171,0,.35)'; ctx.fillRect(22, sy, W - 44, 1); ctx.restore();
+  ctx.save(); gxRR(ctx, 22, top, W - 44, L0.h, 4); ctx.clip(); ctx.fillStyle = 'rgba(207,171,0,.2)'; ctx.fillRect(22, sy, W - 44, 26); ctx.fillStyle = 'rgba(207,171,0,.35)'; ctx.fillRect(22, sy, W - 44, 1); ctx.restore();
   ctx.globalAlpha = a * clamp((t - 0.3) / 0.4, 0, 1) * pulse;
   ctx.textAlign = 'center'; ctx.font = `800 13px ${F_UI}`; ctx.fillStyle = '#F2D35B';
   ctx.fillText(hintTouch ? 'Tik om te beginnen' : 'Klik of druk op spatie om te beginnen', 200, sy + 13.5, 330);
@@ -3438,6 +3632,7 @@ async function copyText(text, box, okMsg, keep) { // keep: tekstveld blijft staa
 
 function startDemo() {
   run = newRun('demo', 0, 20261846); resetWorld(); idleT0 = performance.now(); demoV = 1;
+  gxPrewarm(0); // It giet oan!: molen 1 alvast klaarzetten in rustige tijd
   if (reduced.matches) for (let i = 0; i < 300; i++) update(CONFIG.step); // verminderde beweging: stilstaande demo, maar met walsen in beeld
   show('title'); refreshTitle();
 }
@@ -3505,6 +3700,7 @@ function levelComplete() {
   fillBadges($('lvBadges'), earned);
   $('lvFact').textContent = pickFact(run.lvl);
   $('bNext').textContent = last ? 'Naar het jaarverslag' : `Volgende molen: ${LEVELS[run.lvl + 1].year}`;
+  gxPrewarm(run.lvl + 1); // de volgende molen klaarzetten terwijl de weegbon er staat
   show('level'); SFX.fanfare();
 }
 function nextLevel() {
@@ -3604,6 +3800,7 @@ function openPick() {
     b.setAttribute('aria-label', `Start bij ${lv.year} ${lv.short}`); b.onclick = () => startCampaign(i); chips.appendChild(b);
   });
   show('pick');
+  gxPrewarm(save.maxLvl); // de verste molen (de meest gekozen) klaarzetten terwijl je kiest
   if (acted && lastKey && chips.lastElementChild) chips.lastElementChild.focus(); // toetsenbord: meteen op de verste molen, Terug blijft onderaan
 }
 function toTitle() { show('title'); refreshTitle(); }
@@ -3794,34 +3991,48 @@ document.querySelectorAll('canvas[data-ico]').forEach(c => { const g = c.getCont
 // zijn vooraf gebouwde Path2D-vormen, één per kleur, dus één fill per kleur per frame, en ook ingezoomd blijven ze scherp.
 // Shot 3 vliegt door het middelste raam bovenin de toren: de binnenkant (iShaft) staat al achter dat raam en vult het
 // scherm zodra het raam groter is dan het scherm. Daarna kantelt de blik naar beneden, de schacht in.
+// Shot 1 begint laag in een tarweveld met klaprozen en phacelia aan deze kant van het water (zoals de foto's op de site van
+// Koopmans), onder een Hollandse lucht met stapelwolken. De camera stijgt boven de aren uit en glijdt dan naar de fabriek.
 const INTRO_SHOTS = [
-  { kicker: 'Waar je bent', dur: 4.8,
+  { kicker: 'Waar je bent', dur: 5.6,
     text: 'Leeuwarden, aan het Nieuwe Kanaal. Hier maakt Royal Koopmans dag en nacht bloem van tarwe, voor bakkers en de voedingsindustrie.',
-    desc: 'Beeld: de meelfabriek van Royal Koopmans aan het water, met hoge silo’s, de maaltoren met het logo en een graanschip aan de kade.' },
+    desc: 'Beeld: vanuit een tarweveld met klaprozen en paarse phacelia stijg je op naar de meelfabriek van Royal Koopmans aan het water, met hoge silo’s, de maaltoren met het logo en een graanschip aan de kade.' },
   { kicker: 'De maaltoren', dur: 5,
     text: 'Graan komt per schip aan. De reiniging haalt er stenen en metaal uit. Dan gaan de korrels in de maaltoren door walsen en zeven, steeds fijner, tot er bloem is.',
     desc: 'Beeld: het schip wordt gelost, het graan gaat de silo’s in en de camera stijgt langs de maaltoren naar een raam bovenin.' },
   { kicker: 'Naar binnen', dur: 4.6,
     text: 'Jij bent één van die korrels. Eerst val je terug in de tijd, naar de eerste molen van Koopmans.', // wie, waar en wanneer staat op de introband van molen 1
-    desc: 'Beeld: door het raam kijk je in de maaltoren naar beneden, langs verdiepingen met walsenstoelen. Bovenaan kijkt één korrel je aan.' },
+    desc: 'Beeld: door het raam kijk je in de maaltoren naar beneden, langs verdiepingen met draaiende walsen. Warm licht valt naar binnen. Bovenaan kijkt één korrel je aan.' },
 ];
 // cameravakken [x0, x1, y0, y1, ooghoogte]: het vak past precies in het beeld boven het paneel (staand: op breedte, liggend: op hoogte)
 const IBOX = [
-  [-640, 720, -980, 200, -700], // shot 1 begin: hoog boven het kanaal, stad, oever en de fabriek nog klein
+  [-640, 720, -1300, 200, 63.8], // shot 1 begin: laag in de tarwe aan deze kant van het water (het vak geeft alleen de zoom, zie ixStartCam)
   [-170, 300, -440, 100, -240], //  shot 1 eind: iets dichterbij en lager
   [150, 420, -270, 40, -60], //   shot 2 halverwege: het schip wordt gelost
   [-80, 80, -372, -232, -275], // shot 2 eind: logo en het raam bovenin de toren
 ];
-const IF = 1000, IWIN = 1.5, IDIVE = 0.75; // brandpunt; s door het raam (shot 3); s duik de schacht in na It giet oan!
+const IF = 1000, IWIN = 1.5, IDIVE = 0.85; // brandpunt; s door het raam (shot 3); s duik de schacht in na It giet oan!
 const IWINR = [-14, -292, 28, 34], IWINP = 3, IWINS = 4; // het raam bovenin waar de camera door vliegt (x, y, b, h); kozijn en vensterbank
+// Akker aan deze kant van het water: grond op y IX_G (net als de oever), aren tot 6,5 boven de grond. IX_ROWS: afstand van elke rij tot
+// de startcamera; dichtbij losse pollen die elk wuiven, verder weg een herhalende strook per rij. IX_XF: s overvloeien bij een sprong.
+const IX_G = 70, IX_TOP = 6.5, IX_HB = 4.3, IX_SW = 0.028, IX_XF = 0.32, IX_T0 = 0.4, IX_T1 = 1.1; // IX_HB: onderkant van de kop van een pol; IX_SW: dikte van een halm; IX_T0: s stil voor de stijging; IX_T1: begin van de glijvlucht
+const IX_ROWS = [7.5, 10, 13.5, 18.5].concat(Array.from({ length: 29 }, (_, i) => 25 * Math.pow(1.2, i))), IX_NC = 4; // IX_NC: rijen met losse pollen
+const ixEase = x => { x = clamp(x, 0, 1); return x * x * x * (x * (6 * x - 15) + 10); }; // nog zachter op gang en tot stilstand dan eio
 const IN = { still: null, from: 'start', i: 0, t: 0, amb: 0, last: 0, raf: 0, frames: 0, dive: -1, w: 1, h: 1, d: 1, picH: 1, u: 1,
-  geo: null, pal: null, sky: null, clouds: null, fl: null, logo: null, cams: null, wind: null, dark: null };
+  geo: null, pal: null, sky: null, clouds: null, fl: null, logo: null, cams: null, wind: null, dark: null,
+  field: null, DS: 1, xf: null, xfT: 1, fx: null, hv: 1, skyH: 1, lite: false, bg: null, part: 0 };
 const iCv = $('introCv'), ig = iCv.getContext('2d');
 const eio = t => 0.5 - 0.5 * Math.cos(Math.PI * clamp(t, 0, 1)); // zacht op gang, zacht tot stilstand
 // Kleuren: licht thema = daglicht, donker thema = avond met verlichte ramen. Rollen met B zijn 's avonds verlicht.
+// Licht: een lage zon links (strijklicht): warme lichtkanten links, koele schaduw rechts. Donker: avond met een warme gloed laag aan de hemel.
 const ICOL = {
-  light: { sky: ['#8EC3DB', '#CBE4EC', '#F3EEE0'], sun: '#FFF6D8', cloud: '#FFFFFF', cloudSh: '#DCE7EA',
-    far: '#B5C5C7', farLit: null, midGround: '#AFC0A3', midWall: '#BDBDB0', midRoof: '#8C8A84', midTree: '#8BA884', midLit: null,
+  light: { sky: ['#6EA7D0', '#AFD2E3', '#F4E8CE'], sun: '#FFF6D8', cloud: '#FFFFFF', cloudSh: '#DCE7EA',
+    haze: '#EAE6D6', glow: 'rgba(255,214,140,', star: null, cTop: '#FFFDF5', cBody: '#F3EFE7', cShade: '#D3DBE3', cBase: '#BAC5D0',
+    wheat: '#E0AA48', wheatLit: '#F9DC8F', wheatSh: '#B4813A', stalk: '#D6AE5C', stalkSh: '#A47A37', leaf: '#BCA65A', mass: '#B4883E', canopy: '#D5AA55', track: 'rgba(110,92,40,.4)',
+    poppy: '#D9352A', poppyLit: '#F05A43', poppySh: '#A11F18', poppyC: '#2A1915', bud: '#7F9550', phac: '#9C8FD8', phacLit: '#C6BCEF', phacSh: '#6E63A6', phacSt: '#ECE8F8',
+    field: '#CFA24E', fieldRow: '#BB8E40', bloomR: null, bloomP: null, treeSh: 'rgba(52,64,40,.28)',
+    glint: '#FFF8E0', flow: '#D9A441', flowLit: '#FBE3A0', dust: 'rgba(255,250,236,.9)', logoGlow: null, beam: 'rgba(255,226,160,', mote: 'rgba(255,240,205,',
+    far: '#BAC6C5', farLit: null, midGround: '#AFC0A3', midWall: '#BDBDB0', midRoof: '#8C8A84', midTree: '#8BA884', midLit: null,
     ware: '#D8D3C6', wareDark: '#B1AA98', wareWinA: '#6F808B', wareWinB: '#6F808B', brick: '#9C5236', brickDark: '#783A2C', brickWinA: '#34414A', brickWinB: '#34414A',
     silo: '#E3E1DA', siloLight: '#F7F7F7', siloShade: '#C8C3B4', siloLine: '#D3CEC1', gallery: '#B9B2A0', galleryWin: '#6F808B',
     tower: '#2C2E31', towerLight: '#3E4145', towerShade: '#1D1E1F', orange: '#E78A01', winA: '#8FA9BC', winB: '#8FA9BC', target: '#F6DC93', frame: '#5A5E63',
@@ -3830,7 +4041,12 @@ const ICOL = {
     hull: '#2E3A42', stripe: '#E78A01', grainHeap: '#D9A441', deck: '#C9C4B5', cabin: '#F7F7F7', cabinWin: '#2E3A42', mast: '#2E3A42',
     grass: '#86A66E', path: '#D8CFB8', trunk: '#5A3F26', treeDark: '#4D7541', tree: '#5F8A4E', houseA: '#A55B3D', houseB: '#8E4A32', houseC: '#C07A55',
     roof: '#4A4D52', houseWinA: '#F3EEE2', houseWinB: '#F3EEE2', gull: '#3A3D41' },
-  dark: { sky: ['#0D1720', '#1C2B34', '#57442E'], sun: '#F2D35B', cloud: '#2B3843', cloudSh: '#222E37',
+  dark: { sky: ['#0D1720', '#1F2F3D', '#6A4C33'], sun: '#F2D35B', cloud: '#2B3843', cloudSh: '#222E37',
+    haze: '#3A3128', glow: 'rgba(231,138,1,', star: 'rgba(247,247,247,', cTop: '#4A5663', cBody: '#2F3A46', cShade: '#222B35', cBase: '#6B4A33',
+    wheat: '#6B5734', wheatLit: '#A3844F', wheatSh: '#3E321E', stalk: '#5C4B2D', stalkSh: '#382D1B', leaf: '#4A4A2C', mass: '#2B2316', canopy: '#4C3F26', track: 'rgba(8,8,6,.3)',
+    poppy: '#8A2820', poppyLit: '#A8392C', poppySh: '#5A1913', poppyC: '#140D0B', bud: '#3B4527', phac: '#5D5794', phacLit: '#7F78B4', phacSh: '#3F3A6C', phacSt: '#A39CC8',
+    field: '#3A3020', fieldRow: '#30271A', bloomR: null, bloomP: null, treeSh: null,
+    glint: '#F3E6BC', flow: '#C9973C', flowLit: '#FFE6A3', dust: 'rgba(255,226,160,.85)', logoGlow: 'rgba(255,236,190,', beam: 'rgba(255,214,140,', mote: 'rgba(255,226,170,',
     far: '#1D2930', farLit: 'rgba(242,211,91,.55)', midGround: '#1A241F', midWall: '#252F33', midRoof: '#1B2226', midTree: '#16231C', midLit: 'rgba(242,211,91,.7)',
     ware: '#3A3C3D', wareDark: '#2D2F30', wareWinA: '#1C2227', wareWinB: '#F2D35B', brick: '#4A2A21', brickDark: '#391F19', brickWinA: '#1C2227', brickWinB: '#F2D35B',
     silo: '#6C6B65', siloLight: '#7F7E77', siloShade: '#53524D', siloLine: '#605F59', gallery: '#4B4A45', galleryWin: '#F2D35B',
@@ -3924,9 +4140,14 @@ function introGeo() {
   R(s.deck, 120, -23, 210, 7); R(s.deck, 86, -17, 344, 3);
   R(s.hull, 358, -60, 58, 5); R(s.cabin, 362, -56, 50, 40); R(s.cabinWin, 368, -50, 38, 8);
   R(s.mast, 104, -46, 3, 30);
-  // voorgrond aan deze kant van het water: oever, huizen met trapgevels en bomen
-  const fg = layer(-420, ['grass', 'path', 'trunk', 'treeDark', 'tree', 'houseA', 'houseB', 'houseC', 'roof', 'houseWinA', 'houseWinB']), f = fg.m;
-  R(f.grass, -4000, 70, 8000, 2000); R(f.path, -4000, 73, 8000, 7);
+  // voorgrond aan deze kant van het water: oever met een pad, huizen met trapgevels en bomen; daarvoor (naar de camera toe) de akker,
+  // met langs het pad een bloemrand van klaprozen en phacelia. De rijen aren dichterbij tekent ixField.
+  const fg = layer(-420, ['field', 'fieldRow', 'grass', 'path', 'bloomP', 'bloomR', 'treeSh', 'trunk', 'treeDark', 'tree', 'houseA', 'houseB', 'houseC', 'roof', 'houseWinA', 'houseWinB']), f = fg.m;
+  R(f.field, -4000, 84, 8000, 2000); for (let y = 90, k = 0; y < 700; k++, y += 6 + k * 4) R(f.fieldRow, -4000, y, 8000, 1.2 + k * 0.6);
+  R(f.grass, -4000, 70, 8000, 15); R(f.path, -4000, 73, 8000, 6);
+  const rb = mulberry32(26); // eigen reeks, zodat de ramen van de huizen hetzelfde blijven
+  for (let x = -1700; x < 1800; x += 2.5 + rb() * 3.5) R(rb() < 0.5 ? f.bloomP : f.bloomR, x, 80.5 + rb() * 3.5, 1.5 + rb() * 1.2, 1.5 + rb() * 1.2);
+  for (const [x, y, r] of [[-640, -6, 54], [-176, 6, 42], [-110, 26, 30], [196, 14, 40], [580, -4, 52], [700, 6, 44]]) { f.treeSh.moveTo(x + r * 2, 76); f.treeSh.ellipse(x + r * 0.9, 76, r * 1.1, 3.2, 0, 0, TAU); }
   const house = (x, w, h, role) => {
     const top = 70 - h, st = 13;
     R(f[role], x, top, w, h); R(f[role], x + w * 0.14, top - st, w * 0.72, st + 1); R(f[role], x + w * 0.3, top - 2 * st, w * 0.4, st + 1);
@@ -3942,50 +4163,454 @@ function introGeo() {
   // graan onderweg: uit het ruim omhoog, over de transportbrug de silo's in, en over de loopbrug de toren in
   const pts = [[211, 12], [211, -218], [338, -218], [338, -256], [268, -290], [86, -290], [72, -286]], segs = []; let len = 0;
   for (let i = 1; i < pts.length; i++) { const l = Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]); segs.push([pts[i - 1], pts[i], len, l]); len += l; }
+  // de graanstroom als één gouden lijn met ronde bochten
+  const flow = new Path2D(); flow.moveTo(pts[0][0], pts[0][1]); for (let i = 1; i < pts.length - 1; i++) flow.arcTo(pts[i][0], pts[i][1], pts[i + 1][0], pts[i + 1][1], 9); flow.lineTo(pts[pts.length - 1][0], pts[pts.length - 1][1]);
   const gulls = [[-170, -440, 1.0, 0], [-110, -478, 0.8, 1.7], [170, -500, 1.2, 0.6], [250, -452, 0.9, 2.4], [470, -520, 1.1, 1.1]];
-  const clouds = [[-900, -900, 380, 11], [-260, -1010, 300, 22], [420, -930, 420, 33], [1150, -1000, 340, 44], [1900, -920, 380, 55], [-1700, -980, 360, 66]];
+  // stofjes bij de silo's: [x, y, fase]
+  const dust = Array.from({ length: 16 }, () => [84 + rnd() * 200, -330 + rnd() * 90, rnd() * TAU]);
   far.box = [-3000, -260, 6000, 270, 0.32]; mid.box = [-1820, -210, 3740, 220, 0.62]; // vast plaatje: x, y, breedte, hoogte, px per eenheid (x dpr)
-  return { far, mid, fac, ship, fg, dots: { segs, len }, gulls, clouds };
+  return { far, mid, fac, ship, fg, dots: { segs, len, flow }, gulls, dust };
 }
-// Eén wolk: platte onderkant, ronde bolletjes, een smalle schaduwrand; als los plaatje (sprite) op cs px per eenheid
-function iCloud(seed, wu, col, sh, cs) {
-  const r = mulberry32(seed), hu = wu * 0.46, c = document.createElement('canvas');
-  c.width = Math.ceil(wu * cs); c.height = Math.ceil(hu * cs);
-  const g = c.getContext('2d'); g.scale(cs, cs);
-  const base = hu * 0.9, n = 4 + Math.floor(r() * 2), shape = dy => {
-    g.beginPath(); g.rect(wu * 0.1, base - hu * 0.3 + dy, wu * 0.8, hu * 0.3);
-    for (let i = 0; i < n; i++) { const t = (i + 0.5) / n, rr = hu * (0.22 + 0.2 * Math.sin(t * Math.PI) + r() * 0.08); g.moveTo(wu * (0.1 + 0.8 * t) + rr, base - rr * 0.7 + dy); g.arc(wu * (0.1 + 0.8 * t), base - rr * 0.7 + dy, rr, 0, TAU); }
-    g.fill();
-  };
-  g.save(); g.beginPath(); g.rect(0, 0, wu, base); g.clip();
-  g.fillStyle = sh; shape(0); g.fillStyle = col; shape(-hu * 0.07);
-  g.restore();
-  return { c, wu, hu };
+// #rrggbb met dekking a
+const ixA = (hex, a) => `rgba(${parseInt(hex.slice(1, 3), 16)},${parseInt(hex.slice(3, 5), 16)},${parseInt(hex.slice(5, 7), 16)},${a})`;
+// Eén Hollandse stapelwolk op hulpcanvas t (wu x hu px): een bolle top uit ronde bollen met een toren in het midden en een platte,
+// koelere onderkant. Licht van links boven: eerst de hele vorm in de schaduwkleur, dan het lijf en de lichtkant iets naar links boven
+// verschoven (source-atop, dus binnen de vorm). hz 0-1: verder weg = meer waas (de kleuren schuiven naar de lucht bij de horizon).
+// soft (0-1): zo'n deel van de hoogte vervaagt onderaan naar de lucht, voor de voorste wolken (geen liniaalrechte onderrand).
+function iCloud(t, seed, wu, hu, c, hz, soft) {
+  const r = mulberry32(seed), g = t.getContext('2d'), W = Math.ceil(wu), H = Math.ceil(hu), mx = q => mixHex(q, c.sky[2], hz);
+  if (t.width < W) t.width = W; if (t.height < H) t.height = H;
+  g.setTransform(1, 0, 0, 1, 0, 0); g.globalCompositeOperation = 'source-over'; g.clearRect(0, 0, t.width, t.height);
+  const P = [], n = 5 + Math.floor(r() * 3), m = 1 + Math.floor(r() * 3);
+  for (let i = 0; i < n; i++) { const u = (i + 0.5) / n, rr = hu * (0.16 + 0.2 * Math.sin(u * Math.PI)) * (0.85 + r() * 0.3); P.push([wu * (0.13 + 0.74 * u), hu * 0.97 - rr * 0.5, rr]); }
+  for (let i = 0; i < m; i++) { const u = 0.34 + 0.32 * (m > 1 ? i / (m - 1) : 0.5) + (r() - 0.5) * 0.1, rr = hu * (0.2 + r() * 0.09); P.push([wu * u, hu * (0.4 + r() * 0.1), rr]); }
+  const shape = (dx, dy, k) => { g.beginPath(); for (const [x, y, rr] of P) { g.moveTo(x + dx + rr * k, y + dy); g.arc(x + dx, y + dy, rr * k, 0, TAU); } g.fill(); };
+  g.save(); g.beginPath(); g.rect(0, 0, W, hu * 0.97); g.clip(); // platte onderkant
+  g.fillStyle = mx(c.cShade); shape(0, 0, 1);
+  g.globalCompositeOperation = 'source-atop';
+  g.fillStyle = mx(c.cBody); shape(-wu * 0.03, -hu * 0.07, 1);
+  g.fillStyle = mx(c.cTop); shape(-wu * 0.055, -hu * 0.13, 0.8);
+  const gr = g.createLinearGradient(0, hu * 0.6, 0, hu * 0.97), cb = mx(c.cBase).slice(4, -1); // onderkant: koel en plat
+  gr.addColorStop(0, `rgba(${cb},0)`); gr.addColorStop(1, `rgba(${cb},.75)`); g.fillStyle = gr; g.fillRect(0, hu * 0.6, W, hu * 0.37);
+  g.restore(); g.globalCompositeOperation = 'source-over';
+  if (soft) {
+    const y0 = hu * (0.97 - soft), fo = g.createLinearGradient(0, y0, 0, hu * 0.97);
+    fo.addColorStop(0, 'rgba(0,0,0,0)'); fo.addColorStop(0.55, 'rgba(0,0,0,.4)'); fo.addColorStop(1, 'rgba(0,0,0,1)');
+    g.globalCompositeOperation = 'destination-out'; g.fillStyle = fo; g.fillRect(0, y0, W, H - y0); g.globalCompositeOperation = 'source-over';
+  }
+  return [W, H];
 }
-// Offscreen: lucht (verloop, zon of maan, sterren) en de wolken, per canvasformaat en thema één keer
-function introCaches() {
-  IN.dark = introDark(); IN.still = null; const c = IN.pal = IN.dark ? ICOL.dark : ICOL.light;
-  if (!IN.geo) { IN.geo = introGeo(); IN.logo = introLogo(); }
-  const d = IN.d, W2 = iCv.width, H2 = iCv.height, sky = IN.sky || (IN.sky = document.createElement('canvas'));
-  sky.width = W2; sky.height = H2;
-  const g = sky.getContext('2d'), gr = g.createLinearGradient(0, 0, 0, IN.picH * 0.95 * d);
-  gr.addColorStop(0, c.sky[0]); gr.addColorStop(0.55, c.sky[1]); gr.addColorStop(1, c.sky[2]);
-  g.fillStyle = gr; g.fillRect(0, 0, W2, H2);
-  const sx = Math.min(IN.w * 0.17, 120) * d, sy = IN.picH * 0.15 * d, sr = 20 * d;
+// De lucht als één plaatje (per formaat en thema): verloop, warme gloed laag aan de hemel, zon of maan met sterren, en stapelwolken.
+// De horizon ligt op hoogte IN.skyH (css-px) in dit plaatje; eronder nog een stuk in de horizonkleur. Wolken hebben hun platte
+// onderkant op één hoogte in de lucht, dus verder weg = lager en kleiner (perspectief), en waziger.
+// In stappen (yield), zodat het titelscherm hem bij het opwarmen in stukjes kan maken; de sleutel staat pas goed als hij af is.
+function ixSky(c) { const q = ixSkyGen(c); while (!q.next().done); }
+function* ixSkyGen(c) {
+  const d = IN.d, P = IN.picH, up = Math.ceil(P * 0.86 + 40), W = iCv.width + Math.ceil(72 * d), Hh = Math.ceil((up + 150) * d), Y = up * d;
+  const key = P + '|' + IN.w + '|' + c.cTop, old = IN.sky;
+  if (old && IN.skyKey === key && IN.skyD === d && old.width) return; // niets veranderd
+  if (old && IN.skyKey === key && IN.skyD > d && old.width) { // alleen de resolutie zakt (trage telefoon): het plaatje verkleinen
+    const cv = document.createElement('canvas'); cv.width = W; cv.height = Hh; cv.getContext('2d').drawImage(old, 0, 0, W, Hh);
+    old.width = old.height = 0; IN.sky = cv; IN.skyD = d; IN.skyH = up; return;
+  }
+  IN.skyKey = null;
+  const cv = IN.sky || (IN.sky = document.createElement('canvas')); cv.width = W; cv.height = Hh;
+  const g = cv.getContext('2d'), pd = P * d;
+  g.fillStyle = c.sky[0]; g.fillRect(0, 0, W, Hh);
+  const gr = g.createLinearGradient(0, Y - pd * 0.95, 0, Y); gr.addColorStop(0, c.sky[0]); gr.addColorStop(0.58, c.sky[1]); gr.addColorStop(1, c.sky[2]);
+  g.fillStyle = gr; g.fillRect(0, Y - pd * 0.95, W, pd * 0.95); g.fillStyle = c.sky[2]; g.fillRect(0, Y, W, Hh - Y);
+  ixFlush(cv); yield;
+  const gl = g.createLinearGradient(0, Y - pd * 0.34, 0, Y + 40 * d); gl.addColorStop(0, c.glow + '0)'); gl.addColorStop(0.8, c.glow + (IN.dark ? '.3)' : '.38)')); gl.addColorStop(1, c.glow + (IN.dark ? '.3)' : '.38)'));
+  g.fillStyle = gl; g.fillRect(0, Y - pd * 0.34, W, Hh - Y + pd * 0.34);
+  const sx = (72 + Math.min(IN.w * 0.17, 150)) * d, sy = Y - pd * 0.5, sr = Math.max(15, P * 0.042) * d, rnd = mulberry32(7); // 72: marge voor het drijven
   if (IN.dark) {
-    const rnd = mulberry32(7); g.fillStyle = 'rgba(247,247,247,.7)';
-    for (let i = 0; i < 60; i++) g.fillRect(rnd() * W2, rnd() * IN.picH * 0.5 * d, 1.4 * d, 1.4 * d); // sterren
-    const mc = document.createElement('canvas'); mc.width = mc.height = Math.ceil(sr * 2.4); const mg = mc.getContext('2d');
-    mg.fillStyle = c.sun; mg.beginPath(); mg.arc(sr * 1.2, sr * 1.2, sr * 0.7, 0, TAU); mg.fill();
-    mg.globalCompositeOperation = 'destination-out'; mg.beginPath(); mg.arc(sr * 0.92, sr * 0.98, sr * 0.62, 0, TAU); mg.fill(); // maansikkel
+    for (let i = 0; i < 80; i++) { const y = rnd() * (Y - pd * 0.3), a = 0.25 + 0.55 * rnd() * (1 - y / Y); g.fillStyle = c.star + a.toFixed(2) + ')'; g.fillRect(rnd() * W, y, 1.4 * d, 1.4 * d); }
+    const mg = g.createRadialGradient(sx, sy, sr * 0.5, sx, sy, sr * 4); mg.addColorStop(0, 'rgba(242,211,91,.14)'); mg.addColorStop(1, 'rgba(242,211,91,0)');
+    g.fillStyle = mg; g.fillRect(sx - sr * 4, sy - sr * 4, sr * 8, sr * 8);
+    const mc = document.createElement('canvas'); mc.width = mc.height = Math.ceil(sr * 2.4); const q = mc.getContext('2d');
+    q.fillStyle = c.sun; q.beginPath(); q.arc(sr * 1.2, sr * 1.2, sr * 0.7, 0, TAU); q.fill();
+    q.globalCompositeOperation = 'destination-out'; q.beginPath(); q.arc(sr * 0.92, sr * 0.98, sr * 0.62, 0, TAU); q.fill(); // maansikkel
     g.drawImage(mc, sx - sr * 1.2, sy - sr * 1.2);
   } else {
-    g.fillStyle = 'rgba(255,251,234,.45)'; g.beginPath(); g.arc(sx, sy, sr * 1.7, 0, TAU); g.fill();
+    const sg = g.createRadialGradient(sx, sy, sr * 0.6, sx, sy, pd * 0.55); sg.addColorStop(0, 'rgba(255,244,214,.85)'); sg.addColorStop(0.25, 'rgba(255,232,186,.32)'); sg.addColorStop(1, 'rgba(255,232,186,0)');
+    g.fillStyle = sg; g.fillRect(sx - pd * 0.55, sy - pd * 0.55, pd * 1.1, pd * 1.1);
     g.fillStyle = c.sun; g.beginPath(); g.arc(sx, sy, sr, 0, TAU); g.fill();
+    g.fillStyle = '#FFFDF4'; g.beginPath(); g.arc(sx, sy, sr * 0.72, 0, TAU); g.fill();
   }
-  introImgs(d, c);
-  const cs = 0.5 * d, ck = d + '|' + c.cloud; // wolken alleen opnieuw bij een andere resolutie of een ander thema
-  if (!IN.clouds || IN.cloudKey !== ck) IN.cloudKey = ck, IN.clouds = IN.geo.clouds.map(([x, y, wu, seed]) => ({ x, y, v: 6 + (seed % 5), s: iCloud(seed, wu, c.cloud, c.cloudSh, cs), cs }));
+  ixFlush(cv); yield;
+  // wolken: [onderkant boven de horizon (in beeldhoogtes), aantal per beeldbreedte, breedte per hoogte, hoogte/breedte, waas]
+  // De twee voorste rijen zijn hooguit een half scherm breed (op een staand scherm anders een band over de hele breedte), en de
+  // voorste rij krijgt een zachte onderkant.
+  const t = document.createElement('canvas'), wr = W / pd, cr = mulberry32(IN.dark ? 12 : 11);
+  for (const [ri, [b0, b1, per, wk, ar, hz]] of [[0.03, 0.06, 2.6, 3.4, 0.36, 0.55], [0.08, 0.13, 1.7, 3.0, 0.46, 0.35], [0.16, 0.25, 1.2, 2.6, 0.55, 0.14], [0.33, 0.46, 0.9, 2.3, 0.6, 0]].entries()) {
+    const n = Math.max(1, Math.round(per * wr));
+    for (let i = 0; i < n; i++) {
+      const b = b0 + (b1 - b0) * cr(), w0 = b * wk * pd * (0.8 + 0.4 * cr()), wu = ri < 2 ? w0 : Math.min(w0, IN.w * 0.5 * d), hu = wu * ar * (0.85 + 0.3 * cr());
+      const x = (i + 0.2 + 0.6 * cr()) / n * W, [cw, ch] = iCloud(t, 1 + Math.floor(cr() * 1e6), wu, hu, c, hz, ri === 3 ? 0.3 : 0);
+      g.drawImage(t, 0, 0, cw, ch, x - cw / 2, Y - b * pd - hu * 0.97, cw, ch);
+    }
+    ixFlush(cv); if (ri < 3) yield;
+  }
+  t.width = t.height = 0; IN.skyKey = key; IN.skyD = d; IN.skyH = up;
+}
+// Akker, één keer per thema (los van de resolutie, dus niet opnieuw als die zakt). Een aar zoals in de huisstijl: een kolom van
+// schuine blaadjes (parallellogrammen) die als wigjes op elkaar staan, met een smal kiertje ertussen; de zonkant (links) lichter.
+// In eenheden: x rond de voet, y = hoogte boven de grond. Pol (dichtbij): tarwe, of tarwe met klaprozen ('p') of phacelia ('f');
+// strook (verder weg): een herhalende rij kleine aren, onderaan doorzichtig zodat de massa van de rij erachter doorloopt.
+function ixDrawEar(g, c, x0, bot, L, E, lean, nod, simple) {
+  const xe = x0 + lean, a = Math.atan2(lean, L) + nod, ux = Math.sin(a), uy = Math.cos(a), nx = uy, ny = -ux, yb = bot - 0.06;
+  g.strokeStyle = c.stalk; g.lineWidth = simple ? 0.05 : IX_SW; g.beginPath(); g.moveTo(x0 + lean * yb / L, yb); g.lineTo(xe, L); g.stroke(); // rechte halm vanaf de grond
+  if (simple) { // klein: een slanke aar in twee tinten
+    g.fillStyle = c.wheat; g.beginPath(); g.ellipse(xe + ux * E / 2, L + uy * E / 2, 0.08, E / 2, -a, 0, TAU); g.fill();
+    g.fillStyle = c.wheatLit; g.beginPath(); g.ellipse(xe + ux * E / 2 - nx * 0.035, L + uy * E / 2 - ny * 0.035, 0.04, E * 0.42, -a, 0, TAU); g.fill();
+    return;
+  }
+  const n = Math.round(E / 0.066), st = E / n, ew = 0.072, es = 0.055, eh = st * 0.8; // wigjes met een kier van 20%
+  g.fillStyle = c.wheatSh; g.beginPath(); g.moveTo(xe - nx * 0.016, L - ny * 0.016); g.lineTo(xe + ux * E - nx * 0.01, L + uy * E - ny * 0.01); g.lineTo(xe + ux * E + nx * 0.01, L + uy * E + ny * 0.01); g.lineTo(xe + nx * 0.016, L + ny * 0.016); g.fill();
+  for (const sd of [1, -1]) {
+    g.fillStyle = sd < 0 ? c.wheatLit : c.wheat; g.beginPath();
+    for (let j = 0; j < n; j++) {
+      const t = j * st + (sd > 0 ? st * 0.35 : 0), px = xe + ux * t, py = L + uy * t, w = ew * (1 - 0.4 * Math.pow(j / n, 1.5));
+      const ox = nx * sd * w + ux * es, oy = ny * sd * w + uy * es;
+      g.moveTo(px, py); g.lineTo(px + ox, py + oy); g.lineTo(px + ox + ux * eh, py + oy + uy * eh); g.lineTo(px + ux * eh, py + uy * eh); g.closePath();
+    }
+    g.fill();
+  }
+  const tx = xe + ux * E, ty = L + uy * E; g.fillStyle = c.wheatLit; g.beginPath(); // topblaadje
+  g.moveTo(tx - nx * 0.022, ty - ny * 0.022); g.lineTo(tx + ux * 0.085, ty + uy * 0.085); g.lineTo(tx + nx * 0.022, ty + ny * 0.022); g.fill();
+}
+function ixPol(kind, seed, ppu, c) {
+  const r = mulberry32(seed), CW = 1.4, HB = IX_HB, cv = document.createElement('canvas');
+  cv.width = Math.ceil(CW * ppu); cv.height = Math.ceil((IX_TOP - HB) * ppu);
+  const g = cv.getContext('2d'); g.setTransform(ppu, 0, 0, -ppu, CW / 2 * ppu, IX_TOP * ppu); g.lineCap = 'round'; g.lineJoin = 'round';
+  const leaf = (x, y, dir, len) => { g.fillStyle = c.leaf; g.beginPath(); g.moveTo(x, y); g.quadraticCurveTo(x + dir * len * 0.55, y + len * 0.3, x + dir * len, y - len * 0.22); g.quadraticCurveTo(x + dir * len * 0.5, y + len * 0.14, x, y - 0.06); g.fill(); };
+  const stem = (x0, x1, y1, lw) => { const ya = HB - 0.06; g.strokeStyle = c.bud; g.lineWidth = lw; g.beginPath(); g.moveTo(x0 + (x1 - x0) * ya / y1, ya); g.lineTo(x1, y1); g.stroke(); };
+  const ear = () => { const x0 = -0.5 + r() * 1.0, L = 4.85 + r() * 0.75; ixDrawEar(g, c, x0, HB, L, 0.52 + r() * 0.14, (r() - 0.5) * 0.26, (r() - 0.3) * 0.26, false); };
+  const nW = kind === 'w' ? 6 + Math.floor(r() * 3) : 3 + Math.floor(r() * 2);
+  for (let i = 0; i < nW; i++) ear();
+  for (let i = 0; i < 2; i++) leaf(-0.4 + r() * 0.8, HB + 0.25 + r() * 0.35, r() < 0.5 ? -1 : 1, 0.28 + r() * 0.18); // vlagbladeren
+  if (kind === 'p') for (let i = 0; i < 3; i++) { // klaprozen: een rode kom of een rozet met een zwart hart; soms een knikkende knop
+    const x0 = -0.42 + r() * 0.84, x1 = x0 + (r() - 0.5) * 0.24, y1 = 4.85 + r() * 0.6, sz = 0.24 + r() * 0.1;
+    stem(x0, x1, y1, 0.02);
+    if (i === 2 && r() < 0.6) { g.fillStyle = c.bud; g.beginPath(); g.ellipse(x1 + 0.05, y1 - 0.08, 0.05, 0.085, 0.6, 0, TAU); g.fill(); continue; } // knop
+    g.save(); g.translate(x1, y1 + sz * 0.3);
+    if (r() < 0.45) { // rozet van voren: vier blaadjes, het licht valt links
+      g.fillStyle = c.poppySh; for (const [a, b] of [[-1, -1], [1, -1], [1, 1]]) { g.beginPath(); g.ellipse(a * sz * 0.32, b * sz * 0.27, sz * 0.46, sz * 0.42, a * b * 0.4, 0, TAU); g.fill(); }
+      g.fillStyle = c.poppy; g.beginPath(); g.ellipse(-sz * 0.32, sz * 0.27, sz * 0.46, sz * 0.42, -0.4, 0, TAU); g.fill();
+      g.beginPath(); g.ellipse(sz * 0.3, sz * 0.25, sz * 0.36, sz * 0.32, 0.4, 0, TAU); g.fill();
+      g.fillStyle = c.poppyLit; g.beginPath(); g.ellipse(-sz * 0.42, sz * 0.36, sz * 0.22, sz * 0.18, -0.4, 0, TAU); g.fill();
+      g.fillStyle = c.poppyC; g.beginPath(); g.arc(0, 0.02 * sz, sz * 0.17, 0, TAU); g.fill();
+      g.fillStyle = c.bud; g.beginPath(); g.arc(0, 0.02 * sz, sz * 0.07, 0, TAU); g.fill();
+    } else { // kom van opzij: achterste blaadjes donker, voorste licht, het zwarte hart net zichtbaar
+      g.fillStyle = c.poppySh; g.beginPath(); g.ellipse(0, sz * 0.12, sz * 0.52, sz * 0.36, 0, 0, TAU); g.fill();
+      g.fillStyle = c.poppyC; g.beginPath(); g.ellipse(0, sz * 0.3, sz * 0.27, sz * 0.07, 0, 0, TAU); g.fill();
+      g.fillStyle = c.poppy; for (const sd of [-1, 1]) { g.beginPath(); g.ellipse(sd * sz * 0.2, -sz * 0.02, sz * 0.32, sz * 0.34, -sd * 0.3, 0, TAU); g.fill(); }
+      g.fillStyle = c.poppyLit; g.beginPath(); g.ellipse(-sz * 0.28, sz * 0.02, sz * 0.12, sz * 0.22, 0.3, 0, TAU); g.fill();
+    }
+    g.restore();
+  }
+  if (kind === 'f') for (let i = 0; i < 2; i++) { // phacelia: bovenaan de stengel twee of drie dunne opgerolde bloeiwijzen (zoals een
+    // varenkrul), met aan de buitenkant kleine lavendelblauwe bloempjes waar lange bleke meeldraden uit steken; de knoppen in de krul lichter
+    const x0 = -0.4 + r() * 0.8, x1 = x0 + (r() - 0.5) * 0.24, y1 = 4.85 + r() * 0.55;
+    stem(x0, x1, y1, 0.016);
+    g.fillStyle = c.bud; for (let k = 0; k < 3; k++) { const yy = HB + 0.12 + k * 0.14, sd = k % 2 ? 1 : -1, xx = x0 + (x1 - x0) * yy / y1; g.beginPath(); g.ellipse(xx + sd * 0.08, yy, 0.085, 0.022, sd * 0.45, 0, TAU); g.fill(); } // veerblaadjes
+    const dir = r() < 0.5 ? 1 : -1, nK = r() < 0.5 ? 2 : 3, sp = [], fo = [[], []], st = []; // alle krullen rollen dezelfde kant op
+    for (let k = 0; k < nK; k++) {
+      const nF = k ? 9 : 12, L0 = k ? 0.032 : 0.042; let px = x1, py = y1 - (k ? 0.03 : 0), a = Math.PI / 2 + dir * (k === 1 ? 0.7 : k === 2 ? -0.55 : 0.1) + (r() - 0.5) * 0.2;
+      sp.push(px, py, NaN);
+      for (let j = 0; j < nF; j++) {
+        const u = j / nF, ln = L0 * (1 - 0.45 * u), rf = 0.019 * (1 - 0.4 * u), ox = -Math.sin(a) * dir, oy = Math.cos(a) * dir; // buitenkant van de krul
+        px += Math.cos(a) * ln; py += Math.sin(a) * ln; a -= dir * (0.1 + j * 0.055); sp.push(px, py, 0);
+        const fx = px + ox * rf * 0.75, fy = py + oy * rf * 0.75; fo[u < 0.55 ? 0 : 1].push(fx, fy, rf);
+        if (u < 0.55) for (const e of [-0.45, 0.4]) { const o = Math.atan2(oy, ox) + e + (r() - 0.5) * 0.3; st.push(fx, fy, fx + Math.cos(o) * rf * 2.5, fy + Math.sin(o) * rf * 2.5); }
+      }
+      sp.push(NaN, NaN, NaN);
+    }
+    g.strokeStyle = c.phacSh; g.lineWidth = 0.011; g.beginPath(); // de krullen zelf: dunne stengeltjes
+    for (let q = 0; q + 2 < sp.length; q += 3) { if (isNaN(sp[q])) continue; if (sp[q + 2] !== 0) g.moveTo(sp[q], sp[q + 1]); else g.lineTo(sp[q], sp[q + 1]); }
+    g.stroke();
+    for (const [L, col] of [[fo[0], c.phac], [fo[1], c.phacLit]]) { g.fillStyle = col; g.beginPath(); for (let q = 0; q < L.length; q += 3) { g.moveTo(L[q] + L[q + 2], L[q + 1]); g.arc(L[q], L[q + 1], L[q + 2], 0, TAU); } g.fill(); }
+    g.strokeStyle = c.phacSt; g.lineWidth = 0.007; g.beginPath(); // lange bleke meeldraden
+    for (let q = 0; q < st.length; q += 4) { g.moveTo(st[q], st[q + 1]); g.lineTo(st[q + 2], st[q + 3]); }
+    g.stroke();
+  }
+  // onderaan verdwijnen de halmen in de schaduw van de rij (de rij zelf tekent daar de massa, in drie treden)
+  g.setTransform(1, 0, 0, 1, 0, 0); g.globalCompositeOperation = 'destination-out';
+  const gr = g.createLinearGradient(0, cv.height - 0.45 * ppu, 0, cv.height); gr.addColorStop(0, 'rgba(0,0,0,0)'); gr.addColorStop(1, 'rgba(0,0,0,.85)');
+  g.fillStyle = gr; g.fillRect(0, cv.height - 0.45 * ppu, cv.width, 0.45 * ppu);
+  return cv;
+}
+function ixBand(seed, ppu, TW, c) {
+  const r = mulberry32(seed), B = 3.6, cv = document.createElement('canvas');
+  cv.width = Math.round(TW * ppu); cv.height = Math.ceil((IX_TOP - B) * ppu);
+  const g = cv.getContext('2d'); g.setTransform(ppu, 0, 0, -ppu, 0, IX_TOP * ppu); g.lineCap = 'round';
+  const fl = [], fine = ppu >= 30;
+  for (let x = 0; x < TW; x += 0.12 + r() * 0.12) {
+    const L = 4.75 + r() * 0.8, E = 0.5 + r() * 0.16, lean = (r() - 0.5) * 0.24, nod = (r() - 0.35) * 0.22;
+    for (const o of [0, -TW, TW]) if (x + o > -0.5 && x + o < TW + 0.5) ixDrawEar(g, c, x + o, B, L, E, lean, nod, !fine);
+    if (r() < 0.045) fl.push([x, 4.5 + r() * 0.7, r() < 0.55 ? c.poppy : c.phac]);
+  }
+  for (const [x, y, col] of fl) for (const o of [0, -TW, TW]) { g.fillStyle = col; g.beginPath(); g.arc(x + o, y, 0.11, 0, TAU); g.fill(); }
+  g.setTransform(1, 0, 0, 1, 0, 0); g.globalCompositeOperation = 'destination-out'; // stengels lopen onderaan weg in de massa
+  const gr = g.createLinearGradient(0, (IX_TOP - 4.7) * ppu, 0, cv.height); gr.addColorStop(0, 'rgba(0,0,0,0)'); gr.addColorStop(1, 'rgba(0,0,0,1)');
+  g.fillStyle = gr; g.fillRect(0, (IX_TOP - 4.7) * ppu, cv.width, cv.height);
+  return cv;
+}
+// stroken per detailniveau: [plaatjes, px per eenheid, herhaallengte in eenheden, vanaf schaal (css-px per eenheid x dpr)]
+// lim: hooguit zoveel plaatjes maken en dan stoppen (opwarmen in stapjes); geeft true als alles klaar is
+function ixFieldSprites(c, lim) {
+  const key = c.wheat + c.mass; let F = IN.field;
+  if (!F || F.key !== key) {
+    const r = mulberry32(77);
+    F = IN.field = { key, near: [], mid: [], bands: [[[], 40, 20, 22], [[], 22, 48, 9], [[], 7, 192, 0]], done: false,
+      // vlekken in het veld (van boven zichtbaar): [x, afstand tot de startcamera, straal, licht of donker]
+      // en verder weg grotere plekken, voor als je er hoog boven vliegt
+      spots: Array.from({ length: 90 }, () => [-1600 + r() * 3300, 40 * Math.pow(90, r()), 8 + r() * 30, r() < 0.5]).concat(Array.from({ length: 150 }, () => [-1600 + r() * 3300, 600 + r() * 3000, 20 + r() * 60, r() < 0.5])),
+      shade: Array.from({ length: 5 }, (_, i) => [-1500 + i * 700 + r() * 300, 900 + r() * 2400, 220 + r() * 240]) }; // wolkschaduwen [x, afstand, straal]
+  }
+  if (F.done) return true;
+  const kinds = ['w', 'w', 'w', 'w', 'p', 'p', 'f', 'f']; let made = 0;
+  const need = (arr, i, make) => { if (arr[i]) return true; if (lim !== undefined && made >= lim) return false; ixFlush(arr[i] = make()); made++; return true; };
+  for (let i = 0; i < 8; i++) if (!need(F.near, i, () => ixPol(kinds[i], 101 + i, 72, c))) return false;
+  for (let i = 0; i < 8; i++) if (!need(F.mid, i, () => ixPol(kinds[i], 201 + i, 30, c))) return false;
+  for (const [b, seed, ppu, TW] of [[0, 321, 40, 20], [1, 301, 22, 48], [2, 311, 7, 192]]) for (let i = 0; i < 2; i++) if (!need(F.bands[b][0], i, () => ixBand(seed + i, ppu, TW, c))) return false;
+  F.done = true; return true;
+}
+// Bij de start staat de camera nog op zijn plek en stijgt eerst alleen: dan heeft elke rij precies zijn startschaal. Voor die schaal
+// liggen de pollen en de stroken al klaar op ware grootte, zodat tekenen een snelle kopie is (zonder schalen). Per resolutie. Plaatje
+// voor plaatje (lim: hooguit zoveel nu, de rest later); een rij die nog niet klaarstaat, tekent ixField gewoon geschaald. Het opwarmen
+// zet ook een set voor resolutie 1 klaar (lo, in IN.fn1): zakt de resolutie op een trage telefoon, dan hoeft er niets gemaakt te worden.
+const ixCanvas = (w, h) => { const c = document.createElement('canvas'); c.width = Math.max(1, w); c.height = Math.max(1, h); return c; };
+function ixNative(lim, lo) {
+  const F = IN.field, C = IN.cams && IN.cams[0]; if (!F || !F.done || !C) return true;
+  const d = lo ? 1 : IN.d, base = F.key + '|' + IN.w + '|' + C.fx; let N = lo ? IN.fn1 : IN.fn;
+  if (!N || N.base !== base || N.d !== d) {
+    const R1 = IN.fn1;
+    if (!lo && R1 && R1.base === base && R1.d === d) { N = IN.fn = R1; IN.fn1 = null; }
+    else { N = { base, d, M: Math.ceil(24 * d), rows: [], pend: [], done: false }; if (lo) IN.fn1 = N; else IN.fn = N; }
+  }
+  if (N.done) return true;
+  let made = 0;
+  for (let j = 0; j < IX_ROWS.length; j++) {
+    if (N.rows[j] !== undefined) continue;
+    const s = IF / IX_ROWS[j], sd = s * d;
+    if (j < IX_NC && sd >= 2.2) { // pollen: elk plaatje geschaald, één voor één
+      const set = sd > 64 ? F.near : F.mid, sc = sd / (sd > 64 ? 72 : 30), P = N.pend;
+      for (let k = 0; k < set.length; k++) {
+        if (P[k]) continue;
+        if (lim !== undefined && made >= lim) return false;
+        const im = set[k], c = P[k] = ixCanvas(Math.round(im.width * sc), Math.round(im.height * sc)); c.getContext('2d').drawImage(im, 0, 0, c.width, c.height); ixFlush(c); made++;
+      }
+      N.rows[j] = P; N.pend = []; continue;
+    }
+    if (j >= IX_NC && sd >= 3 && lim !== undefined && made >= lim) return false;
+    if ((N.rows[j] = ixNativeRow(F, C, j, d, N.M))) made++;
+  }
+  N.done = true; return true;
+}
+function ixNativeRow(F, C, j, d, M) {
+  const s = IF / IX_ROWS[j], sd = s * d;
+  if (j < IX_NC || sd < 3) return null;
+  // strook over de hele breedte (plus een marge voor het wiegen)
+  const [imgs, ppu, TW] = F.bands.find(L => sd >= L[3]), img = imgs[j % imgs.length], sc = sd / ppu, x0 = IN.w / 2 - C.fx * s;
+  const off = (j * 7.3) % TW, xs = Math.floor((C.fx - IN.w / 2 / s - off) / TW) * TW + off, c = ixCanvas(Math.round(IN.w * d) + 2 * M, Math.round(img.height * sc)), q = c.getContext('2d');
+  for (let X = (x0 + xs * s) * d + M; X < c.width; X += TW * s * d) q.drawImage(img, X, 0, TW * ppu * sc + 0.5, c.height);
+  ixFlush(c); return c;
+}
+// Aren van boven (glijvlucht): een kleine tegel met korte schuine aartjes (schaduw, aar en lichtkant links), die ixField als patroon
+// over de massa van de verre rijen legt, zodat het veld ook van bovenaf een tarweveld blijft. IX_GQ: tegel in css-px bij vergroting 1;
+// IX_GS: overbemonstering (dichtbij wordt de tegel groter getekend). Per thema en resolutie, één keer.
+const IX_GQ = [48, 12], IX_GS = 1.75;
+function ixGrain(c) {
+  const d = IN.d, key = c.wheat + '|' + d; if (IN.grain && IN.grain.key === key) return;
+  const q = IX_GS * d, W = IX_GQ[0], H = IX_GQ[1], cv = document.createElement('canvas'); cv.width = Math.round(W * q); cv.height = Math.round(H * q);
+  const g = cv.getContext('2d'), r = mulberry32(64), E = [];
+  for (let row = 0; row < 3; row++) for (let i = 0; i < 16; i++) E.push([(i + row * 0.37 + (r() - 0.5) * 0.9) / 16 * W, (row + 0.5 + (r() - 0.5) * 0.8) / 3 * H, 2.2 + r() * 1.4, 0.38 + (r() - 0.5) * 0.4]);
+  g.setTransform(cv.width / W, 0, 0, cv.height / H, 0, 0); g.lineCap = 'round';
+  for (const [col, dx, dy, lw, t0] of [[c.wheatSh, 0.45, 0.5, 1.15, 0], [c.wheat, 0, 0, 0.95, 0], [c.wheatLit, -0.28, -0.08, 0.5, 0.35]]) {
+    g.strokeStyle = col; g.lineWidth = lw; g.beginPath();
+    for (const [x, y, L, a] of E) for (const ox of [-W, 0, W]) for (const oy of [-H, 0, H]) { // naadloos: ook net over de rand
+      const ux = Math.sin(a) * L, uy = -Math.cos(a) * L, x0 = x + ox + dx + ux * t0, y0 = y + oy + dy + uy * t0; // schuin naar rechts (wind van links)
+      if (x0 + 4 < 0 || x0 - 4 > W || y0 + 4 < 0 || y0 - 4 > H) continue;
+      g.moveTo(x0, y0); g.lineTo(x + ox + dx + ux, y + oy + dy + uy);
+    }
+    g.stroke();
+  }
+  IN.grain = { key, pat: ig.createPattern(cv, 'repeat'), q };
+}
+// de tegel over rij j (y0 tot y1, css-px): vast aan de rij (schuift en groeit mee), f: apparaat-px per tegel-px, a: dekking. De tegel is
+// fijner getekend dan nodig, dus bij f vanaf 0,75 kan het patroon zonder gladmaken (dat is ongeveer de helft goedkoper en ziet er hetzelfde uit)
+function ixGrainFill(g, j, f, x0, y0, y1, a) {
+  const Gt = IN.grain, d = IN.d, Y0 = Math.floor(y0 * d), Y1 = Math.ceil(y1 * d); if (!Gt || Y1 - Y0 < 1) return;
+  const ox = x0 * d + ((j * 0.37) % 1) * IX_GQ[0] * Gt.q * f, oy = Y0 + ((j * 0.61) % 1) * IX_GQ[1] * Gt.q * f, sharp = f >= 0.75;
+  g.setTransform(f, 0, 0, f, ox, oy); g.globalAlpha = a; g.fillStyle = Gt.pat; if (sharp) g.imageSmoothingEnabled = false;
+  g.fillRect(-ox / f, (Y0 - oy) / f, iCv.width / f, (Y1 - Y0) / f); g.globalAlpha = 1; if (sharp) g.imageSmoothingEnabled = true;
+}
+// zichtbare rijen [index, afstand, schaal, bovenkant], van ver naar dichtbij
+function ixRows(cam) {
+  const R = [], D = IF / cam.k, moved = IN.DS - D, H = IX_G - cam.ey, edge = D - 440;
+  if (!IN.field || IN.i !== 0) return R;
+  for (let j = IX_ROWS.length - 1; j >= 0; j--) {
+    const dist = IX_ROWS[j] - moved; if (dist < 1.5 || dist > edge) continue;
+    const s = IF / dist, top = cam.hy + (H - IX_TOP) * s; if (top > IN.hv) continue;
+    R.push([j, dist, s, top]);
+  }
+  return R;
+}
+// hoogte boven de grond waaronder een rij dicht is: pollen vanaf de onderste trede van de massa, stroken vanaf hun massa
+const ixDense = j => j < IX_NC ? IX_HB - 0.5 : 5.05;
+// onder deze lijn (css-px) ligt de akker dicht over de rest heen: water en oever hoeven daar niet getekend te worden
+function ixFieldCover(cam, R) { if (!R.length) return IN.h; const [j, , s] = R[0]; return cam.hy + (IX_G - cam.ey - ixDense(j)) * s + 1; }
+// waas per afstand in de akker (luchtperspectief): dezelfde als bij de gevel (ixHaze), anders oogt het veld verder weg dan de fabriek
+const ixFieldHz = dist => ixHaze(dist);
+const ixRGB = h => [parseInt(h.slice(1, 3), 16), parseInt(h.slice(3, 5), 16), parseInt(h.slice(5, 7), 16)];
+// kleur van de massa van een verre rij: van opzij gezien donker (lo 0), van boven het lichte bladerdak (lo 1), met waas (hz)
+const IX_MC = new Map(); // onthouden per (lo, hz) in stapjes van 1/32; leeg bij een ander thema
+function ixMassCol(c, lo, hz) {
+  const key = Math.round(lo * 32) * 64 + Math.round(hz * 32); let v = IX_MC.get(key); if (v) return v;
+  const a = ixRGB(c.mass), b = ixRGB(c.canopy), z = ixRGB(c.sky[2]), L = Math.round(lo * 32) / 32, Z = Math.round(hz * 32) / 32;
+  v = 'rgb(' + a.map((q, i) => Math.round(lerp(lerp(q, b[i], L), z[i], Z))).join(',') + ')'; IX_MC.set(key, v); return v;
+}
+// De akker in shot 1, van ver naar dichtbij. Elke rij ligt op een vaste afstand van de startcamera; vliegt de camera erover (te
+// dichtbij) of zakt de rij onder het beeld, dan valt hij weg. Tussen de rijen de massa: van opzij de donkere halmen, van boven het
+// lichtere bladerdak van aren. Verre rijen krijgen waas (de kleuren mengen met de lucht bij de horizon). Wind van links: de koppen
+// wiegen heen en weer (schuiven, dat is veel sneller te tekenen dan schuin trekken), golven lopen van links naar rechts door het veld.
+const IX_TRACK = [-150, 40, 230]; // rijsporen (x): elk twee wielsporen
+const IX_FGSKIP = ['field', 'fieldRow']; // rollen van de oever die onder de akker vallen
+const IX_RIM = [4, 6, 0, 5, 7, 4, 1, 6]; // voorste rij (de bloemrand): klaprozen (4, 5), phacelia (6, 7) en een enkele pol tarwe (0, 1)
+function ixField(g, cam, A, R) {
+  const F = IN.field, c = IN.pal, d = IN.d, w = IN.w, h = IN.hv, H = IX_G - cam.ey, calm = reduced.matches, CW = iCv.width;
+  if (!F || !R.length) return;
+  const still0 = Math.abs(IN.DS - IF / cam.k) < 1e-6 && IN.fn && Math.abs(cam.fx - IN.cams[0].fx) < 1e-6; // nog op de startafstand
+  let mid = false, run = null; // rijsporen en windvlaag komen na de verre rijen en voor de pollen dichtbij; run: massa in de wacht
+  for (let q = 0; q < R.length; q++) {
+    const [j, dist, s, top] = R[q], clump = j < IX_NC, sd = s * d, hz = ixFieldHz(dist);
+    if (!mid && dist < 120) { if (run) { ixRun(g, run, d, CW); run = null; } mid = true; ixFieldMid(g, cam, A, R, dist); }
+    // tot ye is deze rij te zien: daaronder ligt de volgende (dichtere) rij dicht
+    const nx = R[q + 1], ye = Math.min(h, nx ? cam.hy + (H - ixDense(nx[0])) * nx[2] : h);
+    const yg = cam.hy + H * s, x0 = cam.sx - cam.fx * s; // grondlijn en x van wereld-x 0 op het scherm
+    g.setTransform(1, 0, 0, 1, 0, 0);
+    if (clump && run) { ixRun(g, run, d, CW); run = null; }
+    if (clump) { // losse pollen; vooraan een bloemrand van klaprozen en phacelia
+      // massa onder de koppen in drie treden: de halmen lopen weg in de schaduw van de rij
+      const y1 = cam.hy + (H - IX_HB + 0.02) * s;
+      for (let k = 0; k < 3; k++) {
+        const ya = y1 + k * 0.25 * s, yb = k < 2 ? ya + 0.25 * s : ye; if (ya >= ye) break;
+        g.fillStyle = k < 2 ? ixA(c.mass, k ? 0.72 : 0.38) : c.mass; g.fillRect(0, Math.floor(ya * d), CW, Math.ceil((Math.min(yb, ye) - ya) * d) + (k < 2 ? 0 : 1));
+      }
+      if (sd < 2.2 || top > ye || (IN.lite && j === IX_NC - 1)) continue; // licht: zonder de vierde rij pollen
+      const set = sd > 64 ? F.near : F.mid, ppu = sd > 64 ? 72 : 30, sc = sd / ppu, SP = IN.lite ? 1.5 : 1.2, im0 = set[0];
+      const cut = Math.min(im0.height, Math.ceil((ye - yg) * d / sc + IX_TOP * ppu) + 2); if (cut < 2) continue;
+      const xa = Math.floor((cam.fx - cam.sx / s) / SP) - 1, xb = Math.ceil((cam.fx + (w - cam.sx) / s) / SP) + 1;
+      const nat = still0 ? IN.fn.rows[j] : null, ty = Math.round((yg - IX_TOP * s) * d); // op ware grootte: alleen kopieren
+      if (nat) g.setTransform(1, 0, 0, 1, 0, 0);
+      for (let ci = xa; ci <= xb; ci++) {
+        const hsh = Math.imul(ci * 374761393 + j * 668265263, 1274126177) >>> 0, rr = (hsh % 1000) / 1000, xw = ci * SP + (rr - 0.5) * 0.36;
+        const vi = j === 0 ? IX_RIM[((ci % 8) + 8) % 8] : ((hsh >>> 10) % 100 < (j === 1 ? 40 : 14) ? 4 : 0) + ((hsh >>> 17) & 3); // 0-3 tarwe, 4-5 klaproos, 6-7 phacelia
+        const sway = calm ? 0.2 : 0.2 + 0.26 * Math.sin(1.5 * A - 0.42 * xw + 0.9 * j) + 0.08 * Math.sin(3.7 * A + rr * 9); // uitslag van de kop (eenheden)
+        const X = Math.round((x0 + (xw + sway) * s) * d);
+        if (nat) { const im = nat[vi], ch = Math.min(im.height, Math.ceil(ye * d) - ty); if (ch > 0) g.drawImage(im, 0, 0, im.width, ch, X - Math.round(0.7 * sd), ty, im.width, ch); continue; }
+        const im = set[vi]; g.setTransform(sc, 0, 0, sc, X, yg * d);
+        g.drawImage(im, 0, 0, im.width, cut, -0.7 * ppu, -IX_TOP * ppu, im.width, cut);
+      }
+      continue;
+    }
+    // verdere rij: de massa tussen de aren (van opzij donker, van boven het lichte bladerdak), dan een strook kleine aren
+    const yb = cam.hy + (H - 5.05) * s;
+    if (ye > yb && yb < h) { // aaneengesloten stukken met dezelfde kleur in één keer
+      const col = ixMassCol(c, clamp(H / dist * 4.5 - 0.1, 0, 0.9), hz);
+      if (run && run[0] === col && Math.abs(run[2] - yb) < 1.5) run[2] = ye; else { if (run) ixRun(g, run, d, CW); run = [col, yb, ye]; }
+      // van boven gezien: aren-textuur over de massa (pas als de camera boven de aren uit is), groter naar de camera toe
+      const f = IX_ROWS[j] / dist / IX_GS, ga = H > 8 ? (IN.dark ? 0.34 : 0.44) * clamp((H - 8) / 8, 0, 1) * clamp((H / dist * 4.5 - 0.1) / 0.3, 0, 1) * (1 - hz) * clamp((f - 0.3) / 0.25, 0, 1) : 0;
+      if (ga > 0.02) { ixRun(g, run, d, CW); run = null; ixGrainFill(g, j, f, x0, yb, ye, ga); }
+    }
+    if (top > ye || (ye - top) * d < 3) continue; // (bijna) helemaal bedekt
+    if (sd < (IN.lite ? 8 : 3)) { // ver weg: geen losse aren meer, alleen een licht streepje waar de aartjes boven de massa uitsteken
+      if (run) { ixRun(g, run, d, CW); run = null; } const yl = cam.hy + (H - 5.9) * s, va = clamp((0.08 - H / dist) / 0.05, 0, 1); // van boven gezien geen losse rijen meer
+      if (yl < ye && va > 0) { g.setTransform(1, 0, 0, 1, 0, 0); g.globalAlpha = 0.55 * (1 - hz) * va; g.fillStyle = c.wheatLit; g.fillRect(0, Math.floor(yl * d), CW, Math.max(1, Math.round(0.7 * sd))); g.globalAlpha = 1; }
+      continue;
+    }
+    if (run) { ixRun(g, run, d, CW); run = null; }
+    const [imgs, ppu, TW] = F.bands.find(L => sd >= L[3]), img = imgs[j % imgs.length], sc = sd / ppu;
+    const sway = calm || sd < 6 ? 0.1 : 0.1 + 0.18 * Math.sin(1.5 * A - 0.06 * IX_ROWS[j] + j); // de hele rij wiegt tegelijk
+    const off = (j * 7.3) % TW, xs = Math.floor((cam.fx - cam.sx / s - off) / TW) * TW + off, xe = cam.fx + (w - cam.sx) / s;
+    const cut = Math.min(img.height, Math.ceil((ye - yg) * d / sc + IX_TOP * ppu) + 2); if (cut < 2) continue;
+    g.globalAlpha = 1 - hz;
+    const nat = still0 ? IN.fn.rows[j] : null;
+    if (nat) { const ty = Math.round((yg - IX_TOP * s) * d), ch = Math.min(nat.height, Math.ceil(ye * d) - ty); g.setTransform(1, 0, 0, 1, 0, 0); if (ch > 0) g.drawImage(nat, 0, 0, nat.width, ch, Math.round(sway * sd) - IN.fn.M, ty, nat.width, ch); }
+    else {
+      g.setTransform(sc, 0, 0, sc, Math.round((x0 + (xs + sway) * s) * d), yg * d);
+      for (let k = 0, x = xs; x < xe + 1; k++, x += TW) g.drawImage(img, 0, 0, img.width, cut, k * TW * ppu, -IX_TOP * ppu, TW * ppu + 0.5, cut);
+    }
+    g.globalAlpha = 1;
+  }
+  if (run) ixRun(g, run, d, CW);
+  if (!mid) ixFieldMid(g, cam, A, R, 0);
+  g.setTransform(1, 0, 0, 1, 0, 0);
+}
+function ixRun(g, run, d, CW) { const y0 = Math.floor(run[1] * d), y1 = Math.ceil(run[2] * d) + 1; if (y1 - y0 < 1) return; g.setTransform(1, 0, 0, 1, 0, 0); g.fillStyle = run[0]; g.fillRect(0, y0, CW, y1 - y0); }
+// tussen de verre rijen en de pollen: rijsporen en windvlagen (dmin: tot hier, de rijen dichterbij komen er overheen)
+function ixFieldMid(g, cam, A, R, dmin) {
+  const d = IN.d, c = IN.pal, H = IX_G - cam.ey, far = R[0];
+  g.setTransform(d, 0, 0, d, 0, 0);
+  // rijsporen: twee wielsporen per spoor, van vlak voor de pollen tot de oever, recht naar het verdwijnpunt
+  const da = Math.max(dmin, 30), db = far[1], sa = IF / da, sb = IF / db, ya = cam.hy + H * sa, yb = cam.hy + H * sb;
+  if (ya - yb > 2) {
+    g.fillStyle = c.track; g.beginPath();
+    for (const X of IX_TRACK) for (const o of [-0.95, 0.95]) {
+      const xl = X + o - 0.28, xr = X + o + 0.28, P = (x, s) => cam.sx + (x - cam.fx) * s;
+      g.moveTo(P(xl, sa), ya); g.lineTo(P(xr, sa), ya); g.lineTo(P(xr, sb), yb); g.lineTo(P(xl, sb), yb); g.closePath();
+    }
+    g.fill();
+  }
+  // vlekken: lichtere en donkerdere plekken in het gewas (ingekort in de diepte), zodat het veld van boven geen vlakte is
+  if (H > 9 && IN.field && !IN.lite) {
+    const moved = IN.DS - IF / cam.k, L = new Path2D(), Dk = new Path2D(), Li = new Path2D(), Di = new Path2D(); let n = 0;
+    for (const [x, z, r, light] of IN.field.spots) {
+      const dist = z - moved; if (dist < da || dist > db) continue;
+      const s = IF / dist, rx = r * s, ry = rx * H / dist, X = cam.sx + (x - cam.fx) * s, Y = cam.hy + H * s; if (ry < 0.6 || X + rx < 0 || X - rx > IN.w || Y - ry > IN.hv) continue;
+      const P = light ? L : Dk, Pi = light ? Li : Di, ox = X + (r % 2 > 1 ? 0.22 : -0.22) * rx; // kern wat opzij: een vlek, geen ellips
+      P.moveTo(X + rx, Y); P.ellipse(X, Y, rx, ry, 0, 0, TAU); n++;
+      if (ry > 2.5 && rx > 10) { Pi.moveTo(ox + rx * 0.6, Y - ry * 0.15); Pi.ellipse(ox, Y - ry * 0.15, rx * 0.6, ry * 0.7, 0, 0, TAU); } // kleine zonder kern
+    }
+    if (n) { g.fillStyle = ixA(c.wheatLit, IN.dark ? 0.03 : 0.1); g.fill(L); g.fill(Li); g.fillStyle = ixA(c.wheatSh, IN.dark ? 0.05 : 0.11); g.fill(Dk); g.fill(Di); }
+  }
+  // wolkschaduwen (overdag): een paar grote zachte plekken die met de wind meeschuiven; van boven zie je dat het veld een land is
+  if (!IN.dark && H > 9 && IN.field && !IN.lite) {
+    const moved = IN.DS - IF / cam.k, o = new Path2D(), i = new Path2D(), wx = reduced.matches ? 0 : A * 9; let n = 0;
+    for (const [x, z, r] of IN.field.shade) {
+      const dist = z - moved; if (dist < da || dist > db) continue;
+      const s = IF / dist, rx = r * s, ry = rx * H / dist, X = cam.sx + (x + wx - cam.fx) * s, Y = cam.hy + H * s; if (ry < 1 || X + rx < 0 || X - rx > IN.w || Y - ry > IN.hv) continue;
+      o.moveTo(X + rx, Y); o.ellipse(X, Y, rx, ry, 0, 0, TAU); i.moveTo(X + rx * 0.4, Y); i.ellipse(X - rx * 0.12, Y + ry * 0.05, rx * 0.66, ry * 0.68, 0, 0, TAU); n++;
+    }
+    if (n) { g.fillStyle = 'rgba(120,84,30,.09)'; g.fill(o); g.fill(i); }
+  }
+  // windvlagen: lichte golven die over het veld naar je toe rollen (de aren buigen en vangen licht); alleen als je erboven hangt
+  if (!reduced.matches && !IN.lite && H > 9) for (let i = 0; i < 2; i++) {
+    const dw = 160 + ((4200 - A * 260 + i * 2100) % 4200); if (dw > db || dw < da) continue;
+    const y1 = cam.hy + H * IF / (dw * 1.1), y2 = cam.hy + H * IF / (dw * 0.8), st = (y2 - y1) / 4; if (st < 0.5) continue;
+    for (let k = 0; k < 4; k++) { g.fillStyle = ixA(c.wheatLit, (IN.dark ? 0.05 : 0.09) * (k === 1 || k === 2 ? 2 : 1)); g.fillRect(0, y1 + k * st, IN.w, st + 0.5); }
+  }
+}
+// lucht tekenen tot y0 (css-px): het plaatje schuift mee met de horizon; de wolken drijven heel langzaam naar rechts
+function ixSkyDraw(g, cam, A, y0) {
+  const S = IN.sky, d = IN.d; if (!S || y0 <= 0) return;
+  // drijven langs één tijdlijn over de drie shots (een eindbeeld staat stil, het volgende shot gaat daar verder) en pas na het
+  // bewaarde begin van shot 1; zo verspringen de wolken nergens
+  const dr = IN.i === 0 ? Math.max(0, IN.t - IX_T1) : INTRO_SHOTS[0].dur - IX_T1 + (IN.i === 2 ? INTRO_SHOTS[1].dur : 0) + Math.max(0, IN.t);
+  const top = Math.round((cam.hy - IN.skyH) * d), sx = Math.max(0, Math.round(72 * d - dr * 2.4 * d)), hh = Math.min(S.height, Math.ceil(y0 * d - top)); // hele pixels: snelle kopie
+  if (top > 0) { g.fillStyle = IN.pal.sky[0]; g.fillRect(0, 0, iCv.width, Math.ceil(top) + 1); }
+  if (hh > 0) g.drawImage(S, sx, 0, iCv.width, hh, 0, top, iCv.width, hh);
+  const yb = top + S.height; if (yb < y0 * d) { g.fillStyle = IN.pal.sky[2]; g.fillRect(0, Math.floor(yb), iCv.width, Math.ceil(y0 * d - yb)); }
+}
+// Offscreen: de lucht (ixSky), stad en buurt (introImgs), de akker (ixFieldSprites) en een paar kleine plaatjes, per formaat en thema
+function introCaches() {
+  IN.dark = introDark(); IN.still = null; const c = IN.pal = IN.dark ? ICOL.dark : ICOL.light; IX_HC.clear(); IX_MC.clear();
+  if (!IN.geo) { IN.geo = introGeo(); IN.logo = introLogo(); }
+  const d = IN.d;
+  ixSky(c); introImgs(d, c); ixFieldSprites(c); ixGrain(c); ixFx(c);
+  // de akker op ware grootte is alleen nodig zolang shot 1 nog op de startafstand staat; wat nog ontbreekt, bouwt introFrame per frame
+  if (IN.cams && IN.i === 0 && IN.t < IX_T1) ixNative(0); else if (IN.fn && IN.fn.d !== IN.d) IN.fn = null;
   // binnen in de toren: per verdieping de kleur, donkerder naar beneden (vooraf gemengd, geen verloop per verdieping)
   const bot = '#08090A';
   IN.fl = [];
@@ -3996,27 +4621,89 @@ function introCaches() {
   }
 }
 // stad ver weg en de buurt achter de fabriek: één keer als plaatje (ze veranderen nauwelijks van schaal); per resolutie en thema
-function introImgs(d, c) {
+function introImgs(d, c, only) { // only: alleen deze laag (opwarmen in stapjes)
   if (!IN.geo) { IN.geo = introGeo(); IN.logo = introLogo(); }
-  for (const L of [IN.geo.far, IN.geo.mid]) {
-    const key = d + '|' + c.far; if (L.key === key) continue; L.key = key;
-    const [x0, y0, bw, bh, ps] = L.box, k = ps * d, cv = L.img || (L.img = document.createElement('canvas'));
+  for (const L of only ? [only] : [IN.geo.far, IN.geo.mid]) {
+    const key = d + '|' + c.far; if (L.key === key) continue;
+    const [x0, y0, bw, bh, ps] = L.box, k = ps * d, old = L.img, was = (L.key || '').split('|'); L.key = key;
+    if (old && old.width && was[1] === c.far && +was[0] > d) { // alleen de resolutie zakt (trage telefoon): verkleinen, niet opnieuw tekenen
+      const nv = document.createElement('canvas'); nv.width = Math.ceil(bw * k); nv.height = Math.ceil(bh * k);
+      nv.getContext('2d').drawImage(old, 0, 0, nv.width, nv.height); old.width = old.height = 0; L.img = nv; continue;
+    }
+    const cv = L.img || (L.img = document.createElement('canvas'));
     cv.width = Math.ceil(bw * k); cv.height = Math.ceil(bh * k);
     const lg = cv.getContext('2d'); lg.setTransform(k, 0, 0, k, -x0 * k, -y0 * k);
     for (const [r, p] of L.parts) { const col = c[r]; if (col) { lg.fillStyle = col; lg.fill(p); } }
+    // luchtperspectief: hoe verder weg, hoe lichter en vager (naar de waas toe), onderaan het meest
+    const far = L === IN.geo.far, gr = lg.createLinearGradient(0, y0, 0, y0 + bh);
+    gr.addColorStop(0, ixA(c.haze, far ? 0.3 : 0.06)); gr.addColorStop(1, ixA(c.haze, far ? 0.6 : 0.26));
+    lg.globalCompositeOperation = 'source-atop'; lg.fillStyle = gr; lg.fillRect(x0, y0, bw, bh); lg.globalCompositeOperation = 'source-over';
+    ixFlush(cv);
   }
 }
-// bij een eerste bezoek alvast klaarzetten zodra het titelscherm rustig is, zodat It giet oan! meteen de intro toont
-function introWarm() {
-  if (!introWanted() || S.screen !== 'title') return;
-  try { introImgs(V.dpr, introDark() ? ICOL.dark : ICOL.light); } catch (e) { /* dan bij het openen */ }
+// klein plaatje: de zachte gloed achter het logo ('s avonds)
+function ixFx(c) {
+  if (IN.fx && IN.fx.key === String(c.logoGlow)) return;
+  const glow = document.createElement('canvas'), gg = glow.getContext('2d'); glow.width = 128; glow.height = 64;
+  if (c.logoGlow) { gg.setTransform(1, 0, 0, 0.5, 0, 0); const gr = gg.createRadialGradient(64, 64, 4, 64, 64, 64); gr.addColorStop(0, c.logoGlow + '.34)'); gr.addColorStop(0.6, c.logoGlow + '.12)'); gr.addColorStop(1, c.logoGlow + '0)'); gg.fillStyle = gr; gg.fillRect(0, 0, 128, 128); }
+  IN.fx = { key: String(c.logoGlow), glow };
+}
+// Bij een eerste bezoek zet het titelscherm de intro alvast klaar, in kleine stappen in rustige tijd (ixWarmGen: één stap per yield),
+// zodat It giet oan! meteen het eerste beeld toont en de titeldemo niet hapert: stad en buurt, de akker (plaatje voor plaatje), de maten,
+// de lucht, het bewaarde begin van shot 1 en de akker op ware grootte (rij voor rij). Alles heeft een sleutel (formaat, resolutie,
+// thema): wat bij het openen niet meer klopt, wordt dan gewoon opnieuw gemaakt. Een canvas wordt pas echt getekend bij het eerste
+// gebruik; ixFlush doet dat meteen, anders kwam dat werk alsnog in één keer bij het openen.
+function ixFlush(cv) {
+  try { const g = ixFlush.g || (ixFlush.g = ixCanvas(1, 1).getContext('2d')); if (cv && cv.width && cv.height) g.drawImage(cv, 0, 0, 1, 1); } catch (e) { /* niet nodig */ }
+}
+const ixPal = () => introDark() ? ICOL.dark : ICOL.light;
+let ixWarmQ = null, ixWarmed = false;
+function* ixWarmGen() {
+  if (!IN.geo) { IN.geo = introGeo(); IN.logo = introLogo(); yield; }
+  for (const L of [IN.geo.far, IN.geo.mid]) { introImgs(V.dpr, ixPal(), L); yield; }
+  while (!ixFieldSprites(ixPal(), 1)) yield;
+  yield;
+  const s0 = INTRO_SHOTS[0]; // het paneel zoals bij het openen (introShot(0) staat dan al voor het meten), maar zonder voorlezen
+  if (!$('introKicker').textContent) { $('introKicker').textContent = s0.kicker; $('introStep').textContent = 'Stap 1 van 3.'; $('introText').textContent = s0.text; $('introDesc').textContent = s0.desc; }
+  ixMeasure(true); IN.dark = introDark(); IN.pal = ixPal(); yield;
+  yield* ixSkyGen(IN.pal);
+  ixGrain(IN.pal); ixFx(IN.pal); yield;
+  if (reduced.matches || IN.i !== 0) return; // verminderde beweging: shot 1 begint meteen bij het eindbeeld
+  ixBg(iCamFull(iCamAt(0, 0))); yield;
+  while (!ixNative(1)) yield;
+  if (IN.d > 1) while (!ixNative(1, true)) yield;
+}
+function introWarm(dl) {
+  if (ixWarmed || !introWanted() || S.screen === 'intro') { ixWarmQ = null; return; }
+  if (S.screen !== 'title') { setTimeout(introWarm, 1000); return; } // even een ander scherm: straks verder
+  const idle = dl && typeof dl.timeRemaining === 'function' && !dl.didTimeout, t0 = performance.now();
+  // het frame na een stap is wat langer: dat telt niet mee voor de resolutie van de titeldemo (frameSample), anders zakt die door het
+  // opwarmen zelf, en dat blijft dan de hele sessie zo
+  fps.n = fps.sum = 0; requestAnimationFrame(() => { fps.n = fps.sum = 0; });
+  try {
+    const q = ixWarmQ || (ixWarmQ = ixWarmGen());
+    for (;;) {
+      if (q.next().done) { ixWarmQ = null; ixWarmed = true; return; }
+      if (idle ? dl.timeRemaining() < 3 : performance.now() - t0 > 8) break;
+    }
+  } catch (e) { ixWarmQ = null; return; } // dan bij het openen
+  if ('requestIdleCallback' in window) requestIdleCallback(introWarm, { timeout: 80 }); else setTimeout(introWarm, 40);
 }
 function iCam(b) { const k = Math.min(IN.w / (b[1] - b[0]), IN.picH / (b[3] - b[2])); return { fx: (b[0] + b[1]) / 2, fy: (b[2] + b[3]) / 2, lk: Math.log(k), ey: b[4] }; }
 function iCamFull(c) { const k = Math.exp(c.lk), sx = IN.w / 2, sy = IN.picH / 2; return { fx: c.fx, fy: c.fy, k, ey: c.ey, sx, sy, hy: sy + (c.ey - c.fy) * k }; }
+// startcamera van shot 1: zoom uit het vak van IBOX[0], oog laag tussen de aren, horizon op 60% van het beeld (hr: horizon t.o.v. het midden)
+function ixStartCam() {
+  const b = IBOX[0], k = Math.min(IN.w / (b[1] - b[0]), IN.picH / (b[3] - b[2])), hr = IN.picH * 0.1;
+  return { fx: 40, fy: b[4] - hr / k, lk: Math.log(k), ey: b[4], hr };
+}
 // camera op tijd T (s) in shot i; shot 2 volgt een gebogen baan langs het schip (even langzamer daar) naar het raam bovenin
 function iCamAt(i, T) {
   const C = IN.cams, t = clamp(T / INTRO_SHOTS[i].dur, 0, 1), mix = (a, b, u, uk) => ({ fx: lerp(a.fx, b.fx, u), fy: lerp(a.fy, b.fy, u), ey: lerp(a.ey, b.ey, u), lk: lerp(a.lk, b.lk, uk === undefined ? u : uk) });
-  if (i === 0) return mix(C[0], C[1], eio(t));
+  if (i === 0) { // shot 1: eerst omhoog uit de tarwe (ooghoogte boven de akker gaat met gelijke stappen op een log-schaal), dan naar voren
+    const a = C[0], b = C[1], D = INTRO_SHOTS[0].dur, s = clamp(T, 0, D), ur = ixEase((s - IX_T0) / 3.4), ug = ixEase((s - IX_T1) / (D - IX_T1)), uh = ixEase((s - 0.5) / (D - 0.5));
+    const ey = IX_G - (IX_G - a.ey) * Math.pow((IX_G - b.ey) / (IX_G - a.ey), ur), lk = lerp(a.lk, b.lk, ug);
+    return { fx: lerp(a.fx, b.fx, ug), fy: ey - lerp(a.hr, (b.ey - b.fy) * Math.exp(b.lk), uh) / Math.exp(lk), lk, ey };
+  }
   if (i === 1) {
     let u = eio(t); u += 0.6 * Math.sin(TAU * u) / TAU;
     const A = C[1], M = C[2], B = C[3], q = k => { const c = 2 * M[k] - (A[k] + B[k]) / 2; return (1 - u) * (1 - u) * A[k] + 2 * u * (1 - u) * c + u * u * B[k]; };
@@ -4029,34 +4716,63 @@ function iCamAt(i, T) {
 // Z: pas als het raam het beeld vult vlieg je binnen door (zelfde vaart als de nadering), daarna remt het af
 const iInside = T => ({ Z: Math.pow(0.35, Math.pow(1 - clamp((T - 1.3) / 1.2, 0, 1), 3)), pitch: lerp(0.32, 1, eio((T - 0.7) / 2.7)), gT: T - 2.9 });
 // laag tekenen met de camera: schaal s volgt uit de diepte; geeft de transformatie terug (of null als de camera er al voorbij is)
-function iLayer(g, L, cam) {
+// dy: extra verschuiving omlaag (css-px, het schip deint). Luchtperspectief: ver weg mengen de kleuren met de waas (ixHaze).
+function iLayer(g, L, cam, dy, skip) {
   const dist = L.dz + IF / cam.k; if (dist <= 1) return null;
-  const s = IF / dist, X0 = cam.sx - cam.fx * s, Y0 = cam.hy - cam.ey * s, d = IN.d, c = IN.pal;
+  const s = IF / dist, X0 = cam.sx - cam.fx * s, Y0 = cam.hy - cam.ey * s + (dy || 0), d = IN.d, c = IN.pal, hz = ixHaze(dist);
   g.setTransform(s * d, 0, 0, s * d, X0 * d, Y0 * d);
-  for (const [r, p] of L.parts) { const col = c[r]; if (col) { g.fillStyle = col; g.fill(p); } }
-  return { s, X0, Y0, dist };
+  for (const [r, p] of L.parts) { const col = c[r]; if (col && !(skip && skip.includes(r))) { g.fillStyle = hz && col[0] === '#' ? ixMixC(col, c.haze, hz) : col; g.fill(p); } }
+  return { s, X0, Y0, dist, hz };
 }
-// graan onderweg, alleen als stipjes (bij verminderde beweging staan ze stil); over: boven op een bewaard eindbeeld, dan niet in het ruim
-function iDots(g, cam, A, over) {
-  const D = IN.geo.dots, d = IN.d; g.setTransform(cam.k * d, 0, 0, cam.k * d, (cam.sx - cam.fx * cam.k) * d, (cam.hy - cam.ey * cam.k) * d);
-  g.fillStyle = IN.pal.dot; g.beginPath();
-  for (let i = 0; i < 26; i++) {
-    const p = (i / 26 * D.len + A * 70) % D.len, sg = D.segs.find(q => p >= q[2] && p < q[2] + q[3]) || D.segs[D.segs.length - 1];
-    const u = (p - sg[2]) / sg[3], y = lerp(sg[0][1], sg[1][1], u); if (over && y > -24) continue;
-    const x = lerp(sg[0][0], sg[1][0], u); g.moveTo(x + 1.6, y); g.arc(x, y, 1.6, 0, TAU);
+// waas per afstand tot de camera (alleen bij de start van shot 1, als de fabriek nog ver weg ligt)
+const ixHaze = dist => clamp((dist - 1500) / 5200, 0, 0.3);
+// gemengde kleuren onthouden (in stapjes van 1/64), zodat er per frame geen nieuwe kleurteksten nodig zijn; leeg bij een ander thema
+const IX_HC = new Map();
+function ixMixC(col, to, t) { let a = IX_HC.get(col + to); if (!a) IX_HC.set(col + to, a = []); const q = Math.round(clamp(t, 0, 1) * 64); return a[q] || (a[q] = q ? mixHex(col, to, q / 64) : col); }
+// Graan onderweg (uit het ruim omhoog, over de brug de silo's in en over de loopbrug de toren in): een gouden lijn met ronde bochten
+// en een zachte gloed, met daarop korrels die meeschuiven (de band beweegt) en een paar glinsteringen. mode 0: alleen de lijn
+// (bewaard beeld), 1: alles, 2: alleen wat beweegt, en niet in het ruim (boven op een bewaard beeld ligt het schip daar niet meer voor).
+// Bij verminderde beweging staat alles stil.
+function iDots(g, cam, A, mode) {
+  const D = IN.geo.dots, d = IN.d, c = IN.pal, k = cam.k, lw = Math.max(2.4, 1.7 / k);
+  g.setTransform(k * d, 0, 0, k * d, (cam.sx - cam.fx * k) * d, (cam.hy - cam.ey * k) * d); g.lineCap = 'round'; g.lineJoin = 'round';
+  if (mode < 2) { if (k > 1 && !IN.lite) { g.strokeStyle = c.flowLit; g.globalAlpha = 0.28; g.lineWidth = lw * 2.6; g.stroke(D.flow); g.globalAlpha = 1; } g.strokeStyle = c.flow; g.lineWidth = lw; g.stroke(D.flow); }
+  if (mode === 0) return;
+  const at = p => { const sg = D.segs.find(q => p >= q[2] && p < q[2] + q[3]) || D.segs[D.segs.length - 1], u = (p - sg[2]) / sg[3]; return [lerp(sg[0][0], sg[1][0], u), lerp(sg[0][1], sg[1][1], u)]; };
+  const q = lw * 0.28, sp = k < 0.6 ? 24 : 14, n = Math.floor(D.len / sp); g.fillStyle = c.flowLit; g.beginPath(); // korrels op de band
+  for (let i = 0; i < n; i++) { const [x, y] = at((i * sp + A * 36) % D.len); if (mode === 2 && y > -26) continue; g.rect(x - q, y - q, q * 2, q * 2); }
+  g.fill();
+  g.fillStyle = '#FFFBEA'; g.beginPath();
+  for (let i = 0; i < 6; i++) { // glinsteringen: vierpuntige sterretjes die meelopen en aan- en uitgaan
+    const [x, y] = at((i / 6 * D.len + A * 64) % D.len); if (mode === 2 && y > -26) continue;
+    const r = Math.max(3.4, 3.6 / k) * (0.6 + 0.4 * Math.sin(A * 7 + i * 2.1)), w = r * 0.22;
+    g.moveTo(x, y - r); g.lineTo(x + w, y - w); g.lineTo(x + r, y); g.lineTo(x + w, y + w); g.lineTo(x, y + r); g.lineTo(x - w, y + w); g.lineTo(x - r, y); g.lineTo(x - w, y - w); g.closePath();
   }
   g.fill();
 }
-// meeuwen (iets voor de gevel)
+// meeuwen (iets voor de gevel): een paar vleugelslagen, dan even zweven met de vleugels in een zachte M
 function iGulls(g, cam, A) {
   const gs = IF / (-150 + IF / cam.k), d = IN.d; if (!(gs > 0)) return;
-  g.setTransform(d, 0, 0, d, 0, 0); g.strokeStyle = IN.pal.gull; g.lineWidth = Math.max(1.3, 1.6 * gs); g.lineCap = 'round'; g.lineJoin = 'round'; g.beginPath();
+  g.setTransform(d, 0, 0, d, 0, 0); g.strokeStyle = IN.pal.gull; g.lineWidth = Math.max(1.3, 1.5 * gs); g.lineCap = 'round'; g.lineJoin = 'round'; g.beginPath();
   for (const [x0, y0, v, ph] of IN.geo.gulls) {
     const x = cam.sx + (x0 + Math.sin(A * 0.25 * v + ph) * 40 + A * 8 * v - cam.fx) * gs, y = cam.hy + (y0 + Math.sin(A * 0.6 + ph) * 8 - cam.ey) * gs;
-    const f = Math.sin(A * 5 * v + ph * 3), s = 9 * gs, lift = s * (0.35 + 0.3 * f);
-    g.moveTo(x - s, y - lift); g.quadraticCurveTo(x - s * 0.45, y - lift * 1.4, x, y); g.quadraticCurveTo(x + s * 0.45, y - lift * 1.4, x + s, y - lift);
+    const cyc = (A * 0.5 * v + ph) % 2.2, f = reduced.matches || cyc > 1.2 ? 0.25 : Math.sin(cyc / 1.2 * TAU * 2.5);
+    const s = 9.5 * gs, wy = s * (0.15 + 0.2 * f), ty = s * (0.02 + 0.5 * f); // pols en vleugelpunt (omhoog positief)
+    g.moveTo(x - s, y - ty); g.quadraticCurveTo(x - s * 0.62, y - wy * 1.5, x - s * 0.36, y - wy); g.quadraticCurveTo(x - s * 0.14, y - wy * 0.25, x, y);
+    g.quadraticCurveTo(x + s * 0.14, y - wy * 0.25, x + s * 0.36, y - wy); g.quadraticCurveTo(x + s * 0.62, y - wy * 1.5, x + s, y - ty);
   }
   g.stroke();
+}
+// stofjes bij de silo's (alleen sfeer): drijven langzaam met de wind mee en lichten zacht op
+function ixDust(g, cam, A) {
+  const k = cam.k, d = IN.d; if (k < 0.9 || IN.lite) return; // alleen als je dicht bij de silo's bent
+  const calm = reduced.matches, r0 = Math.max(0.7, 1.3 / k);
+  g.setTransform(k * d, 0, 0, k * d, (cam.sx - cam.fx * k) * d, (cam.hy - cam.ey * k) * d); g.fillStyle = IN.pal.dust; g.beginPath();
+  for (const [x0, y0, ph] of IN.geo.dust) {
+    const x = x0 + (calm ? 0 : ((A * 5 + ph * 30) % 60) - 30 + Math.sin(A * 0.5 + ph) * 6), y = y0 + (calm ? 0 : Math.sin(A * 0.7 + ph * 2) * 7 - ((A * 2 + ph * 5) % 16));
+    const r = r0 * (0.6 + 0.4 * Math.sin(A * 1.9 + ph * 3)); g.moveTo(x + r, y); g.arc(x, y, r, 0, TAU);
+  }
+  g.fill();
 }
 // live: met meeuwen en graanstipjes (anders komen die er later bovenop, op een bewaard eindbeeld)
 function iLayerImg(g, L, cam) {
@@ -4070,24 +4786,18 @@ function iOutside(g, cam, ins, a3, A, live) {
   // alles onder de kaderand wordt toch overgeschilderd (kade, water, oever): lucht en grond alleen tot daar
   const yq = clamp(cam.hy - cam.ey * cam.k, 0, h), sF = IF / (geo.far.dz + IF / cam.k), sM = IF / (geo.mid.dz + IF / cam.k);
   const yF = clamp(cam.hy + (-8 - cam.ey) * sF, 0, yq), yM = clamp(cam.hy + (-4 - cam.ey) * sM, 0, yq);
-  if (yF > 0) g.drawImage(IN.sky, 0, 0, iCv.width, Math.ceil(yF * d), 0, 0, iCv.width, Math.ceil(yF * d));
+  ixSkyDraw(g, cam, A, yF);
   g.fillStyle = c.far; g.fillRect(0, Math.floor(yF * d), iCv.width, Math.ceil((yq - yF) * d) + 2);
   g.fillStyle = c.midGround; g.fillRect(0, Math.floor(yM * d), iCv.width, Math.ceil((yq - yM) * d) + 2);
-  const sc = IF / (2000 + IF / cam.k); // wolken drijven ver weg
-  for (const cl of IN.clouds) {
-    const x = ((cl.x + A * cl.v + 2600) % 5200 + 5200) % 5200 - 2600, sw = cl.s.wu * sc, shh = cl.s.hu * sc;
-    const X = cam.sx + (x - cam.fx) * sc, Y = cam.hy + (cl.y - cam.ey) * sc;
-    if (X + sw / 2 < 0 || X - sw / 2 > w) continue;
-    g.drawImage(cl.s.c, (X - sw / 2) * d, (Y - shh) * d, sw * d, shh * d);
-  }
   iLayerImg(g, geo.far, cam); iLayerImg(g, geo.mid, cam);
   const F = iLayer(g, geo.fac, cam);
-  if (IN.logo.length) { // logo op de gevel, boven de bovenste ramen
+  if (IN.logo.length) { // logo op de gevel, boven de bovenste ramen; 's avonds zacht aangelicht
+    if (c.logoGlow && IN.fx) g.drawImage(IN.fx.glow, -104, -380, 208, 96);
     g.save(); g.translate(-64, -353); g.scale(128 / 426, 128 / 426);
-    for (const q of IN.logo) { g.fillStyle = q.gold ? '#CFAB00' : '#F7F7F7'; g.fill(q.p); }
+    for (const q of IN.logo) { const col = q.gold ? '#CFAB00' : '#F7F7F7'; g.fillStyle = F && F.hz ? ixMixC(col, c.haze, F.hz) : col; g.fill(q.p); }
     g.restore();
   }
-  if (live) iDots(g, cam, A, false);
+  iDots(g, cam, A, live && IN.part !== 1 ? 1 : 0); // bewaarde achtergrond (part 1): alleen de lijn, de korrels komen er elk frame op
   // het raam waar we doorheen vliegen: daarachter de binnenkant van de toren
   const wx0 = cam.sx + (IWINR[0] - cam.fx) * cam.k, wy0 = cam.sy + (IWINR[1] - cam.fy) * cam.k, ww = IWINR[2] * cam.k, wh = IWINR[3] * cam.k;
   if (ins) {
@@ -4101,42 +4811,78 @@ function iOutside(g, cam, ins, a3, A, live) {
     g.fillRect(wx0, wy0, ww, p); g.fillRect(wx0, wy0, p, wh); g.fillRect(wx0 + ww - p, wy0, p, wh);
     g.fillStyle = c.orange; g.fillRect(wx0, wy0 + wh - sb, ww, sb);
   }
-  // water: van de kade tot de oever aan deze kant, met rimpels en weerspiegeling
-  const yw = cam.hy + (27 - cam.ey) * cam.k;
-  const fgD = geo.fg.dz + IF / cam.k, fgS = fgD > 1 ? IF / fgD : 0, yb = fgS ? Math.min(h, cam.hy + (70 - cam.ey) * fgS) : h;
+  ixLower(g, cam, A, live);
+  return F;
+}
+// Onderste deel van het buitenbeeld: water, schip, oever en akker. Ook boven op een bewaard eindbeeld (live false), zodat het water
+// glinstert en het schip deint terwijl je leest. Meeuwen en stofjes alleen live (op een bewaard beeld komen ze er later bovenop).
+function ixLower(g, cam, A, live) {
+  const c = IN.pal, d = IN.d, w = IN.w, h = IN.h, geo = IN.geo, k = cam.k, calm = reduced.matches;
+  if (cam.hy + (-64 - cam.ey) * k > IN.hv) return; // water en schip liggen onder het beeld
+  const R = ixRows(cam), fc = ixFieldCover(cam, R), cover = IN.part === 1 ? IN.h : fc; // onder fc ligt de akker er dicht overheen (part 1: bewaarde achtergrond, zonder akker, dus alles tekenen)
+  // water: van de kade tot de oever aan deze kant, met rimpels, weerspiegeling en glinstering
+  const yw = cam.hy + (27 - cam.ey) * k;
+  const fgD = geo.fg.dz + IF / k, fgS = fgD > 1 ? IF / fgD : 0, yb = fgS ? Math.min(h, cam.hy + (70 - cam.ey) * fgS) : h;
+  const ye = Math.min(fgS && fgD > 60 && IN.i === 0 ? yb + 2 : h, cover), yv = Math.min(ye, fc); // yv: tot daar is het water te zien
   g.setTransform(d, 0, 0, d, 0, 0);
-  if (yw < h) {
-    g.fillStyle = c.water; g.fillRect(0, yw, w, (fgS && fgD > 60 && IN.i === 0 ? yb + 2 : h) - yw);
-    const X = x => cam.sx + (x - cam.fx) * cam.k, rl = Math.min(90, (yb - yw) * 0.8);
+  if (yw < ye) {
+    g.fillStyle = c.water; g.fillRect(0, yw, w, ye - yw);
+    const X = x => cam.sx + (x - cam.fx) * k, rl = Math.min(90, (yb - yw) * 0.8);
+    if (yv - yw > 4) { // een smalle strook (de start van shot 1) krijgt alleen de kleur
     g.fillStyle = c.refl; g.beginPath(); // weerspiegeling van toren en silo's: gebroken strepen, steeds korter
-    for (let j = 0, y = yw + 2; y < yw + rl; j++, y += 7) { const q = 1 - (y - yw) / rl, sh = Math.sin(j * 1.7 + A * 1.3) * 4 * cam.k;
-      g.rect(X(-70) + sh + (1 - q) * 30 * cam.k, y, 140 * cam.k * (0.4 + 0.6 * q), 2.5); g.rect(X(80) - sh + (1 - q) * 40 * cam.k, y, 182 * cam.k * (0.3 + 0.6 * q), 2.5); }
+    for (let j = 0, y = yw + 2; y < yw + rl; j++, y += 7) { const q = 1 - (y - yw) / rl, sh = Math.sin(j * 1.7 + A * 1.3) * 4 * k;
+      g.rect(X(-70) + sh + (1 - q) * 30 * k, y, 140 * k * (0.4 + 0.6 * q), 2.5); g.rect(X(80) - sh + (1 - q) * 40 * k, y, 182 * k * (0.3 + 0.6 * q), 2.5); }
     g.fill();
-    if (c.lit) { g.fillStyle = c.lit; g.beginPath(); for (const x of [-43, -15, 15, 43]) for (let y = yw + 3; y < yw + rl * 0.9; y += 6) g.rect(X(x) - 1.5 * cam.k + Math.sin(y * 0.3 + A * 2) * 2, y, 3 * cam.k, 3); g.fill(); }
+    // het logo in het water: lichte streepjes in de weerspiegeling van de toren, gebroken door de rimpels
+    if (!IN.lite) { g.fillStyle = IN.dark ? 'rgba(255,244,214,.5)' : 'rgba(255,255,255,.42)'; g.beginPath();
+    for (let j = 0; j < 5; j++) { const y = yw + rl * (0.5 + j * 0.08); if (y > yv - 2) break; const sh = Math.sin(j * 2.3 + A * 1.5) * 3 * k, ww = 112 * k * (1 - j * 0.15) * (0.7 + 0.3 * Math.sin(j + A * 0.9));
+      g.rect(X(0) - ww / 2 + sh, y, ww, 1.6); }
+    g.fill(); }
+    if (c.lit) { g.fillStyle = c.lit; g.beginPath(); for (const x of [-43, -15, 15, 43]) for (let y = yw + 3; y < yw + rl * 0.9; y += 6) g.rect(X(x) - 1.5 * k + Math.sin(y * 0.3 + A * 2) * 2, y, 3 * k, 3); g.fill(); }
     g.fillStyle = c.ripple; g.beginPath();
     const rnd = mulberry32(5);
     for (let i = 0; i < 28; i++) {
       const q = rnd(), y = yw + 4 + (yb - yw - 6) * Math.pow(q, 1.4), len = 8 + 30 * q, x = ((rnd() * (w + 80) + A * (5 + 12 * q)) % (w + 80)) - 40;
-      if (y < h) g.rect(x, y, len, 1.5 + q);
+      if (y < yv) g.rect(x, y, len, 1.5 + q);
     }
     g.fill();
+    // glinstering: korte lichte streepjes die aan- en uitgaan, meer naar links (daar staat de zon of de maan)
+    g.fillStyle = c.glint; g.beginPath();
+    const gr = mulberry32(9), span = yv - yw;
+    for (let i = 0; i < (IN.lite ? 0 : 26); i++) {
+      const q = gr(), y = yw + 3 + Math.max(0, span - 6) * Math.pow(gr(), 1.2), x = Math.pow(gr(), 1.7) * (w + 20) - 10 + Math.sin(A * 0.4 + i) * 5;
+      const f = calm ? 0.8 : Math.sin(A * (2 + q * 2.6) + i * 1.7); if (f < 0.5 || (IN.dark && i % 2)) continue;
+      const L = (2.5 + 7 * q) * (f - 0.4) * (0.6 + 0.7 * (y - yw) / Math.max(1, span)); g.rect(x - L / 2, y, L, 1.2);
+    }
+    g.fill();
+    }
   }
-  iLayer(g, geo.ship, cam);
-  if (live) iGulls(g, cam, A);
-  // voorgrond: oever met huizen en bomen; vervaagt zodra de camera erover vliegt
+  iLayer(g, geo.ship, cam, calm ? 0 : Math.sin(A * 1.3) * 1.6 * k); // het schip deint zacht
+  if (live && IN.part !== 1) { iGulls(g, cam, A); ixDust(g, cam, A); }
+  // voorgrond: oever met huizen en bomen; vervaagt zodra de camera erover vliegt. Onder cover ligt de akker er al overheen.
   if (fgD > 60) {
     // in shot 2 vliegt de camera over de oever: die schuift dicht en in 0,9 s omlaag uit beeld (geen doorzichtige spookhuizen)
     const drop = IN.i === 1 ? eio(IN.t / 0.9) * IN.picH * 1.2 : 0, fa = IN.i <= 1 ? 1 : 0;
-    g.globalAlpha = clamp((fgD - 60) / 200, 0, 1) * fa; if (g.globalAlpha > 0.01) iLayer(g, geo.fg, drop ? Object.assign({}, cam, { hy: cam.hy + drop }) : cam); g.globalAlpha = 1;
+    g.globalAlpha = clamp((fgD - 60) / 200, 0, 1) * fa;
+    if (g.globalAlpha > 0.01) {
+      const clip = cover < h; if (clip) { g.save(); g.setTransform(d, 0, 0, d, 0, 0); g.beginPath(); g.rect(0, 0, w, cover); g.clip(); }
+      const F2 = iLayer(g, geo.fg, cam, drop, cover < cam.hy + drop + (86 - cam.ey) * fgS ? IX_FGSKIP : null); // de akker ligt er al overheen
+      if (F2 && F2.s > 0.8 && cam.hy + drop + (78 - cam.ey) * F2.s < IN.hv) { // bloemrand langs het pad: pas als hij groot genoeg is om te zien
+        g.fillStyle = IN.dark ? '#7A241D' : c.poppy; g.fill(geo.fg.m.bloomR); g.fillStyle = IN.dark ? '#4E4779' : c.phac; g.fill(geo.fg.m.bloomP);
+      }
+      if (clip) g.restore();
+    }
+    g.globalAlpha = 1;
   }
-  return F;
+  if (R.length && IN.part !== 1) ixField(g, cam, A, R);
 }
 // Binnen in de maaltoren, schuin naar beneden de schacht in. Verdiepingen met walsenstoelen zoals in het spel (Molen B-kleuren),
 // steeds kleiner en donkerder naar het verdwijnpunt. pitch 0 = recht vooruit (alles op een kluitje), 1 = naar beneden gekanteld.
 const iShaftGeo = (cy, ins) => { const u = IN.u * ins.Z, top = cy - 56 * u; return { u, top, vy: top + lerp(30, 440, ins.pitch) * u }; };
 function iShaft(g, cx, cy, ins, dive, grain) {
-  const d = IN.d, { u, top, vy } = iShaftGeo(cy, ins), yAt = D => vy - (vy - top) / D;
-  const dv = dive > 0 ? dive : 0, m = 1 + 3.2 * dv * dv; // duik: inzoomen op het verdwijnpunt
+  const d = IN.d, { u, top, vy } = iShaftGeo(cy, ins), yAt = D => vy - (vy - top) / D, A = IN.amb;
+  // duik (It giet oan!): de vloeren schieten omhoog voorbij (sh: hoeveel verdiepingen je zakt), iets inzoomen op het verdwijnpunt
+  const dv = dive > 0 ? dive : 0, sh = 3.4 * dv * dv * (1.6 - 0.6 * dv), m = 1 + 1.2 * dv * dv;
   g.setTransform(d * m, 0, 0, d * m, d * cx * (1 - m), d * vy * (1 - m));
   g.fillStyle = '#2C2E31'; g.fillRect(cx - 2000, cy - 2000, 4000, 4000); // zijwanden
   // buizen op de zijwanden, die ook naar het verdwijnpunt lopen
@@ -4146,20 +4892,27 @@ function iShaft(g, cx, cy, ins, dive, grain) {
     g.moveTo(x1, y1); g.lineTo(x2, y1); g.lineTo(cx, vy); g.closePath();
   }
   g.fill();
+  // verdiepingen: [diepte, kleuren, gat-verschuiving]; bij de duik komen ze dichterbij (en lichter), achteraan komen er nieuwe bij
+  const FL = [], n = IN.fl.length;
+  for (let i = Math.max(0, Math.floor((sh - 0.6) / 0.62)); i < n + Math.ceil(sh / 0.62); i++) {
+    const D = 1 + 0.62 * i - sh; if (D < 0.42) continue;
+    FL.push([D, IN.fl[clamp(Math.round((D - 1) / 0.62), 0, n - 1)], IN.fl[i % n].off, i]);
+  }
   // de verdiepingen lopen door in de zijwanden: per vloer een balk tot de rand van het beeld
-  for (let i = IN.fl.length - 1; i >= 0; i--) { const f = IN.fl[i], k = u / f.D, y = yAt(f.D), th = 22 * k; g.fillStyle = f.slab; g.fillRect(cx - 3000, y - th / 2, 6000, th); }
+  for (let i = FL.length - 1; i >= 0; i--) { const [D, f] = FL[i], k = u / D, y = yAt(D), th = 22 * k; g.fillStyle = f.slab; g.fillRect(cx - 3000, y - th / 2, 6000, th); }
   // onder het verdwijnpunt loopt de schacht door: dezelfde balken gespiegeld en samengedrukt, en naar onder toe iets donkerder
-  for (let i = IN.fl.length - 1; i >= 0; i--) { const f = IN.fl[i], k = u / f.D, y2 = vy + (vy - yAt(f.D)) * 0.4, th = 22 * k * 0.4; g.fillStyle = f.slab; g.fillRect(cx - 3000, y2 - th / 2, 6000, th); }
-  const sh = g.createLinearGradient(0, vy, 0, vy + 150 * u); sh.addColorStop(0, 'rgba(18,19,20,0)'); sh.addColorStop(1, 'rgba(18,19,20,.55)');
-  g.fillStyle = sh; g.fillRect(cx - 3000, vy, 6000, 150 * u); g.fillStyle = 'rgba(18,19,20,.55)'; g.fillRect(cx - 3000, vy + 150 * u, 6000, 4000);
+  for (let i = FL.length - 1; i >= 0; i--) { const [D, f] = FL[i], k = u / D, y2 = vy + (vy - yAt(D)) * 0.4, th = 22 * k * 0.4; g.fillStyle = f.slab; g.fillRect(cx - 3000, y2 - th / 2, 6000, th); }
+  const shd = g.createLinearGradient(0, vy, 0, vy + 150 * u); shd.addColorStop(0, 'rgba(18,19,20,0)'); shd.addColorStop(1, 'rgba(18,19,20,.55)');
+  g.fillStyle = shd; g.fillRect(cx - 3000, vy, 6000, 150 * u); g.fillStyle = 'rgba(18,19,20,.55)'; g.fillRect(cx - 3000, vy + 150 * u, 6000, 4000);
   // achterwand van de schacht: twee vlakke tinten, donkerder naar het verdwijnpunt (geen verloop per frame)
   g.fillStyle = '#25272A'; g.beginPath(); g.moveTo(cx - 200 * u / 0.2, yAt(0.2)); g.lineTo(cx + 200 * u / 0.2, yAt(0.2)); g.lineTo(cx, vy); g.closePath(); g.fill();
   g.fillStyle = '#0E0F10'; g.beginPath(); g.moveTo(cx - 200 * u / 2.2, yAt(2.2)); g.lineTo(cx + 200 * u / 2.2, yAt(2.2)); g.lineTo(cx, vy); g.closePath(); g.fill();
   g.fillStyle = 'rgba(111,211,224,.22)'; // dunne lichtlijn langs de schachtwand, zoals in Molen B
   g.beginPath(); for (const sd of [-1, 1]) { g.moveTo(cx + sd * 200 * u / 0.2, yAt(0.2)); g.lineTo(cx + sd * 203 * u / 0.2, yAt(0.2)); g.lineTo(cx, vy); g.closePath(); } g.fill();
-  for (let i = IN.fl.length - 1; i >= 0; i--) {
-    const f = IN.fl[i], D = f.D, k = u / D, y = yAt(D), hw = 200 * k, gx = cx + f.off * k, gw = 30 * k, r = 25 * k, th = 22 * k;
-    if (y - th > IN.h + 20) continue;
+  const led = [[], []], ribs = [[], [], []]; // ledlampjes op de vloerranden (groen: draait, oranje) en ribbels op de walsen
+  for (let i = FL.length - 1; i >= 0; i--) {
+    const [D, f, off, id] = FL[i], k = u / D, y = yAt(D), hw = 200 * k, gx = cx + off * k, gw = 30 * k, r = 25 * k, th = 22 * k;
+    if (y - th > IN.hv + 20 || y + th < -40) continue;
     const xl = gx - gw - r, xr = gx + gw + r, tp = 9 * k * ins.pitch; // tp: hoe ver je op de bovenkant van de vloer kijkt
     if (tp > 0.5) { g.fillStyle = f.top; g.fillRect(cx - hw, y - th / 2 - tp, xl - (cx - hw), tp); g.fillRect(xr, y - th / 2 - tp, cx + hw - xr, tp); }
     g.fillStyle = f.slab; g.fillRect(cx - hw, y - th / 2, xl - (cx - hw), th); g.fillRect(xr, y - th / 2, cx + hw - xr, th);
@@ -4168,30 +4921,111 @@ function iShaft(g, cx, cy, ins, dive, grain) {
     g.fillStyle = f.roll; g.beginPath(); g.arc(xl, y, r, 0, TAU); g.moveTo(xr + r, y); g.arc(xr, y, r, 0, TAU); g.fill();
     g.fillStyle = f.hi; g.fillRect(xl - r * 0.4, y - r * 0.85, Math.max(1, 2.2 * k), r * 1.7); g.fillRect(xr - r * 0.4, y - r * 0.85, Math.max(1, 2.2 * k), r * 1.7);
     g.strokeStyle = f.rim; g.lineWidth = Math.max(1, 2 * k); g.beginPath(); g.arc(xl, y, r, 0, TAU); g.moveTo(xr + r, y); g.arc(xr, y, r, 0, TAU); g.stroke();
+    if (grain || dv > 0) ixRollTicks(ribs, xl, xr, y, r, A);
+    if (k > 0.35) { const q = led[id % 3 ? 0 : 1]; q.push(cx - hw + 14 * k, y + 2 * k, 2.2 * k, xr + 26 * k, y + 2 * k, 2.2 * k); }
   }
+  ixRibs(g, ribs, 1.2);
+  for (const [q, col] of [[led[0], '#5FD08A'], [led[1], '#E78A01']]) { if (!q.length) continue; g.fillStyle = col; g.beginPath(); for (let j = 0; j < q.length; j += 3) { g.moveTo(q[j] + q[j + 2], q[j + 1]); g.arc(q[j], q[j + 1], q[j + 2], 0, TAU); } g.fill(); }
   // lampjes langs de wand
   g.fillStyle = '#F2D35B'; g.beginPath();
-  for (let i = 1; i < 6; i++) { const D = 1.31 + 0.62 * i, k = u / D, y = yAt(D); for (const sd of [-1, 1]) { g.moveTo(cx + sd * 214 * k + 3 * k, y); g.arc(cx + sd * 214 * k, y, 3 * k, 0, TAU); } }
+  for (let i = 1; i < 6; i++) { const D = 1.31 + 0.62 * i - sh, k = u / D, y = yAt(D); if (D < 0.5) continue; for (const sd of [-1, 1]) { g.moveTo(cx + sd * 214 * k + 3 * k, y); g.arc(cx + sd * 214 * k, y, 3 * k, 0, TAU); } }
   g.fill();
+  // warm licht door het raam (achter en boven je) valt schuin de schacht in; bij de duik blijft het boven je achter
+  ixBeams(g, cx, top, u, 1 - dv, grain || dv > 0 ? A : -1);
   // stortkoker en de korrel: één korrel uit de koker, die je aankijkt
-  const gy = top - 62 * u, mouth = gy - 34 * u;
-  g.fillStyle = '#8D959E'; g.fillRect(cx - 16 * u, mouth - 2000, 32 * u, 2000); g.fillStyle = 'rgba(255,255,255,.18)'; g.fillRect(cx - 12 * u, mouth - 2000, 5 * u, 2000);
-  g.fillStyle = '#5D646C'; g.fillRect(cx - 21 * u, mouth - 10 * u, 42 * u, 10 * u);
+  // bij de duik zakt de camera: de koker schuift omhoog uit beeld (en wordt groter), de korrel valt mee naar beneden
+  const mouth = top - 96 * u, Dc = (vy - top) / (vy - mouth), Dm = Dc - sh;
+  if (Dm > 0.3) {
+    const q = Dc / Dm, my = vy - (vy - top) / Dm;
+    g.fillStyle = '#8D959E'; g.fillRect(cx - 16 * u * q, my - 2000, 32 * u * q, 2000); g.fillStyle = 'rgba(255,255,255,.18)'; g.fillRect(cx - 12 * u * q, my - 2000, 5 * u * q, 2000);
+    g.fillStyle = '#5D646C'; g.fillRect(cx - 21 * u * q, my - 10 * u * q, 42 * u * q, 10 * u * q);
+  }
+  if (dv > 0) ixStreaks(g, cx, vy, dv, A);
   if (grain) iShaftGrain(g, cx, cy, ins, dv);
-  if (dv > 0.4) { g.setTransform(1, 0, 0, 1, 0, 0); g.fillStyle = `rgba(11,12,13,${clamp((dv - 0.4) / 0.6, 0, 1).toFixed(3)})`; g.fillRect(0, 0, iCv.width, iCv.height); }
+  if (dv > 0.45) { g.setTransform(1, 0, 0, 1, 0, 0); g.fillStyle = `rgba(11,12,13,${ixEase((dv - 0.45) / 0.55).toFixed(3)})`; g.fillRect(0, 0, iCv.width, iCv.height); }
 }
-// de korrel komt uit de stortkoker, veert even na, lacht en kijkt je dan aan (knipperend); bij de duik valt hij de schacht in
+// ribbels op de walsen, zoals in het spel: dunne lijnen die over de wals schuiven, naar de spleet toe (links naar rechts en
+// rechts naar links) en naar de randen toe vervagen. Verzameld in R (drie helderheden), getekend met ixRibs: drie streken per frame.
+function ixRollTicks(R, xl, xr, y, r, A) {
+  if (r < 5) return;
+  const n = 6, step = Math.PI / n, calm = reduced.matches;
+  for (const [x, sd] of [[xl, 1], [xr, -1]]) {
+    const ph = calm ? step / 2 : ((sd * A * 1.6) % step + step) % step;
+    for (let j = 0; j < n; j++) { const th = j * step + ph, sn = Math.sin(th), xx = -Math.cos(th) * r * 0.94, hh = Math.sqrt(Math.max(0, r * r * 0.88 - xx * xx)); R[sn > 0.75 ? 0 : sn > 0.4 ? 1 : 2].push(x + xx, y - hh, y + hh); }
+  }
+}
+function ixRibs(g, R, lw) {
+  g.fillStyle = '#2b3138';
+  [0.3, 0.18, 0.07].forEach((al, j) => { const q = R[j]; if (!q.length) return; g.globalAlpha = al; for (let i = 0; i < q.length; i += 3) g.fillRect(q[i] - lw / 2, q[i + 1], lw, q[i + 2] - q[i + 1]); });
+  g.globalAlpha = 1;
+}
+// lichtbundels met stofjes erin: per bundel een trapezium dat naar onder breder wordt en uitdooft, in drie treden (egale vlakken: een
+// verloop is per pixel veel duurder). Smal en iets sterker in het midden, zodat de randen zacht lijken. A < 0: zonder stofjes (die
+// komen er dan elk frame bovenop, zie ixShaftLive)
+const IX_BEAMS = [[-150, 70, 1.15], [-40, 50, 0.8], [70, 86, 1]]; // x t.o.v. het midden, breedte, sterkte
+function ixBeams(g, cx, top, u, a, A) {
+  if (a <= 0.01 || !IN.pal) return;
+  const k = (IN.dark ? 0.6 : 1) * a, L = 560 * u, y0 = top - 230 * u, cs = Math.cos(0.32), sn = Math.sin(0.32), b = IN.pal.beam;
+  const steps = IN.lite ? [[0, 0.5, 0.085, 1], [0.5, 1, 0.03, 1]] : [[0, 0.34, 0.075, 1], [0.34, 0.68, 0.045, 1], [0.68, 1, 0.02, 1], [0, 0.5, 0.05, 0.5]]; // licht: twee treden
+  for (const [t0, t1, al, f] of steps) {
+    g.fillStyle = b + (al * k).toFixed(3) + ')'; g.beginPath();
+    for (const [o, bw, st] of IX_BEAMS) {
+      const tx = cx + o * u, W = t => bw * u * f * st * (0.32 + 0.3 * t), P = (t, sd) => { const wd = W(t) * sd, l = L * t; return [tx + l * sn + cs * wd, y0 + l * cs - sn * wd]; };
+      const [ax, ay] = P(t0, -1), [bx, by] = P(t0, 1), [ccx, ccy] = P(t1, 1), [dx, dy] = P(t1, -1);
+      g.moveTo(ax, ay); g.lineTo(bx, by); g.lineTo(ccx, ccy); g.lineTo(dx, dy); g.closePath();
+    }
+    g.fill();
+  }
+  if (A >= 0) ixMotes(g, cx, top, u, a, A);
+}
+// stofjes in de lichtbundels: drijven heel langzaam omlaag en dwarrelen, lichter bovenin de bundel (alleen sfeer, niet meer dan 36)
+function ixMotes(g, cx, top, u, a, A) {
+  const calm = reduced.matches, cs = Math.cos(0.32), sn = Math.sin(0.32), L = 560 * u, c = IN.pal;
+  const beams = IX_BEAMS, cls = [[], [], []];
+  for (let i = 0; i < 36; i++) {
+    const [o, bw] = beams[i % 3], t = ((i * 0.618 + (calm ? 0 : A * 0.03)) % 1) * 0.8 + 0.05, s = ((i * 0.377) % 1 - 0.5) * 0.7 + (calm ? 0 : Math.sin(A * 0.6 + i) * 0.08);
+    const lx = s * bw * u, ly = t * L, x = cx + o * u + lx * cs + ly * sn, y = top - 230 * u - lx * sn + ly * cs;
+    const tw = calm ? 0.7 : 0.55 + 0.45 * Math.sin(A * 1.3 + i * 2.7), q = (1 - t) * tw;
+    cls[q > 0.55 ? 0 : q > 0.3 ? 1 : 2].push(x, y, (1 + (i % 3) * 0.45) * Math.max(0.8, u));
+  }
+  [0.85, 0.5, 0.25].forEach((al, j) => { const q = cls[j]; if (!q.length) return; g.fillStyle = c.mote + (al * a).toFixed(2) + ')'; g.beginPath(); for (let i = 0; i < q.length; i += 3) g.rect(q[i] - q[i + 2] / 2, q[i + 1] - q[i + 2] / 2, q[i + 2], q[i + 2]); g.fill(); });
+}
+// snelheidsstrepen bij de duik: lijnen vanuit het verdwijnpunt naar buiten, steeds langer en sneller
+function ixStreaks(g, cx, vy, dv, A) {
+  const d = IN.d, R = Math.hypot(IN.w, IN.h), rnd = mulberry32(31), a = Math.min(1, dv * 2.2) * (1 - Math.max(0, dv - 0.75) * 3);
+  if (a <= 0) return;
+  g.setTransform(d, 0, 0, d, 0, 0); g.strokeStyle = `rgba(255,236,196,${(0.36 * a).toFixed(3)})`; g.lineWidth = 1.8; g.lineCap = 'round'; g.beginPath();
+  for (let i = 0; i < 18; i++) {
+    const ang = rnd() * TAU, sp = 0.6 + rnd() * 0.8, p = (rnd() + dv * 2.6 * sp) % 1, r0 = 30 + p * p * R, len = (14 + 140 * dv) * (0.4 + p);
+    const ux = Math.cos(ang), uy = Math.sin(ang); g.moveTo(cx + ux * r0, vy + uy * r0); g.lineTo(cx + ux * (r0 + len), vy + uy * (r0 + len));
+  }
+  g.stroke();
+}
+// bovenop een bewaard eindbeeld van de schacht: de walsen draaien en de stofjes dwarrelen (de rest staat stil)
+function ixShaftLive(g, cx, cy, ins, A) {
+  const d = IN.d, { u, top, vy } = iShaftGeo(cy, ins), yAt = D => vy - (vy - top) / D;
+  g.setTransform(d, 0, 0, d, 0, 0); const ribs = [[], [], []];
+  for (let i = IN.fl.length - 1; i >= 0; i--) {
+    const f = IN.fl[i], k = u / f.D, y = yAt(f.D), gx = cx + f.off * k, gw = 30 * k, r = 25 * k;
+    if (y - 22 * k > IN.hv + 20) continue;
+    ixRollTicks(ribs, gx - gw - r, gx + gw + r, y, r, A);
+  }
+  ixRibs(g, ribs, 1.2);
+  ixMotes(g, cx, top, u, 1, A);
+}
+// de korrel komt uit de stortkoker, veert even na, lacht en kijkt dan rond en naar jou (knipperend); bij de duik valt hij de schacht in
 function iShaftGrain(g, cx, cy, ins, dv) {
-  const d = IN.d, { u, top, vy } = iShaftGeo(cy, ins), gy = top - 62 * u, mouth = gy - 34 * u, m = 1 + 3.2 * dv * dv, gT = ins.gT;
+  const d = IN.d, { u, top, vy } = iShaftGeo(cy, ins), gy = top - 62 * u, mouth = gy - 34 * u, m = 1 + 1.2 * dv * dv, gT = ins.gT, A = IN.amb, calm = reduced.matches;
   g.setTransform(d * m, 0, 0, d * m, d * cx * (1 - m), d * vy * (1 - m));
   if (gT >= 0) {
     const e = clamp(gT / 0.55, 0, 1), back = 1 + 2.4 * Math.pow(e - 1, 3) + 1.4 * Math.pow(e - 1, 2); // even doorschieten en terugveren
-    let x = cx, y = lerp(mouth - 10 * u, gy, back), sc = 3.1 * u;
+    let x = cx, y = lerp(mouth - 10 * u, gy, back), sc = 3.1 * u, rot = 0;
+    if (!calm && gT > 1.35) { const q = clamp((gT - 1.35) / 0.6, 0, 1); rot = q * 0.13 * Math.sin((A - 1) * 0.9); y += q * Math.sin(A * 1.8) * 1.2 * u; } // rondkijken, zacht ademen
     if (dv > 0) { // bij de duik valt de korrel de schacht in, de camera erachteraan
-      const fe = dv * dv; g.setTransform(d, 0, 0, d, 0, 0); y = lerp(y, vy, fe); x = cx; sc *= 1 - 0.75 * fe;
+      const fe = dv * dv; g.setTransform(d, 0, 0, d, 0, 0); y = lerp(y, vy, fe); x = cx; sc *= 1 - 0.7 * fe; rot *= 1 - dv;
     }
-    g.save(); g.translate(x, y); g.scale(sc, sc);
-    drawGrain(0, 0, g, { joy: gT > 0.45 && gT < 1.35, blink: !reduced.matches && gT > 1.35 && (IN.amb % 3.1) < 0.12 });
+    g.save(); g.translate(x, y); g.rotate(rot); g.scale(sc, sc);
+    drawGrain(0, 0, g, { joy: gT > 0.45 && gT < 1.35, blink: !calm && gT > 1.35 && (A % 3.1) < 0.12 });
     g.restore();
   }
 }
@@ -4203,25 +5037,74 @@ function iStill(key, paint) {
 }
 function introDraw() {
   if (!IN.geo || S.screen !== 'intro') return;
-  const g = ig, sh = IN.i, T = IN.t;
+  const cut = IN.hv < IN.h - 1; // onder het paneel niets tekenen (zie introLayout)
+  if (cut) { ig.save(); ig.setTransform(1, 0, 0, 1, 0, 0); ig.beginPath(); ig.rect(0, 0, iCv.width, Math.ceil(IN.hv * IN.d)); ig.clip(); }
+  ixPaint(ig);
+  if (cut) ig.restore();
+}
+function ixPaint(g) {
+  const sh = IN.i, T = IN.t;
   g.setTransform(1, 0, 0, 1, 0, 0); g.globalAlpha = 1;
   const still = T >= INTRO_SHOTS[sh].dur && IN.dive < 0, key = `${sh}|${iCv.width}|${iCv.height}|${IN.dark}`;
   if (sh < 2) {
     const cam = iCamFull(iCamAt(sh, T));
-    if (!still) { iOutside(g, cam, null, 0, IN.amb, true); return; }
-    iStill(key, gg => iOutside(gg, cam, null, 0, IN.amb, false)); // camera staat stil: alleen meeuwen en graan bewegen nog
-    iDots(g, cam, IN.amb, true); iGulls(g, cam, IN.amb); return;
+    if (!still && sh === 0 && T < IX_T1 && !reduced.matches && IN.field) {
+      // begin van shot 1: de camera stijgt alleen nog wat. Lucht, stad en fabriek schuiven dan minder dan een halve pixel, dus die
+      // staan bewaard (opnieuw zodra de horizon, de kade of de zoom meer verschuift); graankorrels, meeuwen en akker elk frame
+      const B = ixBg(cam);
+      g.drawImage(B.cv, 0, 0); iDots(g, cam, IN.amb, 2); iGulls(g, cam, IN.amb); ixField(g, cam, IN.amb, ixRows(cam));
+    } else if (!still) iOutside(g, cam, null, 0, IN.amb, true);
+    else { // camera staat stil: het bewaarde beeld, en daarop wat nog leeft (water, schip, graanstroom, meeuwen, stofjes)
+      iStill(key, gg => iOutside(gg, cam, null, 0, IN.amb, false));
+      ixLower(g, cam, IN.amb, false); iDots(g, cam, IN.amb, 2); iGulls(g, cam, IN.amb); ixDust(g, cam, IN.amb);
+    }
+    ixXfade(g); return;
   }
   const ins = iInside(T), a3 = clamp(T / IWIN, 0, 1), cam = iCamFull(iCamAt(2, T));
   const x0 = cam.sx + (IWINR[0] - cam.fx) * cam.k, y0 = cam.sy + (IWINR[1] - cam.fy) * cam.k;
   const p = IWINP * cam.k, covers = IN.dive >= 0 || (x0 + p <= 0 && y0 + p <= 0 && x0 + IWINR[2] * cam.k - p >= IN.w && y0 + (IWINR[3] - IWINS) * cam.k >= IN.h); // de opening binnen het kozijn vult het beeld
-  if (covers && still) { iStill(key, gg => iShaft(gg, IN.w / 2, IN.picH / 2, ins, -1, false)); iShaftGrain(g, IN.w / 2, IN.picH / 2, ins, 0); }
+  if (covers && still) { iStill(key, gg => iShaft(gg, IN.w / 2, IN.picH / 2, ins, -1, false)); ixShaftLive(g, IN.w / 2, IN.picH / 2, ins, IN.amb); iShaftGrain(g, IN.w / 2, IN.picH / 2, ins, 0); }
   else if (covers) iShaft(g, IN.w / 2, IN.picH / 2, ins, IN.dive >= 0 ? IN.dive / IDIVE : -1, true);
   else iOutside(g, cam, ins, a3, IN.amb, true);
+  ixXfade(g);
+}
+// bewaarde achtergrond voor het begin van shot 1 (alles behalve akker, meeuwen en graankorrels): opnieuw zodra de horizon, de kade of
+// de zoom meer dan 0,4 px verschuift. Zakt alleen de resolutie, dan wordt het plaatje verkleind in plaats van opnieuw getekend.
+function ixBg(cam) {
+  const bk = `s0|${IN.dark}|${IN.hv}`, W = iCv.width, H = iCv.height, sig = [cam.hy, cam.hy - cam.ey * cam.k, cam.k * 2000], B = IN.bg;
+  const ok = B && B.key === bk && !sig.some((v, i) => Math.abs(v - B.sig[i]) > 0.4);
+  if (ok && B.cv.width === W && B.cv.height === H) return B;
+  if (ok && B.d > IN.d) { const cv = ixCanvas(W, H); cv.getContext('2d').drawImage(B.cv, 0, 0, W, H); B.cv.width = B.cv.height = 0; B.cv = cv; B.d = IN.d; return B; }
+  const cv = (B && B.cv) || ixCanvas(W, H); if (cv.width !== W || cv.height !== H) { cv.width = W; cv.height = H; }
+  IN.part = 1; try { iOutside(cv.getContext('2d'), cam, null, 0, IN.amb, true); } finally { IN.part = 0; }
+  ixFlush(cv); return (IN.bg = { key: bk, cv, sig, d: IN.d });
+}
+// Overvloeien zonder harde knip: bij een sprong (Verder tijdens een beweging, pijltje links) eerst het oude beeld bewaren
+// (ixSnap) en dat in IX_XF s laten wegvloeien over het nieuwe. Niet bij verminderde beweging en niet bij een vastgehouden testbeeld.
+function ixSnap() {
+  if (reduced.matches || !IN.frames) return;
+  const c = IN.xf || (IN.xf = document.createElement('canvas'));
+  if (c.width !== iCv.width || c.height !== iCv.height) { c.width = iCv.width; c.height = iCv.height; }
+  const q = c.getContext('2d'); q.setTransform(1, 0, 0, 1, 0, 0); q.globalAlpha = 1; q.drawImage(iCv, 0, 0); IN.xfT = 0;
+}
+function ixXfade(g) {
+  if (!IN.xf || IN.xfT >= IX_XF || IN.hold || IN.xf.width !== iCv.width || IN.xf.height !== iCv.height) return;
+  g.setTransform(1, 0, 0, 1, 0, 0); g.globalAlpha = 1 - ixEase(IN.xfT / IX_XF); g.drawImage(IN.xf, 0, 0); g.globalAlpha = 1;
 }
 // formaat: canvas, hoogte van het beeld boven het paneel, cameravakken en offscreen-lagen (ook bij draaien of een ander thema)
 function introLayout() {
   if (S.screen !== 'intro') return;
+  ixMeasure();
+  introCaches();
+  if (!IN.raf) introDraw();
+}
+// hidden: op het titelscherm (opwarmen); dan staat #scrIntro heel even onzichtbaar open om het paneel te meten
+function ixMeasure(hidden) {
+  const sc = $('scrIntro'), peek = !!hidden && sc.hidden;
+  if (peek) { sc.style.visibility = 'hidden'; sc.hidden = false; }
+  try { ixMeasureIn(); } finally { if (peek) { sc.hidden = true; sc.style.visibility = ''; } }
+}
+function ixMeasureIn() {
   const w = app.clientWidth || innerWidth, h = app.clientHeight || innerHeight, d = V.dpr;
   iCv.width = Math.max(1, Math.round(w * d)); iCv.height = Math.max(1, Math.round(h * d));
   Object.assign(IN, { w, h, d });
@@ -4231,12 +5114,16 @@ function introLayout() {
   $('introPanel').appendChild(mz); let mx = 0; for (const s of INTRO_SHOTS) { mz.textContent = s.text; mx = Math.max(mx, mz.offsetHeight); } mz.remove();
   p.style.minHeight = mx + 'px';
   IN.picH = clamp($('introPanel').getBoundingClientRect().top - app.getBoundingClientRect().top, 120, h);
+  // hv: tot hier is het beeld te zien. Dekt het paneel de hele breedte tot onderaan (telefoon) en is het niet doorzichtig, dan hoeft
+  // eronder niets getekend te worden (scheelt ongeveer een derde van het tekenwerk); anders tot de onderrand.
+  const pr = $('introPanel').getBoundingClientRect(), ar = app.getBoundingClientRect(), pb = getComputedStyle($('introPanel')).backgroundColor;
+  const dicht = /^rgb\(/.test(pb) || /^rgba\(.*,\s*1\)$/.test(pb);
+  IN.hv = dicht && pr.left - ar.left <= 1 && ar.right - pr.right <= 1 && ar.bottom - pr.bottom <= 2 ? clamp(pr.top - ar.top + 6, 120, h) : h;
   IN.u = Math.min(w, IN.picH * 0.9) / 400;
   const ox = IWINR[2] / 2 - IWINP, oy = IWINR[3] / 2 - IWINS; // halve opening binnen het kozijn
   const kw = 1.15 * Math.max(w / 2 / ox, IN.picH / 2 / oy, (h - IN.picH / 2) / oy);
   IN.cams = IBOX.map(iCam).concat([{ fx: IWINR[0] + IWINR[2] / 2, fy: IWINR[1] + IWINR[3] / 2, ey: IWINR[1] + IWINR[3] / 2, lk: Math.log(kw) }]);
-  introCaches();
-  if (!IN.raf) introDraw();
+  IN.cams[0] = ixStartCam(); IN.DS = IF / Math.exp(IN.cams[0].lk); // DS: afstand van de startcamera tot de gevel (de akker ligt daartussen)
 }
 function introShot(i) {
   // verminderde beweging: meteen het eindbeeld. Shot 1 staat eerst 0,3 s stil, zodat een trage start niet midden in de beweging hapert.
@@ -4246,19 +5133,19 @@ function introShot(i) {
   $('introText').textContent = s.text; $('introDesc').textContent = s.desc;
   announce(`${s.kicker}. Stap ${i + 1} van 3. ${s.text} ${s.desc}`); // #sr staat altijd in de DOM, dus ook shot 1 wordt voorgelezen
   [...$('introDots').querySelectorAll('i')].forEach((e, j) => e.classList.toggle('on', j <= i));
-  $('bIntroNext').textContent = i === 2 ? 'It giet oan!' : 'Verder';
+  $('bIntroNext').textContent = i === 2 ? 'It giet oan!' : 'Verder'; $('bIntroNext').classList.toggle('ui-fries', i === 2); // ui-fries: It giet oan! in gewone letters
 }
 const introWanted = () => !save.introSeen; // iedereen één keer, ook wie al eerder speelde; hij is kort en je kunt hem overslaan
 function openIntro(from) {
   // tEnd: de eerste 0,4 s telt een tik niet als Verder (tweede tik van een dubbeltik op It giet oan!)
-  Object.assign(IN, { from, t: 0, amb: 0, dive: -1, last: 0, hold: false, quick: 0, qsum: 0, tEnd: performance.now() + 50, capBefore: dprCap });
+  Object.assign(IN, { from, t: 0, amb: 0, dive: -1, last: 0, hold: false, quick: 0, qsum: 0, tEnd: performance.now() + 50, capBefore: dprCap, lite: false });
   const again = from === 'again';
   $('bIntroSkip').textContent = again ? 'Terug naar het menu' : 'Overslaan';
   $('bIntroSkipTop').textContent = again ? 'Menu' : 'Overslaan';
   $('bIntroSkipTop').setAttribute('aria-label', again ? 'Terug naar het menu' : 'Intro overslaan');
   // was de titeldemo al te traag, dan meteen op resolutie 1 (één herbouw); daarna meet de intro zelf
   const slow = fps.n > 10 && fps.sum / fps.n > CONFIG.slowFrame && V.dpr > 1; fps.n = fps.sum = 0;
-  show('intro'); if (slow) { dprCap = 1; layout(); } else introLayout(); introShot(0); introWind(true); introLoop();
+  show('intro'); introShot(0); if (slow) { dprCap = 1; layout(); } else introLayout(); introWind(true); introLoop();
 }
 function introLoop() {
   if (S.screen !== 'intro') return;
@@ -4269,13 +5156,19 @@ function introFrame(ts) {
   IN.raf = 0;
   if (S.screen !== 'intro' || offscreen) return; // weg uit de intro of uit beeld: de lus stopt
   if (!$('rotate').hidden) { IN.last = ts; IN.raf = requestAnimationFrame(introFrame); return; } // telefoon dwars: de vlucht wacht
-  const raw = IN.last ? ts - IN.last : 0, dt = Math.min(raw / 1000, 0.05); IN.last = ts; IN.frames++; IN.amb += dt;
+  const raw = IN.last ? ts - IN.last : 0, dt = Math.min(raw / 1000, 0.05); IN.last = ts; IN.frames++; IN.amb += dt; IN.xfT += dt;
   // zwakke telefoon: net als in het spel zakt de canvasresolutie (frameSample, layout() bouwt de intro opnieuw op). De eerste twaalf
-  // frames tellen apart: zijn die gemiddeld veel te traag, dan meteen naar 1, zodat shot 1 niet eerst een seconde hapert.
-  if (raw > 0 && raw < 100 && IN.quick < 12 && ++IN.quick) { IN.qsum += raw; if (IN.quick === 12 && IN.qsum / 12 > CONFIG.slowFrame * 1.5 && V.dpr > 1) { dprCap = 1; layout(); } }
+  // frames tellen apart: zijn die gemiddeld veel te traag, dan meteen naar 1, zodat shot 1 niet eerst een seconde hapert. Daarna nog
+  // twaalf: nog steeds te traag op resolutie 1 (gemiddeld boven 24 ms), dan laat de akker een paar sierdetails weg (IN.lite).
+  if (raw > 0 && raw < 100 && IN.quick < 24 && ++IN.quick) {
+    IN.qsum += raw;
+    if (IN.quick === 12) { if (IN.qsum / 12 > CONFIG.slowFrame * 1.5 && V.dpr > 1) { dprCap = 1; layout(); } IN.qsum = 0; }
+    else if (IN.quick === 24 && IN.qsum / 12 > 24 && Math.min(window.devicePixelRatio || 1, dprCap) <= 1) IN.lite = true;
+  }
   frameSample(raw);
   if (IN.dive >= 0) { IN.dive += dt; if (IN.dive >= IDIVE) { IN.dive = IDIVE; introDraw(); introGo(true); return; } }
   else if (!IN.hold) IN.t = Math.min(IN.t + dt, INTRO_SHOTS[IN.i].dur);
+  if (IN.i === 0 && IN.t < IX_T1 && !(IN.fn && IN.fn.done)) ixNative(1); // één rij per frame, de rest staat zolang geschaald
   if (!IN.hold) introDraw();
   IN.raf = requestAnimationFrame(introFrame);
 }
@@ -4284,6 +5177,7 @@ function introStop() {
   // offscreen-beelden vrijgeven (bij opnieuw bekijken zijn ze snel weer gebouwd)
   IN.still = null; if (IN.sky) IN.sky.width = IN.sky.height = 0; IN.sky = null; IN.clouds = null; IN.cloudKey = null;
   if (IN.geo) for (const L of [IN.geo.far, IN.geo.mid]) { if (L.img) L.img.width = L.img.height = 0; L.img = null; L.key = null; }
+  IN.field = null; IN.fn = IN.fn1 = null; IN.fx = null; IN.grain = null; if (IN.bg) IN.bg.cv.width = IN.bg.cv.height = 0; IN.bg = null; if (IN.xf) IN.xf.width = IN.xf.height = 0; IN.xf = null; IN.xfT = IX_XF;
 }
 // na de intro meet het spel zelf opnieuw: een lagere resolutie voor de intro geldt niet voor het spel
 function introCap() { fps.n = fps.sum = 0; if (IN.capBefore && dprCap !== IN.capBefore) { dprCap = IN.capBefore; layout(); } }
@@ -4291,7 +5185,7 @@ function introCap() { fps.n = fps.sum = 0; if (IN.capBefore && dprCap !== IN.cap
 // Vlak na het openen of na de sprong naar het eindbeeld telt een tweede druk niet (dubbeltik), zodat je het eindbeeld ziet.
 function introNext() {
   if (S.screen !== 'intro' || IN.dive >= 0 || performance.now() - IN.tEnd < 350) return;
-  if (IN.t < INTRO_SHOTS[IN.i].dur) { IN.t = INTRO_SHOTS[IN.i].dur; IN.tEnd = performance.now(); introLoop(); return; }
+  if (IN.t < INTRO_SHOTS[IN.i].dur) { ixSnap(); IN.t = INTRO_SHOTS[IN.i].dur; IN.tEnd = performance.now(); introLoop(); return; } // overvloeien naar het eindbeeld
   if (IN.i < 2) { introShot(IN.i + 1); IN.tEnd = performance.now(); introLoop(); return; }
   if (reduced.matches) { introGo(false); return; }
   IN.dive = 0; introLoop(); // It giet oan!: de camera duikt de schacht in, daarna molen 1
@@ -4299,7 +5193,7 @@ function introNext() {
 // pijltje links: terug naar het eindbeeld van het vorige shot
 function introPrev() {
   if (S.screen !== 'intro' || IN.dive >= 0 || IN.i === 0) return;
-  introShot(IN.i - 1); IN.t = INTRO_SHOTS[IN.i].dur; introLoop();
+  ixSnap(); introShot(IN.i - 1); IN.t = INTRO_SHOTS[IN.i].dur; introLoop();
 }
 function introSkip() { // Overslaan of Esc; bij opnieuw bekijken: terug naar het menu
   if (S.screen !== 'intro') return;
@@ -4311,7 +5205,7 @@ function introGo(dived) {
   if (dived) { veil.hidden = false; veil.style.transition = 'none'; veil.style.opacity = '1'; }
   startCampaign(0, 2026); // de jaarteller van molen 1 rolt van 2026 terug naar 1846
   introCap();
-  if (dived) { void veil.offsetWidth; veil.style.transition = 'opacity .45s ease-out'; veil.style.opacity = '0'; setTimeout(() => { veil.hidden = true; }, 500); }
+  if (dived) { void veil.offsetWidth; veil.style.transition = 'opacity .6s cubic-bezier(.3,0,.2,1)'; veil.style.opacity = '0'; setTimeout(() => { veil.hidden = true; }, 650); } // zacht open naar molen 1
 }
 // geluid (alleen als het aan staat): zacht windje en een meeuw
 function introWind(on, quiet) { // quiet: zonder meeuw (weer in beeld gescrold)

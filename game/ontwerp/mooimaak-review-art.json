@@ -1,0 +1,89 @@
+{
+  "samenvatting": "Het voelt grotendeels als één spel. De drie bouwers gebruiken dezelfde letters (Nunito, La Belle Aurore voor jaartallen), hetzelfde oranje en goud, en dezelfde manier van tekenen: de tijdperkplaatjes zijn nu in de stijl van de intro getekend en komen terug in de introband, de verhaalkaart, het Molenboek en het merkkader. De huisstijl van Royal Koopmans is goed herkenbaar zonder dat het een kopie van de site wordt. Het gaat om de tijdlijn met oranje stippen en handgeschreven jaartallen (Kies een molen, merkkader, intro-stippen), de potloodstreep, het gouden aanhalingsteken, de mosterdgouden voetstrook en de korenaar. Duidelijk beter dan voorheen: Verder malen loopt nu vol als een voortgangsbalk in plaats van een vale knop, de weegbon lijkt op een echte bon met een stempel, het merkkader op brede schermen is af, de HUD is rustiger, gevaren en pick-ups hebben een schaduwvlek en zijn minstens zo goed te zien, en de korrel heeft een gloed. In de intro zijn shot 2 en 3 en de duik mooier (avondgloed, graanstroom, lichtbundels, draaiende walsen, snelheidsstrepen). De overgang naar molen 1 sluit goed aan: zwart, zacht open, jaarteller van 2026 naar 1846 en zonnestralen in de rosmolen. Er zijn drie punten met ernst hoog. (1) Op de telefoon zitten in het lichte thema crème stroken boven en onder het speelveld, van 40 tot ruim 70 px, en op 16:9-telefoons een crème lijn van 2 px langs beide zijkanten. (2) In 1976 en 2008 lijken de felwitte TL-buizen en lichtpanelen midden in de schacht op vloeren of plaatdelen. (3) Het eerste beeld van de intro heeft op de telefoon bovenin een wolk zo breed als het scherm, met een liniaalrechte onderkant; in het donkere thema is dat een bruin blok. Verder zijn er middelzware punten: de lege, zanderige akker tijdens de glijvlucht, walsen die op zaagbladen lijken, de grote OVERSLAAN-knop, de zware mosterdgele voetstrook op de titel (vooral in het donkere thema), heldere lichtpunten in de valbaan en hover-kleuren die op touch blijven hangen. De titel is nog rustig, maar de voetstrook en de crème stroken op de telefoon maken hem drukker dan nodig. Hoofdletters op de knoppen passen bij de site en werken. Alleen 'IT GIET OAN!' verliest er warmte door, en 'KORREL VAN DE DAG' breekt over twee regels. Getest met nepklok en vaste seed, voor en na op dezelfde momenten, op 360x640, 400x800, 412x915 (dpr 2), 1280x800 en 1920x1080, in licht en donker. Scripts en beelden staan in mooi/review-art/ (cmp/ voor de vergelijkingen).",
+  "bevindingen": [
+    {
+      "ernst": "hoog",
+      "waar": "Merkkader op de telefoon, licht thema (buildLetterbox en gxLbFill)",
+      "wat": "Op elke telefoon zonder zijpanelen vult het merkkader de ruimte rond het speelveld met crème (#EEE7D7) en het korenaarpatroon. Op 400x800 zijn dat stroken van 40 px boven en onder, op 390x844, 360x800 en 412x915 ruim 70 px. Dat is circa 17 procent van het scherm, tijdens de titel, het spelen en alle kaarten. De stroken staan hard tegen de bijna zwarte HUD en maken van het veld een donkere kaart op een lichte pagina. Op 16:9-telefoons (360x640) blijft er links en rechts een crème lijn van 2 px over langs de hele hoogte, die eruitziet als een tekenfout. In het donkere thema en vóór de ronde (donker metselwerk) speelt dit niet.",
+      "voorstel": "In buildLetterbox: als gxLbPanels geen zijpanelen tekent (V.ox - 48 < 110), het hele kader in beide thema's donker vullen met gxLbFill(g, 0, 0, c.width, c.height, true), dus #1A1815. Bij stroken smaller dan 24 css-px het korenaarpatroon weglaten. De crème achtergrond alleen gebruiken op brede schermen met tijdlijn en plaatje. Optioneel: de bovenste strook in de HUD-kleur rgb(38,36,33) vullen, zodat de HUD tot de schermrand lijkt door te lopen."
+    },
+    {
+      "ernst": "hoog",
+      "waar": "Achterwand 1976 (getTile, stijl hout2: TL-buizen) en 2008 (stijl staal: lichtpanelen)",
+      "wat": "De TL-buizen (84 px, wit op dekking .9) en de lichtpanelen (60 px, dekking .92) zijn de felste dingen in de schacht, feller dan de echte plansichterplaten. In 1976 hangen op de derde verdieping twee buizen naast elkaar (lx 86 en 204) met een gat ertussen. Dat lijkt precies op een plansichterplaat met een gat, en in beeld hangt zo'n paar vlak onder een echte plaat. In 2008 hangt een paneel midden in de valbaan (lx 150). Dit gaat in tegen 'achtergrond laag contrast, niets mag eruitzien als een vloer of gevaar'. Door de parallax schuiven ze ook nog anders dan de vloeren, wat extra afleidt.",
+      "voorstel": "Lampen alleen langs de wanden en nooit twee op dezelfde hoogte. TL-lijst [[100,0],[214,1],[86,2],[204,2]] wordt [[30,0],[270,1],[30,2]], lichtpanelen [[150,0],[60,1],[240,1],[150,2]] worden [[30,0],[270,1],[30,2]]. De lichtbalk van dekking .9/.92 naar .4 en de gloed van .18/.2 naar .1. Of de buis rechtop zetten (4 x 60 px) tegen de zijwand. Daarna 1976 en 2008 nog eens met een plaat in beeld bekijken."
+    },
+    {
+      "ernst": "hoog",
+      "waar": "Intro shot 1 op de telefoon: de bovenste wolkenrij in ixSky ([0.33, 0.46, 0.9, 2.3, 0.6, 0]) met de platte onderkant uit iCloud",
+      "wat": "Op staande schermen krijgt de dichtstbijzijnde wolkenrij één wolk van circa 0,9 keer de beeldhoogte breed, dus breder dan het scherm. Met de afgeknipte platte onderkant wordt dat bovenin een band over de hele breedte met een liniaalrechte onderrand: op 400x800 circa 100 px hoog, op 390x844 nog groter. In het donkere thema is het een bruin blok met een rechte onderkant en een trapje naar de sterrenlucht. Het is het allereerste beeld van de intro en leest als een tekenfout. Op de laptop valt het niet op.",
+      "voorstel": "In ixSky de wolkbreedte begrenzen: wu = Math.min(wu, IN.w * 0.5 * IN.d) voor de twee voorste rijen. Bij de voorste rij de onderkant niet hard afknippen op hu*0.97, maar laten vervagen met een verloop met destination-out over het onderste kwart. Of die rij weglaten als IN.w < IN.picH (staand scherm)."
+    },
+    {
+      "ernst": "midden",
+      "waar": "Intro shot 1, glijvlucht van circa 1,1 tot 3 s (ixFieldMid, ixFieldCover, ixRun)",
+      "wat": "Zodra de camera opstijgt, verdwijnt de textuur van de tarwe. De akker wordt een egaal okergeel vlak met twee dunne rijsporen en ronde vlekken. In het donkere thema is het een modderig bruine vlakte. Het lijkt meer op zand of modder dan op een tarweveld, en in deze frames is de stad kleiner dan vóór de ronde. Het begin (in de tarwe met klaprozen en phacelia) en het eindbeeld zijn mooi; het midden is zwakker dan eerst.",
+      "voorstel": "Tijdens de glijvlucht een goedkope tarwetextuur houden. Bijvoorbeeld één keer een patroontegel (circa 64 x 16 px) met korte schuine aarstreepjes in c.wheat en c.wheatLit tekenen en die in ixFieldMid in perspectiefbanden over het vlak leggen, op 25 tot 35 procent dekking. Dat is hetzelfde principe als ixRun, maar verder weg. De ixRun-stroken tot dichter bij de horizon laten doorlopen. In het donkere thema het contrast van de vlekken (ixFieldCover) halveren."
+    },
+    {
+      "ernst": "midden",
+      "waar": "Walsen vanaf 1920 tot en met de Nachtploeg (drawWals)",
+      "wat": "De nieuwe ribbels zijn radiale streepjes van 0,58R tot 0,84R, plus een spie in de as, en alles draait mee. Daardoor zien de walsen eruit als cirkelzaagbladen of klokjes, het duidelijkst in 1976 en 2008. De cilinder met de verticale lichtband van vóór de ronde is weg. Een walsenstoel moet niet op een zaag lijken. Het maakt het beeld ook harder.",
+      "voorstel": "De ribbels als fijne kartel op de omtrek tekenen (streepjes van 0,93R tot 1,0R, dekking .25), zodat het vlak glad en glanzend blijft. Of terug naar de aanpak van base: verticale ribbellijnen die binnen de cirkel horizontaal meeschuiven, over de stilstaande cilindersprite met lichtband. De spie kleiner maken (dekking .4)."
+    },
+    {
+      "ernst": "midden",
+      "waar": "Overslaan-knop rechtsboven in de intro (.intro-skip)",
+      "wat": "De knop is groter geworden (119 x 44 px, was 100 x 44), in hoofdletters met letterafstand, met een bijna dichte donkere pil (dekking .88) op een lichte lucht. In shot 1 en 2 is het het zwaarste element in beeld. Hij trekt de aandacht weg van de vlucht en het paneel, terwijl het paneel zelf al een Overslaan-link heeft.",
+      "voorstel": ".intro-skip{font:800 13px/1 var(--ui);letter-spacing:0;text-transform:none;min-height:34px;padding:0 13px;border-radius:17px;background:rgba(29,30,31,.55)} en .intro-skip:hover{background:rgba(29,30,31,.75)}. Het tikvlak houden op 44 px met .intro-skip::before{content:'';position:absolute;inset:-5px}. Zichtbaar wordt dat circa 88 x 34 px."
+    },
+    {
+      "ernst": "midden",
+      "waar": "Titelscherm, voetstrook (.title .ui-voet), vooral in het donkere thema",
+      "wat": "De mosterdgele strook over de volle breedte is na de oranje hoofdknop het meest verzadigde vlak van de kaart, terwijl er de minst belangrijke regel in staat ('Fan-made door een stagiair.'). In het donkere thema is het zelfs het helderste vlak en trekt het oog naar beneden. Met het korenaarpatroon, de potloodstreep en de goudgerande knoppen is de titel net minder rustig dan na de vorige opruimronde.",
+      "voorstel": "Donker thema: .title .ui-voet{background:var(--gold-soft);color:var(--gold-ink)} (#3A3421 met #E3C431, 7,2:1) en de aar in --ui-mustard. Licht thema: de mosterd houden, maar padding 7px en font-size 12px. Rustiger alternatief: alleen een mosterdgouden lijn van 3 px boven de regel, met de tekst in --muted."
+    },
+    {
+      "ernst": "midden",
+      "waar": "Lichtpunten in de valbaan: luikje 1846 (stijl hout, lx 92), gaslamp 1867 (stijl steen, lx 228), hanglamp 1920 (stijl tegel, lx 140), daglichtlijnen 1846",
+      "wat": "In 1846 is het verlichte luikje met vier ruitjes (24 x 22 px, dekking .75) het helderste ding in de schacht, en het zit midden in de valbaan. Het lijkt op een kistje of een pick-up. De gaslamp in 1867 gloeit geel vlak bij de korrel en heeft bijna dezelfde kleur als de gouden korrel. De dunne heldere daglichtlijnen in 1846 (1,3 px, dekking .62) lijken op het spoortje van de korrel.",
+      "voorstel": "Lichtbronnen binnen 35 px van de wanden zetten. Luikje lx 92 wordt 8. Gaslampen [[76,196,1],[228,470,-1],[112,800,1]] worden [[24,196,1],[276,470,-1],[24,800,1]]. De middelste hanglamp in 1920 (lx 140) wordt 40. Het glas van het luikje van dekking .75 naar .4, de daglichtlijnen van .62 naar .3."
+    },
+    {
+      "ernst": "midden",
+      "waar": "Hover-kleuren op touch (CSS .btn:hover, .btn.primary:hover, .btn.go:hover, .chips .btn:hover, .links .linkbtn:hover)",
+      "wat": "Op telefoons blijft :hover hangen op de plek waar je tikte. Met de nieuwe, donkerdere hover-kleur (#D07C01) blijft na de eerste tik de knop VERDER in de intro donkerder, tijdens alle drie shots, en ook IT GIET OAN! ziet er gedimd uit. Na een tik op Nachtploeg verschijnt KORREL VAN DE DAG meteen donkerder. Dat lijkt op ingedrukt of uitgeschakeld. Vóór de ronde was de hover brightness(1.05), dus onzichtbaar.",
+      "voorstel": "Alle :hover-regels voor .btn, .btn.primary, .btn.go, .chips .btn, .links .linkbtn en .intro-skip in @media (hover:hover) and (pointer:fine){...} zetten. :active en focus-visible blijven zoals ze zijn."
+    },
+    {
+      "ernst": "laag",
+      "waar": "Canvaspanelen (gxPanel: introband en Nieuw in deze molen) naast de DOM-kaarten",
+      "wat": "De canvaspanelen hebben hoeken van 9 tot 10 px, een gouden bovenrand van 3 px en een gouden binnenrand. De DOM-kaarten (verhaalkaart, weegbon, intro-paneel) hebben hoeken van 3 px en een gouden bovenrand van 6 px. Als je ze snel na elkaar ziet (weegbon, dan de introband), zie je de naad tussen de bouwers.",
+      "voorstel": "In gxPanel de hoekstraal van 9 naar 4 (de schaduw van 10 naar 5) en de gouden band van 3 naar 5 px. De binnenrand rgba(207,171,0,.2) weglaten. De pilletjes (labels) mogen rond blijven."
+    },
+    {
+      "ernst": "laag",
+      "waar": "Dienstbriefje: #bNbDaily en #bNbFree",
+      "wat": "Tot 400 px breed breekt KORREL VAN DE DAG over twee regels, terwijl VRIJE DIENST op één regel past. Het paar ziet er scheef uit; vóór de ronde paste het op één regel.",
+      "voorstel": ".brief .row>.btn{letter-spacing:.04em;font-size:calc(12.5px*var(--s,1))}, of de hoofdkeuze meer ruimte geven met .brief .row>.btn.go{flex:1.35 1 0}."
+    },
+    {
+      "ernst": "laag",
+      "waar": "Holle knoppen in het lichte thema (--ui-edge #C5AA20)",
+      "wat": "De mosterdgouden rand haalt op de crème kaart maar 2,2:1. MENU, MOLENBOEK, GELUID en VRIJE DIENST zien er daardoor flets uit, bijna uitgeschakeld, vooral naast de oranje hoofdknop op de weegbon en de game-over.",
+      "voorstel": "In het lichte thema --ui-edge op #A88F1A (3,0:1) en --ui-edge-hover op #8A7514. Het donkere thema blijft zoals het is (3,8:1)."
+    },
+    {
+      "ernst": "laag",
+      "waar": "Hoofdletters op 'It giet oan!' (#bStart, en #bIntroNext in shot 3)",
+      "wat": "Hoofdletters op de knoppen passen bij de site en werken goed voor Verder, Menu en Terug. Alleen de Friese slogan wordt als IT GIET OAN! een schreeuw en verliest de warmte die hij in normale letters had. Het is een van de twee zinnen waarvoor de stijlgids een uitroepteken toestaat.",
+      "voorstel": "Voor deze ene zin een uitzondering: #bStart{text-transform:none;letter-spacing:.01em}, en in introShot bij i === 2 een klasse (bijvoorbeeld ui-oan) op #bIntroNext zetten met dezelfde regel."
+    },
+    {
+      "ernst": "laag",
+      "waar": "Intro shot 1, phacelia op de voorgrond (ixDrawEar en ixFieldSprites, pollen 'f')",
+      "wat": "Dichtbij zijn de phacelia dikke, bobbelige paarse spiralen van 40 tot 60 px op de telefoon. Ze lezen eerder als rupsen of zeepaardjes dan als bloemen. Verder weg, en op de laptop, werkt het als bloemrand wel.",
+      "voorstel": "De krul circa 40 procent dunner maken, lichter lavendelblauw (rond #9C8FD8, met lichtere toppen) en er een paar bleke meeldraden uit laten steken (lijntjes van 1 px in #E9E4F7). De voorste bloemen 30 procent kleiner."
+    }
+  ]
+}
