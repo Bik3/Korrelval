@@ -20,6 +20,17 @@
   --shadow:0 2px 0 rgba(29,30,31,.10),0 18px 44px rgba(29,30,31,.42);
   --ui:"Nunito","Avenir Next","Segoe UI",system-ui,-apple-system,sans-serif;
   --hand:"La Belle Aurore","Segoe Script","Bradley Hand","Snell Roundhand",cursive;
+  /* huisstijl van royalkoopmans.com: hover en ingedrukt van de oranje knop (donkere tekst, minstens 4,5:1), gloed van de tijdlijnstip,
+     vulling van Verder malen, mosterdgoud (rand van de holle knop, voetstrook), donkerbruin op mosterd (5:1), papier en stempel van de weegbon */
+  --accent-hover:#D07C01; --accent-press:#C47501; --ui-glow:rgba(231,138,1,.2); --ui-fill:rgba(231,138,1,.42);
+  --ui-edge:#C5AA20; --ui-edge-hover:#9E881A; --ui-mustard:#C5AA20; --ui-brown:#4A3200;
+  --ui-paper:#FFFFFF; --ui-paper-shadow:rgba(29,30,31,.22); --ui-stamp:#9E5E00;
+  /* eigen tekeningen (data-URI): korenaarpatroon op de kaarten (lijntekening, circa 5 procent), crème aar voor de voetstrook,
+     groot aanhalingsteken en potloodstreep (maskers: de kleur komt uit de CSS) */
+  --ui-grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='152' viewBox='0 0 120 152'%3E%3Cg fill='none' stroke='%231D1E1F' stroke-opacity='.06' stroke-width='1.3' stroke-linejoin='round' stroke-linecap='round'%3E%3Cpath transform='translate(30 140) rotate(-10)' d='M0 2V-50M0.9 -6L7.4 -10.6V-6L0.9 -1.4ZM-0.9 -6L-7.4 -10.6V-6L-0.9 -1.4ZM0.9 -13.2L6.95 -17.55V-13.2L0.9 -8.85ZM-0.9 -13.2L-6.95 -17.55V-13.2L-0.9 -8.85ZM0.9 -20.4L6.5 -24.5V-20.4L0.9 -16.3ZM-0.9 -20.4L-6.5 -24.5V-20.4L-0.9 -16.3ZM0.9 -27.6L6.05 -31.45V-27.6L0.9 -23.75ZM-0.9 -27.6L-6.05 -31.45V-27.6L-0.9 -23.75ZM0.9 -34.8L5.6 -38.4V-34.8L0.9 -31.2ZM-0.9 -34.8L-5.6 -38.4V-34.8L-0.9 -31.2ZM0.9 -42L5.15 -45.35V-42L0.9 -38.65ZM-0.9 -42L-5.15 -45.35V-42L-0.9 -38.65ZM0 -49.5L2.3 -55.5L0 -63L-2.3 -55.5Z'/%3E%3Cpath transform='translate(88 70) rotate(9)' d='M0 2V-50M0.9 -6L7.4 -10.6V-6L0.9 -1.4ZM-0.9 -6L-7.4 -10.6V-6L-0.9 -1.4ZM0.9 -13.2L6.95 -17.55V-13.2L0.9 -8.85ZM-0.9 -13.2L-6.95 -17.55V-13.2L-0.9 -8.85ZM0.9 -20.4L6.5 -24.5V-20.4L0.9 -16.3ZM-0.9 -20.4L-6.5 -24.5V-20.4L-0.9 -16.3ZM0.9 -27.6L6.05 -31.45V-27.6L0.9 -23.75ZM-0.9 -27.6L-6.05 -31.45V-27.6L-0.9 -23.75ZM0.9 -34.8L5.6 -38.4V-34.8L0.9 -31.2ZM-0.9 -34.8L-5.6 -38.4V-34.8L-0.9 -31.2ZM0.9 -42L5.15 -45.35V-42L0.9 -38.65ZM-0.9 -42L-5.15 -45.35V-42L-0.9 -38.65ZM0 -49.5L2.3 -55.5L0 -63L-2.3 -55.5Z'/%3E%3C/g%3E%3C/svg%3E");
+  --ui-aar:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-12 -14 24 26'%3E%3Cpath d='M0 11V-8' stroke='%23F3EED2' stroke-width='2.2' stroke-linecap='round'/%3E%3Cpath fill='%23F3EED2' d='M1 -5L7 -10L7 -7L1 -2ZM-1 -5L-7 -10L-7 -7L-1 -2ZM1 -0.6L7 -5.6L7 -2.6L1 2.4ZM-1 -0.6L-7 -5.6L-7 -2.6L-1 2.4ZM1 3.8L7 -1.2L7 1.8L1 6.8ZM-1 3.8L-7 -1.2L-7 1.8L-1 6.8ZM1 8.2L7 3.2L7 6.2L1 11.2ZM-1 8.2L-7 3.2L-7 6.2L-1 11.2Z'/%3E%3Cellipse fill='%23F3EED2' cx='0' cy='-10' rx='1.8' ry='3.2'/%3E%3C/svg%3E");
+  --ui-quote:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 30'%3E%3Ccircle cx='9' cy='21' r='8'/%3E%3Cpath d='M1.2 21C1 11 6 3.6 15.6 1l1.2 3.4C11.4 6.6 8.7 10.4 8.4 14z'/%3E%3Ccircle cx='29.5' cy='21' r='8'/%3E%3Cpath d='M21.7 21C21.5 11 26.5 3.6 36.1 1l1.2 3.4C31.9 6.6 29.2 10.4 28.9 14z'/%3E%3C/svg%3E");
+  --ui-pen:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 12' preserveAspectRatio='none'%3E%3Cpath d='M2.5 8.6C38 6.6 92 5.6 146 5.7c19 .1 35 .6 51.5 1.6-16.4.6-32.4 1.3-51.4 1.5C92 9.3 40 9.9 2.8 10.6c-1.6.1-1.8-1.9-.3-2z'/%3E%3Cpath opacity='.55' d='M14 10.4c40-1.3 92-2 150-1.6 7 .1 14 .3 21 .7-7 .3-14 .5-21 .6-58 .5-110 .9-150 1.6-.9 0-.9-1.3 0-1.3z'/%3E%3C/svg%3E");
   color-scheme:light;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
@@ -27,12 +38,18 @@
   --accent:#F29A1C; --accent-ink:#1D1E1F; --accent-edge:#8E5200; --gold:#E3C431; --gold-ink:#E3C431; --gold-soft:#3A3421;
   --danger:#F0596B; --ok:#8CC79A; --chip:#33302B; --accent-text:#F29A1C; --focus:#E3C431;
   --shadow:0 2px 0 rgba(0,0,0,.3),0 18px 44px rgba(0,0,0,.65);
+  --accent-hover:#DB8812; --accent-press:#C77A06; --ui-glow:rgba(242,154,28,.24); --ui-fill:rgba(242,154,28,.4);
+  --ui-edge:#8F7B2A; --ui-edge-hover:#C5AA20; --ui-paper:#2F2C28; --ui-paper-shadow:rgba(0,0,0,.55); --ui-stamp:#F29A1C;
+  --ui-grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='152' viewBox='0 0 120 152'%3E%3Cg fill='none' stroke='%23F3EED2' stroke-opacity='.045' stroke-width='1.3' stroke-linejoin='round' stroke-linecap='round'%3E%3Cpath transform='translate(30 140) rotate(-10)' d='M0 2V-50M0.9 -6L7.4 -10.6V-6L0.9 -1.4ZM-0.9 -6L-7.4 -10.6V-6L-0.9 -1.4ZM0.9 -13.2L6.95 -17.55V-13.2L0.9 -8.85ZM-0.9 -13.2L-6.95 -17.55V-13.2L-0.9 -8.85ZM0.9 -20.4L6.5 -24.5V-20.4L0.9 -16.3ZM-0.9 -20.4L-6.5 -24.5V-20.4L-0.9 -16.3ZM0.9 -27.6L6.05 -31.45V-27.6L0.9 -23.75ZM-0.9 -27.6L-6.05 -31.45V-27.6L-0.9 -23.75ZM0.9 -34.8L5.6 -38.4V-34.8L0.9 -31.2ZM-0.9 -34.8L-5.6 -38.4V-34.8L-0.9 -31.2ZM0.9 -42L5.15 -45.35V-42L0.9 -38.65ZM-0.9 -42L-5.15 -45.35V-42L-0.9 -38.65ZM0 -49.5L2.3 -55.5L0 -63L-2.3 -55.5Z'/%3E%3Cpath transform='translate(88 70) rotate(9)' d='M0 2V-50M0.9 -6L7.4 -10.6V-6L0.9 -1.4ZM-0.9 -6L-7.4 -10.6V-6L-0.9 -1.4ZM0.9 -13.2L6.95 -17.55V-13.2L0.9 -8.85ZM-0.9 -13.2L-6.95 -17.55V-13.2L-0.9 -8.85ZM0.9 -20.4L6.5 -24.5V-20.4L0.9 -16.3ZM-0.9 -20.4L-6.5 -24.5V-20.4L-0.9 -16.3ZM0.9 -27.6L6.05 -31.45V-27.6L0.9 -23.75ZM-0.9 -27.6L-6.05 -31.45V-27.6L-0.9 -23.75ZM0.9 -34.8L5.6 -38.4V-34.8L0.9 -31.2ZM-0.9 -34.8L-5.6 -38.4V-34.8L-0.9 -31.2ZM0.9 -42L5.15 -45.35V-42L0.9 -38.65ZM-0.9 -42L-5.15 -45.35V-42L-0.9 -38.65ZM0 -49.5L2.3 -55.5L0 -63L-2.3 -55.5Z'/%3E%3C/g%3E%3C/svg%3E");
   color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#121314; --card:#24221F; --card2:#2D2A26; --ink:#F4EFE3; --muted:#BFB7A6; --line:#48423A;
   --accent:#F29A1C; --accent-ink:#1D1E1F; --accent-edge:#8E5200; --gold:#E3C431; --gold-ink:#E3C431; --gold-soft:#3A3421;
   --danger:#F0596B; --ok:#8CC79A; --chip:#33302B; --accent-text:#F29A1C; --focus:#E3C431;
   --shadow:0 2px 0 rgba(0,0,0,.3),0 18px 44px rgba(0,0,0,.65);
+  --accent-hover:#DB8812; --accent-press:#C77A06; --ui-glow:rgba(242,154,28,.24); --ui-fill:rgba(242,154,28,.4);
+  --ui-edge:#8F7B2A; --ui-edge-hover:#C5AA20; --ui-paper:#2F2C28; --ui-paper-shadow:rgba(0,0,0,.55); --ui-stamp:#F29A1C;
+  --ui-grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='152' viewBox='0 0 120 152'%3E%3Cg fill='none' stroke='%23F3EED2' stroke-opacity='.045' stroke-width='1.3' stroke-linejoin='round' stroke-linecap='round'%3E%3Cpath transform='translate(30 140) rotate(-10)' d='M0 2V-50M0.9 -6L7.4 -10.6V-6L0.9 -1.4ZM-0.9 -6L-7.4 -10.6V-6L-0.9 -1.4ZM0.9 -13.2L6.95 -17.55V-13.2L0.9 -8.85ZM-0.9 -13.2L-6.95 -17.55V-13.2L-0.9 -8.85ZM0.9 -20.4L6.5 -24.5V-20.4L0.9 -16.3ZM-0.9 -20.4L-6.5 -24.5V-20.4L-0.9 -16.3ZM0.9 -27.6L6.05 -31.45V-27.6L0.9 -23.75ZM-0.9 -27.6L-6.05 -31.45V-27.6L-0.9 -23.75ZM0.9 -34.8L5.6 -38.4V-34.8L0.9 -31.2ZM-0.9 -34.8L-5.6 -38.4V-34.8L-0.9 -31.2ZM0.9 -42L5.15 -45.35V-42L0.9 -38.65ZM-0.9 -42L-5.15 -45.35V-42L-0.9 -38.65ZM0 -49.5L2.3 -55.5L0 -63L-2.3 -55.5Z'/%3E%3Cpath transform='translate(88 70) rotate(9)' d='M0 2V-50M0.9 -6L7.4 -10.6V-6L0.9 -1.4ZM-0.9 -6L-7.4 -10.6V-6L-0.9 -1.4ZM0.9 -13.2L6.95 -17.55V-13.2L0.9 -8.85ZM-0.9 -13.2L-6.95 -17.55V-13.2L-0.9 -8.85ZM0.9 -20.4L6.5 -24.5V-20.4L0.9 -16.3ZM-0.9 -20.4L-6.5 -24.5V-20.4L-0.9 -16.3ZM0.9 -27.6L6.05 -31.45V-27.6L0.9 -23.75ZM-0.9 -27.6L-6.05 -31.45V-27.6L-0.9 -23.75ZM0.9 -34.8L5.6 -38.4V-34.8L0.9 -31.2ZM-0.9 -34.8L-5.6 -38.4V-34.8L-0.9 -31.2ZM0.9 -42L5.15 -45.35V-42L0.9 -38.65ZM-0.9 -42L-5.15 -45.35V-42L-0.9 -38.65ZM0 -49.5L2.3 -55.5L0 -63L-2.3 -55.5Z'/%3E%3C/g%3E%3C/svg%3E");
   color-scheme:dark}
 [hidden]{display:none!important} /* ook zonder het skelet van de host: .screen{display:flex} mag hidden niet overschrijven */
 html,body{height:100%;margin:0;overflow:hidden;overscroll-behavior:none;touch-action:none}
@@ -43,9 +60,15 @@ body{background:var(--bg);color:var(--ink);font-family:var(--ui);-webkit-tap-hig
 .screen{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;box-sizing:border-box;
   padding:max(16px,env(safe-area-inset-top,0px)) 16px max(16px,env(safe-area-inset-bottom,0px));pointer-events:none}
 /* --s schaalt koppen, knoppen en witruimte mee op kleine schermen (0,86 tot 1), gezet in layout() */
+/* Kaart: crème (donker: warm antraciet) met het korenaarpatroon; local: het patroon schuift mee als de kaart in zichzelf scrolt.
+   Binnenkomst: zacht in beeld en 8 px omhoog in 0,2 s (niet bij verminderde beweging, zie onderaan) */
 .card{pointer-events:auto;box-sizing:border-box;width:100%;max-width:384px;max-height:100%;overflow-y:auto;overscroll-behavior:contain;
-  touch-action:pan-y;background:var(--card);color:var(--ink);border-radius:3px;box-shadow:var(--shadow);
-  padding:calc(18px*var(--s,1)) calc(18px*var(--s,1)) calc(16px*var(--s,1));border-top:6px solid var(--gold);position:relative}
+  touch-action:pan-y;background-color:var(--card);background-image:var(--ui-grain);background-size:120px 152px;background-attachment:local;
+  color:var(--ink);border-radius:3px;box-shadow:var(--shadow);
+  padding:calc(18px*var(--s,1)) calc(18px*var(--s,1)) calc(16px*var(--s,1));border-top:6px solid var(--gold);position:relative;
+  animation:uiIn .2s cubic-bezier(.2,.7,.3,1) backwards}
+@keyframes uiIn{from{opacity:0;transform:translateY(8px)}}
+@keyframes uiFade{from{opacity:0}}
 .card>*+*{margin-top:calc(12px*var(--s,1))}
 .card h1,.card h2,.card p{margin-bottom:0}
 .card h1{margin-top:2px}
@@ -54,31 +77,56 @@ body{background:var(--bg);color:var(--ink);font-family:var(--ui);-webkit-tap-hig
 .kicker canvas{width:26px;height:26px;flex:none}
 .logo{font:800 calc(46px*var(--s,1))/0.95 var(--ui);letter-spacing:-.025em;margin:0;overflow-wrap:anywhere} /* 200% systeemletter: afbreken in plaats van afsnijden */
 .logo span{color:var(--accent)}
+/* Titel: een getekende potloodstreep in goud onder Korrelval, die zich bij binnenkomst van links naar rechts trekt.
+   .ui-pen: dezelfde streep (zonder beweging) onder een paar koppen: Kies een molen en Molenboek */
+.title .logo,.ui-pen{position:relative;width:fit-content;max-width:100%;padding-bottom:calc(10px*var(--s,1))}
+.ui-pen{padding-bottom:7px}
+.title .logo::after,.ui-pen::after{content:'';position:absolute;left:-2px;right:-6px;bottom:0;height:calc(10px*var(--s,1));background:var(--gold);
+  -webkit-mask:var(--ui-pen) 0 0/100% 100% no-repeat;mask:var(--ui-pen) 0 0/100% 100% no-repeat}
+.ui-pen::after{height:8px}
+.title .logo::after{animation:uiPen .55s cubic-bezier(.3,.6,.3,1) .18s backwards}
+@keyframes uiPen{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
 h2{font:800 calc(26px*var(--s,1))/1.1 var(--ui);margin:0;letter-spacing:-.01em}
 .lead{font:600 calc(15px*var(--s,1))/1.4 var(--ui);color:var(--ink);margin:0}
 .muted{color:var(--muted);font:600 calc(14px*var(--s,1))/1.35 var(--ui);margin:0}
 .hand{font-family:var(--hand);font-weight:400}
 .era{font-size:calc(24px*var(--s,1));line-height:1.1;color:var(--gold-ink);margin:0}
+#lvEra{margin-top:calc(5px*var(--s,1))} /* ruimte onder de stempel Tsjoch! */
+/* Knoppen zoals op royalkoopmans.com: hoofdletters, iets kleiner, met wat letterafstand. Hol met een rustige mosterdgouden rand;
+   de hoofdknop oranje met donkere tekst (hover #D07C01, ingedrukt iets donkerder, allebei minstens 4,5:1). Tikvlak minstens 44 px.
+   Hoofdletters alleen via CSS: textContent blijft gewoon (It giet oan!). Let op: Chrome geeft de hoofdletters wel door aan de schermlezer. */
 .btn{appearance:none;-webkit-appearance:none;display:inline-flex;align-items:center;justify-content:center;gap:8px;box-sizing:border-box;
-  min-height:46px;padding:6px 14px;border:2px solid var(--ink);background:transparent;color:var(--ink);font:800 calc(15px*var(--s,1))/1.1 var(--ui);
-  border-radius:3px;cursor:pointer;pointer-events:auto;touch-action:manipulation;text-align:center;overflow-wrap:anywhere;hyphens:auto}
-.btn:hover{background:var(--chip)}
-.btn.primary{display:flex;width:100%;min-height:calc(58px*var(--s,1));font-size:calc(22px*var(--s,1));background:var(--accent);border-color:var(--accent);color:var(--accent-ink);
-  box-shadow:0 4px 0 var(--accent-edge);margin-bottom:4px}
-.btn.primary:hover{filter:brightness(1.05)}
-.btn.primary:active{transform:translateY(3px);box-shadow:0 1px 0 var(--accent-edge)}
+  min-height:46px;padding:6px 14px;border:2px solid var(--ui-edge);background:transparent;color:var(--ink);font:800 calc(13.5px*var(--s,1))/1.15 var(--ui);
+  letter-spacing:.07em;text-transform:uppercase;text-wrap:balance;
+  border-radius:3px;cursor:pointer;pointer-events:auto;touch-action:manipulation;text-align:center;overflow-wrap:anywhere;hyphens:auto;
+  transition:background-color .15s ease-out,border-color .15s ease-out,color .15s ease-out,box-shadow .12s ease-out,transform .12s ease-out}
+.btn:hover{background:var(--chip);border-color:var(--ui-edge-hover)}
+.btn:active{transform:translateY(1px)}
+.btn.primary{display:flex;width:100%;min-height:calc(54px*var(--s,1));font-size:calc(17px*var(--s,1));letter-spacing:.08em;background:var(--accent);border-color:var(--accent);color:var(--accent-ink);
+  box-shadow:0 3px 0 var(--accent-edge);margin-bottom:3px}
+.btn.primary:hover{background:var(--accent-hover);border-color:var(--accent-hover)}
+.btn.primary:active{background:var(--accent-press);border-color:var(--accent-press);transform:translateY(2px);box-shadow:0 1px 0 var(--accent-edge)}
 .btn:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
 .btn[disabled]{opacity:.42;cursor:not-allowed}
-.btn[aria-pressed="true"],.btn.on{background:var(--ink);color:var(--card)}
+.btn[aria-pressed="true"],.btn.on{background:var(--ink);border-color:var(--ink);color:var(--card)}
 .row{display:flex;flex-wrap:wrap;gap:8px} /* grote systeemletter: knoppen onder elkaar in plaats van over elkaar */
 .row>.btn{flex:1 1 6em;min-width:0;padding-left:8px;padding-right:8px}
 .sect{border-top:1px dashed var(--line);padding-top:10px}
 .sect-h{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:8px;font:800 14px/1.2 var(--ui);margin:0 0 8px}
 .sect-h small{font:600 12px/1.2 var(--ui);color:var(--muted);text-align:right}
-/* Kies een molen: jaartal met de korte naam eronder, twee per rij */
-.chips{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
-.chips .btn{flex-direction:column;gap:0;min-height:52px;padding:4px 6px;font-size:calc(17px*var(--s,1));font-variant-numeric:tabular-nums}
-.btn small{display:block;font:600 11px/1.1 var(--ui);opacity:.75;margin-top:2px;text-wrap:balance}
+/* Kies een molen als geschiedenistijdlijn, zoals op de site: een lijn met oranje stippen met gloed, het jaartal in handschrift
+   en de korte naam in kleine kapitalen ernaast. Elke regel is een hele knop van minstens 48 px hoog. */
+.chips{display:flex;flex-direction:column;gap:2px;position:relative}
+.chips::before{content:'';position:absolute;left:16px;top:24px;bottom:24px;width:2px;margin-left:-1px;background:var(--line)}
+.chips .btn{position:relative;justify-content:flex-start;gap:14px;min-height:48px;padding:2px 10px 2px 40px;border:0;background:transparent;
+  text-transform:none;letter-spacing:0;text-align:left}
+.chips .btn::before{content:'';position:absolute;left:10px;top:50%;width:12px;height:12px;margin-top:-6px;border-radius:50%;background:var(--accent);
+  box-shadow:0 0 0 5px var(--ui-glow);transition:box-shadow .15s ease-out}
+.chips .btn .hand{font-size:calc(30px*var(--s,1));line-height:1;min-width:2.9em;padding-top:.14em;color:var(--ink)}
+.chips .btn small{font:800 11.5px/1.2 var(--ui);letter-spacing:.1em;text-transform:uppercase;opacity:1;color:var(--muted);margin:0}
+.chips .btn:hover{background:var(--chip)}
+.chips .btn:hover::before{box-shadow:0 0 0 7px var(--ui-glow)}
+.btn small{display:block;font:600 11px/1.15 var(--ui);letter-spacing:0;text-transform:none;opacity:.8;margin-top:3px;text-wrap:balance}
 /* smalle telefoons: knoppen naast elkaar krijgen minder zijmarge */
 @media (max-width:390px){.row>.btn{padding-left:5px;padding-right:5px}}
 #bGezel,.subbtn,.bookbtn{flex-direction:column;gap:0}
@@ -86,15 +134,26 @@ h2{font:800 calc(26px*var(--s,1))/1.1 var(--ui);margin:0;letter-spacing:-.01em}
 .card>.hint{margin-top:10px}
 .fine{font:600 11.5px/1.4 var(--ui);color:var(--muted);margin:0;border-top:1px solid var(--line);padding-top:8px}
 .fine.top{border-top:0;padding-top:0}
+/* Stempels (Partij afgekeurd, Tsjoch!): komen zacht neer, van iets groter en doorzichtig naar hun plek (niet bij verminderde beweging) */
 .stamp{display:inline-block;font:800 21px/1 var(--ui);color:var(--danger);border:3px solid var(--danger);padding:7px 10px 6px;
-  transform:rotate(-3.5deg);letter-spacing:.04em;text-transform:uppercase;border-radius:2px}
+  transform:rotate(-3.5deg);letter-spacing:.04em;text-transform:uppercase;border-radius:2px;animation:uiStempel .34s cubic-bezier(.2,.8,.25,1) .12s backwards}
+@keyframes uiStempel{from{opacity:0;scale:1.4}}
 .over-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
 .over-head .hand{font-size:26px;color:var(--gold-ink)}
-.bon{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;font:600 calc(14px*var(--s,1))/1.25 var(--ui)}
+/* Weegbon, game-over en jaarverslag: een echte bon van papier met een kartelrand boven en onder (masker); het schaduwrandje
+   komt van de omhullende .ui-bon. Cijfers in vaste breedte: tabular-nums staat na de font-afkorting, die zet hem anders terug. */
+.ui-bon{margin-left:calc(-9px*var(--s,1));margin-right:calc(-9px*var(--s,1));filter:drop-shadow(0 1px 1.5px var(--ui-paper-shadow))} /* tekst even breed als zonder bon */
+.bon{--z:10px;width:100%;box-sizing:border-box;border-collapse:separate;border-spacing:0;font:600 calc(14px*var(--s,1))/1.25 var(--ui);font-variant-numeric:tabular-nums;
+  background:var(--ui-paper);padding:calc(var(--z)/2 + 4px) calc(9px*var(--s,1));
+  -webkit-mask:conic-gradient(from 135deg at 50% 0,#000 90deg,#0000 0) 50% 0/var(--z) 51% repeat-x,conic-gradient(from -45deg at 50% 100%,#000 90deg,#0000 0) 50% 100%/var(--z) 51% repeat-x;
+  mask:conic-gradient(from 135deg at 50% 0,#000 90deg,#0000 0) 50% 0/var(--z) 51% repeat-x,conic-gradient(from -45deg at 50% 100%,#000 90deg,#0000 0) 50% 100%/var(--z) 51% repeat-x}
 .bon td{padding:calc(5px*var(--s,1)) 0;border-bottom:1px dashed var(--line);vertical-align:baseline}
-.bon td:last-child{text-align:right;font-weight:800;padding-left:10px}
+.bon tr:last-child td{border-bottom:0}
+.bon td:last-child{text-align:right;font-weight:800;padding-left:10px;white-space:nowrap}
 .bon tr.big td{font-size:17px}
 .bon tr.big td:last-child{color:var(--accent-text)}
+#lvBon tr.big td{border-top:1.5px solid var(--ink);border-bottom-style:solid} /* weegbon: een streep boven het totaal */
+#lvBon tr:has(+ tr.big) td{border-bottom:0}
 .uit{font:600 13px/1.4 var(--ui);color:var(--muted);margin:0}
 .uit b{color:var(--ink)}
 .meel{display:inline-block;width:1em;height:1em;border-radius:50%;border:1px solid var(--muted);box-sizing:border-box;vertical-align:-.16em;margin-right:4px;
@@ -121,7 +180,7 @@ button.badge:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
 .easy p{margin:0;font:600 calc(14px*var(--s,1))/1.4 var(--ui)}
 .easy .btn{width:100%;margin-top:calc(8px*var(--s,1));min-height:44px}
 #bookAllAsk:focus{outline:none}
-.easy .btn.pick{background:var(--ink);color:var(--card)}
+.easy .btn.pick{background:var(--ink);border-color:var(--ink);color:var(--card)}
 #scrOver.tight1 #overBon tr:not(.big){display:none}
 #scrOver.tight2 #overBadges{display:none}
 .picker{display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--card2);padding:8px 10px}
@@ -139,7 +198,7 @@ button.badge:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
 .share input{grid-column:1;grid-row:2;min-width:0;width:100%;height:28px;box-sizing:border-box;font:600 11px/1 var(--ui);background:var(--card2);color:var(--ink);
   border:1px solid var(--line);border-radius:2px;padding:0 5px;user-select:text;-webkit-user-select:text;touch-action:auto}
 .share input:focus-visible{outline:3px solid var(--focus);outline-offset:1px}
-.share .btn{grid-column:2;grid-row:1/3;min-height:44px;padding:4px 10px;font-size:calc(13px*var(--s,1))}
+.share .btn{grid-column:2;grid-row:1/3;min-height:44px;padding:4px 10px;font-size:calc(12px*var(--s,1))}
 @media (pointer:fine){.share .btn{min-height:38px}.share input{height:22px}}
 textarea.copy{width:100%;box-sizing:border-box;font:600 13px/1.35 var(--ui);background:var(--card2);color:var(--ink);border:1px solid var(--line);padding:8px;resize:none;user-select:text;-webkit-user-select:text}
 .toplist{list-style:none;padding:0;margin:0;counter-reset:n}
@@ -152,26 +211,35 @@ textarea.copy{width:100%;box-sizing:border-box;font:600 13px/1.35 var(--ui);back
 .about h2+p,.about p+p{margin-top:10px}
 .about h3{font:800 13px/1.2 var(--ui);letter-spacing:.1em;text-transform:uppercase;color:var(--gold-ink);margin:14px 0 4px}
 /* Terug blijft onderin de kaart staan, ook als de tekst langer is dan het scherm */
-.about #bAboutBack{position:sticky;bottom:0;z-index:1;box-shadow:0 4px 0 var(--accent-edge),0 20px 0 2px var(--card),0 -14px 14px 4px var(--card)}
+.about #bAboutBack{position:sticky;bottom:0;z-index:1;box-shadow:0 3px 0 var(--accent-edge),0 20px 0 2px var(--card),0 -14px 14px 4px var(--card)}
 .about #bAboutBack{margin-top:calc(30px*var(--s,1))} /* helemaal onderaan valt de laatste regel (lettertypen) niet onder de vervaging van de knop */
-/* Weegbon: Tsjoch! (proost) in handschrift voor de kop */
-.tsjoch{font-family:var(--hand);font-weight:400;font-size:1.12em;color:var(--gold-ink);letter-spacing:0}
+/* Weegbon: Tsjoch! (proost) als stempel voor de kop, met een dubbele rand. Hij komt zacht neer als het totaal is opgeteld (0,9 s). */
+.tsjoch{display:inline-block;font:800 .6em/1 var(--ui);letter-spacing:.1em;text-transform:uppercase;color:var(--ui-stamp);
+  border:2.5px solid currentColor;border-radius:3px;padding:.34em .5em .28em;margin-right:.3em;vertical-align:.28em;transform:rotate(-4deg);
+  box-shadow:inset 0 0 0 1.5px var(--card),inset 0 0 0 3px currentColor;animation:uiStempel .34s cubic-bezier(.2,.8,.25,1) .9s backwards}
 /* Verhaalpauze halverwege een molen: kop met klein tijdperkplaatje ernaast, daaronder de tekst over de hele breedte */
 .story .story-head{margin-top:calc(6px*var(--s,1))}
 .story-head{display:flex;align-items:center;gap:12px}
 .story-head h2{flex:1;min-width:0;text-wrap:balance}
-.story-art{flex:none;width:104px;height:58px;border-radius:3px;background:#161617}
+.story-art{flex:none;width:104px;height:58px;border-radius:3px;background:#161617;box-shadow:0 0 0 1px var(--line)}
 .story-text{font:600 calc(15px*var(--s,1))/1.45 var(--ui);margin:calc(14px*var(--s,1)) 0 0}
-.story-slot{font-size:calc(21px*var(--s,1));line-height:1.2;color:var(--gold-ink);margin:calc(10px*var(--s,1)) 0 0}
-.story #bStory{position:sticky;bottom:0;z-index:1;transition:opacity .15s}
+/* slotzin in handschrift met een groot gouden aanhalingsteken ervoor, zoals de citaten op de site */
+.story-slot{position:relative;font-size:calc(21px*var(--s,1));line-height:1.2;color:var(--gold-ink);margin:calc(12px*var(--s,1)) 0 0;
+  padding-left:calc(40px*var(--s,1));min-height:calc(25px*var(--s,1))}
+.story-slot::before{content:'';position:absolute;left:0;top:.02em;width:calc(31px*var(--s,1));height:calc(24px*var(--s,1));background:var(--ui-mustard);
+  -webkit-mask:var(--ui-quote) 0 0/contain no-repeat;mask:var(--ui-quote) 0 0/contain no-repeat}
+/* kicker met het jaartal groot in handschrift: Halverwege 1846 (verhaalkaart), Jaarverslag 2026 */
+.ui-kick{align-items:baseline;flex-wrap:wrap;column-gap:10px;row-gap:0}
+.ui-kick .hand{font-size:calc(36px*var(--s,1));line-height:.5;letter-spacing:0;text-transform:none;color:var(--gold-ink)}
+.story #bStory{position:sticky;bottom:0;z-index:1}
 .story .story-book{margin-top:calc(8px*var(--s,1))}
 /* Dienstbriefje van de Nachtploeg: zelfde kaart als de verhaalpauze, met de keuze onderaan */
 .brief .story-text+.story-text{margin-top:calc(9px*var(--s,1))}
 .brief .story-text b{font-weight:800}
 .brief .row>.btn{min-height:calc(52px*var(--s,1))}
-.btn.go{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);box-shadow:0 4px 0 var(--accent-edge)}
-.btn.go:hover{background:var(--accent);filter:brightness(1.05)}
-.btn.go:active{transform:translateY(3px);box-shadow:0 1px 0 var(--accent-edge)}
+.btn.go{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);box-shadow:0 3px 0 var(--accent-edge)}
+.btn.go:hover{background:var(--accent-hover);border-color:var(--accent-hover)}
+.btn.go:active{background:var(--accent-press);border-color:var(--accent-press);transform:translateY(2px);box-shadow:0 1px 0 var(--accent-edge)}
 .nb-lock{background:var(--gold-soft);padding:calc(10px*var(--s,1)) 12px;border-left:4px solid var(--gold);font:700 calc(14px*var(--s,1))/1.4 var(--ui);margin:calc(12px*var(--s,1)) 0 0}
 .brief .linkbtn{text-align:center}
 .brief .btn.primary{margin-bottom:0}
@@ -184,10 +252,14 @@ textarea.copy{width:100%;box-sizing:border-box;font:600 13px/1.35 var(--ui);back
 .links .linkbtn{width:auto;flex:1 1 auto;text-align:center;padding:6px 4px;color:var(--ink);font-weight:700;text-decoration-color:var(--line)}
 .links .linkbtn:hover{text-decoration-color:currentColor}
 .title .fine{text-align:center}
+/* Voetstrook zoals de footer van de site: mosterdgoud tot de randen van de kaart, donkerbruine tekst en een crème korenaar */
+.title .ui-voet{display:flex;align-items:center;justify-content:center;gap:9px;margin:calc(14px*var(--s,1)) calc(-18px*var(--s,1)) calc(-16px*var(--s,1));
+  padding:calc(9px*var(--s,1)) 16px;border:0;background:var(--ui-mustard);color:var(--ui-brown);font:700 12.5px/1.3 var(--ui)}
+.title .ui-voet::before{content:'';flex:none;width:15px;height:18px;background:var(--ui-aar) 50% 50%/contain no-repeat}
 .btn.wide{display:flex;width:100%}
 /* Nachtploeg nog dicht: knoppen zien er dicht uit, maar een tik opent het briefje. Alleen tekst en rand gedimd, niet de hele knop,
    zodat de focusring vol blijft. */
-.btn[aria-disabled="true"]{color:var(--muted);color:color-mix(in srgb,var(--ink) 42%,var(--card));border-color:currentColor}
+.btn[aria-disabled="true"]{color:var(--muted);color:color-mix(in srgb,var(--ink) 42%,var(--card));border-color:currentColor;border-style:dashed}
 .btn[aria-disabled="true"]:hover{background:transparent}
 /* Molenboek: lange kaart die binnen zichzelf scrollt; Terug plakt onderin, net als bij Over dit spel */
 .boek .sect{padding-top:12px}
@@ -200,7 +272,7 @@ textarea.copy{width:100%;box-sizing:border-box;font:600 13px/1.35 var(--ui);back
 .page.st>canvas{grid-column:2;grid-row:1;width:104px;height:58px;border-radius:3px;background:#161617}
 .page.st>div{grid-column:1;grid-row:1}
 .page h4{margin:0;font:800 calc(16px*var(--s,1))/1.25 var(--ui);text-wrap:balance}
-.page .jaar{margin:0 0 1px;font-size:calc(19px*var(--s,1));line-height:1.1;color:var(--gold-ink)}
+.page .jaar{margin:0 0 2px;font-family:var(--hand);font-weight:400;font-size:calc(27px*var(--s,1));line-height:1;color:var(--gold-ink)} /* .page p zet Nunito: hier zelf het handschrift */
 .page p{margin:4px 0 0;font:600 calc(14px*var(--s,1))/1.45 var(--ui)}
 .page.st p.txt{grid-column:1/-1;grid-row:2}
 .page .act{color:var(--muted)}
@@ -222,19 +294,32 @@ textarea.copy{width:100%;box-sizing:border-box;font:600 13px/1.35 var(--ui);back
 .closedsum{display:flex;align-items:center;gap:12px;margin:0;padding:8px 0;font:600 italic 13px/1.3 var(--ui);color:var(--muted)}
 .closedsum canvas{width:36px;height:36px;opacity:.45;flex:none}
 .closedsum.moved{padding-left:48px;border-bottom:1px dashed var(--line)}
-.boek #bBookBack{position:sticky;bottom:0;z-index:1;box-shadow:0 4px 0 var(--accent-edge),0 20px 0 2px var(--card),0 -14px 14px 4px var(--card)}
-/* De eerste 0,6 s (en zolang de sturende vinger nog ligt) werkt Verder malen nog niet: knop gedimd */
-.story #bStory[aria-disabled="true"]{opacity:.5;cursor:default;filter:none;transform:none;box-shadow:0 4px 0 var(--accent-edge)}
+.boek #bBookBack{position:sticky;bottom:0;z-index:1;box-shadow:0 3px 0 var(--accent-edge),0 20px 0 2px var(--card),0 -14px 14px 4px var(--card)}
+/* De eerste 0,6 s (en zolang de sturende vinger nog ligt) werkt Verder malen nog niet. De knop vult zich dan zichtbaar, als een
+   voortgangsbalk in de knop (duur --ui-wait = CONFIG.story.minWait, gezet bij het starten). De tekst blijft goed leesbaar: var(--ink)
+   op crème en op de vulling, minstens 6:1. Daarna is het een gewone oranje knop. Bij verminderde beweging: alleen de oranje rand. */
+.story #bStory[aria-disabled="true"]{background:var(--card);border-color:var(--accent);border-style:solid;color:var(--ink);box-shadow:0 3px 0 var(--line);
+  cursor:default;transform:none;overflow:hidden;isolation:isolate}
+.story #bStory[aria-disabled="true"]::before{content:'';position:absolute;inset:0;z-index:-1;background:var(--ui-fill);transform-origin:0 50%;
+  animation:uiVul var(--ui-wait,.6s) linear backwards}
+@keyframes uiVul{from{transform:scaleX(0)}}
 .hudbtn{position:absolute;display:flex;align-items:center;justify-content:center;border:0;border-radius:3px;padding:0;
   background:var(--hud-bg);color:var(--hud-ink);cursor:pointer;pointer-events:auto;touch-action:manipulation}
 .hudbtn svg{width:46%;height:46%}
 .hudbtn:focus-visible{outline:3px solid var(--hud-focus)}
 .sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;border:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap}
 .card h1[tabindex="-1"]:focus,.card h2[tabindex="-1"]:focus{outline:none} /* touch: de kop krijgt de focus voor de schermlezer, zonder ring */
+/* Melding: donker kaartje (in het donkere thema licht) met een oranje streep links en een zachte schaduw; komt zacht omhoog in beeld */
 .toast{position:absolute;z-index:3;left:50%;bottom:max(24px,env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--card);
-  font:800 14px/1.2 var(--ui);padding:10px 14px;border-radius:3px;pointer-events:none;max-width:calc(100% - 32px);box-sizing:border-box;text-align:center}
-/* de melding valt niet achter de plakkende Terug-knop of over de deelregel van Over dit spel, en in de intro niet over het paneel */
-#scrAbout:not([hidden])~#toast{top:max(16px,env(safe-area-inset-top,0px));bottom:auto}
+  font:700 14px/1.35 var(--ui);padding:11px 16px 11px 14px;border-left:4px solid var(--accent);border-radius:3px;pointer-events:none;
+  width:max-content;max-width:min(360px,calc(100% - 32px));box-sizing:border-box;text-align:left;
+  box-shadow:0 12px 30px rgba(29,30,31,.35),0 2px 6px rgba(29,30,31,.2);animation:uiToast .22s cubic-bezier(.2,.7,.3,1) backwards}
+@keyframes uiToast{from{opacity:0;transform:translate(-50%,8px)}}
+/* de melding valt niet achter de plakkende Terug-knop of over de deelregel van Over dit spel, niet over de knoppen onderaan de kaarten
+   met badges (weegbon, game-over, jaarverslag, Scores), en in de intro niet over het paneel */
+#scrAbout:not([hidden])~#toast,#scrScores:not([hidden])~#toast,#scrLevel:not([hidden])~#toast,#scrOver:not([hidden])~#toast,#scrDone:not([hidden])~#toast{
+  top:max(16px,env(safe-area-inset-top,0px));bottom:auto;animation-name:uiToastTop}
+@keyframes uiToastTop{from{opacity:0;transform:translate(-50%,-8px)}}
 #scrIntro:not([hidden])~#toast{top:max(68px,calc(env(safe-area-inset-top,0px) + 64px));bottom:auto}
 .rotate{position:absolute;inset:0;z-index:5;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;
   padding:16px;box-sizing:border-box;background:var(--bg);color:var(--ink);text-align:center;font:800 20px/1.25 var(--ui);pointer-events:auto}
@@ -245,27 +330,37 @@ textarea.copy{width:100%;box-sizing:border-box;font:600 13px/1.35 var(--ui);back
 #scrIntro{display:block;padding:0;pointer-events:auto;background:#1b1816;touch-action:none}
 #introCv{position:absolute;left:0;top:0;width:100%;height:100%;display:block;cursor:pointer}
 .intro-panel{position:absolute;left:0;right:0;bottom:0;margin:0 auto;max-width:560px;border-radius:3px 3px 0 0;
-  padding:calc(13px*var(--s,1)) 16px max(calc(8px*var(--s,1)),env(safe-area-inset-bottom,0px))}
+  padding:calc(13px*var(--s,1)) 16px max(calc(8px*var(--s,1)),env(safe-area-inset-bottom,0px));animation-name:uiFade} /* alleen vervagen: introLayout meet zijn bovenkant */
 .card.intro-panel>*+*{margin-top:calc(10px*var(--s,1))}
 @media (min-width:600px) and (min-height:560px){.intro-panel{bottom:16px;border-radius:3px}}
 .intro-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
-.intro-dots{display:flex;gap:7px;margin:0;flex:none}
-.intro-dots i{display:block;width:9px;height:9px;border-radius:50%;background:transparent;box-shadow:inset 0 0 0 1.5px var(--muted)}
-.intro-dots i.on{background:var(--accent-text);box-shadow:none}
+/* stap 1 tot 3 als tijdlijn: stippen op een lijn, gedaan en nu in oranje; de huidige met een gloed, zoals de tijdlijnstippen op de site */
+.intro-dots{position:relative;display:flex;align-items:center;gap:13px;margin:0;padding:0 5px;flex:none}
+.intro-dots::before{content:'';position:absolute;left:8px;right:8px;top:50%;height:2px;margin-top:-1px;background:var(--line)}
+.intro-dots i{position:relative;display:block;width:10px;height:10px;border-radius:50%;background:var(--card);box-shadow:inset 0 0 0 2px var(--muted)}
+.intro-dots i.on{background:var(--accent);box-shadow:0 0 0 4px var(--ui-glow)}
+.intro-dots i.on:has(+ i.on){box-shadow:none}
 .intro-text{font:600 calc(15px*var(--s,1))/1.45 var(--ui);margin:calc(8px*var(--s,1)) 0 0;text-wrap:pretty}
 .intro-panel .btn.primary{margin-bottom:0}
 .intro-panel .linkbtn{text-align:center;margin-top:calc(4px*var(--s,1))}
 .intro-skip{position:absolute;top:max(12px,env(safe-area-inset-top,0px));right:max(12px,env(safe-area-inset-right,0px));min-height:44px;min-width:44px;
-  padding:0 16px;border:0;border-radius:22px;background:rgba(29,30,31,.88);color:#F7F7F7;font:800 14px/1 var(--ui);cursor:pointer;touch-action:manipulation}
+  padding:0 16px;border:0;border-radius:22px;background:rgba(29,30,31,.88);color:#F7F7F7;font:800 12.5px/1 var(--ui);letter-spacing:.08em;text-transform:uppercase;
+  cursor:pointer;touch-action:manipulation}
 .intro-skip:hover{background:rgba(29,30,31,.96)}
 .intro-skip:focus-visible{outline:3px solid #CFAB00;outline-offset:0;box-shadow:0 0 0 6px #1D1E1F} /* goud met een donkere band: zichtbaar op lucht en wolk */
 .veil{position:absolute;inset:0;z-index:4;background:#0b0c0d;pointer-events:none}
 @media (max-height:700px){.btn{min-height:44px}
   /* weegbon op kleine telefoons: de zakkenregel (staat ook op het jaarverslag) wijkt voor de langste reeks */
-  #lvBon tr.opt{display:none}#lvBon td{padding-top:calc(4px*var(--s,1));padding-bottom:calc(4px*var(--s,1))}}
+  #lvBon tr.opt{display:none}.bon td{padding-top:calc(4px*var(--s,1));padding-bottom:calc(4px*var(--s,1))}
+  .bon{--z:8px;padding-top:7px;padding-bottom:7px} /* bon iets platter, met kleinere kartels */
+  /* jaarverslag: iets minder witruimte tussen de blokken die marge hebben (.muted, .uit en .fact hebben er geen),
+     zodat bon en kernwaarden op een kleine telefoon zonder scrollen passen */
+  #scrDone .card>:is(h2,.ui-bon,.badges,.btn,.row){margin-top:calc(9px*var(--s,1))}}
 /* lage vensters: Nog een korrel? bovenaan, bon weg */
-@media (max-height:480px){#scrOver .card{display:flex;flex-direction:column;gap:8px}#scrOver .card>*{margin-top:0;flex:none}#bAgain{order:-1}#overBon{display:none}}
-@media (prefers-reduced-motion:reduce){.btn.primary:active,.btn.go:active{transform:none}}
+@media (max-height:480px){#scrOver .card{display:flex;flex-direction:column;gap:8px}#scrOver .card>*{margin-top:0;flex:none}#bAgain{order:-1}#scrOver .ui-bon{display:none}}
+@media (prefers-reduced-motion:reduce){.btn:active,.btn.primary:active,.btn.go:active{transform:none}
+  .card,.toast,.stamp,.tsjoch,.title .logo::after{animation:none}
+  .story #bStory[aria-disabled="true"]::before{animation:none;transform:scaleX(0)}}
 </style>
 <div id="app">
 <canvas id="lb" aria-hidden="true"></canvas>
@@ -283,7 +378,7 @@ textarea.copy{width:100%;box-sizing:border-box;font:600 13px/1.35 var(--ui);back
     <button class="linkbtn mid" id="bPick" type="button" hidden>Kies een molen</button>
     <div class="row duo"><button class="btn subbtn" id="bNight" type="button">Nachtploeg</button><button class="btn bookbtn" id="bBook" type="button">Molenboek</button></div>
     <div class="links"><button class="linkbtn" id="bScores" type="button">Scores</button><button class="linkbtn" id="bSettings" type="button">Instellingen</button><button class="linkbtn" id="bAbout" type="button">Over dit spel</button></div>
-    <p class="fine">Fan-made door een stagiair.</p>
+    <p class="fine ui-voet">Fan-made door een stagiair.</p>
   </div>
 </section>
 
@@ -303,7 +398,7 @@ textarea.copy{width:100%;box-sizing:border-box;font:600 13px/1.35 var(--ui);back
 
 <section id="scrPick" class="screen" aria-label="Kies een molen" hidden>
   <div class="card">
-    <h2>Kies een molen</h2>
+    <h2 class="ui-pen">Kies een molen</h2>
     <p class="muted">Begin bij een molen die je al hebt bereikt.</p>
     <div class="chips" id="lvlChips"></div>
     <button class="btn primary" id="bPickBack" type="button" data-primary>Terug</button>
@@ -334,7 +429,7 @@ textarea.copy{width:100%;box-sizing:border-box;font:600 13px/1.35 var(--ui);back
 
 <section id="scrStory" class="screen" aria-label="Verhaal halverwege" hidden>
   <div class="card story">
-    <p class="kicker" id="stKicker">Halverwege</p>
+    <p class="kicker ui-kick" id="stKicker">Halverwege</p>
     <div class="story-head"><h2 id="stTitle"></h2><canvas class="story-art" id="stArt" width="208" height="116" aria-hidden="true"></canvas></div>
     <p class="story-text" id="stText"></p>
     <p class="hand story-slot" id="stSlot"></p>
@@ -363,7 +458,7 @@ textarea.copy{width:100%;box-sizing:border-box;font:600 13px/1.35 var(--ui);back
     <p class="kicker">Weegbon</p>
     <h2 id="lvTitle"><span class="tsjoch">Tsjoch!</span> Order geladen</h2>
     <p class="hand era" id="lvEra"></p>
-    <table class="bon" id="lvBon"></table>
+    <div class="ui-bon"><table class="bon" id="lvBon"></table></div>
     <p class="uit" id="lvUit"></p>
     <div class="badges" id="lvBadges"></div>
     <p class="fact"><b>Wist je dat?</b><span id="lvFact"></span></p>
@@ -376,7 +471,7 @@ textarea.copy{width:100%;box-sizing:border-box;font:600 13px/1.35 var(--ui);back
   <div class="card">
     <div class="over-head"><h2 class="stamp">Partij afgekeurd</h2><span class="hand">Oant moarn</span></div>
     <p class="muted" id="overSub"></p>
-    <table class="bon" id="overBon"></table>
+    <div class="ui-bon"><table class="bon" id="overBon"></table></div>
     <p class="uit" id="overUit"></p>
     <div class="badges" id="overBadges"></div>
     <div class="picker" id="picker" hidden>
@@ -393,10 +488,10 @@ textarea.copy{width:100%;box-sizing:border-box;font:600 13px/1.35 var(--ui);back
 
 <section id="scrDone" class="screen" aria-label="Jaarverslag" hidden>
   <div class="card">
-    <p class="kicker">Jaarverslag 2026</p>
+    <p class="kicker ui-kick">Jaarverslag <span class="hand">2026</span></p>
     <h2>180 jaar, van rosmolen tot Molen B</h2>
     <p class="muted" id="doneNote">Je viel door alle molens van de tijdlijn. Generaties lang draaiden hier de molens op vakmanschap; jij draaide een rondje mee.</p>
-    <table class="bon" id="doneBon"></table>
+    <div class="ui-bon"><table class="bon" id="doneBon"></table></div>
     <p class="uit" id="doneUit"></p>
     <div class="badges" id="doneBadges"></div>
     <p class="fact"><b>Jubileumjaar</b>In het Urban Tarweveld in de Leeuwarder wijk Middelsee groeide in 2026 tarwe gewoon bij de stoplichten.</p>
@@ -447,7 +542,7 @@ textarea.copy{width:100%;box-sizing:border-box;font:600 13px/1.35 var(--ui);back
   <div class="card boek">
     <div class="brand sm"><svg class="rk-logo" focusable="false" role="img" aria-label="koopmans" viewBox="0 0 426 147" version="1.1" xmlns="http://www.w3.org/2000/svg"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g><path d="M150.3,104.8 C155.3,104.8 155.4,102.9 155.4,101.9 L155.4,79.8 C155.4,79 155.4,77.2 150.3,77.2 C145.2,77.2 145,78.5 145,79.7 L145,101.9 C145,103.1 145.5,104.8 150.3,104.8 Z"></path><path d="M188.8,103.9 C193.8,103.9 192.9,98.9 192.9,98.9 L192.9,81.7 C192.9,80.9 192.7,78.6 188.8,78.6 C184.9,78.6 183.1,79.4 183.1,83 L183.1,100.5 C183.1,103.1 184.4,103.9 188.8,103.9 Z"></path><rect x="198.6" y="46.5" width="30.3" height="5.9"></rect><path d="M194.1,41.2 L201.5,41.2 L201.5,33.5 C201.5,33.5 200.8,27.8 195.2,27.8 C191,27.8 188.3,31.6 188.3,34.5 C188.3,37.8 191.2,41.2 194.1,41.2 Z"></path><path d="M239.4,34.5 C239.4,31.6 236.7,27.8 232.5,27.8 C226.8,27.8 226.2,33.5 226.2,33.5 L226.2,41.2 L233.6,41.2 C236.6,41.2 239.4,37.8 239.4,34.5 Z"></path><path d="M286.6,93 C284.9,92.3 282.3,92.3 281.2,92.8 C280.1,93.2 279.2,94.8 279.2,95.9 L279.2,101.4 C279.2,103.1 279.8,103.6 280.9,104 C282,104.4 283.7,104.6 285.6,104.2 C287.6,103.9 288,102.1 288.1,101.4 C288.2,100.7 288,96.1 288,94.8 C288,94.8 287.6,93.4 286.6,93 Z"></path><path d="M220.3,29.3 C220.3,24.7 216.9,23 213.6,23 C210.3,23 207.4,25.2 207.4,29.3 L207.4,41.2 L220.3,41.2 L220.3,29.3 L220.3,29.3 Z"></path><path d="M112.5,104.8 C117.5,104.8 117.6,102.9 117.6,101.9 L117.6,79.8 C117.6,79 117.6,77.2 112.5,77.2 C107.4,77.2 107.2,78.5 107.2,79.7 L107.2,101.9 C107.2,103.1 107.6,104.8 112.5,104.8 Z"></path><path d="M213.7,8.4 C216,8.4 217.9,6.5 217.9,4.2 C217.9,1.9 216,0 213.7,0 C211.4,0 209.5,1.9 209.5,4.2 C209.5,6.5 211.4,8.4 213.7,8.4 Z" fill="#CFAB00" fill-rule="nonzero"></path><path d="M215.7,11.9 C215.7,14.2 217.6,16.1 219.9,16.1 C222.2,16.1 224.1,14.2 224.1,11.9 C224.1,9.6 222.2,7.7 219.9,7.7 C217.5,7.7 215.7,9.6 215.7,11.9 Z" fill="#CFAB00" fill-rule="nonzero"></path><path d="M207.5,16.1 C209.8,16.1 211.7,14.2 211.7,11.9 C211.7,9.6 209.8,7.7 207.5,7.7 C205.2,7.7 203.3,9.6 203.3,11.9 C203.3,14.3 205.2,16.1 207.5,16.1 Z" fill="#CFAB00" fill-rule="nonzero"></path><polygon fill="currentColor" fill-rule="nonzero" points="68.9 93.3 82.6 113.1 96.7 113.1 80.1 88.9 97.4 68.4 82.8 68.4 69.2 84.8 69.2 51 57.5 51 57.5 113.1 68.9 113.1"></polygon><path d="M95.8,104.8 C95.8,108.4 96.2,114.1 112.2,114.1 C128.6,114.1 128.8,106.8 128.8,104.8 L128.8,76.6 C128.8,74.9 129.2,67.9 112,67.9 C96.1,67.9 95.7,76.8 95.7,76.8 L95.7,104.8 L95.8,104.8 Z M107.2,79.7 C107.2,78.5 107.4,77.2 112.5,77.2 C117.6,77.2 117.6,79.1 117.6,79.8 L117.6,101.9 C117.6,102.9 117.5,104.8 112.5,104.8 C107.6,104.8 107.2,103.1 107.2,101.9 L107.2,79.7 Z" fill="currentColor" fill-rule="nonzero"></path><path d="M150.1,114 C166.5,114 166.7,106.7 166.7,104.7 L166.7,76.6 C166.7,74.9 167.1,67.9 149.9,67.9 C134,67.9 133.6,76.8 133.6,76.8 L133.6,104.7 C133.7,108.4 134.1,114 150.1,114 Z M145,79.7 C145,78.5 145.2,77.2 150.3,77.2 C155.4,77.2 155.4,79.1 155.4,79.8 L155.4,101.9 C155.4,102.9 155.3,104.8 150.3,104.8 C145.4,104.8 145,103.1 145,101.9 L145,79.7 Z" fill="currentColor" fill-rule="nonzero"></path><path d="M183.1,108.8 C185.5,113.4 189.6,113.8 194,113.8 C200.5,113.7 204.9,110.2 204.8,103.9 C204.7,97 204.8,82.6 204.8,76.7 C204.8,70.7 199.8,68.4 194,68.4 C188.2,68.4 185.7,70.4 183.1,72.8 L183.1,68.4 L171.5,68.4 L171.5,130.9 L183.1,130.9 L183.1,108.8 Z M183.1,83 C183.1,79.4 185,78.6 188.8,78.6 C192.7,78.6 192.9,80.9 192.9,81.7 L192.9,98.9 C192.9,98.9 193.8,103.9 188.8,103.9 C184.4,103.9 183.1,103.1 183.1,100.6 L183.1,83 Z" fill="currentColor" fill-rule="nonzero"></path><path d="M242.3,74.2 C241.2,71.6 238.9,67.9 232,67.9 C225.2,67.9 221.4,72.9 221.4,72.9 L221.4,68.4 L209.6,68.4 L209.6,113.2 L221.4,113.2 L221.4,83 C221.4,78.9 224.6,78.6 226,78.6 C227.4,78.6 230.4,78.9 230.4,83 L230.4,113.1 L242.3,113.1 L242.3,83 C242.3,78.5 245.9,78.4 247.2,78.4 C248.4,78.4 251.5,78.6 251.5,83 L251.5,113.1 L263.3,113.1 L263.3,76.4 C263.3,75.1 263.6,68 252.7,68 C245.7,68 242.3,74.2 242.3,74.2 Z" fill="currentColor" fill-rule="nonzero"></path><path d="M284.7,85.6 C283,85.3 279.5,84.6 274,85.9 C267.7,87.4 267.799905,93.9 267.799905,93.9 L267.799905,105.7 C267.799905,110.4 272.3,113.6 275.2,113.6 L280,113.6 C284.9,113.6 288.2,108 288.2,108 L288.2,113.1 L299.1,113.1 L299.1,79 C299.1,73.7 295.1,70.4 292.8,69.3 C290.5,68.2 285.7,67.6 282.1,67.6 C278.5,67.6 276.4,67.4 268.1,69.7 L268.1,80.6 C269.5,79.3 274.8,77.2 279.5,77.2 C284.1,77.2 287.9,78.7 287.9,80.9 L287.9,87.3 C288,87.3 286.4,85.9 284.7,85.6 Z M288,94.8 C288,96.1 288.2,100.8 288.1,101.4 C288,102.1 287.5,103.8 285.6,104.2 C283.6,104.5 282,104.4 280.9,104 C279.8,103.6 279.2,103 279.2,101.4 L279.2,95.9 C279.2,94.8 280.1,93.3 281.2,92.8 C282.3,92.4 285,92.4 286.6,93 C287.6,93.4 288,94.8 288,94.8 Z" fill="currentColor" fill-rule="nonzero"></path><path d="M316,81.7 C316,78.1 319.5,78.2 320.1,78.2 C320.8,78.2 324.8,78.5 324.8,81.5 L324.8,113.1 L336.7,113.1 C336.7,113.1 336.6,79.1 336.7,76.3 C336.8,73.5 335.4,67.5 325.6,67.8 C322,67.9 317.5,68.8 316,72.9 L316,68.3 L304,68.3 L304,113.1 L316,113.1 L316,81.7 Z" fill="currentColor" fill-rule="nonzero"></path><path d="M347.6,94.6 C349.9,94.8 353.8,94.4 356.5,94.6 C359.1,94.8 359,96.9 359.2,97.3 C359.4,97.7 359.1,100.4 359.1,100.4 C359.1,100.4 359,103.4 356.5,103.5 C348,104.1 341.6,102 341.6,102 L341.7,111.3 C341.7,111.3 347.8,113.3 355.3,113.8 C357.8,114 358.1,113.7 360.9,113.6 C362.5,113.5 364.9,112.9 367.5,110.5 C369.8,108.4 370.3,103.7 370.4,102.9 C370.6,101 370.5,94.6 370.3,93 C370.2,91.4 369.7,88.6 368.5,87.2 C367.3,85.8 364.9,85.4 364.3,85.3 C363.6,85.2 358.4,85.3 355.6,85.4 C352.8,85.5 352.6,84.3 352.6,84.3 C352.6,84.3 352.2,81.4 352.7,79.3 C352.7,79.2 352.4,77.3 357.4,77.3 C362.4,77.3 367.7,78.8 367.7,78.8 L367.7,69.5 C366.2,68.8 364.6,68.6 362.6,68.2 C360.6,67.8 353.6,67.7 349.1,68.3 C345.3,68.8 341.9,72.8 341.6,75.1 C341.3,77.7 340.9,81 341.3,87.7 C341.6,94.4 345.2,94.4 347.6,94.6 Z" fill="currentColor" fill-rule="nonzero"></path><path d="M192.5,46.4 L192.5,57.9 L234.7,57.9 L234.7,46.4 C238,46.4 245.3,41.5 245.3,34.5 C245.3,26.3 237.4,21.7 232.7,21.7 C228.1,21.7 225.2,24.5 225.2,24.5 C224,21.7 219.9,17 213.4,17 C206.9,17 203.8,21.6 202.2,24.6 C202.2,24.6 200.5,21.9 194.6,21.9 C188.8,21.9 182.2,27.7 182.2,34.2 C182.3,40.7 187.6,46.4 192.5,46.4 Z M226.2,33.5 C226.2,33.5 226.9,27.8 232.5,27.8 C236.7,27.8 239.4,31.6 239.4,34.5 C239.4,37.8 236.5,41.2 233.6,41.2 L226.2,41.2 L226.2,33.5 Z M207.4,29.3 C207.4,25.2 210.3,23 213.6,23 C216.9,23 220.3,24.7 220.3,29.3 L220.3,41.2 L207.4,41.2 L207.4,29.3 L207.4,29.3 Z M228.9,46.5 L228.9,52.4 L198.6,52.4 L198.6,46.5 L228.9,46.5 Z M195.2,27.8 C200.9,27.8 201.5,33.5 201.5,33.5 L201.5,41.2 L194.1,41.2 C191.2,41.2 188.3,37.8 188.3,34.5 C188.3,31.6 191,27.8 195.2,27.8 Z" fill="#CFAB00" fill-rule="nonzero"></path><path d="M395.8,124.6 L395.8,132.5 C395.8,137.9 391.9,142 386.4,142 L38.1,142 C31.8,142 28.3,138 28.3,132.5 L28.3,124.6 L0,124.6 L0,128.6 L23.9,128.6 L23.9,132.6 C23.9,140.3 28.3,146.1 38,146.1 L386.6,146.1 C395.9,146.1 399.8,139.2 399.8,132.6 L399.8,128.6 L425.2,128.6 L425.2,124.6 L395.8,124.6 Z" fill="#CFAB00" fill-rule="nonzero"></path></g></g></svg></div>
     <p class="kicker"><canvas data-ico="aar" width="52" height="52"></canvas><span>Op je eigen tempo</span></p>
-    <h2>Molenboek</h2>
+    <h2 class="ui-pen">Molenboek</h2>
     <p class="muted">De verhalen en alles wat je in de molen tegenkomt, staan hier. Een pagina gaat open zodra je iets voor het eerst ziet.</p>
     <button class="linkbtn" id="bBookAll" type="button">Toon alle pagina's</button>
     <div class="easy" id="bookAllAsk" role="group" aria-labelledby="bookAllAskH" tabindex="-1" hidden>
@@ -792,63 +887,32 @@ function layout() {
   if (S.screen === 'intro') introLayout();
 }
 // Letterbox één keer op een eigen canvas onder het speelveld; #cv tekent alleen nog het veld zelf.
+// Merkkader: warme achtergrond (licht of donker thema) met een korenaarpatroon op lage dekking, een zachte schaduw rond het veld, en op
+// brede schermen links de tijdlijn en rechts het tijdperkplaatje (gxLbPanels). Verandert alleen het tijdperk of de zone, dan tekent
+// gxLetterbox() alleen de twee zijpanelen opnieuw.
 function buildLetterbox() {
   const c = $('lb'); c.width = cv.width; c.height = cv.height;
-  const g = c.getContext('2d'), k = V.dpr * Math.max(0.8, Math.min(V.s, 1.6));
-  g.fillStyle = '#1b1816'; g.fillRect(0, 0, c.width, c.height);
-  const bw = 44 * k, bh = 18 * k, rnd = mulberry32(7);
-  for (let r = 0, y = 0; y < c.height; r++, y += bh) {
-    for (let x = (r % 2) ? -bw / 2 : 0; x < c.width; x += bw) {
-      const v = 34 + Math.floor(rnd() * 12);
-      g.fillStyle = `rgb(${v + 6},${v - 2},${v - 8})`; g.fillRect(x + 1.5 * k, y + 1.5 * k, bw - 3 * k, bh - 3 * k);
-    }
-  }
-  const fx = V.ox * V.dpr, fy = V.oy * V.dpr, fw = W * V.s * V.dpr, fh = H * V.s * V.dpr;
-  if (fx > 60 * V.dpr) { // gouden korenaren als ornament naast het speelveld op brede schermen
-    for (let y = 120 * k; y < c.height - 60 * k; y += 220 * k) { icon(g, 'aar', fx / 2, y, 34 * k, 'rgba(207,171,0,.22)'); icon(g, 'aar', c.width - fx / 2, y + 110 * k, 34 * k, 'rgba(207,171,0,.22)'); }
-  }
-  g.save(); g.shadowColor = 'rgba(0,0,0,.75)'; g.shadowBlur = 28 * V.dpr; g.fillStyle = '#000'; g.fillRect(fx, fy, fw, fh); g.restore();
+  const g = c.getContext('2d'), d = V.dpr, dark = gxDark();
+  gxSt.lb = gxLbKey(); gxSt.lbDark = dark;
+  g.setTransform(1, 0, 0, 1, 0, 0);
+  gxLbFill(g, 0, 0, c.width, c.height, dark);
+  const fx = V.ox * d, fy = V.oy * d, fw = W * V.s * d, fh = H * V.s * d;
+  g.save(); g.shadowColor = dark ? 'rgba(0,0,0,.75)' : 'rgba(70,52,20,.38)'; g.shadowBlur = 30 * d; g.shadowOffsetY = 8 * d; g.fillStyle = '#000'; g.fillRect(fx, fy, fw, fh); g.restore();
+  gxLbPanels(g, dark);
 }
-// Achtergrond per tijdperk: één keer naar een offscreen canvas, daarna met modulo gescrold.
+// Achtergrond per tijdperk: één keer naar een offscreen canvas (gxBG), daarna op hele schermpixels gekopieerd en trager gescrold dan
+// de verdiepingen. Alleen het tijdperk van nu blijft in het geheugen. B.motes: de stofjes die in het licht van deze wand zweven.
 function getTile(style, pal) {
-  const key = style + pal.wall;
+  const era = gxEra(style, pal), key = 'bg:' + era;
   if (tiles[key]) return tiles[key];
-  const k = V.s * V.dpr, th = 240, c = document.createElement('canvas');
-  c.width = Math.ceil(W * k); c.height = Math.ceil(th * k);
-  const g = c.getContext('2d', { alpha: false }); g.scale(k, k); // ondoorzichtig: neerzetten is dan een kale kopie
-  const rnd = mulberry32(hashStr(key));
-  g.fillStyle = pal.wall; g.fillRect(0, 0, W, th);
-  if (style === 'hout' || style === 'hout2') {
-    for (let x = L; x < R; x += 30) {
-      g.globalAlpha = 0.55 + rnd() * 0.3; g.fillStyle = pal.wall2; g.fillRect(x + 1, 0, 28, th); g.globalAlpha = 1;
-      g.strokeStyle = 'rgba(0,0,0,.2)'; g.lineWidth = 1;
-      for (let i = 0; i < 3; i++) { const gx = x + 5 + rnd() * 20; g.beginPath(); g.moveTo(gx, 0); g.bezierCurveTo(gx + 4, 80, gx - 4, 160, gx, th); g.stroke(); }
-      g.fillStyle = 'rgba(0,0,0,.5)'; for (const ny of [22, 142]) { g.fillRect(x + 6, ny, 2, 2); g.fillRect(x + 22, ny, 2, 2); }
-      if (style === 'hout2') { g.fillStyle = pal.line; g.globalAlpha = 0.35; g.fillRect(x, 0, 1, th); g.globalAlpha = 1; }
-    }
-    g.fillStyle = 'rgba(0,0,0,.28)'; g.fillRect(L, 112, R - L, 10);
-  } else if (style === 'steen' || style === 'tegel') {
-    const bw = style === 'steen' ? 34 : 30, bh = style === 'steen' ? 15 : 30;
-    for (let r = 0, y = 0; y < th; r++, y += bh) for (let x = L - (r % 2 && style === 'steen' ? bw / 2 : 0); x < R; x += bw) {
-      g.globalAlpha = 0.45 + rnd() * 0.35; g.fillStyle = pal.wall2; g.fillRect(x + 1, y + 1, bw - 2, bh - 2);
-    }
-    g.globalAlpha = 1;
-    if (style === 'tegel') { g.fillStyle = pal.line; g.globalAlpha = 0.18; g.fillRect(L, 0, R - L, 5); g.fillRect(L, 120, R - L, 5); g.globalAlpha = 1; }
-  } else if (style === 'staal') {
-    for (let y = 0; y < th; y += 120) for (let x = L; x < R; x += 100) {
-      g.fillStyle = pal.wall2; g.globalAlpha = 0.35 + rnd() * 0.2; g.fillRect(x + 2, y + 2, 96, 116); g.globalAlpha = 1;
-      g.fillStyle = 'rgba(255,255,255,.07)'; g.beginPath(); g.moveTo(x + 2, y + 2); g.lineTo(x + 60, y + 2); g.lineTo(x + 2, y + 70); g.fill();
-      g.fillStyle = 'rgba(159,179,200,.45)'; for (const [rx, ry] of [[7, 7], [93, 7], [7, 113], [93, 113]]) g.fillRect(x + rx - 1.5, y + ry - 1.5, 3, 3);
-    }
-  } else {
-    g.strokeStyle = pal.line; g.globalAlpha = 0.09; g.lineWidth = 1;
-    for (let x = L; x <= R; x += 20) { g.beginPath(); g.moveTo(x + 0.5, 0); g.lineTo(x + 0.5, th); g.stroke(); }
-    for (let y = 0; y < th; y += 20) { g.beginPath(); g.moveTo(L, y + 0.5); g.lineTo(R, y + 0.5); g.stroke(); }
-    g.globalAlpha = 0.5;
-    for (let i = 0; i < 7; i++) { g.fillStyle = rnd() < 0.35 ? '#E78A01' : pal.line; const gx = L + 10 + Math.floor(rnd() * 13) * 20, gy = Math.floor(rnd() * 11) * 20 + 6; g.fillRect(gx, gy, 4 + Math.floor(rnd() * 3) * 4, 3); g.globalAlpha = 0.25; g.fillRect(gx, gy + 6, 8, 2); g.globalAlpha = 0.5; }
-    g.globalAlpha = 1;
-  }
-  return (tiles[key] = c);
+  for (const q in tiles) if (q.startsWith('bg:')) delete tiles[q];
+  const k = V.s * V.dpr, P = gxP, w = gxBW, { c, g } = gxCv(w, P, k, true), rnd = mulberry32(hashStr(key)), M = [];
+  g.fillStyle = pal.wall; g.fillRect(0, 0, w, P);
+  (gxBG[era] || gxBG.digi)(g, rnd, pal, M, w, P);
+  gxBgShade(g, w, P, era);
+  tiles[key] = { c, P, motes: gxMotesIn(M, rnd, era === 'digi' || era === 'night' ? 14 : 30) };
+  gxWarm(style, pal); // de rest van dit tijdperk in hetzelfde frame (dat telt niet mee voor frameSample), niet verspreid over de eerste frames
+  return tiles[key];
 }
 // Iconen uit canvas-primitieven (geen emoji, geen plaatjes).
 function icon(g, name, x, y, s, col) {
@@ -1482,6 +1546,7 @@ function update(dt) {
   }
   Wd.t += wdt;
   steer(dt);
+  if (!demo) gxTrailStep(); // zacht spoor achter de korrel (alleen beeld)
   if (Wd.ending) Wd.scroll *= Math.exp(-3 * dt);
   Wd.camY += Wd.scroll * wdt;
   const gy = Wd.camY + CONFIG.GY, r = hitR();
@@ -1496,6 +1561,8 @@ function update(dt) {
     if (!demo && !f.passed && floorHit(f, G.x, gy, r)) { if (!f.hit) contact(); if (!f.hit && G.inv <= 0) hurt('floor-' + f.kind); f.hit = true; }
     if (!f.passed && gy >= f.y) { f.passed = true; if (!demo) floorPassed(f); }
   }
+  if (run.perfects > gxSt.pf && !demo) gxPerfectFx(G.x, gy); // perfecte passage: meelwolkje en gouden glans (alleen beeld)
+  gxSt.pf = run.perfects;
   // geplande gevaren van boven: eerst 1 s een waarschuwingsdriehoekje
   for (let i = Wd.sched.length - 1; i >= 0; i--) {
     const s = Wd.sched[i];
@@ -1564,7 +1631,7 @@ function update(dt) {
     p.vy += p.g * wdt; p.x += p.vx * wdt; p.y += p.vy * wdt; p.rot += p.vr * wdt; p.size += p.grow * wdt;
   }
   for (const t of TEXTS) if (t.on) { t.life -= dt; t.y += t.vy * dt; if (t.life <= 0) t.on = false; }
-  if (!demo && !Wd.ending && Math.random() < 0.45) part({ x: G.x + (Math.random() - 0.5) * 8, y: gy - 10, vx: (Math.random() - 0.5) * 20, vy: -Wd.scroll * 0.15, life: 0.5, size: 1.2 + Math.random() * 1.3, color: 'rgba(247,247,247,.55)', kind: 'dust' });
+  if (!demo && !Wd.ending && Math.random() < 0.2) part({ x: G.x + (Math.random() - 0.5) * 8, y: gy - 10, vx: (Math.random() - 0.5) * 20, vy: -Wd.scroll * 0.15, life: 0.5, size: 1 + Math.random() * 1.1, color: 'rgba(247,243,232,.5)', kind: 'dust' }); // fijn meelstof naast het spoor
   if (Wd.dying) { Wd.dying -= dt; if (Wd.dying <= 0) { Wd.dying = 0; gameOver(); } }
   // verhaalpauze pas aan het eind van de stap, als alle botsingen van deze stap bekend zijn
   if (Wd.storyCand) { const f = Wd.storyCand; Wd.storyCand = null; if (storyOK(f)) openStory(f); }
@@ -1676,7 +1743,7 @@ function openStory(f) {
   const st = STORIES.find(s => s.lvl === run.lvl);
   run.storySeen.add(run.lvl); lvS.storyN = f.n + 1; lvS.storyCleared = clearForStory();
   unlockPage('st' + run.lvl); // dit verhaal staat nu in het Molenboek
-  $('stKicker').textContent = `Halverwege · ${st.jaar}`;
+  $('stKicker').innerHTML = `Halverwege <span class="hand">${esc(st.jaar)}</span>`; // jaartal groot in handschrift
   $('stTitle').textContent = st.kop;
   $('stText').textContent = st.tekst;
   $('stSlot').textContent = st.slot || ''; $('stSlot').hidden = !st.slot;
@@ -1739,33 +1806,878 @@ function siloLanded() {
 // ============================================================
 // 10. Tekenen
 // ============================================================
+// ------------------------------------------------------------
+// 10a. Spel-art (gx): diepte en licht per tijdperk, zijwanden, vloeren, stofjes, spoor en merkkader
+// ------------------------------------------------------------
+// Alles wat stilstaat, wordt één keer per tijdperk en canvasformaat op een offscreen canvas getekend (in tiles, dat layout() leegmaakt).
+// Per frame alleen kale kopieën en een paar kleine vormen: geen ctx.filter, geen blur, geen nieuwe verlopen per frame.
+// De achterwand schuift trager mee dan de verdiepingen (gxPar): zo krijgt de schacht diepte. Het licht van het tijdperk (zon tussen de
+// planken, gaslamp, gloeilamp, TL, daglicht, schermpjes) zit in de achterwand zelf; de stofjes zweven alleen in dat licht, puur als sfeer.
+// Feitelijk: geen walsen of plansichters vóór 1920, dus in 1846 en 1867 ook niet op de achtergrond.
+const gxP = 960, gxPS = 320, gxPar = 0.42, gxBW = R - L; // periode achterwand, periode zijwanden, parallax, breedte achterwand
+// gxSt: spoor (trail, tn, ti, cam), perfecte passages (pf), merkkader (lb = sleutel, lbDark, lbEl, lbPat = korenaarpatroon)
+const gxSt = { trail: [], tn: 0, ti: 0, cam: 0, pf: 0, lb: '', lbDark: false, lbEl: null, lbPat: null };
+function gxDark() {
+  const t = document.documentElement.getAttribute('data-theme');
+  if (t === 'dark' || t === 'light') return t === 'dark';
+  try { return matchMedia('(prefers-color-scheme: dark)').matches; } catch (e) { return false; }
+}
+// thema gewisseld: het merkkader opnieuw (en het stilstaande veld één keer opnieuw tekenen)
+function gxTheme() { gxSt.lb = ''; still = false; }
+try { matchMedia('(prefers-color-scheme: dark)').addEventListener('change', gxTheme); } catch (e) { /* oudere browsers */ }
+try { new MutationObserver(gxTheme).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] }); } catch (e) { /* idem */ }
+try { document.fonts.addEventListener('loadingdone', gxTheme); } catch (e) { /* zonder FontFace-API: dan blijft het reservelettertype staan */ }
+function gxCv(w, h, k, opaque) {
+  const c = document.createElement('canvas'); c.width = Math.max(1, Math.ceil(w * k)); c.height = Math.max(1, Math.ceil(h * k));
+  const g = c.getContext('2d', opaque ? { alpha: false } : undefined); g.scale(k, k); return { c, g };
+}
+const gxRgb = hex => { const n = parseInt(hex.slice(1), 16); return `${n >> 16},${n >> 8 & 255},${n & 255}`; }; // '#F7F1E1' > '247,241,225'
+const gxRgba = (rgb, a) => `rgba(${rgb},${Math.round(a * 1000) / 1000})`;
+function gxGlow(g, x, y, r, rgb, a) {
+  const gr = g.createRadialGradient(x, y, 0, x, y, r);
+  gr.addColorStop(0, gxRgba(rgb, a)); gr.addColorStop(0.3, gxRgba(rgb, a * 0.55)); gr.addColorStop(0.65, gxRgba(rgb, a * 0.16)); gr.addColorStop(1, gxRgba(rgb, 0));
+  g.fillStyle = gr; g.fillRect(x - r, y - r, 2 * r, 2 * r);
+}
+function gxRR(g, x, y, w, h, r) { g.beginPath(); g.moveTo(x + r, y); g.arcTo(x + w, y, x + w, y + h, r); g.arcTo(x + w, y + h, x, y + h, r); g.arcTo(x, y + h, x, y, r); g.arcTo(x, y, x + w, y, r); g.closePath(); }
+// verticale herhaling: f(y) ook één periode hoger of lager als het over de rand van de tegel steekt
+function gxWrap(P, y, h, f) { f(y); if (y + h > P) f(y - P); if (y < 0) f(y + P); }
+// lichtbundel als vierhoek met waaierende zijkanten: drie lagen (smaller = lichter) geven een zachte rand zonder blur
+function gxBeam(g, x0, y0, x1, y1, w0, w1, rgb, a) {
+  const gr = g.createLinearGradient(x0, y0, x1, y1); gr.addColorStop(0, gxRgba(rgb, a)); gr.addColorStop(0.5, gxRgba(rgb, a * 0.5)); gr.addColorStop(1, gxRgba(rgb, 0));
+  g.fillStyle = gr;
+  for (const s of [1, 0.7, 0.42]) { g.beginPath(); g.moveTo(x0 - w0 * s / 2, y0); g.lineTo(x0 + w0 * s / 2, y0); g.lineTo(x1 + w1 * s / 2, y1); g.lineTo(x1 - w1 * s / 2, y1); g.closePath(); g.fill(); }
+}
+// zonnestraal door een spleet tussen de planken: een schuin vlak van de spleet (x, y0 tot y0 + h) naar rechtsonder
+function gxRay(g, x, y0, h, dx, dy, rgb, a) {
+  const gr = g.createLinearGradient(x, y0 + h / 2, x + dx, y0 + h / 2 + dy); gr.addColorStop(0, gxRgba(rgb, a)); gr.addColorStop(0.6, gxRgba(rgb, a * 0.35)); gr.addColorStop(1, gxRgba(rgb, 0));
+  g.fillStyle = gr;
+  for (const s of [1, 0.66, 0.33]) { const m = h * (1 - s) / 2; g.beginPath(); g.moveTo(x, y0 + m); g.lineTo(x + dx, y0 + dy + m - 10 * s); g.lineTo(x + dx, y0 + dy + h - m + 10 * s); g.lineTo(x, y0 + h - m); g.closePath(); g.fill(); }
+}
+// stofjes: in de lichtplekken M = [x, y, rx, ry, warm] van de achterwand, een vaste set per tijdperk
+function gxMotesIn(M, rnd, n) {
+  const out = []; if (!M.length) return out;
+  for (let i = 0; i < n; i++) {
+    const z = M[i % M.length], a = rnd() * TAU, d = Math.sqrt(rnd());
+    out.push({ x: z[0] + Math.cos(a) * z[2] * d, y: z[1] + Math.sin(a) * z[3] * d, r: 0.6 + rnd() * 1.0, a: 0.16 + rnd() * 0.26, w: 0.2 + rnd() * 0.4, ph: rnd() * TAU, warm: z[4] !== false });
+  }
+  return out;
+}
+// zachte ronde gloed in één kleur (stofjes, glans, gloed achter de korrel en het actieve HUD-icoon); één keer per kleur en canvasformaat
+function gxDot(rgb) {
+  const key = 'dot:' + rgb; if (tiles[key]) return tiles[key];
+  const { c, g } = gxCv(16, 16, V.s * V.dpr); gxGlow(g, 8, 8, 8, rgb, 1);
+  return (tiles[key] = c);
+}
+const gxEra = (style, pal) => pal === NIGHT.pal ? 'night' : style;
+
+// ---------- achterwanden: x 0-300 is de schacht (L tot R), y 0-960 herhaalt; drie verdiepingen van 320 per tegel ----------
+// Regels: de structuur is vooral verticaal (planken, palen, kolommen, buizen); horizontale delen blijven dun en zacht, zodat niets op
+// een vloer lijkt; geen machines of ronde vormen die op een wals, steen of pick-up lijken. Na de details legt gxHaze een waas in de
+// kleur van de wand over alles (diepte), daarna pas het licht en de lichtplekken voor de stofjes.
+function gxHaze(g, w, P, col, a) { g.globalAlpha = a; g.fillStyle = col; g.fillRect(0, 0, w, P); g.globalAlpha = 1; }
+const gxBG = {
+  // 1846, rosmolen in Holwerd: planken met daglicht ertussen, zachte balken met stro, schoren en de houten spil van de rosmolen
+  hout(g, rnd, pal, M, w, P) {
+    const seams = []; let x = -3;
+    while (x < w) {
+      const pw = 22 + Math.floor(rnd() * 14), t = rnd();
+      g.fillStyle = mixHex('#3b2816', '#523822', t); g.fillRect(x, 0, pw, P);
+      g.strokeStyle = 'rgba(20,12,4,.28)'; g.lineWidth = 1; g.beginPath(); // nerf: golft met een heel aantal golven per periode, dus naadloos
+      for (let i = 0; i < 3; i++) { const nx = x + 4 + rnd() * (pw - 8), ph = rnd() * TAU, n = 2 + Math.floor(rnd() * 4); g.moveTo(nx, 0); for (let y = 16; y <= P; y += 16) g.lineTo(nx + Math.sin(y / P * TAU * n + ph) * 1.8, y); }
+      g.stroke();
+      g.fillStyle = 'rgba(255,228,184,.045)'; g.fillRect(x + 1.6, 0, 2, P);
+      g.fillStyle = 'rgba(10,6,2,.6)'; g.fillRect(x, 0, 1.6, P);
+      if (rnd() < 0.75) { const ky = rnd() * P, kx = x + 6 + rnd() * (pw - 12); gxWrap(P, ky - 10, 20, yy => { g.fillStyle = 'rgba(20,12,4,.38)'; g.beginPath(); g.ellipse(kx, yy + 10, 2.4, 5, 0, 0, TAU); g.fill(); g.strokeStyle = 'rgba(20,12,4,.2)'; g.beginPath(); g.ellipse(kx, yy + 10, 4.4, 8.5, 0, 0, TAU); g.stroke(); }); }
+      seams.push(x); x += pw;
+    }
+    for (const [x0, y0, x1, y1] of [[6, 330, 70, 600], [294, 650, 230, 920]]) { // schoren
+      g.strokeStyle = 'rgba(30,20,10,.75)'; g.lineWidth = 12; g.lineCap = 'butt'; g.beginPath(); g.moveTo(x0, y0); g.lineTo(x1, y1); g.stroke();
+      g.strokeStyle = 'rgba(214,180,128,.08)'; g.lineWidth = 1.5; g.beginPath(); g.moveTo(x0 - 5, y0); g.lineTo(x1 - 5, y1); g.stroke();
+    }
+    for (let s = 0; s < 3; s++) gxWrap(P, 300 + s * 320, 30, yy => { // balken: dun en bijna in de tint van de planken
+      g.fillStyle = 'rgba(28,18,8,.5)'; g.fillRect(0, yy, w, 12);
+      g.fillStyle = 'rgba(214,180,128,.09)'; g.fillRect(0, yy, w, 1.5);
+      const sg = g.createLinearGradient(0, yy + 12, 0, yy + 28); sg.addColorStop(0, 'rgba(0,0,0,.18)'); sg.addColorStop(1, 'rgba(0,0,0,0)'); g.fillStyle = sg; g.fillRect(0, yy + 12, w, 16);
+      g.fillStyle = 'rgba(16,9,3,.4)'; for (let px = 16 + s * 9; px < w; px += 48) { g.beginPath(); g.arc(px, yy + 6, 1.8, 0, TAU); g.fill(); }
+      g.strokeStyle = 'rgba(222,190,122,.3)'; g.lineWidth = 0.8; g.beginPath(); // stro op de balk
+      for (let i = 0; i < 12; i++) { const sx = rnd() * w, l = 3 + rnd() * 7; g.moveTo(sx, yy + 1); g.quadraticCurveTo(sx + (rnd() - 0.5) * 8, yy - l * 0.4, sx + (rnd() - 0.5) * 12, yy - l); }
+      g.stroke();
+    });
+    const sx = 222, sw = 24; // de houten spil van de rosmolen, met ijzeren banden
+    const spg = g.createLinearGradient(sx - sw / 2, 0, sx + sw / 2, 0); spg.addColorStop(0, '#24170b'); spg.addColorStop(0.32, '#56391f'); spg.addColorStop(0.55, '#442e19'); spg.addColorStop(1, '#1f1409');
+    g.fillStyle = spg; g.fillRect(sx - sw / 2, 0, sw, P);
+    g.strokeStyle = 'rgba(20,12,4,.32)'; g.lineWidth = 1; g.beginPath(); for (const o of [-5, 3, 8]) { g.moveTo(sx + o, 0); g.lineTo(sx + o, P); } g.stroke();
+    for (let y = 70; y < P; y += 160) { g.fillStyle = '#1a1a1a'; g.fillRect(sx - sw / 2 - 1.5, y, sw + 3, 6); g.fillStyle = 'rgba(210,210,210,.13)'; g.fillRect(sx - sw / 2 - 1.5, y, sw + 3, 1.2); }
+    gxHaze(g, w, P, '#2c1d0f', 0.3);
+    // daglicht: spleten tussen de planken en een klein luik, met schuine zonnestralen naar rechtsonder
+    const light = [[seams[1], 60, 150], [seams[2], 420, 120], [seams[3], 760, 130]];
+    for (const [lx, y0, h] of light) gxWrap(P, y0 - 10, h + 300, yy => {
+      gxRay(g, lx, yy, h, 190, 230, '255,214,150', 0.07);
+      g.fillStyle = 'rgba(255,226,170,.62)'; g.fillRect(lx - 0.2, yy, 1.3, h); gxGlow(g, lx, yy + h / 2, 18, '255,214,150', 0.14);
+    });
+    for (const [lx, y0, h] of light) for (let i = 0; i < 3; i++) M.push([lx + 50 + i * 40, (y0 + h / 2 + 60 + i * 55) % P, 34, 46]);
+    gxWrap(P, 640, 260, yy => {
+      const lx = 92, ly = yy + 6; g.fillStyle = 'rgba(24,15,7,.9)'; g.fillRect(lx - 3, ly - 3, 30, 28);
+      const lg = g.createLinearGradient(lx, ly, lx, ly + 22); lg.addColorStop(0, 'rgba(240,226,190,.75)'); lg.addColorStop(1, 'rgba(214,196,150,.6)'); g.fillStyle = lg; g.fillRect(lx, ly, 24, 22);
+      g.fillStyle = '#1c1209'; g.fillRect(lx + 11, ly, 2, 22); g.fillRect(lx, ly + 10, 24, 2);
+      gxGlow(g, lx + 12, ly + 11, 40, '255,220,160', 0.14);
+      gxBeam(g, lx + 12, ly + 22, lx + 96, ly + 250, 24, 120, '255,214,150', 0.045);
+    });
+    M.push([140, 800, 40, 60], [170, 860, 40, 50]);
+  },
+  // 1867, Stoommeelfabriek Friso: baksteen, rondboogramen, gietijzeren kolommen, een stoombuis, drijfriemen en gaslampen
+  steen(g, rnd, pal, M, w, P) {
+    g.fillStyle = '#211009'; g.fillRect(0, 0, w, P);
+    const bc = ['#46200f', '#4c2313', '#512616', '#43200f', '#562a18'];
+    for (let r = 0, y = 0; y < P; r++, y += 12) for (let x = (r % 2) ? -16 : 0; x < w; x += 32) {
+      g.fillStyle = bc[Math.floor(rnd() * bc.length)]; g.fillRect(x + 1, y + 1, 30, 10);
+      if (rnd() < 0.3) { g.fillStyle = 'rgba(255,214,180,.03)'; g.fillRect(x + 1, y + 1, 30, 2); }
+    }
+    const win = (x, yy, ww, hh) => { // rondboograam met gietijzeren roeden, avondlucht achter het glas
+      const r = ww / 2, top = yy;
+      g.fillStyle = '#2a120a'; g.beginPath(); g.moveTo(x - 7, top + r + 2); g.arc(x + r, top + r + 2, r + 7, Math.PI, 0); g.lineTo(x + ww + 7, top + hh + 3); g.lineTo(x - 7, top + hh + 3); g.closePath(); g.fill();
+      const gg = g.createLinearGradient(0, top, 0, top + hh); gg.addColorStop(0, '#1d2a3b'); gg.addColorStop(0.7, '#2a3646'); gg.addColorStop(1, '#3b3a3c');
+      g.fillStyle = gg; g.beginPath(); g.moveTo(x, top + r + 2); g.arc(x + r, top + r + 2, r, Math.PI, 0); g.lineTo(x + ww, top + hh); g.lineTo(x, top + hh); g.closePath(); g.fill();
+      g.fillStyle = 'rgba(255,255,255,.05)'; g.beginPath(); g.moveTo(x + 4, top + hh); g.lineTo(x + ww * 0.45, top + r * 0.6); g.lineTo(x + ww * 0.62, top + r * 0.6); g.lineTo(x + 16, top + hh); g.closePath(); g.fill();
+      g.strokeStyle = '#121212'; g.lineWidth = 2; g.beginPath();
+      for (let i = 1; i < 3; i++) { g.moveTo(x + ww * i / 3, top + 3); g.lineTo(x + ww * i / 3, top + hh); }
+      for (let y2 = top + r + 2; y2 < top + hh - 4; y2 += 22) { g.moveTo(x, y2); g.lineTo(x + ww, y2); }
+      g.stroke(); g.fillStyle = '#4d463f'; g.fillRect(x - 8, top + hh, ww + 16, 4);
+    };
+    gxWrap(P, 70, 180, yy => win(46, yy, 54, 150)); gxWrap(P, 560, 180, yy => win(196, yy, 54, 150));
+    for (let s = 0; s < 3; s++) gxWrap(P, 300 + s * 320, 24, yy => { // ijzeren ligger: dun
+      g.fillStyle = 'rgba(18,20,22,.55)'; g.fillRect(0, yy, w, 8); g.fillStyle = 'rgba(190,190,180,.08)'; g.fillRect(0, yy, w, 1.2);
+      const sg = g.createLinearGradient(0, yy + 8, 0, yy + 22); sg.addColorStop(0, 'rgba(0,0,0,.2)'); sg.addColorStop(1, 'rgba(0,0,0,0)'); g.fillStyle = sg; g.fillRect(0, yy + 8, w, 14);
+    });
+    for (const cx of [18, 282]) { // gietijzeren kolommen met een kapiteel onder elke ligger
+      g.fillStyle = '#1b1e21'; g.fillRect(cx - 5, 0, 10, P); g.fillStyle = 'rgba(180,190,190,.12)'; g.fillRect(cx - 3, 0, 2, P);
+      for (let s = 0; s < 3; s++) gxWrap(P, 288 + s * 320, 14, yy => { g.fillStyle = '#1b1e21'; g.beginPath(); g.moveTo(cx - 5, yy + 12); g.lineTo(cx - 11, yy); g.lineTo(cx + 11, yy); g.lineTo(cx + 5, yy + 12); g.closePath(); g.fill(); });
+    }
+    // stoombuis langs de wand (verticaal), met flenzen en een afsluiter
+    g.fillStyle = '#4f4a43'; g.fillRect(258, 0, 10, P); g.fillStyle = 'rgba(255,255,255,.08)'; g.fillRect(260, 0, 2, P); g.fillStyle = 'rgba(0,0,0,.3)'; g.fillRect(265, 0, 3, P);
+    for (let y = 40; y < P; y += 160) { g.fillStyle = '#38332e'; g.fillRect(255, y, 16, 5); }
+    gxWrap(P, 500, 30, yy => { g.strokeStyle = '#2f2a26'; g.lineWidth = 2.2; g.beginPath(); g.arc(263, yy + 12, 10, 0, TAU); for (let i = 0; i < 4; i++) { const a = i / 4 * Math.PI; g.moveTo(263 + Math.cos(a) * 10, yy + 12 + Math.sin(a) * 10); g.lineTo(263 - Math.cos(a) * 10, yy + 12 - Math.sin(a) * 10); } g.stroke(); });
+    gxWrap(P, 620, 300, yy => { // drijfwerk: een dunne as met een riemschijf en een schuine drijfriem
+      g.fillStyle = 'rgba(16,18,20,.6)'; g.fillRect(0, yy + 14, w, 3);
+      g.strokeStyle = 'rgba(40,26,16,.6)'; g.lineWidth = 2.2; g.beginPath(); g.moveTo(98, yy + 15); g.lineTo(70, yy + 240); g.moveTo(118, yy + 15); g.lineTo(84, yy + 240); g.stroke();
+      g.fillStyle = 'rgba(30,32,35,.7)'; g.fillRect(96, yy + 8, 24, 14); g.fillStyle = 'rgba(190,190,180,.1)'; g.fillRect(96, yy + 8, 24, 1.2);
+    });
+    gxHaze(g, w, P, '#2a130c', 0.32);
+    for (const [lx, ly, sd] of [[76, 196, 1], [228, 470, -1], [112, 800, 1]]) gxWrap(P, ly - 90, 180, yy => { // gaslampen aan een arm: warm geel licht
+      gxGlow(g, lx, yy + 6, 96, '255,180,84', 0.24); gxGlow(g, lx, yy + 6, 26, '255,226,160', 0.38);
+      g.strokeStyle = '#141414'; g.lineWidth = 2.2; g.beginPath(); g.moveTo(lx - sd * 22, yy - 12); g.lineTo(lx, yy - 12); g.lineTo(lx, yy - 6); g.stroke();
+      g.fillStyle = '#141414'; g.fillRect(lx - sd * 24 - 2, yy - 16, 4, 9);
+      g.fillStyle = '#1d1d1d'; g.beginPath(); g.moveTo(lx - 6, yy - 6); g.lineTo(lx + 6, yy - 6); g.lineTo(lx + 3, yy - 9); g.lineTo(lx - 3, yy - 9); g.closePath(); g.fill();
+      g.fillStyle = 'rgba(255,236,190,.85)'; g.beginPath(); g.moveTo(lx - 5, yy - 6); g.lineTo(lx + 5, yy - 6); g.lineTo(lx + 4, yy + 8); g.lineTo(lx - 4, yy + 8); g.closePath(); g.fill();
+      g.fillStyle = '#FFF6D8'; g.beginPath(); g.ellipse(lx, yy + 2, 1.8, 3.2, 0, 0, TAU); g.fill();
+      g.fillStyle = '#1d1d1d'; g.fillRect(lx - 5, yy + 8, 10, 2);
+      M.push([lx, yy + 40, 56, 52]);
+    });
+  },
+  // 1920, de N.V.: groene tegels, gepleisterde bovenwand, meelpijpen schuin langs de wand en de eerste gloeilampen
+  tegel(g, rnd, pal, M, w, P) {
+    for (let s = 0; s < 3; s++) {
+      const ys = s * 320, ty = ys + 128;
+      g.fillStyle = '#34413a'; g.fillRect(0, ys, w, 128);
+      g.fillStyle = 'rgba(0,0,0,.07)'; for (let i = 0; i < 6; i++) { g.beginPath(); g.ellipse(rnd() * w, ys + 30 + rnd() * 90, 20 + rnd() * 30, 8 + rnd() * 10, 0, 0, TAU); g.fill(); } // vlekken in het pleisterwerk
+      g.fillStyle = '#16251c'; g.fillRect(0, ty, w, 192);
+      for (let r = 0, y = ty; r < 16; r++, y += 12) for (let x = r % 2 ? -11 : 0; x < w; x += 22) {
+        g.fillStyle = mixHex('#22392b', '#2a4634', rnd()); g.fillRect(x + 1, y + 1, 20, 10); g.fillStyle = 'rgba(214,255,226,.05)'; g.fillRect(x + 2, y + 1.5, 17, 1.5);
+      }
+      g.fillStyle = 'rgba(19,34,25,.8)'; g.fillRect(0, ty - 3, w, 5); g.fillStyle = 'rgba(239,230,200,.16)'; g.fillRect(0, ty - 4, w, 1.2); // sierrand
+      g.fillStyle = 'rgba(30,38,33,.7)'; g.fillRect(0, ys, w, 9); g.fillStyle = 'rgba(239,230,200,.08)'; g.fillRect(0, ys + 8, w, 1);
+      g.strokeStyle = 'rgba(20,24,20,.55)'; g.lineWidth = 2; g.beginPath(); g.moveTo(0, ys + 50); g.lineTo(w, ys + 50); g.stroke(); // leiding voor de elektriciteit
+      g.fillStyle = 'rgba(30,36,32,.8)'; for (const bx of [46 + s * 40, 210 - s * 30]) g.fillRect(bx, ys + 45, 9, 10);
+      // meelpijpen langs de wand: van de verdieping erboven schuin naar beneden, tegen de zijkant
+      for (const [px, dx] of s === 1 ? [[16, 34]] : [[284, -34]]) {
+        g.strokeStyle = 'rgba(60,72,64,.7)'; g.lineWidth = 8; g.lineCap = 'butt'; g.beginPath(); g.moveTo(px, ys + 10); g.lineTo(px + dx, ys + 150); g.lineTo(px + dx, ys + 312); g.stroke();
+        g.strokeStyle = 'rgba(239,230,200,.08)'; g.lineWidth = 1.4; g.beginPath(); g.moveTo(px - 3, ys + 10); g.lineTo(px + dx - 3, ys + 150); g.lineTo(px + dx - 3, ys + 312); g.stroke();
+      }
+    }
+    gxHaze(g, w, P, '#1f3327', 0.3);
+    for (const [lx, s] of [[74, 0], [222, 0], [140, 1], [60, 2], [236, 2]]) { // gloeilampen onder een geëmailleerde kap, warm licht naar beneden
+      const ys = s * 320;
+      gxBeam(g, lx, ys + 60, lx, ys + 250, 18, 150, '255,214,150', 0.045);
+      gxGlow(g, lx, ys + 60, 70, '255,204,120', 0.22);
+      g.strokeStyle = '#111'; g.lineWidth = 1; g.beginPath(); g.moveTo(lx, ys + 9); g.lineTo(lx, ys + 48); g.stroke();
+      g.fillStyle = '#1e3326'; g.beginPath(); g.moveTo(lx - 3, ys + 48); g.lineTo(lx + 3, ys + 48); g.lineTo(lx + 13, ys + 58); g.lineTo(lx - 13, ys + 58); g.closePath(); g.fill();
+      g.fillStyle = '#E9E3CF'; g.fillRect(lx - 13, ys + 57, 26, 2);
+      g.fillStyle = '#FFF0C2'; g.beginPath(); g.ellipse(lx, ys + 62, 3.6, 4.4, 0, 0, TAU); g.fill();
+      M.push([lx, ys + 130, 40, 60]);
+    }
+  },
+  // 1976, Koninklijk: bruine wandpanelen, een zachte band in jaren-70-kleuren, TL-buizen, pneumatische buizen en metaal
+  hout2(g, rnd, pal, M, w, P) {
+    for (let x = 0; x < w; x += 25) { g.fillStyle = mixHex('#2a190c', '#342011', rnd()); g.fillRect(x, 0, 25, P); g.fillStyle = 'rgba(0,0,0,.38)'; g.fillRect(x, 0, 1.6, P); g.fillStyle = 'rgba(255,220,170,.035)'; g.fillRect(x + 2.4, 0, 1.4, P); }
+    for (let s = 0; s < 3; s++) {
+      const ys = s * 320, by = ys + 200;
+      g.globalAlpha = 0.26; g.fillStyle = '#A85A1C'; g.fillRect(0, by, w, 6); g.fillStyle = '#B0862A'; g.fillRect(0, by + 8, w, 6); g.fillStyle = '#6E3D1C'; g.fillRect(0, by + 16, w, 6); g.globalAlpha = 1;
+      g.fillStyle = 'rgba(34,30,27,.75)'; g.fillRect(0, ys, w, 9); g.fillStyle = 'rgba(207,171,0,.12)'; g.fillRect(0, ys + 8, w, 1);
+      const sg = g.createLinearGradient(0, ys + 9, 0, ys + 26); sg.addColorStop(0, 'rgba(0,0,0,.22)'); sg.addColorStop(1, 'rgba(0,0,0,0)'); g.fillStyle = sg; g.fillRect(0, ys + 9, w, 17);
+      g.strokeStyle = 'rgba(150,110,52,.28)'; g.lineWidth = 1.5; g.beginPath(); g.moveTo(0, ys + 286); g.lineTo(w, ys + 286); for (let px = 12; px < w; px += 38) { g.moveTo(px, ys + 286); g.lineTo(px, ys + 318); } g.stroke(); // leuning
+    }
+    const pipe = (x0) => { g.fillStyle = '#5f666b'; g.fillRect(x0 - 3.5, 0, 7, P); g.fillStyle = 'rgba(230,236,240,.35)'; g.fillRect(x0 - 2, 0, 1.3, P); g.fillStyle = 'rgba(0,0,0,.35)'; g.fillRect(x0 + 2, 0, 1.5, P); };
+    for (const px of [238, 247, 256, 265, 274]) pipe(px); // pneumatisch transport: een bundel verticale buizen met klemmen
+    for (let y = 40; y < P; y += 160) { g.fillStyle = '#25282b'; g.fillRect(232, y, 48, 4); g.fillStyle = 'rgba(255,255,255,.1)'; g.fillRect(232, y, 48, 1); }
+    pipe(30); pipe(40);
+    for (let s = 0; s < 3; s++) { // korte aftakkingen met een bocht de zijwand in
+      const ys = s * 320 + 90; g.lineCap = 'butt';
+      g.strokeStyle = '#5f666b'; g.lineWidth = 7; g.beginPath(); g.moveTo(247, ys); g.arcTo(247, ys + 22, 270, ys + 22, 18); g.lineTo(306, ys + 22); g.stroke();
+      g.fillStyle = '#25282b'; g.fillRect(26, ys + 120, 18, 4);
+    }
+    gxHaze(g, w, P, '#2a190d', 0.3);
+    for (const [lx, s] of [[100, 0], [214, 1], [86, 2], [204, 2]]) { // TL-buizen onder elke balk: koel wit licht
+      const ys = s * 320 + 14;
+      gxBeam(g, lx, ys + 8, lx, ys + 150, 80, 170, '214,236,255', 0.035);
+      g.save(); g.translate(lx, ys + 6); g.scale(2.4, 1); gxGlow(g, 0, 0, 28, '214,236,255', 0.18); g.restore();
+      g.fillStyle = '#4e4d49'; g.fillRect(lx - 42, ys, 84, 5); g.fillStyle = 'rgba(236,246,242,.9)'; g.fillRect(lx - 39, ys + 4, 78, 2.4);
+      M.push([lx, ys + 70, 50, 40, false]);
+    }
+  },
+  // 2008, de nieuwe molen: staal en glas, koel daglicht; RVS-pijpen langs de gevel
+  staal(g, rnd, pal, M, w, P) {
+    for (let s = 0; s < 3; s++) for (let c = 0; c < 3; c++) {
+      const x = c * 100, y = s * 320, gg = g.createLinearGradient(x, y, x + 60, y + 320);
+      gg.addColorStop(0, '#29435a'); gg.addColorStop(0.55, '#1f384d'); gg.addColorStop(1, '#182c3e'); g.fillStyle = gg; g.fillRect(x, y, 100, 320);
+      g.fillStyle = 'rgba(214,236,255,.045)'; g.beginPath(); g.moveTo(x + 8, y); g.lineTo(x + 46, y); g.lineTo(x + 100, y + 110); g.lineTo(x + 100, y + 190); g.closePath(); g.fill();
+      g.fillStyle = 'rgba(214,236,255,.025)'; g.beginPath(); g.moveTo(x, y + 150); g.lineTo(x + 30, y + 150); g.lineTo(x + 100, y + 290); g.lineTo(x + 100, y + 320); g.lineTo(x + 84, y + 320); g.lineTo(x, y + 180); g.closePath(); g.fill();
+    }
+    g.fillStyle = '#1a2735'; for (const x of [0, 100, 200, 300]) g.fillRect(x - 4, 0, 8, P); // stijlen van de gevel
+    g.fillStyle = 'rgba(159,179,200,.2)'; for (const x of [0, 100, 200, 300]) g.fillRect(x - 4, 0, 1.5, P);
+    for (let s = 0; s < 3; s++) {
+      const ys = s * 320, bx = [100, 0, 200][s];
+      g.strokeStyle = 'rgba(26,39,53,.85)'; g.lineWidth = 3.5; g.beginPath(); g.moveTo(bx + 4, ys + 16); g.lineTo(bx + 96, ys + 304); g.moveTo(bx + 96, ys + 16); g.lineTo(bx + 4, ys + 304); g.stroke(); // X-schoren
+      g.fillStyle = 'rgba(22,33,45,.8)'; g.fillRect(0, ys, w, 9); g.fillStyle = 'rgba(159,179,200,.16)'; g.fillRect(0, ys, w, 1.2);
+      const sg = g.createLinearGradient(0, ys + 9, 0, ys + 26); sg.addColorStop(0, 'rgba(0,0,0,.2)'); sg.addColorStop(1, 'rgba(0,0,0,0)'); g.fillStyle = sg; g.fillRect(0, ys + 9, w, 17);
+    }
+    for (const [px, dx] of [[34, 0], [262, 0], [228, 0]]) { // RVS-pijpen langs de gevel
+      g.strokeStyle = 'rgba(120,136,150,.55)'; g.lineWidth = 8; g.lineCap = 'butt'; g.beginPath(); g.moveTo(px, 0); g.lineTo(px + dx, P); g.stroke();
+      g.strokeStyle = 'rgba(230,240,248,.18)'; g.lineWidth = 1.4; g.beginPath(); g.moveTo(px - 2.5, 0); g.lineTo(px + dx - 2.5, P); g.stroke();
+    }
+    gxHaze(g, w, P, '#121c27', 0.34);
+    for (const [lx, s] of [[150, 0], [60, 1], [240, 1], [150, 2]]) { // lichtpanelen aan het plafond: helder en koel
+      const ys = s * 320 + 14;
+      gxBeam(g, lx, ys + 6, lx, ys + 170, 64, 170, '220,238,255', 0.04);
+      g.save(); g.translate(lx, ys + 4); g.scale(2.2, 1); gxGlow(g, 0, 0, 32, '220,238,255', 0.2); g.restore();
+      g.fillStyle = 'rgba(233,244,255,.92)'; g.fillRect(lx - 30, ys + 1, 60, 3.4);
+      M.push([lx, ys + 80, 50, 50, false]);
+    }
+  },
+  // 2026, Molen B: donkere panelen, kabelgoten, RVS-buizen, schermpjes met zacht licht en ledjes. Rustig, niets beweegt.
+  digi(g, rnd, pal, M, w, P) { gxDigi(g, rnd, M, w, P, false); },
+  // Nachtploeg: Molen B 's nachts, met ramen naar de nachtlucht boven Leeuwarden
+  night(g, rnd, pal, M, w, P) { gxDigi(g, rnd, M, w, P, true); },
+};
+function gxDigi(g, rnd, M, w, P, night) {
+  for (let y = 0; y < P; y += 80) for (let x = 0; x < w; x += 75) {
+    g.fillStyle = night ? mixHex('#0d0e10', '#111215', rnd()) : mixHex('#151618', '#1a1b1e', rnd()); g.fillRect(x, y, 75, 80);
+    g.fillStyle = 'rgba(255,255,255,.03)'; g.fillRect(x, y, 75, 1); g.fillRect(x, y, 1, 80); g.fillStyle = 'rgba(0,0,0,.45)'; g.fillRect(x, y + 79, 75, 1); g.fillRect(x + 74, y, 1, 80);
+  }
+  if (night) for (const [wx, wy] of [[30, 140], [176, 470], [70, 800]]) gxWrap(P, wy, 130, yy => { // raam met de nacht erachter
+    const ww = 80, wh = 110, sky = g.createLinearGradient(0, yy, 0, yy + wh); sky.addColorStop(0, '#0a1520'); sky.addColorStop(1, '#17242f');
+    g.fillStyle = '#060707'; g.fillRect(wx - 4, yy - 4, ww + 8, wh + 8); g.fillStyle = sky; g.fillRect(wx, yy, ww, wh);
+    const r2 = mulberry32(wx * 7 + wy); g.fillStyle = 'rgba(247,247,247,.5)'; for (let i = 0; i < 12; i++) g.fillRect(wx + r2() * ww, yy + r2() * wh * 0.6, 1, 1);
+    if (wx === 176) { g.fillStyle = 'rgba(242,211,91,.85)'; g.beginPath(); g.arc(wx + 56, yy + 26, 8, 0, TAU); g.fill(); g.fillStyle = '#0b1622'; g.beginPath(); g.arc(wx + 52.5, yy + 22.5, 7, 0, TAU); g.fill(); gxGlow(g, wx + 56, yy + 26, 26, '242,211,91', 0.08); }
+    g.fillStyle = '#0a0f14'; for (let x = wx; x < wx + ww;) { const bw = 8 + r2() * 14, bh = 8 + r2() * 22; g.fillRect(x, yy + wh - bh, bw, bh); if (r2() < 0.6) { g.fillStyle = 'rgba(242,211,91,.55)'; g.fillRect(x + 2 + r2() * (bw - 5), yy + wh - bh + 3 + r2() * (bh - 7), 1.8, 1.8); g.fillStyle = '#0a0f14'; } x += bw + 1; }
+    g.fillStyle = '#25282c'; g.fillRect(wx + ww / 2 - 1.5, yy, 3, wh); g.fillRect(wx, yy + wh * 0.55, ww, 3);
+    g.fillStyle = 'rgba(255,255,255,.035)'; g.beginPath(); g.moveTo(wx, yy + wh); g.lineTo(wx + 30, yy); g.lineTo(wx + 44, yy); g.lineTo(wx + 14, yy + wh); g.closePath(); g.fill();
+  });
+  for (let s = 0; s < 3; s++) {
+    const ys = s * 320;
+    g.fillStyle = night ? 'rgba(10,11,12,.8)' : 'rgba(14,15,17,.8)'; g.fillRect(0, ys, w, 8); g.fillStyle = 'rgba(231,138,1,.3)'; g.fillRect(0, ys + 7.5, w, 1); // balk met een oranje lijntje
+    const sg = g.createLinearGradient(0, ys + 8, 0, ys + 26); sg.addColorStop(0, 'rgba(0,0,0,.3)'); sg.addColorStop(1, 'rgba(0,0,0,0)'); g.fillStyle = sg; g.fillRect(0, ys + 8, w, 18);
+    const ky = ys + 34; // kabelgoot: dun, met kabels die erin hangen
+    g.strokeStyle = 'rgba(10,10,11,.8)'; g.lineWidth = 1.6; g.beginPath(); for (let px = 30; px < w; px += 80) { g.moveTo(px, ys + 8); g.lineTo(px, ky); } g.stroke();
+    g.fillStyle = 'rgba(38,41,45,.8)'; g.fillRect(0, ky, w, 7); g.fillStyle = 'rgba(20,22,24,.9)'; g.fillRect(0, ky + 1.5, w, 4);
+    for (const [cy, col] of [[2.5, 'rgba(70,74,80,.6)'], [4, 'rgba(48,70,76,.6)']]) { g.strokeStyle = col; g.lineWidth = 1.4; g.beginPath(); g.moveTo(0, ky + cy); for (let px = 0; px <= w; px += 25) g.lineTo(px, ky + cy + Math.sin(px / 40 + cy + s) * 0.5); g.stroke(); }
+    const cx = [196, 36, 160][s], cy = ys + 150; // schakelkast met ledjes en een schermpje
+    g.fillStyle = night ? '#141619' : '#1b1e21'; gxRR(g, cx, cy, 64, 92, 3); g.fill(); g.fillStyle = 'rgba(255,255,255,.04)'; g.fillRect(cx + 2, cy + 1, 60, 1);
+    g.fillStyle = 'rgba(0,0,0,.35)'; for (let i = 0; i < 5; i++) g.fillRect(cx + 10, cy + 62 + i * 5, 44, 2);
+    const sxs = cx + 10, sys = cy + 12, sw = 44, sh = 30;
+    gxGlow(g, sxs + sw / 2, sys + sh / 2, 46, '111,211,224', night ? 0.15 : 0.11);
+    g.fillStyle = '#0a0c0d'; g.fillRect(sxs - 2, sys - 2, sw + 4, sh + 4);
+    const sg2 = g.createLinearGradient(0, sys, 0, sys + sh); sg2.addColorStop(0, '#15333a'); sg2.addColorStop(1, '#0e2226'); g.fillStyle = sg2; g.fillRect(sxs, sys, sw, sh);
+    g.strokeStyle = 'rgba(111,211,224,.7)'; g.lineWidth = 1; g.beginPath(); g.moveTo(sxs + 3, sys + 22); for (let i = 1; i <= 8; i++) g.lineTo(sxs + 3 + i * 4.6, sys + 22 - Math.abs(Math.sin(i * 1.7 + s)) * 10 - i * 0.6); g.stroke();
+    g.fillStyle = 'rgba(231,138,1,.7)'; g.fillRect(sxs + 3, sys + 4, 12, 2); g.fillStyle = 'rgba(111,211,224,.4)'; g.fillRect(sxs + 18, sys + 4, 8, 2); g.fillRect(sxs + 28, sys + 4, 12, 2);
+    for (let i = 0; i < 4; i++) { const col = i === 1 ? '231,138,1' : i === 3 ? '111,211,224' : '91,211,138', lx = cx + 12 + i * 12, ly = cy + 52; gxGlow(g, lx, ly, 6, col, 0.45); g.fillStyle = `rgb(${col})`; g.beginPath(); g.arc(lx, ly, 1.5, 0, TAU); g.fill(); }
+    M.push([sxs + sw / 2, sys + sh + 20, 40, 30, false]);
+    const qx = [40, 214, 60][s], qy = ys + 92; // tweede schermpje aan de wand, met een staafdiagram
+    gxGlow(g, qx + 18, qy + 12, 38, '111,211,224', night ? 0.12 : 0.09);
+    g.fillStyle = '#0a0c0d'; g.fillRect(qx - 2, qy - 2, 40, 28); g.fillStyle = '#10292d'; g.fillRect(qx, qy, 36, 24);
+    g.fillStyle = 'rgba(111,211,224,.55)'; for (let i = 0; i < 5; i++) { const bh = 4 + ((i * 7 + s * 3) % 13); g.fillRect(qx + 4 + i * 6.4, qy + 20 - bh, 3.6, bh); }
+    g.fillStyle = 'rgba(231,138,1,.75)'; g.fillRect(qx + 4, qy + 3, 6, 2);
+    for (let i = 0; i < 6; i++) { const lx = 20 + i * 52 + s * 7, col = i % 3 === 1 ? '231,138,1' : '91,211,138'; gxGlow(g, lx, ys + 18, 5, col, 0.35); g.fillStyle = `rgba(${col},.85)`; g.fillRect(lx - 1, ys + 17, 2, 2); } // ledstrip
+  }
+  for (const px of [268, 281]) { g.fillStyle = '#33373b'; g.fillRect(px - 4, 0, 8, P); g.fillStyle = 'rgba(220,226,230,.18)'; g.fillRect(px - 2.5, 0, 1.3, P); g.fillStyle = 'rgba(0,0,0,.4)'; g.fillRect(px + 2.5, 0, 1.5, P); } // RVS-buizen langs de rechterwand
+  for (let y = 100; y < P; y += 320) { g.fillStyle = '#2a2d31'; g.fillRect(260, y, 30, 5); g.fillStyle = 'rgba(255,255,255,.08)'; g.fillRect(260, y, 30, 1); }
+  g.fillStyle = night ? 'rgba(0,0,0,.12)' : 'rgba(0,0,0,.04)'; g.fillRect(0, 0, w, P);
+}
+// zachte schaduw langs de zijwanden op de achterwand, en een iets lichter midden waar de korrel valt
+function gxBgShade(g, w, P, era) {
+  const gr = g.createLinearGradient(0, 0, w, 0), a = era === 'staal' ? 0.32 : 0.45;
+  gr.addColorStop(0, `rgba(0,0,0,${a})`); gr.addColorStop(0.1, `rgba(0,0,0,${a * 0.35})`); gr.addColorStop(0.22, 'rgba(0,0,0,0)'); gr.addColorStop(0.78, 'rgba(0,0,0,0)'); gr.addColorStop(0.9, `rgba(0,0,0,${a * 0.35})`); gr.addColorStop(1, `rgba(0,0,0,${a})`);
+  g.fillStyle = gr; g.fillRect(0, 0, w, P);
+}
+
+// ---------- zijwanden (dichtbij): schuiven 1:1 met de verdiepingen mee; de vloeren verdwijnen erin ----------
+const gxSIDE = {
+  hout(g, rnd, w, P) { // dikke houten stijl met ijzeren banden
+    g.fillStyle = '#24170b'; g.fillRect(0, 0, w, P);
+    const pg = g.createLinearGradient(6, 0, 44, 0); pg.addColorStop(0, '#3a2714'); pg.addColorStop(0.45, '#56391f'); pg.addColorStop(1, '#2e1e0e');
+    g.fillStyle = pg; g.fillRect(6, 0, 38, P);
+    g.strokeStyle = 'rgba(16,9,3,.35)'; g.lineWidth = 1; g.beginPath(); for (const o of [13, 22, 31, 38]) { g.moveTo(o, 0); for (let y = 16; y <= P; y += 16) g.lineTo(o + Math.sin(y / P * TAU * 2 + o) * 1.4, y); } g.stroke();
+    for (const y of [36, 196]) { g.fillStyle = '#161616'; g.fillRect(4, y, 42, 9); g.fillStyle = 'rgba(210,210,210,.16)'; g.fillRect(4, y, 42, 1.5); g.fillStyle = 'rgba(0,0,0,.55)'; for (const bx of [11, 25, 39]) { g.beginPath(); g.arc(bx, y + 4.5, 1.6, 0, TAU); g.fill(); } }
+    g.fillStyle = 'rgba(14,8,2,.55)'; for (const y of [120, 280]) { g.beginPath(); g.arc(25, y, 3, 0, TAU); g.fill(); }
+  },
+  steen(g, rnd, w, P) { // bakstenen pijler met een gietijzeren regenpijp en flenzen
+    g.fillStyle = '#1c0d07'; g.fillRect(0, 0, w, P);
+    const bc = ['#3b190c', '#43200f', '#3e1b0d'];
+    for (let r = 0, y = 0; y < P; r++, y += 10) for (let x = r % 2 ? -12 : 0; x < w; x += 24) { g.fillStyle = bc[Math.floor(rnd() * 3)]; g.fillRect(x + 1, y + 1, 22, 8); }
+    gxPipe(g, 25, P, '#2a2e32', [80, 240]);
+  },
+  tegel(g, rnd, w, P) { // groen betegelde pijler met een leiding en lasdozen
+    g.fillStyle = '#0f1a13'; g.fillRect(0, 0, w, P);
+    for (let r = 0, y = 0; y < P; r++, y += 12) for (let x = r % 2 ? -10 : 0; x < w; x += 20) { g.fillStyle = mixHex('#1a3022', '#21392a', rnd()); g.fillRect(x + 1, y + 1, 18, 10); g.fillStyle = 'rgba(214,255,226,.05)'; g.fillRect(x + 2, y + 1.5, 15, 1.4); }
+    gxPipe(g, 25, P, '#26342b', [80, 240]);
+  },
+  hout2(g, rnd, w, P) { // bruine kolom met een aluminium transportbuis en klemmen
+    g.fillStyle = '#1c1008'; g.fillRect(0, 0, w, P);
+    const pg = g.createLinearGradient(4, 0, 46, 0); pg.addColorStop(0, '#2c1a0c'); pg.addColorStop(0.5, '#3f2612'); pg.addColorStop(1, '#24150a'); g.fillStyle = pg; g.fillRect(4, 0, 42, P);
+    g.globalAlpha = 0.45; g.fillStyle = '#A85A1C'; g.fillRect(4, 196, 42, 8); g.fillStyle = '#B0862A'; g.fillRect(4, 206, 42, 8); g.fillStyle = '#6E3D1C'; g.fillRect(4, 216, 42, 8); g.globalAlpha = 1;
+    gxPipe(g, 25, P, '#6c7378', [60, 220], true);
+  },
+  staal(g, rnd, w, P) { // stalen H-kolom met boutplaten
+    g.fillStyle = '#0e161f'; g.fillRect(0, 0, w, P);
+    g.fillStyle = '#1f2f3f'; g.fillRect(6, 0, 38, P); g.fillStyle = '#2a3f53'; g.fillRect(6, 0, 6, P); g.fillRect(38, 0, 6, P);
+    g.fillStyle = 'rgba(159,179,200,.35)'; g.fillRect(6, 0, 1.5, P); g.fillRect(38, 0, 1.5, P);
+    for (const y of [60, 220]) { g.fillStyle = '#2f465b'; g.fillRect(4, y, 42, 26); g.fillStyle = 'rgba(159,179,200,.3)'; g.fillRect(4, y, 42, 1.5); g.fillStyle = 'rgba(200,215,230,.45)'; for (const [bx, by] of [[10, 6], [40, 6], [10, 20], [40, 20]]) g.fillRect(bx - 1.5, y + by - 1.5, 3, 3); }
+  },
+  digi(g, rnd, w, P) { gxSideDigi(g, w, P, false); },
+  night(g, rnd, w, P) { gxSideDigi(g, w, P, true); },
+};
+function gxSideDigi(g, w, P, night) { // donker paneel met een kabelkoker, een paar statuslampjes en de lichte lijn langs de schacht
+  g.fillStyle = night ? '#08090a' : '#0e0f10'; g.fillRect(0, 0, w, P);
+  g.fillStyle = night ? '#111215' : '#16181b'; g.fillRect(8, 0, 34, P); g.fillStyle = 'rgba(255,255,255,.05)'; g.fillRect(8, 0, 1, P);
+  g.fillStyle = '#1f2226'; g.fillRect(16, 0, 18, P); g.fillStyle = 'rgba(0,0,0,.5)'; g.fillRect(19, 0, 12, P);
+  for (let y = 0; y < P; y += 40) { g.fillStyle = '#2a2d31'; g.fillRect(16, y, 18, 3); }
+  for (const [y, col] of [[100, '91,211,138'], [112, '231,138,1'], [260, '91,211,138']]) { gxGlow(g, 25, y, 6, col, 0.45); g.fillStyle = `rgba(${col},.95)`; g.fillRect(24, y - 1, 2, 2); }
+  g.fillStyle = 'rgba(111,211,224,.3)'; g.fillRect(w - 1, 0, 1, P);
+}
+// gietijzeren of aluminium pijp met flenzen of klemmen (zijwanden)
+function gxPipe(g, x, P, col, ys, clamp2) {
+  g.fillStyle = col; g.fillRect(x - 10, 0, 20, P);
+  g.fillStyle = 'rgba(255,255,255,.13)'; g.fillRect(x - 6, 0, 4, P); g.fillStyle = 'rgba(0,0,0,.28)'; g.fillRect(x + 5, 0, 5, P);
+  for (const y of ys) { g.fillStyle = clamp2 ? '#25282b' : col; g.fillRect(x - 14, y, 28, 9); g.fillStyle = 'rgba(255,255,255,.2)'; g.fillRect(x - 14, y, 28, 2); g.fillStyle = 'rgba(0,0,0,.45)'; g.fillRect(x - 11, y + 4, 2, 2); g.fillRect(x + 9, y + 4, 2, 2); }
+}
+// beide zijwanden van een tijdperk: links zoals getekend, rechts gespiegeld; met de schaduw naar buiten en de rand langs de schacht
+function gxSides(style, pal) {
+  const era = gxEra(style, pal), key = 'side:' + era;
+  if (tiles[key]) return tiles[key];
+  for (const q in tiles) if (q.startsWith('side:')) delete tiles[q];
+  const k = V.s * V.dpr, out = [];
+  for (const right of [false, true]) {
+    const w = right ? W - R : L, { c, g } = gxCv(w, gxPS, k, true), rnd = mulberry32(hashStr(key));
+    if (right) { g.translate(w, 0); g.scale(-1, 1); }
+    (gxSIDE[era] || gxSIDE.digi)(g, rnd, w, gxPS);
+    const gr = g.createLinearGradient(0, 0, w, 0); gr.addColorStop(0, 'rgba(0,0,0,.5)'); gr.addColorStop(0.55, 'rgba(0,0,0,.12)'); gr.addColorStop(1, 'rgba(0,0,0,0)');
+    g.fillStyle = gr; g.fillRect(0, 0, w, gxPS);
+    g.fillStyle = 'rgba(255,240,215,.08)'; g.fillRect(w - 5, 0, 1.5, gxPS); g.fillStyle = 'rgba(0,0,0,.55)'; g.fillRect(w - 3, 0, 3, gxPS);
+    out.push(c);
+  }
+  return (tiles[key] = out);
+}
+
+// ---------- vloeren als stroken: per tijdperk één keer getekend, per frame een uitsnede ----------
+// Vloerbalk links en rechts van de walsen of stenen, met daaronder al de zachte schaduw op de achterwand (gxSH px); 100 px extra
+// breedte zodat elke verdieping een eigen uitsnede krijgt. Per frame een kale uitsnede op hele schermpixels (gxBlitPart).
+const gxSH = 30;
+function gxShadowBand(g, y, w, h, a) { const sg = g.createLinearGradient(0, y, 0, y + h); sg.addColorStop(0, `rgba(0,0,0,${a})`); sg.addColorStop(1, 'rgba(0,0,0,0)'); g.fillStyle = sg; g.fillRect(0, y, w, h); }
+function gxSlab(style, pal, hh) {
+  const era = gxEra(style, pal), key = 'slab:' + era + ':' + hh;
+  if (tiles[key]) return tiles[key];
+  const k = V.s * V.dpr, ww = W + 100, h = 2 * hh, { c, g } = gxCv(ww, h + gxSH, k), rnd = mulberry32(hashStr(key));
+  gxShadowBand(g, h, ww, gxSH, 0.34);
+  g.fillStyle = pal.slab; g.fillRect(0, 0, ww, h);
+  if (era === 'hout') { // eikenhouten balk: nerf in de lengte, naden en houten pennen
+    g.strokeStyle = 'rgba(30,18,8,.35)'; g.lineWidth = 1; g.beginPath();
+    for (let i = 0; i < 7; i++) { const yy = 6 + i * (h - 12) / 6 + (rnd() - 0.5) * 3; g.moveTo(0, yy); for (let x = 12; x <= ww; x += 12) g.lineTo(x, yy + Math.sin(x / 31 + i * 2) * 1.2); }
+    g.stroke();
+    g.fillStyle = 'rgba(20,12,4,.55)'; for (let x = 40; x < ww; x += 70 + rnd() * 40) g.fillRect(x, 0, 1.6, h);
+    for (let x = 18; x < ww; x += 44) { g.fillStyle = 'rgba(20,12,4,.6)'; g.beginPath(); g.arc(x, h / 2, 3, 0, TAU); g.fill(); g.fillStyle = 'rgba(214,180,128,.25)'; g.beginPath(); g.arc(x - 0.6, h / 2 - 0.6, 1.4, 0, TAU); g.fill(); }
+  } else if (era === 'steen') { // ijzeren ligger met twee rijen klinknagels
+    g.fillStyle = 'rgba(255,255,255,.07)'; g.fillRect(0, 7, ww, 2); g.fillRect(0, h - 10, ww, 2);
+    for (let x = 6; x < ww; x += 16) for (const yy of [4.5, h - 6]) { g.fillStyle = 'rgba(0,0,0,.45)'; g.beginPath(); g.arc(x, yy + 0.6, 1.9, 0, TAU); g.fill(); g.fillStyle = 'rgba(220,220,210,.28)'; g.beginPath(); g.arc(x - 0.4, yy - 0.3, 1.1, 0, TAU); g.fill(); }
+    g.fillStyle = 'rgba(0,0,0,.18)'; for (let x = 50; x < ww; x += 96) g.fillRect(x, 0, 2, h);
+  } else if (era === 'tegel') { // crèmewit gelakte gietijzeren kast met een groen biesje en bouten
+    g.fillStyle = 'rgba(63,94,74,.7)'; g.fillRect(0, 6, ww, 2); g.fillRect(0, h - 9, ww, 1.5);
+    for (let x = 30; x < ww; x += 60) { g.fillStyle = 'rgba(0,0,0,.2)'; g.fillRect(x, 10, 1.5, h - 20); g.fillStyle = 'rgba(60,50,30,.55)'; g.beginPath(); g.arc(x + 12, h / 2, 2, 0, TAU); g.arc(x - 12, h / 2, 2, 0, TAU); g.fill(); }
+  } else if (era === 'hout2') { // bruin metaal met groeven
+    g.fillStyle = 'rgba(0,0,0,.25)'; for (let x = 14; x < ww; x += 30) g.fillRect(x, 4, 1.5, h - 8);
+    g.fillStyle = 'rgba(255,220,160,.07)'; for (let x = 16; x < ww; x += 30) g.fillRect(x, 4, 1, h - 8);
+    g.fillStyle = 'rgba(0,0,0,.4)'; for (let x = 29; x < ww; x += 60) { g.fillRect(x - 1.5, 6, 3, 3); g.fillRect(x - 1.5, h - 9, 3, 3); }
+  } else if (era === 'staal') { // geborsteld staal met bouten in paren
+    g.fillStyle = 'rgba(255,255,255,.035)'; for (let yy = 3; yy < h; yy += 3) g.fillRect(0, yy, ww, 1);
+    g.fillStyle = 'rgba(200,215,230,.4)'; for (let x = 24; x < ww; x += 64) for (const yy of [7, h - 9]) { g.fillRect(x, yy, 2.5, 2.5); g.fillRect(x + 8, yy, 2.5, 2.5); }
+  } else { // Molen B en de Nachtploeg: donkere panelen met naden
+    g.fillStyle = 'rgba(0,0,0,.4)'; for (let x = 40; x < ww; x += 82) g.fillRect(x, 3, 1.5, h - 6);
+    g.fillStyle = 'rgba(255,255,255,.05)'; for (let x = 42; x < ww; x += 82) g.fillRect(x, 3, 1, h - 6);
+    g.fillStyle = 'rgba(0,0,0,.45)'; for (let x = 12; x < ww; x += 82) for (let i = 0; i < 4; i++) g.fillRect(x + i * 5, h / 2 - 3, 2.5, 6);
+  }
+  const sg = g.createLinearGradient(0, 0, 0, h); sg.addColorStop(0, 'rgba(255,255,255,.12)'); sg.addColorStop(0.4, 'rgba(255,255,255,0)'); sg.addColorStop(0.75, 'rgba(0,0,0,0)'); sg.addColorStop(1, 'rgba(0,0,0,.32)');
+  g.fillStyle = sg; g.fillRect(0, 0, ww, h);
+  g.fillStyle = pal.edge; g.globalAlpha = era === 'digi' || era === 'night' ? 0.9 : era === 'staal' ? 0.75 : 0.5; g.fillRect(0, 0, ww, 2); g.globalAlpha = 1;
+  g.fillStyle = 'rgba(0,0,0,.4)'; g.fillRect(0, h - 3, ww, 3);
+  return (tiles[key] = { c, k });
+}
+// Plaat van een plansichter (gaatjes) of buil (zijden doek in een houten raam), met de schaduw eronder
+function gxPlate(style, pal, buil) {
+  const era = gxEra(style, pal), key = 'plate:' + era + (buil ? 'b' : 'p');
+  if (tiles[key]) return tiles[key];
+  const k = V.s * V.dpr, ww = W + 140, h = CONFIG.plate, { c, g } = gxCv(ww, h + gxSH, k);
+  gxShadowBand(g, h, ww, gxSH - 4, 0.3);
+  if (buil) {
+    g.fillStyle = pal.slab; g.fillRect(0, 0, ww, h);
+    g.fillStyle = 'rgba(232,220,186,.5)'; g.fillRect(0, 4, ww, h - 8);
+    g.strokeStyle = 'rgba(120,96,60,.5)'; g.lineWidth = 0.8; g.beginPath(); for (let x = -h; x < ww; x += 4) { g.moveTo(x, 4); g.lineTo(x + h - 8, h - 4); } g.stroke();
+    g.fillStyle = 'rgba(0,0,0,.25)'; for (let x = 60; x < ww; x += 120) g.fillRect(x, 0, 3, h);
+    g.fillStyle = 'rgba(255,255,255,.18)'; g.fillRect(0, 0, ww, 1.5); g.fillStyle = 'rgba(0,0,0,.4)'; g.fillRect(0, h - 3, ww, 3);
+  } else {
+    g.fillStyle = pal.plate; g.fillRect(0, 0, ww, h);
+    g.fillStyle = 'rgba(0,0,0,.42)'; for (let x = 3; x < ww; x += 7) { g.fillRect(x, 6, 2.6, 2.6); g.fillRect(x + 3.5, 10.5, 2.6, 2.6); }
+    g.fillStyle = 'rgba(255,255,255,.22)'; g.fillRect(0, 0, ww, 2); g.fillStyle = 'rgba(255,255,255,.08)'; g.fillRect(0, 3, ww, 1);
+    g.fillStyle = 'rgba(0,0,0,.38)'; g.fillRect(0, h - 3, ww, 3);
+  }
+  return (tiles[key] = { c, k });
+}
+// zachte schaduw onder een rol, in het plaatje van de rol zelf (onder het lijf, iets naar beneden)
+function gxRollShadow(g, Rr, dy) { g.save(); g.translate(0, dy); g.scale(1, 0.34); const rg = g.createRadialGradient(0, 0, 0, 0, 0, Rr); rg.addColorStop(0, 'rgba(0,0,0,.42)'); rg.addColorStop(1, 'rgba(0,0,0,0)'); g.fillStyle = rg; g.beginPath(); g.arc(0, 0, Rr, 0, TAU); g.fill(); g.restore(); }
+// stilstaand deel van een wals (lijf, glans, as, rand, schaduw); de draaiende groeven komen er per frame overheen. Middelpunt op (m, m).
+function gxRollSpr(st, Rr, e, digi) {
+  const key = 'roll:' + st + ':' + Rr; if (tiles[key]) return tiles[key];
+  const m = Rr + 3, { c, g } = gxCv(2 * m, 2 * m + 16, V.s * V.dpr); g.translate(m, m);
+  gxRollShadow(g, Rr * 0.95, Rr * 0.92);
+  const lg = g.createLinearGradient(-Rr, 0, Rr, 0);
+  lg.addColorStop(0, e[0]); lg.addColorStop(0.2, e[1]); lg.addColorStop(digi ? 0.3 : 0.27, e[2]); lg.addColorStop(digi ? 0.38 : 0.42, e[1]); lg.addColorStop(0.8, e[1]); lg.addColorStop(1, e[0]);
+  g.fillStyle = lg; g.beginPath(); g.arc(0, 0, Rr, 0, TAU); g.fill();
+  const rg = g.createRadialGradient(-Rr * 0.3, -Rr * 0.35, Rr * 0.2, 0, 0, Rr); rg.addColorStop(0, 'rgba(255,255,255,.12)'); rg.addColorStop(0.7, 'rgba(255,255,255,0)'); rg.addColorStop(1, 'rgba(0,0,0,.22)');
+  g.fillStyle = rg; g.beginPath(); g.arc(0, 0, Rr, 0, TAU); g.fill();
+  g.fillStyle = e[3]; g.globalAlpha = 0.55; g.beginPath(); g.arc(0, 0, Rr * 0.17, 0, TAU); g.fill(); g.globalAlpha = 1; // de as
+  g.strokeStyle = 'rgba(255,255,255,.35)'; g.lineWidth = 1; g.beginPath(); g.arc(0, 0, Rr * 0.17, -2.6, -0.6); g.stroke();
+  if (digi) { const hy = Rr * 0.9; g.fillStyle = 'rgba(255,255,255,.75)'; g.fillRect(-Rr * 0.36, -hy, 2, hy * 2); g.strokeStyle = 'rgba(111,211,224,.4)'; g.lineWidth = 2; g.beginPath(); g.arc(0, 0, Rr - 3, -0.5, 0.5); g.stroke(); }
+  g.lineWidth = 2; g.strokeStyle = e[3]; g.beginPath(); g.arc(0, 0, Rr, 0, TAU); g.stroke();
+  return (tiles[key] = { c, m });
+}
+function gxStoneSpr(Rr) {
+  const key = 'stone:' + Rr; if (tiles[key]) return tiles[key];
+  const m = Rr + 3, { c, g } = gxCv(2 * m, 2 * m + 14, V.s * V.dpr); g.translate(m, m);
+  const a = Rr * 0.3, b = Rr * 0.7;
+  gxRollShadow(g, Rr * 0.98, a + b * 0.72);
+  g.beginPath(); g.moveTo(-Rr, -a); g.ellipse(0, -a, Rr, b, 0, Math.PI, TAU); g.lineTo(Rr, a); g.ellipse(0, a, Rr, b, 0, 0, Math.PI); g.closePath();
+  const rim = g.createLinearGradient(-Rr, 0, Rr, 0); rim.addColorStop(0, '#6c5f46'); rim.addColorStop(0.3, '#9a8b6e'); rim.addColorStop(0.55, '#8E7F63'); rim.addColorStop(1, '#5f533c');
+  g.fillStyle = rim; g.fill(); g.lineWidth = 2; g.strokeStyle = '#3b2f20'; g.stroke();
+  g.strokeStyle = 'rgba(45,36,24,.55)'; g.lineWidth = 1.5; g.beginPath(); g.ellipse(0, 0, Rr - 1, b, 0, 0.12, Math.PI - 0.12); g.stroke(); // naad loper/ligger
+  const top = g.createLinearGradient(-Rr, -Rr, Rr * 0.6, 0); top.addColorStop(0, '#D3C6AA'); top.addColorStop(0.5, '#BBAC8F'); top.addColorStop(1, '#a8987a');
+  g.fillStyle = top; g.beginPath(); g.ellipse(0, -a, Rr - 1, b - 1, 0, 0, TAU); g.fill();
+  g.strokeStyle = 'rgba(255,246,222,.35)'; g.lineWidth = 1.5; g.beginPath(); g.ellipse(0, -a, Rr - 1.5, b - 1.5, 0, 0.15, Math.PI - 0.15); g.stroke();
+  g.save(); g.translate(0, -a); g.scale(1, b / Rr);
+  g.strokeStyle = 'rgba(255,248,230,.3)'; g.lineWidth = 3; g.beginPath(); g.arc(0, 0, Rr * 0.8, -2.7, -1.5); g.stroke();
+  g.fillStyle = 'rgba(80,66,44,.2)'; g.beginPath(); g.arc(0, 0, Rr * 0.3, 0, TAU); g.fill(); // het oog
+  g.fillStyle = '#2f3337'; g.beginPath(); g.arc(0, 0, Rr * 0.16, 0, TAU); g.fill();
+  g.strokeStyle = '#6a6f74'; g.lineWidth = 1.5; g.beginPath(); g.arc(0, 0, Rr * 0.16, 0, TAU); g.stroke(); // ijzeren steenbus
+  g.restore();
+  return (tiles[key] = { c, m });
+}
+// zachte schaduwvlek onder pick-ups en gevaren (rx bij ry), en de gloed met schaduw achter de korrel: plaatjes op schermresolutie
+function gxShade(rx, ry) {
+  const key = 'shade:' + rx + ':' + ry; if (tiles[key]) return tiles[key];
+  const { c, g } = gxCv(2 * rx, 2 * ry, V.s * V.dpr); g.translate(rx, ry); g.scale(1, ry / rx);
+  const rg = g.createRadialGradient(0, 0, 0, 0, 0, rx); rg.addColorStop(0, 'rgba(0,0,0,.42)'); rg.addColorStop(0.55, 'rgba(0,0,0,.24)'); rg.addColorStop(1, 'rgba(0,0,0,0)');
+  g.fillStyle = rg; g.fillRect(-rx, -rx, 2 * rx, 2 * rx);
+  return (tiles[key] = c);
+}
+function gxGrainHalo() {
+  if (tiles.halo) return tiles.halo;
+  const { c, g } = gxCv(56, 60, V.s * V.dpr);
+  gxGlow(g, 28, 28, 27, '255,232,190', 0.22);
+  g.save(); g.translate(29, 42); g.scale(1, 0.62); const rg = g.createRadialGradient(0, 0, 0, 0, 0, 13); rg.addColorStop(0, 'rgba(0,0,0,.42)'); rg.addColorStop(1, 'rgba(0,0,0,0)'); g.fillStyle = rg; g.fillRect(-13, -13, 26, 26); g.restore();
+  return (tiles.halo = c);
+}
+// vignet onder de HUD en langs de onderrand: twee stroken op schermresolutie
+function gxVigSpr() {
+  if (tiles.vig) return tiles.vig;
+  const k = V.s * V.dpr, t = gxCv(W, 44, k), b = gxCv(W, 120, k);
+  gxShadowBand(t.g, 0, W, 44, 0.4);
+  const bg = b.g.createLinearGradient(0, 0, 0, 120); bg.addColorStop(0, 'rgba(0,0,0,0)'); bg.addColorStop(1, 'rgba(0,0,0,.42)'); b.g.fillStyle = bg; b.g.fillRect(0, 0, W, 120);
+  return (tiles.vig = { t: t.c, b: b.c });
+}
+
+// Alle plaatjes van een tijdperk in één keer (na de achterwand): zijwanden, vloerbalken, platen, walsen of stenen, schaduwen,
+// gloed, vignet en HUD. Zo komt het tekenwerk in één lang frame, en niet in een reeks trage frames die de resolutie omlaag zouden zetten.
+function gxWarm(style, pal) {
+  const st = style, e = WALS_ERA[st] || WALS_ERA.hout2;
+  gxSides(style, pal); gxVigSpr(); gxHudBg(); gxGrainHalo(); gxShade(19, 17); gxShade(13, 20); gxShade(17, 15);
+  gxSlab(style, pal, CONFIG.roll.wals * CONFIG.roll.casing); gxPlate(style, pal, false); gxRollSpr(st, CONFIG.roll.wals, e, st === 'digi');
+  if (style === 'hout' || style === 'steen') { gxSlab(style, pal, CONFIG.roll.molen * CONFIG.roll.casing); gxStoneSpr(CONFIG.roll.molen); gxPlate(style, pal, true); }
+  for (const c of ['255,214,110', '250,246,236', '231,138,1']) gxDot(c);
+  // elk nieuw plaatje één keer op een canvasje van 1 px tekenen: de browser maakt dan nu al zijn kopie, niet in het eerste speelframe
+  const pr = gxSt.prime || (gxSt.prime = document.createElement('canvas').getContext('2d'));
+  for (const q in tiles) { const t = tiles[q], cs = t && (t.getContext ? [t] : t.c ? [t.c] : Array.isArray(t) ? t : t.t ? [t.t, t.b] : []); for (const c of cs) if (c && c.getContext) pr.drawImage(c, 0, 0, 1, 1); }
+}
+// ---------- per frame ----------
+// Kale kopie op hele schermpixels: een plaatje dat al op schermresolutie getekend is, linksboven op (lx, ly) in de huidige coördinaten.
+// Zonder schalen en filteren is dat op een telefoon die het canvas op de CPU tekent veel sneller dan een geschaalde drawImage.
+function gxBlit(c, lx, ly) {
+  const m = ctx.getTransform(); ctx.setTransform(1, 0, 0, 1, 0, 0);
+  ctx.drawImage(c, Math.round(m.e + lx * m.a), Math.round(m.f + ly * m.d));
+  ctx.setTransform(m);
+}
+// idem, een uitsnede: logische x sx0 tot sx0 + sw uit een strook op resolutie k, met de volle hoogte
+function gxBlitPart(c, k, sx0, sw, lx, ly) {
+  const S = Math.max(0, Math.round(sx0 * k)), w = Math.min(Math.round(sw * k), c.width - S); if (w <= 0) return;
+  const m = ctx.getTransform(); ctx.setTransform(1, 0, 0, 1, 0, 0);
+  ctx.drawImage(c, S, 0, w, c.height, Math.round(m.e + lx * m.a), Math.round(m.f + ly * m.d), w, c.height);
+  ctx.setTransform(m);
+}
+// stofjes in het licht van de achterwand: schuiven mee met de achterwand en zweven zacht (bij verminderde beweging stil).
+// Eén pad per kleur en helderheid: twee keer vullen in plaats van een plaatje per stofje.
+function gxMotesDraw(B, cam) {
+  if (!B.motes.length) return;
+  const T = reduced.matches ? 0 : performance.now() / 1000, off = -((cam * gxPar) % B.P);
+  for (const [warm, hi, col] of [[true, 0, '255,236,200'], [true, 1, '255,236,200'], [false, 0, '214,240,255'], [false, 1, '214,240,255']]) {
+    ctx.beginPath(); let n = 0;
+    for (const m of B.motes) {
+      if (m.warm !== warm || (m.a > 0.3) !== !!hi) continue;
+      let y = m.y + off + Math.cos(T * m.w * 0.8 + m.ph) * 5; if (y < -4) y += B.P; if (y > H + 4) continue;
+      const x = L + m.x + Math.sin(T * m.w + m.ph) * 7, r = m.r * (0.85 + 0.25 * Math.sin(T * m.w * 1.9 + m.ph * 2));
+      ctx.rect(x - r, y - r, 2 * r, 2 * r); n++; // zo klein is een vierkantje een stipje, en veel goedkoper dan een cirkel
+    }
+    if (n) { ctx.fillStyle = `rgba(${col},${hi ? 0.42 : 0.24})`; ctx.fill(); }
+  }
+}
+// zacht vignet over de wanden (niet over het spel): schaduw onder de HUD en donkerder naar de onderrand. Niet in Molen B en de
+// Nachtploeg: die wand is al donker, en 's nachts geeft de werklamp de rand.
+function gxVignette(lv) { if (lv.style === 'digi') return; const v = gxVigSpr(); gxBlit(v.t, 0, CONFIG.HUD); gxBlit(v.b, 0, H - 120); }
+// zacht spoor achter de korrel: een taps toelopend lint door de laatste posities (wereldcoördinaten), meelwit en doorschijnend
+// Elk derde punt is genoeg voor een vloeiende lijn; de twee randen staan in vaste arrays (geen nieuwe per frame).
+const gxTL = new Float32Array(32), gxTR = new Float32Array(32);
+function gxTrailDraw() {
+  const n = gxSt.tn; if (n < 6 || run.mode === 'demo' || Wd.ending) return;
+  const T = gxSt.trail, N = T.length, at = i => T[(gxSt.ti - 1 - i + N) % N];
+  let k = 0;
+  for (let i = 0; i < n && k < 32; i += 3, k += 2) {
+    const a = at(i), b = at(Math.min(n - 1, i + 3)), c = at(Math.max(0, i - 3)), dx = b.x - c.x, dy = b.y - c.y, l = Math.hypot(dx, dy) || 1, wd = 6 * (1 - i / n) * (1 - i / n) + 0.3;
+    gxTL[k] = a.x - dy / l * wd; gxTL[k + 1] = a.y + dx / l * wd; gxTR[k] = a.x + dy / l * wd; gxTR[k + 1] = a.y - dx / l * wd;
+  }
+  ctx.fillStyle = 'rgba(250,244,228,.14)'; ctx.beginPath(); ctx.moveTo(gxTL[0], gxTL[1]);
+  for (let i = 2; i < k; i += 2) ctx.lineTo(gxTL[i], gxTL[i + 1]);
+  for (let i = k - 2; i >= 0; i -= 2) ctx.lineTo(gxTR[i], gxTR[i + 1]);
+  ctx.fill();
+}
+// spoor bijhouden (in update, elke stap): wereldpositie van de korrel; leeg na een nieuwe start
+function gxTrailStep() {
+  const y = Wd.camY + CONFIG.GY;
+  if (y < gxSt.cam - 1) gxSt.tn = 0;
+  gxSt.cam = y;
+  const T = gxSt.trail; if (!T.length) for (let i = 0; i < 40; i++) T.push({ x: 0, y: 0 });
+  const q = T[gxSt.ti]; q.x = G.x; q.y = y; gxSt.ti = (gxSt.ti + 1) % T.length; gxSt.tn = Math.min(T.length, gxSt.tn + 1);
+}
+// perfecte passage: een klein meelwolkje en een gouden glans (de oranje ring en de zemelvlokjes komen uit floorPassed)
+function gxPerfectFx(x, y) {
+  part({ kind: 'glow', x, y, life: 0.5, size: 26, color: '#F2C94C' });
+  const n = reduced.matches ? 3 : 7;
+  for (let i = 0; i < n; i++) { // zachte wolkjes meel die opbollen en vervagen (geen harde rondjes)
+    const a = -Math.PI / 2 + (i / (n - 1) - 0.5) * Math.PI * 1.6, v = reduced.matches ? 14 : 30 + Math.random() * 34;
+    part({ kind: 'mist', x: x + Math.cos(a) * 7, y: y + 2 + Math.sin(a) * 4, vx: Math.cos(a) * v, vy: Math.sin(a) * v * 0.55 - 8, drag: 3.2, g: 8, grow: 16, size: 6 + Math.random() * 4, life: 0.55 + Math.random() * 0.3, color: '#F7F1E1' });
+  }
+}
+
+// ---------- merkkader naast het speelveld (#lb): warme achtergrond met korenaren, tijdlijn links, tijdperkplaatje rechts ----------
+// Korenaar als lijntekening: een steel met parallellogram-blaadjes in twee rijen en een paar baardharen
+function gxEar(g, x, y, s, rot, lw) {
+  g.save(); g.translate(x, y); g.rotate(rot || 0); g.scale(s, s); if (lw) g.lineWidth = lw / s;
+  g.beginPath(); g.moveTo(0, 30); g.quadraticCurveTo(1.5, 10, 0, -14);
+  for (let i = 0; i < 6; i++) {
+    const yy = -12 + i * 6.2, l = 6.6 - i * 0.25;
+    for (const sd of [-1, 1]) { g.moveTo(0, yy + 3); g.lineTo(sd * l, yy - 1); g.lineTo(sd * l, yy - 4.6); g.lineTo(0, yy - 0.6); }
+  }
+  g.moveTo(0, -14); g.lineTo(0, -22); g.moveTo(-1.5, -14); g.lineTo(-4.5, -21); g.moveTo(1.5, -14); g.lineTo(4.5, -21);
+  g.stroke(); g.restore();
+}
+function gxEarTile(dark, d) {
+  const key = (dark ? 'd' : 'l') + d; if (gxSt.lbPat && gxSt.lbPat.key === key) return gxSt.lbPat.c;
+  const tw = 132, th = 150, c = document.createElement('canvas'); c.width = Math.round(tw * d); c.height = Math.round(th * d);
+  const g = c.getContext('2d'); g.scale(c.width / tw, c.height / th);
+  g.strokeStyle = dark ? 'rgba(243,238,210,.06)' : 'rgba(102,68,0,.07)'; g.lineJoin = 'round'; g.lineCap = 'round';
+  for (const [x, y, r] of [[30, 40, -0.25], [98, 112, 0.2], [100, 30, 0.12], [34, 124, -0.1], [66, 76, 0.3]]) gxEar(g, x, y, 1.05, r, 1.1);
+  gxSt.lbPat = { key, c }; return c;
+}
+// tijdlijn (links): zes molens, of in de Nachtploeg de vijf zones; de huidige uitgelicht met een oranje stip met gloed
+function gxTimeline(g, x0, w, h, dark) {
+  const night = run && run.mode === 'night', demo = !run || run.mode === 'demo';
+  const items = night ? NIGHT.zones.map((z, i) => ({ big: z, small: 'zone ' + (i + 1) })) : LEVELS.map(l => ({ big: String(l.year), small: l.short }));
+  const cur = night ? Math.floor(run.passed / 10) % NIGHT.zones.length : demo ? -1 : Math.min(run.lvl, LEVELS.length - 1);
+  const n = items.length, compact = w < 200, span = Math.min(h * 0.66, n * (compact ? 78 : 100)), top = (h - span) / 2, dy = span / (n - 1);
+  const lx = x0 + (compact ? w * 0.34 : Math.min(w * 0.3, 80)), ink = dark ? '244,239,227' : '29,30,31', gold = dark ? '#E3C431' : '#7A6500';
+  g.strokeStyle = `rgba(${ink},.16)`; g.lineWidth = 2; g.beginPath(); g.moveTo(lx, top - 26); g.lineTo(lx, top + span + 26); g.stroke();
+  if (!compact) { g.font = `800 11px ${F_UI}`; g.textAlign = 'left'; g.textBaseline = 'alphabetic'; g.fillStyle = `rgba(${ink},.5)`; try { g.letterSpacing = '1.5px'; } catch (e) { /* oud */ } g.fillText(night ? 'NACHTPLOEG' : 'SINDS 1846', lx - 4, top - 44); try { g.letterSpacing = '0px'; } catch (e) { /* oud */ } }
+  for (let i = 0; i < n; i++) {
+    const y = top + i * dy, on = i === cur, past = night ? false : (demo ? i <= save.maxLvl : i < cur);
+    if (on) { g.fillStyle = 'rgba(231,138,1,.2)'; g.beginPath(); g.arc(lx, y, 17, 0, TAU); g.fill(); g.fillStyle = 'rgba(231,138,1,.12)'; g.beginPath(); g.arc(lx, y, 25, 0, TAU); g.fill(); }
+    g.beginPath(); g.arc(lx, y, on ? 8 : 5.5, 0, TAU);
+    if (on || past) { g.fillStyle = '#E78A01'; g.fill(); } else { g.fillStyle = dark ? '#1c1a17' : '#F4EFE2'; g.fill(); g.strokeStyle = 'rgba(231,138,1,.75)'; g.lineWidth = 2; g.stroke(); }
+    const tx = lx + (compact ? 16 : 24), bigF = night ? (compact ? 19 : 25) : (compact ? 22 : 30);
+    g.textAlign = 'left'; g.textBaseline = 'middle';
+    g.font = `400 ${on ? bigF + 4 : bigF}px ${F_HAND}`; g.fillStyle = on ? gold : `rgba(${ink},${past || night ? 0.62 : 0.42})`;
+    g.fillText(items[i].big, tx, y - (compact ? 0 : 5), w - (tx - x0) - 8);
+    if (!compact) { g.font = `${on ? 800 : 700} 11.5px ${F_UI}`; g.fillStyle = on ? (dark ? '#F29A1C' : '#9E5E00') : `rgba(${ink},.45)`; try { g.letterSpacing = '1px'; } catch (e) { /* oud */ } g.fillText(items[i].small.toUpperCase(), tx + 2, y + 16, w - (tx - x0) - 8); try { g.letterSpacing = '0px'; } catch (e) { /* oud */ } }
+  }
+}
+// het merkkader opnieuw opbouwen als formaat, thema, tijdperk of zone verandert (zie buildLetterbox); per frame alleen een sleutel vergelijken
+function gxLbKey() {
+  const night = run && run.mode === 'night';
+  return [run ? run.mode : '-', run ? run.lvl : 0, night ? Math.floor(run.passed / 10) % NIGHT.zones.length : 0, run && run.mode === 'demo' ? save.maxLvl : 0].join('|');
+}
+// ---------- tijdperkplaatjes (drawEraVignette): vlakke vormen in een vak van 100 x 50, met een eigen lucht ----------
+// schip aan de loskade met zuigbuis (1920, 1976, 2008): o.build tekent het gebouw van dat tijdperk achter de kade
+function gxQuay(g, t, o) {
+  const sky = g.createLinearGradient(0, 0, 0, 44); sky.addColorStop(0, o.sky[0]); sky.addColorStop(1, o.sky[1]); g.fillStyle = sky; g.fillRect(0, 0, 100, 50);
+  g.fillStyle = o.sun; g.beginPath(); g.arc(o.sunX, 8, 4, 0, TAU); g.fill();
+  g.fillStyle = o.cloud; g.beginPath(); g.arc(17, 10, 3.6, 0, TAU); g.arc(22, 8.4, 4.6, 0, TAU); g.arc(27.5, 10.2, 3.2, 0, TAU); g.rect(14, 10, 16, 3.4); g.fill();
+  o.build(g);
+  g.fillStyle = o.quay; g.fillRect(60, 33, 40, 17); g.fillStyle = o.quayTop; g.fillRect(60, 33, 40, 1.8);
+  g.fillStyle = 'rgba(0,0,0,.25)'; for (const bx of [66, 78]) g.fillRect(bx, 31, 2.4, 2); // bolders
+  const wg = g.createLinearGradient(0, 40, 0, 50); wg.addColorStop(0, o.water[0]); wg.addColorStop(1, o.water[1]); g.fillStyle = wg; g.fillRect(0, 40, 61, 10);
+  g.strokeStyle = 'rgba(255,255,255,.28)'; g.lineWidth = 0.6; g.beginPath(); for (const [x, y, l] of [[4, 46.5, 9], [22, 48, 12], [40, 46.8, 8], [52, 48.6, 6]]) { g.moveTo(x, y); g.lineTo(x + l, y); } g.stroke();
+  g.fillStyle = o.hull; g.beginPath(); g.moveTo(2, 33); g.lineTo(58, 33); g.lineTo(54.5, 44); g.lineTo(6.5, 44); g.closePath(); g.fill(); // romp
+  g.fillStyle = 'rgba(0,0,0,.25)'; g.fillRect(6, 42.4, 49, 1.6);
+  g.fillStyle = o.stripe; g.fillRect(3.4, 37, 53.2, 1.3);
+  g.fillStyle = '#D9A441'; g.beginPath(); g.moveTo(20, 33); g.quadraticCurveTo(37, 25.5, 55, 33); g.closePath(); g.fill(); // graan in het ruim
+  g.fillStyle = 'rgba(255,240,200,.35)'; g.beginPath(); g.moveTo(26, 31); g.quadraticCurveTo(35, 27.5, 44, 29.5); g.lineTo(44, 30.5); g.quadraticCurveTo(35, 29, 26, 32); g.fill();
+  g.fillStyle = o.cabin; g.fillRect(5, 24.5, 11, 8.5); g.fillStyle = o.cabinWin; g.fillRect(6.5, 26.5, 8, 2.2); g.fillStyle = o.hull; g.fillRect(4.4, 23.4, 12.2, 1.6); // stuurhut
+  g.fillStyle = o.tower; g.fillRect(84, 5, 10, 28); g.fillStyle = 'rgba(255,255,255,.18)'; g.fillRect(84, 5, 1.6, 28); g.fillStyle = o.towerTop; g.fillRect(82.5, 3.4, 13, 2.4);
+  g.strokeStyle = o.tube; g.lineWidth = 2.6; g.beginPath(); g.moveTo(86, 10); g.lineTo(42, 17); g.lineTo(38, 31); g.stroke(); // zuigbuis het ruim in
+  g.strokeStyle = 'rgba(255,255,255,.35)'; g.lineWidth = 0.7; g.beginPath(); g.moveTo(85, 9.2); g.lineTo(42, 16); g.stroke();
+  const P0 = [38, 31], P1 = [42, 17], P2 = [86, 10], s1 = Math.hypot(P1[0] - P0[0], P1[1] - P0[1]), s2 = Math.hypot(P2[0] - P1[0], P2[1] - P1[1]);
+  g.fillStyle = '#F2C94C';
+  for (let i = 0; i < 4; i++) { // korrels onderweg naar de silo
+    const d = ((t * 0.6 + i / 4) % 1) * (s1 + s2), u = d < s1 ? d / s1 : (d - s1) / s2, A = d < s1 ? P0 : P1, B = d < s1 ? P1 : P2;
+    g.fillRect(lerp(A[0], B[0], u) - 1, lerp(A[1], B[1], u) - 1, 2, 2);
+  }
+}
+const gxVIG = {
+  hout(g, t) { // 1846: de rosmolen onder een rieten kap; het paard loopt rond, het kamwiel draait; daglicht boven het Friese land
+    const sky = g.createLinearGradient(0, 0, 0, 40); sky.addColorStop(0, '#93C1D6'); sky.addColorStop(1, '#EFE6CC'); g.fillStyle = sky; g.fillRect(0, 0, 100, 50);
+    g.fillStyle = 'rgba(255,252,236,.55)'; g.beginPath(); g.arc(89, 8, 6.4, 0, TAU); g.fill(); g.fillStyle = '#FFF6D8'; g.beginPath(); g.arc(89, 8, 4, 0, TAU); g.fill();
+    g.fillStyle = '#9DAFB2'; // dorp in de verte
+    for (const [x, w, h] of [[-1, 8, 4], [6, 7, 6], [70, 8, 5], [77, 6, 3], [88, 12, 5]]) { g.fillRect(x, 38 - h, w, h + 2); g.beginPath(); g.moveTo(x - 0.5, 38 - h); g.lineTo(x + w / 2, 38 - h - w * 0.45); g.lineTo(x + w + 0.5, 38 - h); g.fill(); }
+    g.fillStyle = '#86A267'; g.fillRect(0, 38, 100, 12); g.fillStyle = '#75924F'; g.fillRect(0, 45, 100, 5);
+    g.fillStyle = 'rgba(214,190,130,.55)'; g.beginPath(); g.ellipse(50, 42.5, 37, 4.4, 0, 0, TAU); g.fill(); // het rondgelopen pad
+    g.fillStyle = '#4a3320'; g.fillRect(12.5, 14, 2.4, 28); g.fillRect(85.1, 14, 2.4, 28); // palen
+    const ph = t * 0.9, hx = 50 + Math.cos(ph) * 33, hy = 41.5 + Math.sin(ph) * 3.4, face = Math.sin(ph) > 0 ? -1 : 1;
+    const horse = () => { // paard van opzij: één silhouet (romp, hals, kop), vier lopende benen, manen en staart
+      const f = face, sw = Math.sin(t * 5.2) * 1.3, X = v => hx + f * v;
+      g.strokeStyle = '#4e331c'; g.lineWidth = 1.5; g.beginPath();
+      for (const [x0, d] of [[5.2, sw], [3.6, -sw], [-4.6, -sw], [-6.2, sw]]) { g.moveTo(X(x0), hy - 4); g.lineTo(X(x0 + d * 0.6), hy + 1); g.lineTo(X(x0 + d), hy + 5); }
+      g.stroke();
+      g.fillStyle = '#6B4A2B'; g.beginPath(); g.ellipse(hx, hy - 5.5, 8.4, 4, 0, 0, TAU); g.fill();
+      g.beginPath(); g.moveTo(X(4.5), hy - 8.6); g.quadraticCurveTo(X(8.5), hy - 14.5, X(10), hy - 17); g.lineTo(X(15.2), hy - 13.6); g.quadraticCurveTo(X(15.8), hy - 12.2, X(14.6), hy - 12); g.lineTo(X(11.4), hy - 13.2); g.quadraticCurveTo(X(9.5), hy - 9, X(7.6), hy - 4.4); g.closePath(); g.fill(); // hals en kop
+      g.beginPath(); g.moveTo(X(10.3), hy - 16.8); g.lineTo(X(10.7), hy - 19.2); g.lineTo(X(11.8), hy - 16.6); g.closePath(); g.fill(); // oor
+      g.strokeStyle = '#3a2614'; g.lineWidth = 1.3; g.beginPath(); g.moveTo(X(5), hy - 9.4); g.quadraticCurveTo(X(8), hy - 14, X(9.8), hy - 17); g.stroke(); // manen
+      g.beginPath(); g.moveTo(X(-8.2), hy - 6.5); g.quadraticCurveTo(X(-11), hy - 4, X(-10.6), hy + 0.5); g.stroke(); // staart
+      g.fillStyle = '#2a1a0c'; g.beginPath(); g.arc(X(13.2), hy - 14.2, 0.55, 0, TAU); g.fill(); // oog
+    };
+    if (Math.sin(ph) < 0) horse(); // achter de spil
+    g.strokeStyle = '#4a3320'; g.lineWidth = 2.2; g.beginPath(); g.moveTo(50, 12); g.lineTo(50, 44); g.stroke(); // spil
+    g.lineWidth = 1.6; g.beginPath(); g.moveTo(50, 32); g.lineTo(hx, hy - 6); g.stroke(); // trekboom
+    g.strokeStyle = '#7a4f26'; g.lineWidth = 2.6; g.beginPath(); g.ellipse(50, 20.5, 30, 5, 0, 0, TAU); g.stroke(); // kamwiel
+    g.lineWidth = 1; g.strokeStyle = '#6b4424'; g.beginPath(); for (let i = 0; i < 6; i++) { const a = ph + i / 6 * TAU; g.moveTo(50, 20.5); g.lineTo(50 + Math.cos(a) * 30, 20.5 + Math.sin(a) * 5); } g.stroke();
+    g.fillStyle = '#C99A3A'; for (let i = 0; i < 18; i++) { const a = ph + i / 18 * TAU; g.fillRect(50 + Math.cos(a) * 30 - 0.6, 20.5 + Math.sin(a) * 5 - 2.7, 1.2, 2.2); } // kammen
+    if (Math.sin(ph) >= 0) horse();
+    g.fillStyle = '#C9A24A'; g.beginPath(); g.moveTo(4, 15.5); g.lineTo(50, 1.5); g.lineTo(96, 15.5); g.closePath(); g.fill(); // rieten kap
+    g.fillStyle = '#A9842F'; g.fillRect(4, 13.8, 92, 2.4);
+    g.strokeStyle = 'rgba(122,90,32,.55)'; g.lineWidth = 0.5; g.beginPath(); for (let x = 8; x < 93; x += 2.6) { const top = 1.5 + 14 * Math.abs(x - 50) / 46; g.moveTo(x, 13.8); g.lineTo(x + (x - 50) * 0.04, Math.max(top + 1, 13.8 - 3 - (x * 7) % 4)); } g.stroke();
+  },
+  steen(g, t) { // 1867: de stoommeelfabriek aan het water bij avondlicht; stoom uit de schoorsteen, gaslicht achter de ramen
+    const sky = g.createLinearGradient(0, 0, 0, 42); sky.addColorStop(0, '#26364F'); sky.addColorStop(0.6, '#7E6170'); sky.addColorStop(1, '#E2A46A');
+    g.fillStyle = sky; g.fillRect(0, 0, 100, 50);
+    g.fillStyle = 'rgba(247,247,247,.65)'; for (const [x, y] of [[8, 5], [19, 10], [47, 4], [62, 3], [76, 9], [92, 5]]) g.fillRect(x, y, 0.9, 0.9);
+    g.fillStyle = '#3d2c2e'; g.fillRect(0, 31, 17, 11); g.beginPath(); g.moveTo(-1, 31); g.lineTo(8.5, 25.5); g.lineTo(18, 31); g.fill(); // buurhuis
+    g.fillStyle = '#F2C35B'; g.fillRect(4, 34, 2.6, 3); g.fillStyle = '#2a1d1d'; g.fillRect(10, 34, 2.6, 3);
+    g.fillStyle = '#6E3328'; g.fillRect(44, 16, 53, 26); g.fillStyle = '#4e231b'; g.beginPath(); g.moveTo(41, 17); g.lineTo(70.5, 6.5); g.lineTo(100, 17); g.closePath(); g.fill(); // fabriek
+    g.fillStyle = 'rgba(0,0,0,.16)'; for (let y = 19; y < 42; y += 3.2) g.fillRect(44, y, 53, 0.55);
+    for (let r = 0; r < 3; r++) for (let c = 0; c < 5; c++) { const lit = (r * 5 + c * 3) % 4 !== 1; g.fillStyle = lit ? '#F2C35B' : '#2a1712'; g.fillRect(48 + c * 9.6, 19 + r * 7.4, 4.2, 5); if (lit) { g.fillStyle = 'rgba(242,195,91,.22)'; g.fillRect(46.6 + c * 9.6, 17.6 + r * 7.4, 7, 7.8); } }
+    g.fillStyle = '#7d3a2c'; g.beginPath(); g.moveTo(25, 42); g.lineTo(28, 10); g.lineTo(35, 10); g.lineTo(38, 42); g.fill(); // schoorsteen
+    g.fillStyle = 'rgba(0,0,0,.2)'; for (let y = 14; y < 42; y += 4) g.fillRect(27, y, 10, 0.6);
+    g.fillStyle = '#3a1d16'; g.fillRect(26.5, 8, 10, 3);
+    for (let i = 0; i < 4; i++) { const k = (t * 0.3 + i / 4) % 1; g.fillStyle = `rgba(236,230,222,${(0.55 * (1 - k)).toFixed(3)})`; g.beginPath(); g.arc(31.5 - k * 16, 6 - k * 5 + Math.sin(k * 6 + i), 2.6 + k * 6, 0, TAU); g.fill(); } // stoom
+    g.fillStyle = '#4a4440'; g.fillRect(0, 41.5, 100, 2.8); g.fillStyle = 'rgba(255,255,255,.12)'; g.fillRect(0, 41.5, 100, 0.7); // kade
+    const wg = g.createLinearGradient(0, 44, 0, 50); wg.addColorStop(0, '#1d2b39'); wg.addColorStop(1, '#2c3f4f'); g.fillStyle = wg; g.fillRect(0, 44.3, 100, 6);
+    g.fillStyle = 'rgba(242,195,91,.55)'; for (let c = 0; c < 5; c++) g.fillRect(48.6 + c * 9.6, 45.6 + (c % 2) * 1.4, 3, 0.8); // gaslicht in het water
+    g.fillStyle = 'rgba(226,164,106,.35)'; g.fillRect(4, 46.4, 28, 0.7); g.fillRect(12, 48.4, 22, 0.6);
+  },
+  tegel(g, t) { // 1920: bakstenen pakhuis met hoge ramen, een schip met graan aan de kade, daglicht
+    gxQuay(g, t, { sky: ['#A9CBDA', '#EDE7D4'], sun: '#FFF6D8', sunX: 52, cloud: 'rgba(255,255,255,.75)', water: ['#4F7E93', '#3C677B'], quay: '#77736b', quayTop: '#a29e93',
+      hull: '#2E3A42', stripe: '#C9A24A', cabin: '#E9E3CF', cabinWin: '#2E3A42', tower: '#4f5458', towerTop: '#3a3e42', tube: '#AEB5BC',
+      build: g => { g.fillStyle = '#8a4a34'; g.fillRect(60, 12, 40, 22); g.fillStyle = '#6a3526'; g.fillRect(58.5, 10, 43, 2.6); g.fillStyle = '#2f3a42'; for (let c = 0; c < 6; c++) for (let r = 0; r < 2; r++) g.fillRect(62 + c * 6.4, 15 + r * 9, 3, 6.4); } });
+  },
+  hout2(g, t) { // 1976: betonnen silo's en een bruin gebouw in jaren-70-kleuren, warm middaglicht
+    gxQuay(g, t, { sky: ['#D9A86A', '#F2DDB4'], sun: '#FFF1C9', sunX: 50, cloud: 'rgba(255,246,226,.65)', water: ['#5a7a80', '#46646a'], quay: '#7d776c', quayTop: '#a39d90',
+      hull: '#3a2a20', stripe: '#E78A01', cabin: '#E9DDC4', cabinWin: '#3a2a20', tower: '#7a4a24', towerTop: '#5a3418', tube: '#B4BBC2',
+      build: g => {
+        for (let i = 0; i < 3; i++) { const x = 61 + i * 7.2; g.fillStyle = '#d7cebd'; g.fillRect(x, 6, 7, 28); g.fillStyle = 'rgba(0,0,0,.14)'; g.fillRect(x + 5, 6, 2, 28); g.fillStyle = 'rgba(255,255,255,.3)'; g.fillRect(x + 1, 6, 1.2, 28); }
+        g.fillStyle = '#b9ae98'; g.fillRect(60.5, 4.5, 22.6, 2);
+        g.fillStyle = '#9a5a2a'; g.fillRect(94, 16, 6, 18); g.fillStyle = '#B5611D'; g.fillRect(94, 16, 6, 1.6);
+      } });
+  },
+  staal(g, t) { // 2008: de nieuwe molen van staal en glas, koel helder licht, de loskraan in oranje
+    gxQuay(g, t, { sky: ['#8EC3DB', '#E3F0F4'], sun: '#FFFFFF', sunX: 54, cloud: 'rgba(255,255,255,.85)', water: ['#5C8EA5', '#467890'], quay: '#8a8a84', quayTop: '#c3c2bb',
+      hull: '#2E3A42', stripe: '#E78A01', cabin: '#F7F7F7', cabinWin: '#2E3A42', tower: '#E78A01', towerTop: '#B56C00', tube: '#8D959E',
+      build: g => {
+        const gg = g.createLinearGradient(60, 4, 100, 34); gg.addColorStop(0, '#4F6D8C'); gg.addColorStop(1, '#2c4660'); g.fillStyle = gg; g.fillRect(60, 4, 40, 30);
+        g.fillStyle = 'rgba(214,236,255,.22)'; g.beginPath(); g.moveTo(62, 4); g.lineTo(70, 4); g.lineTo(84, 34); g.lineTo(76, 34); g.closePath(); g.fill();
+        g.fillStyle = '#9FB3C8'; for (let x = 60; x <= 100; x += 8) g.fillRect(x - 0.4, 4, 0.8, 30); for (let y = 4; y <= 34; y += 7.5) g.fillRect(60, y - 0.4, 40, 0.8);
+        g.fillStyle = '#16212d'; g.fillRect(59, 2.6, 42, 1.8);
+      } });
+  },
+  digi(g, t) { // 2026, Molen B: avondlucht, de donkere maaltoren met de oranje band; een kraan takelt een wals door een opening in het dak
+    const sky = g.createLinearGradient(0, 0, 0, 44); sky.addColorStop(0, '#1C2A3C'); sky.addColorStop(0.62, '#5B4C5E'); sky.addColorStop(1, '#D98A52');
+    g.fillStyle = sky; g.fillRect(0, 0, 100, 50);
+    g.fillStyle = 'rgba(247,247,247,.6)'; for (const [x, y] of [[6, 4], [18, 8], [33, 3], [72, 6], [96, 3]]) g.fillRect(x, y, 0.9, 0.9);
+    g.fillStyle = '#56575a'; for (let i = 0; i < 3; i++) { g.fillRect(3 + i * 8.6, 16, 8, 28); g.fillStyle = 'rgba(255,255,255,.12)'; g.fillRect(4 + i * 8.6, 16, 1.2, 28); g.fillStyle = '#56575a'; } // silo's
+    g.fillStyle = '#2C2E31'; g.fillRect(30, 34, 10, 10); g.fillRect(62, 34, 38, 10); // gebouw met de opening in het dak (x 40-62)
+    g.fillStyle = '#232528'; g.fillRect(40, 38, 22, 6);
+    g.fillStyle = '#E78A01'; g.fillRect(30, 33, 10, 1.6); g.fillRect(62, 33, 38, 1.6);
+    g.fillStyle = '#F2D35B'; for (const [x, y] of [[66, 37], [72, 37], [84, 37], [90, 40], [33, 38]]) g.fillRect(x, y, 2.6, 2);
+    g.fillStyle = '#6FD3E0'; g.fillRect(78, 41, 1.4, 1.4); g.fillStyle = '#5BD38A'; g.fillRect(96, 38, 1.4, 1.4); // ledjes
+    g.strokeStyle = '#E78A01'; g.lineWidth = 2.4; g.beginPath(); g.moveTo(90, 33); g.lineTo(90, 2.5); g.lineTo(28, 2.5); g.moveTo(90, 12); g.lineTo(78, 2.5); g.moveTo(90, 2.5); g.lineTo(98, 2.5); g.stroke(); // mast, giek, schoor
+    g.fillStyle = '#2C2E31'; g.fillRect(95.5, 3.4, 4, 4); // contragewicht
+    const hy = 17 + (0.5 - 0.5 * Math.cos(t * 0.9)) * 15; // de wals zakt langzaam het dak in en komt terug
+    g.strokeStyle = '#C8C2B4'; g.lineWidth = 0.8; g.beginPath(); g.moveTo(51, 2.5); g.lineTo(51, hy - 5); g.moveTo(51, hy - 5); g.lineTo(40.5, hy - 1.5); g.moveTo(51, hy - 5); g.lineTo(61.5, hy - 1.5); g.stroke(); // kabel en stroppen
+    g.fillStyle = '#C4CBD3'; g.fillRect(39, hy - 4, 24, 8); g.fillStyle = 'rgba(255,255,255,.85)'; g.fillRect(39, hy - 2.6, 24, 1.6); g.fillStyle = 'rgba(0,0,0,.2)'; g.fillRect(39, hy + 2.4, 24, 1.6); // wals met glans
+    g.fillStyle = '#2a3036'; g.fillRect(36.5, hy - 1.6, 2.6, 3.2); g.fillRect(63, hy - 1.6, 2.6, 3.2); // assen
+    g.fillStyle = '#141517'; g.fillRect(0, 44, 100, 6); g.fillStyle = 'rgba(231,138,1,.4)'; g.fillRect(0, 44, 100, 0.8);
+  },
+  night(g, t) { // de molen van nu bij nacht: maan, sterren, verlichte ramen en hun weerspiegeling in het kanaal
+    const sky = g.createLinearGradient(0, 0, 0, 42); sky.addColorStop(0, '#0B1520'); sky.addColorStop(1, '#22323d'); g.fillStyle = sky; g.fillRect(0, 0, 100, 50);
+    g.fillStyle = 'rgba(247,247,247,.75)'; for (const [x, y] of [[6, 6], [14, 14], [27, 4], [40, 11], [56, 5], [64, 13], [72, 3], [94, 15], [98, 6], [3, 18]]) g.fillRect(x, y, 1, 1);
+    g.fillStyle = 'rgba(242,211,91,.18)'; g.beginPath(); g.arc(84, 9.5, 8.5, 0, TAU); g.fill();
+    g.fillStyle = '#F2D35B'; g.beginPath(); g.arc(84, 9.5, 5.4, 0, TAU); g.fill(); g.fillStyle = '#111c26'; g.beginPath(); g.arc(81.6, 7.6, 4.8, 0, TAU); g.fill(); // maansikkel
+    g.fillStyle = '#2a1d1a'; g.fillRect(0, 24, 22, 16); g.fillStyle = '#1f1715'; g.fillRect(-1, 22.5, 24, 2); // oud bakstenen gebouw
+    g.fillStyle = '#2e2f30'; for (let i = 0; i < 4; i++) g.fillRect(45 + i * 8.2, 13, 7.8, 27); // silo's
+    g.fillStyle = 'rgba(255,255,255,.06)'; for (let i = 0; i < 4; i++) g.fillRect(46 + i * 8.2, 13, 1.2, 27);
+    g.fillStyle = '#3a3b3c'; g.fillRect(44.5, 11.5, 33.4, 2); g.fillRect(78, 26, 22, 14); // galerij en pakhuis
+    g.fillStyle = '#18191B'; g.fillRect(24, 6, 20, 34); g.fillRect(28.5, 2.5, 11, 4); // maaltoren
+    g.fillStyle = '#E78A01'; g.fillRect(23.5, 5.6, 21, 1.4); g.fillRect(28, 2.1, 12, 1.1);
+    g.fillStyle = '#F2D35B'; for (const [x, y] of [[32, 9], [27, 16], [36, 16], [27, 22], [40, 28], [31, 28], [27, 34], [3, 28], [11, 32], [17, 28], [81, 30], [91, 30], [86, 34], [57, 17]]) g.fillRect(x, y, 2.4, 2.4);
+    g.fillStyle = '#E3C431'; g.fillRect(31.6, 8.6, 3.2, 3.4); // het raam bovenin uit de intro
+    g.fillStyle = '#0f1d27'; g.fillRect(0, 40, 100, 10); g.fillStyle = 'rgba(255,255,255,.08)'; g.fillRect(0, 40, 100, 0.6);
+    g.fillStyle = 'rgba(242,211,91,.5)'; for (const x of [28, 33, 37, 4, 12, 82, 92]) g.fillRect(x, 42 + (x % 3), 1.6, 2.6 + (x % 2)); // ramen in het water
+    g.fillStyle = 'rgba(242,211,91,.25)'; g.fillRect(83, 46, 3, 0.8);
+  },
+};
+// ---------- HUD-achtergrond en panelen ----------
+function gxHudBg() {
+  if (tiles.hud) return tiles.hud;
+  const hb = CONFIG.HUD, { c, g } = gxCv(W, hb, V.s * V.dpr);
+  const gr = g.createLinearGradient(0, 0, 0, hb); gr.addColorStop(0, 'rgba(38,36,33,.94)'); gr.addColorStop(1, 'rgba(22,22,23,.9)');
+  g.fillStyle = gr; g.fillRect(0, 0, W, hb);
+  g.fillStyle = 'rgba(255,255,255,.05)'; g.fillRect(0, 0, W, 1);
+  g.fillStyle = 'rgba(255,236,160,.2)'; g.fillRect(0, hb - 3, W, 1); g.fillStyle = 'rgba(207,171,0,.85)'; g.fillRect(0, hb - 2, W, 2);
+  return (tiles.hud = c);
+}
+// paneel zoals de kaarten: warm antraciet, afgeronde hoeken, een zachte schaduw en een gouden bovenrand
+function gxPanel(x, y, w, h) {
+  ctx.fillStyle = 'rgba(0,0,0,.3)'; gxRR(ctx, x, y + 3, w, h + 2, 10); ctx.fill();
+  ctx.fillStyle = 'rgba(28,27,25,.93)'; gxRR(ctx, x, y, w, h, 9); ctx.fill();
+  ctx.save(); ctx.clip(); ctx.fillStyle = '#CFAB00'; ctx.fillRect(x, y, w, 3); ctx.fillStyle = 'rgba(255,255,255,.035)'; ctx.fillRect(x, y + 3, w, Math.min(40, h * 0.3)); ctx.restore();
+  ctx.strokeStyle = 'rgba(207,171,0,.2)'; ctx.lineWidth = 1; gxRR(ctx, x + 0.5, y + 0.5, w - 1, h - 1, 8.5); ctx.stroke();
+}
+// ---------- merkkader: vlakken, tijdperkpaneel en opnieuw opbouwen ----------
+function gxLbFill(g, x, y, w, h, dark) { // achtergrond in schermpixels: warme kleur en het korenaarpatroon
+  if (w <= 0 || h <= 0) return;
+  g.fillStyle = dark ? '#1A1815' : '#EEE7D7'; g.fillRect(x, y, w, h);
+  const p = g.createPattern(gxEarTile(dark, V.dpr), 'repeat'); if (p) { g.fillStyle = p; g.fillRect(x, y, w, h); }
+}
+// de twee zijpanelen naast het veld (alleen als er ruimte is): links de tijdlijn, rechts het tijdperkplaatje
+function gxLbPanels(g, dark) {
+  const d = V.dpr, m = 48, pw = V.ox - m, fw = W * V.s, h = V.ch;
+  if (pw < 110) return;
+  g.setTransform(1, 0, 0, 1, 0, 0);
+  gxLbFill(g, 0, 0, Math.floor(pw * d), Math.ceil(h * d), dark);
+  const rx = Math.ceil((V.ox + fw + m) * d); gxLbFill(g, rx, 0, g.canvas.width - rx, Math.ceil(h * d), dark);
+  g.setTransform(d, 0, 0, d, 0, 0);
+  gxTimeline(g, 0, pw, h, dark);
+  if (pw >= 200) gxEraPanel(g, V.ox + fw + m, pw, h, dark);
+  g.setTransform(1, 0, 0, 1, 0, 0);
+}
+// rechts: het tijdperkplaatje groot en zacht (vervagende randen), met de naam eronder; op het titelscherm een grote korenaar
+function gxEraPanel(g, x0, w, h, dark) {
+  const demo = !run || run.mode === 'demo';
+  if (demo) { // titelscherm: een waaier van korenaren als fijne lijntekening, zoals de korenaar in de footer van de site
+    const s = Math.min(w * 0.6, h * 0.55) / 56, cx = x0 + w / 2, cy = h / 2 + 4 * s;
+    g.strokeStyle = dark ? 'rgba(227,196,49,.3)' : 'rgba(158,136,26,.45)'; g.lineCap = 'round'; g.lineJoin = 'round';
+    for (const [a, sc] of [[-0.5, 0.9], [0.5, 0.9], [0, 1.06]]) { g.save(); g.translate(cx, cy + 34 * s); g.rotate(a); gxEar(g, 0, -30 * s * sc, s * sc, 0, 1.4); g.restore(); }
+    return;
+  }
+  const lv = lvlCfg(), pw = Math.min(w * 0.84, 420), ph = pw / 2, px = x0 + (w - pw) / 2, py = h / 2 - ph / 2 - 24, d = Math.max(1, Math.min(2, V.dpr));
+  const off = document.createElement('canvas'); off.width = Math.ceil(pw * d); off.height = Math.ceil(ph * d);
+  const og = off.getContext('2d'); og.scale(off.width / 92, off.height / 46); drawEraVignette(lv, 0, 0, 1.2, og);
+  og.setTransform(1, 0, 0, 1, 0, 0); og.globalCompositeOperation = 'destination-in'; // zachte randen: vervagen naar alle vier de kanten
+  for (const [x1, y1] of [[off.width, 0], [0, off.height]]) {
+    const lg = og.createLinearGradient(0, 0, x1, y1); lg.addColorStop(0, 'rgba(0,0,0,0)'); lg.addColorStop(0.16, 'rgba(0,0,0,1)'); lg.addColorStop(0.84, 'rgba(0,0,0,1)'); lg.addColorStop(1, 'rgba(0,0,0,0)');
+    og.fillStyle = lg; og.fillRect(0, 0, off.width, off.height);
+  }
+  g.globalAlpha = dark ? 0.62 : 0.78; g.drawImage(off, px, py, pw, ph); g.globalAlpha = 1;
+  g.textAlign = 'center'; g.textBaseline = 'middle'; g.font = `400 ${Math.round(clamp(pw / 10, 22, 36))}px ${F_HAND}`; g.fillStyle = dark ? 'rgba(227,196,49,.85)' : 'rgba(122,101,0,.92)';
+  g.fillText(run.mode === 'night' ? 'Nachtploeg' : lv.title, x0 + w / 2, py + ph + 30, w - 24);
+  if (run.mode !== 'night') { g.font = `700 12px ${F_UI}`; g.fillStyle = dark ? 'rgba(244,239,227,.5)' : 'rgba(29,30,31,.55)'; try { g.letterSpacing = '1.5px'; } catch (e) { /* oud */ } g.fillText(String(lv.year), x0 + w / 2, py + ph + 58); try { g.letterSpacing = '0px'; } catch (e) { /* oud */ } }
+}
+// per frame: alleen een sleutel vergelijken; bij een ander tijdperk of een andere zone de zijpanelen opnieuw, anders (formaat, thema) alles
+function gxLetterbox() {
+  const key = gxLbKey(), c = gxSt.lbEl || (gxSt.lbEl = $('lb'));
+  if (key === gxSt.lb && c.width === cv.width && c.height === cv.height) return;
+  const dark = gxDark();
+  if (!gxSt.lb || c.width !== cv.width || c.height !== cv.height || dark !== gxSt.lbDark) { buildLetterbox(); return; }
+  gxSt.lb = key; gxLbPanels(c.getContext('2d'), dark);
+}
 function render(alpha) {
-  // de letterbox staat op #lb eronder; buiten het veld blijft #cv doorzichtig en wordt nooit beschilderd
+  // het merkkader staat op #lb eronder; buiten het veld blijft #cv doorzichtig en wordt nooit beschilderd
   const k = V.s * V.dpr;
+  gxLetterbox();
   ctx.setTransform(k, 0, 0, k, V.ox * V.dpr, V.oy * V.dpr);
   ctx.save(); ctx.beginPath(); ctx.rect(0, 0, W, H); ctx.clip();
   const cam = lerp(Wd.pcam, Wd.camY, alpha), gx = lerp(G.px, G.x, alpha), lv = lvlCfg(), pal = lv.pal, demo = run.mode === 'demo';
   let sx = 0, sy = 0;
-  if (Wd.shakeT > 0) {
-    const a = CONFIG.shake.amp * (Wd.shakeT / CONFIG.shake.t); sx = (Math.random() - 0.5) * 2 * a; sy = (Math.random() - 0.5) * 2 * a;
-    ctx.fillStyle = '#000'; ctx.fillRect(0, 0, W, H); // randen die de schok vrijlaat
+  if (Wd.shakeT > 0) { // korte, zachte schok na een botsing: gedempt, vooral op en neer (bij verminderde beweging zet hurt() geen shakeT)
+    const u = 1 - Wd.shakeT / CONFIG.shake.t, e = (1 - u) * (1 - u), a = CONFIG.shake.amp * 0.8;
+    sx = Math.sin(u * 17 + 0.4) * a * 0.45 * e; sy = Math.sin(u * 13 + 1.1) * a * e;
+    ctx.fillStyle = pal.wall; ctx.fillRect(0, 0, W, H); // randen die de schok vrijlaat
   }
   ctx.save(); ctx.translate(sx, sy);
-  drawTiles(getTile(lv.style, pal), -((cam * 0.5) % 240), sx, sy);
-  drawWalls(cam, pal, lv);
+  const bg = getTile(lv.style, pal);
+  drawTiles(bg, -((cam * gxPar) % bg.P), sx, sy);
+  gxMotesDraw(bg, cam);
+  drawWalls(cam, pal, lv, sx, sy);
+  gxVignette(lv); // alleen over de wanden: het spel zelf blijft helder
   drawSteam();
   ctx.save(); ctx.translate(0, -cam);
   drawChute(lv);
   if (Wd.silo) drawSilo(Wd.silo, cam);
   // verdiepingen alleen binnen de schacht: stenen en walsen verdwijnen in de wand in plaats van eroverheen
   ctx.save(); ctx.beginPath(); ctx.rect(L, cam - 150, R - L, H + 300); ctx.clip();
-  for (const f of Wd.floors) if (f.y - cam > -140 && f.y - cam < H + 140) drawFloor(f, pal);
+  for (const f of Wd.floors) if (f.y - cam > -140 && f.y - cam < H + 140) drawFloor(f, pal); // met hun schaduw op de achterwand
   ctx.restore();
+  if (!demo) gxTrailDraw();
+  // zachte schaduw onder pick-ups en gevaren: los van elke achterwand goed te zien
+  const shP = gxShade(19, 17), shM = gxShade(13, 20), shH = gxShade(17, 15);
+  for (const p of Wd.picks) if (!p.got && p.y - cam > -30 && p.y - cam < H + 30) gxBlit(shP, p.x - 19, p.y + Math.sin(Wd.t * 3 + p.ph) * 4 - 15);
+  for (const h of Wd.haz) if (h.anch) gxBlit(shM, h.sx - 13, h.y - 19);
   for (const p of Wd.picks) if (!p.got && p.y - cam > -30 && p.y - cam < H + 30) drawPick(p.type, p.x, p.y + Math.sin(Wd.t * 3 + p.ph) * 4, Wd.t + p.ph);
   for (const h of Wd.haz) if (h.anch) drawHazard('moeder', h.sx, h.y, h.rot, null, 1);
   drawParticles();
   if (Wd.jg) drawJokeGrain(Wd.jg);
   ctx.restore();
+  for (const h of Wd.haz) if (!h.anch && !h.fling) gxBlit(shH, h.sx - 17, h.sy - 13);
   for (const h of Wd.haz) if (!h.anch) drawHazard(h.type, h.sx, h.sy, h.rot, h.pts, h.fling ? 0.5 : 1);
   drawTexts(); // zwevende punten onder de korrel, zodat ze nooit over zijn gezichtje vallen
   // wachtend op de start dobbert de korrel zacht onder de stortkoker
@@ -1785,21 +2697,22 @@ function render(alpha) {
   if (debug) drawDebug(cam);
   ctx.restore();
 }
-// Achtergrondtegels op hele schermpixels en zonder schalen (de tegel is al op schermresolutie getekend): dan is elke tegel een
-// kale kopie in plaats van een gefilterde, en dat scheelt op een telefoon die het canvas op de CPU tekent veel tijd per frame.
+// Achterwand op hele schermpixels en zonder schalen (de tegel is al op schermresolutie getekend): dan is elke tegel een kale kopie in
+// plaats van een gefilterde, en dat scheelt op een telefoon die het canvas op de CPU tekent veel tijd per frame. Alleen de schacht (L tot R).
 function drawTiles(tile, off, sx, sy) {
-  const d = V.dpr, x = Math.round((V.ox + sx * V.s) * d);
+  const d = V.dpr, x = Math.round((V.ox + (L + sx) * V.s) * d);
   ctx.save(); ctx.setTransform(1, 0, 0, 1, 0, 0); // de clip op het speelveld blijft staan
-  for (let y = off; y < H; y += 240) ctx.drawImage(tile, x, Math.round((V.oy + (y + sy) * V.s) * d));
+  for (let y = off; y < H; y += tile.P) ctx.drawImage(tile.c, x, Math.round((V.oy + (y + sy) * V.s) * d));
   ctx.restore();
 }
+// stoompufjes van de 2 pk-machine (1867): zachte wolkjes langs de wand, geen harde rondjes
 function drawSteam() {
   if (!Wd.steam.length) return;
-  ctx.fillStyle = '#F7F7F7';
+  const d = gxDot('247,247,247');
   for (const p of Wd.steam) {
-    const d = Math.sign(p.vx);
-    ctx.globalAlpha = 0.34 * clamp(p.life / p.max * 2, 0, 1);
-    ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, TAU); ctx.arc(p.x + d * p.r * 0.75, p.y - p.r * 0.35, p.r * 0.7, 0, TAU); ctx.fill();
+    const s = Math.sign(p.vx), r = p.r * 1.7;
+    ctx.globalAlpha = 0.42 * clamp(p.life / p.max * 2, 0, 1);
+    ctx.drawImage(d, p.x - r, p.y - r, 2 * r, 2 * r); ctx.drawImage(d, p.x + s * p.r * 0.75 - r * 0.7, p.y - p.r * 0.35 - r * 0.7, 1.4 * r, 1.4 * r);
   }
   ctx.globalAlpha = 1;
 }
@@ -1827,39 +2740,41 @@ function drawNightLamp(gx) {
   ctx.drawImage(lampC, Math.round((V.ox + (gx - W + x0) * V.s) * V.dpr), Math.round(V.oy * V.dpr));
   ctx.restore();
 }
-function vignette(rgb, a) { const g = ctx.createRadialGradient(200, 360, 160, 200, 360, 470); g.addColorStop(0, rgb + '0)'); g.addColorStop(1, rgb + a + ')'); ctx.fillStyle = g; ctx.fillRect(0, 0, W, H); }
-function drawWalls(cam, pal, lv) {
-  ctx.fillStyle = 'rgba(0,0,0,.42)'; ctx.fillRect(0, 0, L, H); ctx.fillRect(R, 0, W - R, H);
-  for (const px of [24, W - 24]) {
-    ctx.fillStyle = pal.pipe; ctx.fillRect(px - 11, 0, 22, H);
-    ctx.fillStyle = 'rgba(255,255,255,.13)'; ctx.fillRect(px - 7, 0, 4, H);
-    ctx.fillStyle = 'rgba(0,0,0,.25)'; ctx.fillRect(px + 6, 0, 5, H);
-    for (let y = -(cam % 160); y < H + 10; y += 160) {
-      ctx.fillStyle = pal.pipe; ctx.fillRect(px - 15, y, 30, 9);
-      ctx.fillStyle = 'rgba(255,255,255,.2)'; ctx.fillRect(px - 15, y, 30, 2);
-      ctx.fillStyle = 'rgba(0,0,0,.45)'; ctx.fillRect(px - 12, y + 4, 2, 2); ctx.fillRect(px + 10, y + 4, 2, 2);
-    }
-  }
-  if (lv.style === 'digi') { ctx.fillStyle = 'rgba(111,211,224,.35)'; ctx.fillRect(L - 1, 0, 1, H); ctx.fillRect(R, 0, 1, H); }
-  ctx.fillStyle = 'rgba(0,0,0,.5)'; ctx.fillRect(L - 3, 0, 3, H); ctx.fillRect(R, 0, 3, H);
+// Water: koele rand (even trager). Het verloop één keer per kleur; de sterkte via globalAlpha.
+function vignette(rgb, a) {
+  const key = 'vig' + rgb; let gr = ROLL_GRAD[key];
+  if (!gr) { gr = ROLL_GRAD[key] = ctx.createRadialGradient(200, 360, 160, 200, 360, 470); gr.addColorStop(0, rgb + '0)'); gr.addColorStop(1, rgb + '1)'); }
+  ctx.globalAlpha = a; ctx.fillStyle = gr; ctx.fillRect(0, 0, W, H); ctx.globalAlpha = 1;
 }
-function drawChute(lv) { // zuigbuis (of houten stortkoker in 1846) waaruit de korrel valt
+// Zijwanden (dichtbij): per tijdperk een strook die 1:1 met de verdiepingen meeschuift, op hele schermpixels
+function drawWalls(cam, pal, lv, sx, sy) {
+  const S = gxSides(lv.style, pal), d = V.dpr, s = V.s;
+  ctx.save(); ctx.setTransform(1, 0, 0, 1, 0, 0);
+  const xl = Math.round((V.ox + sx * s) * d), xr = Math.round((V.ox + (R + sx) * s) * d);
+  for (let y = -(cam % gxPS); y < H; y += gxPS) { const py = Math.round((V.oy + (y + sy) * s) * d); ctx.drawImage(S[0], xl, py); ctx.drawImage(S[1], xr, py); }
+  ctx.restore();
+}
+function drawChute(lv) { // houten stortkoker (1846, 1867) of zuigbuis waaruit de korrel valt
   if (run.mode === 'demo') return;
   const y1 = CONFIG.GY - 22; if (y1 - Wd.camY < -10) return;
-  ctx.fillStyle = lv.old ? '#6B4A2B' : '#8d959e'; ctx.fillRect(184, -400, 32, y1 + 400);
-  ctx.fillStyle = 'rgba(255,255,255,.15)'; ctx.fillRect(188, -400, 5, y1 + 400);
-  ctx.fillStyle = lv.old ? '#4a3320' : '#5d646c'; ctx.fillRect(179, y1 - 10, 42, 10);
+  if (lv.old) {
+    ctx.fillStyle = '#56391f'; ctx.fillRect(183, -400, 34, y1 + 400);
+    ctx.fillStyle = 'rgba(255,230,190,.13)'; ctx.fillRect(187, -400, 4, y1 + 400); ctx.fillStyle = 'rgba(0,0,0,.3)'; ctx.fillRect(211, -400, 6, y1 + 400);
+    ctx.fillStyle = 'rgba(20,12,4,.55)'; ctx.fillRect(199.5, -400, 1.2, y1 + 400);
+    ctx.fillStyle = '#1c1c1c'; for (let y = y1 - 56; y > -400; y -= 96) ctx.fillRect(181, y, 38, 5);
+    ctx.fillStyle = '#3e2a16'; ctx.fillRect(178, y1 - 10, 44, 10); ctx.fillStyle = 'rgba(255,230,190,.2)'; ctx.fillRect(178, y1 - 10, 44, 1.5);
+  } else {
+    ctx.fillStyle = rollGrad('chute', () => { const g = ctx.createLinearGradient(184, 0, 216, 0); g.addColorStop(0, '#5d646c'); g.addColorStop(0.25, '#b4bcc3'); g.addColorStop(0.5, '#8d959e'); g.addColorStop(1, '#4b5258'); return g; });
+    ctx.fillRect(184, -400, 32, y1 + 400);
+    ctx.fillStyle = '#4b5258'; for (let y = y1 - 64; y > -400; y -= 112) ctx.fillRect(182, y, 36, 4);
+    ctx.fillStyle = '#5d646c'; ctx.fillRect(179, y1 - 10, 42, 10); ctx.fillStyle = 'rgba(255,255,255,.22)'; ctx.fillRect(179, y1 - 10, 42, 1.5);
+  }
 }
 function drawFloor(f, pal) {
   if (f.kind === 'plan' || f.kind === 'buil') return drawPlate(f, pal);
   const xl = f.cx - f.w / 2 - f.R, xr = f.cx + f.w / 2 + f.R, y = f.y, hh = f.R * CONFIG.roll.casing;
-  for (const [a, b] of [[-10, xl], [xr, W + 10]]) {
-    if (b <= a) continue;
-    ctx.fillStyle = pal.slab; ctx.fillRect(a, y - hh, b - a, hh * 2);
-    ctx.fillStyle = 'rgba(255,255,255,.16)'; ctx.fillRect(a, y - hh, b - a, 3);
-    ctx.fillStyle = 'rgba(0,0,0,.3)'; ctx.fillRect(a, y + hh - 4, b - a, 4);
-    ctx.fillStyle = 'rgba(0,0,0,.35)'; for (let x = a + 12; x < b - 6; x += 26) { ctx.fillRect(x, y - hh + 7, 3, 3); ctx.fillRect(x, y + hh - 11, 3, 3); }
-  }
+  const S = gxSlab(lvlCfg().style, pal, hh), o = 10 + Math.floor(f.seed * 7) % 80; // elke verdieping een eigen uitsnede van de strook
+  for (const [a, b] of [[-10, xl], [xr, W + 10]]) if (b > a) gxBlitPart(S.c, S.k, a + o, b - a, a, y - hh);
   drawRoll(f, xl, y, 1); drawRoll(f, xr, y, -1);
 }
 // Alleen tekenwerk: de botsing blijft de cirkel (f.R) uit stepFloor/hitCirc. Verlopen worden per soort één keer
@@ -1869,51 +2784,42 @@ const WALS_ERA = { // [rand donker, lijf, glans, omtrek] per tijdperk; Molen B (
   tegel: ['#5c605d', '#A6AAA6', '#D8D9D0', '#363a38'], hout2: ['#5d646c', '#B0B7BF', '#E2E6E9', '#3c4248'],
   staal: ['#56606b', '#B2BBC5', '#EAF0F5', '#36404a'], digi: ['#48515a', '#C4CBD3', '#FFFFFF', '#2a3036'] };
 function rollGrad(key, mk) { return ROLL_GRAD[key] || (ROLL_GRAD[key] = mk()); }
+// Stilstaand deel van een wals of molensteen als kale kopie (met zijn schaduw), daarna de draaiende delen
 function drawRoll(f, x, y, dir) {
-  const Rr = f.R;
+  const Rr = f.R, st = lvlCfg().style, S = f.kind === 'molen' ? gxStoneSpr(Rr) : gxRollSpr(st, Rr, WALS_ERA[st] || WALS_ERA.hout2, st === 'digi');
+  gxBlit(S.c, x - S.m, y - S.m);
   ctx.save(); ctx.translate(x, y);
   if (f.kind === 'molen') drawStone(f, Rr, dir); else drawWals(f, Rr, dir);
   ctx.restore();
 }
-function drawStone(f, Rr, dir) { // molensteen (loper op ligger), schuin van opzij: rond bovenvlak, platte rand, ijzeren steenbus
-  const a = Rr * 0.3, b = Rr * 0.7; // a + b = R: het silhouet omsluit de botscirkel en raakt hem op de spleethoogte
-  ctx.beginPath(); ctx.moveTo(-Rr, -a); ctx.ellipse(0, -a, Rr, b, 0, Math.PI, TAU); ctx.lineTo(Rr, a); ctx.ellipse(0, a, Rr, b, 0, 0, Math.PI); ctx.closePath();
-  ctx.fillStyle = rollGrad('rim' + Rr, () => { const g = ctx.createLinearGradient(-Rr, 0, Rr, 0); g.addColorStop(0, '#6c5f46'); g.addColorStop(0.3, '#9a8b6e'); g.addColorStop(0.55, '#8E7F63'); g.addColorStop(1, '#5f533c'); return g; });
-  ctx.fill(); ctx.lineWidth = 2; ctx.strokeStyle = '#3b2f20'; ctx.stroke();
-  ctx.strokeStyle = 'rgba(45,36,24,.5)'; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.ellipse(0, 0, Rr - 1, b, 0, 0.12, Math.PI - 0.12); ctx.stroke(); // naad loper/ligger
-  ctx.fillStyle = rollGrad('top' + Rr, () => { const g = ctx.createLinearGradient(-Rr, -Rr, Rr * 0.6, 0); g.addColorStop(0, '#CFC2A6'); g.addColorStop(0.5, '#B8A98C'); g.addColorStop(1, '#a8987a'); return g; });
-  ctx.beginPath(); ctx.ellipse(0, -a, Rr - 1, b - 1, 0, 0, TAU); ctx.fill();
-  ctx.strokeStyle = 'rgba(255,246,222,.35)'; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.ellipse(0, -a, Rr - 1.5, b - 1.5, 0, 0.15, Math.PI - 0.15); ctx.stroke(); // lichte kantlijn van het bovenvlak
-  ctx.save(); ctx.translate(0, -a); ctx.scale(1, b / Rr); // bovenvlak als cirkel: draaien = groeven schuiven rond
-  ctx.strokeStyle = 'rgba(255,248,230,.28)'; ctx.lineWidth = 3; ctx.beginPath(); ctx.arc(0, 0, Rr * 0.8, -2.7, -1.5); ctx.stroke(); // glans linksboven
-  const rot = dir * Wd.t * f.spin * 1.4;
-  ctx.strokeStyle = 'rgba(92,76,52,.32)'; ctx.lineWidth = 1.4; ctx.beginPath();
-  for (let i = 0; i < 12; i++) { const g = rot + i / 12 * TAU; ctx.moveTo(Math.cos(g) * Rr * 0.7, Math.sin(g) * Rr * 0.7); ctx.quadraticCurveTo(Math.cos(g + 0.12) * Rr * 0.82, Math.sin(g + 0.12) * Rr * 0.82, Math.cos(g + 0.28) * Rr * 0.92, Math.sin(g + 0.28) * Rr * 0.92); }
-  ctx.stroke(); // korte scherpselgroeven, alleen bij de rand
-  ctx.fillStyle = 'rgba(80,66,44,.18)'; ctx.beginPath(); ctx.arc(0, 0, Rr * 0.3, 0, TAU); ctx.fill(); // het oog rond de steenbus
-  ctx.fillStyle = '#2f3337'; ctx.beginPath(); ctx.arc(0, 0, Rr * 0.16, 0, TAU); ctx.fill();
-  ctx.strokeStyle = '#6a6f74'; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.arc(0, 0, Rr * 0.16, 0, TAU); ctx.stroke();
-  ctx.fillStyle = 'rgba(255,255,255,.18)'; for (let i = 0; i < 7; i++) { const g = f.seed + i * 2.1, d = Rr * (0.42 + (i % 3) * 0.1); ctx.fillRect(Math.cos(g + rot) * d, Math.sin(g + rot) * d, 2, 2); }
+function drawStone(f, Rr, dir) { // molensteen (loper op ligger), schuin van opzij: de loper draait (rand en scherpselgroeven)
+  const a = Rr * 0.3, b = Rr * 0.7, rot = dir * Wd.t * f.spin * 1.4;
+  ctx.strokeStyle = 'rgba(58,46,30,.4)'; ctx.lineWidth = 1.5; ctx.beginPath(); // rand van de loper: streepjes die rondlopen (voorkant)
+  for (let i = 0; i < 14; i++) { const t = rot + i / 14 * TAU, s = Math.sin(t); if (s < 0.18) continue; const x = Math.cos(t) * (Rr - 1.5); ctx.moveTo(x, -a + b * s + 2); ctx.lineTo(x, b * s - 2); }
+  ctx.stroke();
+  ctx.save(); ctx.translate(0, -a); ctx.scale(1, b / Rr); ctx.rotate(rot); // bovenvlak als cirkel: de scherpselgroeven draaien in harpen rond
+  const rd = Rr * 0.18, t0 = Math.sqrt((Rr * 0.34) ** 2 - rd * rd), t1 = Math.sqrt((Rr * 0.94) ** 2 - rd * rd), r2 = rd + Rr * 0.12, t2 = Math.sqrt((Rr * 0.6) ** 2 - r2 * r2), t3 = Math.sqrt((Rr * 0.93) ** 2 - r2 * r2);
+  ctx.strokeStyle = 'rgba(88,72,48,.48)'; ctx.lineWidth = 1.6; ctx.beginPath();
+  for (let i = 0; i < 10; i++) {
+    const g = i / 10 * TAU, c = Math.cos(g), s = Math.sin(g);
+    ctx.moveTo(rd * c - t0 * s, rd * s + t0 * c); ctx.lineTo(rd * c - t1 * s, rd * s + t1 * c);
+    ctx.moveTo(r2 * c - t2 * s, r2 * s + t2 * c); ctx.lineTo(r2 * c - t3 * s, r2 * s + t3 * c);
+  }
+  ctx.stroke();
+  ctx.fillStyle = 'rgba(255,255,255,.22)'; for (let i = 0; i < 7; i++) { const g = f.seed + i * 2.1, d = Rr * (0.42 + (i % 3) * 0.1); ctx.fillRect(Math.cos(g) * d, Math.sin(g) * d, 2, 2); }
   ctx.restore();
 }
-function drawWals(f, Rr, dir) { // gladde stalen wals: cilinderglans met verticale lichtband; ribbels alleen als fijne, vage lijnen
-  const st = lvlCfg().style, e = WALS_ERA[st] || WALS_ERA.hout2, digi = st === 'digi';
-  ctx.beginPath(); ctx.arc(0, 0, Rr, 0, TAU);
-  ctx.fillStyle = rollGrad('w' + st + Rr, () => { const g = ctx.createLinearGradient(-Rr, 0, Rr, 0);
-    g.addColorStop(0, e[0]); g.addColorStop(0.2, e[1]); g.addColorStop(digi ? 0.3 : 0.27, e[2]); g.addColorStop(digi ? 0.38 : 0.42, e[1]); g.addColorStop(0.8, e[1]); g.addColorStop(1, e[0]); return g; });
-  ctx.fill();
-  if (f.ribs > 0) { // ribbels: dunne lijnen langs de wals die meedraaien (tegen elkaar in) en naar de randen toe vervagen
-    ctx.save(); ctx.clip();
-    const n = f.ribs, step = Math.PI / n, ph = ((dir * Wd.t * f.spin * 1.5) % step + step) % step;
-    ctx.strokeStyle = '#2b3138'; ctx.lineWidth = n < 15 ? 1.4 : 1;
-    for (let k = 0; k < n; k++) { const th = k * step + ph, xx = -Math.cos(th) * Rr; ctx.globalAlpha = (n < 15 ? 0.26 : 0.2) * Math.sin(th); ctx.beginPath(); ctx.moveTo(xx, -Rr); ctx.lineTo(xx, Rr); ctx.stroke(); }
-    ctx.restore(); ctx.globalAlpha = 1;
-  }
-  if (digi) { // Molen B: scherpe glanslijn en een vleugje schachtlicht
-    const hy = Rr * 0.9; ctx.fillStyle = 'rgba(255,255,255,.75)'; ctx.fillRect(-Rr * 0.36, -hy, 2, hy * 2);
-    ctx.strokeStyle = 'rgba(111,211,224,.4)'; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(0, 0, Rr - 3, -0.5, 0.5); ctx.stroke();
-  }
-  ctx.lineWidth = 2; ctx.strokeStyle = e[3]; ctx.beginPath(); ctx.arc(0, 0, Rr, 0, TAU); ctx.stroke();
+// Stalen wals: lijf, glans en rand staan stil (het licht draait niet mee). Wat draait: fijne groeven in het vlak (geribbelde walsen
+// grover, gladde walsen vaag) en de as met zijn spie; links met de klok mee en rechts ertegenin, zodat ze de korrel de spleet in trekken
+function drawWals(f, Rr, dir) {
+  const st = lvlCfg().style, e = WALS_ERA[st] || WALS_ERA.hout2;
+  const rot = dir * Wd.t * f.spin * 1.7, n = f.ribs || 10;
+  ctx.save(); ctx.rotate(rot); ctx.strokeStyle = e[3]; ctx.lineCap = 'round';
+  ctx.globalAlpha = f.ribs ? 0.3 : 0.16; ctx.lineWidth = n < 15 ? 1.6 : 1.15; ctx.beginPath();
+  for (let i = 0; i < n; i++) { const a = i / n * TAU, c = Math.cos(a), s = Math.sin(a); ctx.moveTo(c * Rr * 0.58, s * Rr * 0.58); ctx.lineTo(c * Rr * 0.84, s * Rr * 0.84); }
+  ctx.stroke();
+  ctx.globalAlpha = 0.7; ctx.lineWidth = 2.2; ctx.beginPath(); ctx.moveTo(Rr * 0.04, 0); ctx.lineTo(Rr * 0.15, 0); ctx.stroke(); // spie in de as
+  ctx.globalAlpha = 1; ctx.restore();
 }
 function drawPlate(f, pal) {
   const buil = f.kind === 'buil', hp = CONFIG.plate / 2, y = f.y;
@@ -1921,17 +2827,12 @@ function drawPlate(f, pal) {
   const hs = holesAt(f, Wd.t).map(h => h + jit), segs = [];
   let x = -20; for (const hx of hs) { segs.push([x, hx - f.w / 2]); x = hx + f.w / 2; } segs.push([x, W + 20]);
   if (!buil) { // ophangstangen: de zeefkast hangt en schudt
-    ctx.strokeStyle = 'rgba(0,0,0,.45)'; ctx.lineWidth = 2;
-    for (const rx of [hs[0] - 100, hs[hs.length - 1] + 100]) { ctx.beginPath(); ctx.moveTo(rx, y - hp); ctx.lineTo(rx + jit * 3, y - 70); ctx.stroke(); }
+    ctx.strokeStyle = 'rgba(0,0,0,.45)'; ctx.lineWidth = 2; ctx.beginPath();
+    for (const rx of [hs[0] - 100, hs[hs.length - 1] + 100]) { ctx.moveTo(rx, y - hp); ctx.lineTo(rx + jit * 3, y - 70); }
+    ctx.stroke();
   }
-  for (const [a, b] of segs) {
-    if (b <= a) continue;
-    ctx.fillStyle = buil ? pal.slab : pal.plate; ctx.fillRect(a, y - hp, b - a, hp * 2);
-    ctx.fillStyle = 'rgba(255,255,255,.2)'; ctx.fillRect(a, y - hp, b - a, 2);
-    ctx.fillStyle = 'rgba(0,0,0,.35)'; ctx.fillRect(a, y + hp - 3, b - a, 3);
-    if (buil) { ctx.strokeStyle = 'rgba(240,230,200,.35)'; ctx.lineWidth = 1; for (let xx = a + 3; xx < b - 2; xx += 6) { ctx.beginPath(); ctx.moveTo(xx, y - hp + 3); ctx.lineTo(xx + 4, y + hp - 4); ctx.stroke(); } }
-    else { ctx.fillStyle = 'rgba(0,0,0,.42)'; for (let xx = a + 5; xx < b - 4; xx += 8) ctx.fillRect(xx, y - 1.5, 3, 3); }
-  }
+  const S = gxPlate(lvlCfg().style, pal, buil), o = 32 + Math.floor(f.seed * 5) % 60 - jit; // de plaat schudt met zijn gaatjes mee
+  for (const [a, b] of segs) if (b > a) gxBlitPart(S.c, S.k, a + o, b - a, a, y - hp);
   ctx.fillStyle = buil ? pal.edge : '#E78A01';
   for (const hx of hs) { ctx.fillRect(hx - f.w / 2 - 3, y - hp, 3, hp * 2); ctx.fillRect(hx + f.w / 2, y - hp, 3, hp * 2); }
 }
@@ -2012,28 +2913,42 @@ function bookIcon(g, id, x, y, s) {
   }
   g.restore();
 }
+// Silo's aan het eind van de molen: ronde schaduw (verloop één keer per soort), hoepels, een kegel met glans; de gouden silo met ORDER
+// en daaronder de bulkwagen met vier cellen. Plaats en maten zijn gelijk gebleven (siloLanded rekent met dezelfde vakken).
 function drawSilo(s, cam) {
   const y = s.y; if (y - cam > H + 40) return;
   ctx.fillStyle = 'rgba(0,0,0,.35)'; ctx.fillRect(L, y - 30, R - L, 520);
+  const body = tgt => rollGrad(tgt ? 'siloT' : 'siloN', () => { const g = ctx.createLinearGradient(-26, 0, 26, 0), c = tgt ? ['#a68c38', '#e9d590', '#d8c27a', '#9a8132'] : ['#9c978b', '#e6e2d8', '#cdc8bd', '#8f8a7e']; g.addColorStop(0, c[0]); g.addColorStop(0.3, c[1]); g.addColorStop(0.58, c[2]); g.addColorStop(1, c[3]); return g; });
   for (let i = 0; i < 5; i++) {
     const cx = L + 30 + i * 60, tgt = i === s.target;
-    ctx.fillStyle = tgt ? '#d8c27a' : '#cdc8bd'; ctx.fillRect(cx - 26, y + 14, 52, 210);
-    ctx.fillStyle = 'rgba(0,0,0,.18)'; ctx.fillRect(cx + 12, y + 14, 14, 210);
-    ctx.fillStyle = 'rgba(255,255,255,.3)'; ctx.fillRect(cx - 20, y + 14, 4, 210);
-    ctx.fillStyle = tgt ? '#b89f45' : '#a8a397';
-    ctx.beginPath(); ctx.moveTo(cx - 29, y - 6); ctx.lineTo(cx + 29, y - 6); ctx.lineTo(cx + 26, y + 14); ctx.lineTo(cx - 26, y + 14); ctx.fill();
-    ctx.beginPath(); ctx.moveTo(cx - 26, y + 224); ctx.lineTo(cx + 26, y + 224); ctx.lineTo(cx + 7, y + 252); ctx.lineTo(cx - 7, y + 252); ctx.fill();
-    ctx.fillStyle = '#1D1E1F'; ctx.beginPath(); ctx.ellipse(cx, y - 6, 26, 6, 0, 0, TAU); ctx.fill();
+    ctx.save(); ctx.translate(cx, 0);
+    ctx.fillStyle = body(tgt); ctx.fillRect(-26, y + 14, 52, 210);
+    ctx.fillStyle = 'rgba(0,0,0,.13)'; for (let h = 46; h < 210; h += 54) ctx.fillRect(-26, y + 14 + h, 52, 2); // hoepels
+    ctx.fillStyle = 'rgba(255,255,255,.18)'; for (let h = 46; h < 210; h += 54) ctx.fillRect(-26, y + 12 + h, 52, 1);
+    ctx.fillStyle = tgt ? '#b89f45' : '#a8a397'; // kegel boven
+    ctx.beginPath(); ctx.moveTo(-29, y - 6); ctx.lineTo(29, y - 6); ctx.lineTo(26, y + 14); ctx.lineTo(-26, y + 14); ctx.fill();
+    ctx.fillStyle = 'rgba(255,255,255,.22)'; ctx.beginPath(); ctx.moveTo(-27, y - 4); ctx.lineTo(-12, y - 4); ctx.lineTo(-13, y + 14); ctx.lineTo(-25, y + 14); ctx.fill();
+    ctx.fillStyle = body(tgt); ctx.beginPath(); ctx.moveTo(-26, y + 224); ctx.lineTo(26, y + 224); ctx.lineTo(7, y + 252); ctx.lineTo(-7, y + 252); ctx.fill(); // kegel onder
+    ctx.fillStyle = 'rgba(0,0,0,.2)'; ctx.beginPath(); ctx.moveTo(-26, y + 224); ctx.lineTo(26, y + 224); ctx.lineTo(7, y + 252); ctx.lineTo(-7, y + 252); ctx.fill();
+    ctx.fillStyle = '#1D1E1F'; ctx.beginPath(); ctx.ellipse(0, y - 6, 26, 6, 0, 0, TAU); ctx.fill(); // de opening
+    ctx.strokeStyle = 'rgba(255,255,255,.25)'; ctx.lineWidth = 1; ctx.beginPath(); ctx.ellipse(0, y - 6, 26, 6, 0, 0.2, Math.PI - 0.2); ctx.stroke();
+    ctx.restore();
     ctx.save(); ctx.translate(cx + 3, y + 118); ctx.rotate(-Math.PI / 2); ctx.font = `800 13px ${F_UI}`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillStyle = '#1D1E1F'; ctx.fillText(SILOS[i], 0, 0); ctx.restore();
     if (tgt) {
       const p = 0.55 + Math.sin(Wd.t * 6) * 0.35;
       ctx.strokeStyle = `rgba(207,171,0,${p})`; ctx.lineWidth = 3; ctx.strokeRect(cx - 30, y - 14, 60, 244);
-      ctx.fillStyle = '#CFAB00'; ctx.font = `800 11px ${F_UI}`; ctx.textAlign = 'center'; ctx.fillText('ORDER', cx, y - 20);
+      ctx.fillStyle = '#E3C431'; ctx.font = `800 11px ${F_UI}`; ctx.textAlign = 'center'; ctx.fillText('ORDER', cx, y - 20);
       // bulkwagen met vier cellen wacht onder de silo
-      const by = y + 262; ctx.fillStyle = '#E3E1DA'; ctx.fillRect(cx - 44, by, 88, 34); ctx.fillStyle = '#1D1E1F'; ctx.fillRect(cx + 44, by + 10, 22, 24);
-      ctx.fillStyle = 'rgba(0,0,0,.25)'; for (let c = 1; c < 4; c++) ctx.fillRect(cx - 44 + c * 22, by + 3, 2, 28);
-      ctx.fillStyle = '#E78A01'; ctx.fillRect(cx - 44, by + 30, 110, 4);
-      ctx.fillStyle = '#1D1E1F'; for (const wx of [cx - 28, cx + 20, cx + 54]) { ctx.beginPath(); ctx.arc(wx, by + 38, 7, 0, TAU); ctx.fill(); }
+      const by = y + 262;
+      ctx.fillStyle = 'rgba(0,0,0,.3)'; ctx.fillRect(cx - 46, by + 40, 116, 5);
+      ctx.fillStyle = '#E3E1DA'; gxRR(ctx, cx - 44, by, 88, 34, 6); ctx.fill();
+      ctx.fillStyle = 'rgba(255,255,255,.5)'; ctx.fillRect(cx - 40, by + 3, 80, 3);
+      ctx.fillStyle = 'rgba(0,0,0,.2)'; for (let c = 1; c < 4; c++) ctx.fillRect(cx - 44 + c * 22, by + 3, 2, 28);
+      ctx.fillStyle = 'rgba(0,0,0,.12)'; for (let c = 0; c < 4; c++) { ctx.beginPath(); ctx.arc(cx - 33 + c * 22, by - 1, 4, Math.PI, 0); ctx.fill(); } // vuldeksels
+      ctx.fillStyle = '#1D1E1F'; gxRR(ctx, cx + 46, by + 6, 22, 28, 4); ctx.fill(); // cabine
+      ctx.fillStyle = '#7d9bb0'; ctx.fillRect(cx + 56, by + 10, 9, 9); ctx.fillStyle = 'rgba(255,255,255,.35)'; ctx.fillRect(cx + 57, by + 11, 3, 7);
+      ctx.fillStyle = '#E78A01'; ctx.fillRect(cx - 44, by + 30, 112, 4);
+      for (const wx of [cx - 28, cx + 20, cx + 56]) { ctx.fillStyle = '#1D1E1F'; ctx.beginPath(); ctx.arc(wx, by + 38, 7, 0, TAU); ctx.fill(); ctx.fillStyle = '#8d959e'; ctx.beginPath(); ctx.arc(wx, by + 38, 2.6, 0, TAU); ctx.fill(); }
     }
   }
 }
@@ -2076,11 +2991,15 @@ function drawGrain(x, y, g = ctx, st = null) {
   } else if (ouch) {
     const el = Rc.ouch - G.ouch, pop = 1 + Rc.pop * 0.6 * (Wd.dying > 0 ? 1 : clamp(G.ouch / (Rc.ouch * 0.4), 0, 1));
     sx = sy = pop;
+    if (G.ouch > 0) { const u = el / 0.3; if (u < 1) { const q = calm ? 0.45 * (1 - u) * (1 - u) : Math.cos(1.5 * Math.PI * u) * (1 - u); sx *= 1 + 0.3 * q; sy *= 1 - 0.3 * q; } } // stoot: plat, even uitgerekt, terug
     if (!calm && el < Rc.tremble) dx = Math.sin(el * TAU * 22) * Rc.amp * (1 - el / Rc.tremble);
   }
   let sc = st ? 1 : 1 - Math.min(G.knaks, 15) * 0.006, a = 1;
   if (!st && Wd.ending) { const e = Wd.ending / 0.16; if (e >= 1) return; sc *= 1 + 0.35 * e; a = 1 - e; } // in de silo: even opbollen en weg, het meelwolkje neemt het over
   const { rx, ry } = GR, col = st ? '#D9A441' : mixHex('#D9A441', '#F7F7F7', clamp(grainWhite(), 0, 0.96));
+  if (!st) { // in het spel: zachte schaduw en een warme gloed, zodat de korrel op elke achterwand goed los staat
+    g.globalAlpha = a; gxBlit(gxGrainHalo(), x + dx - 28, y - 28); g.globalAlpha = 1;
+  }
   g.save(); g.globalAlpha = a; g.translate(x + dx, y); g.rotate(st ? 0 : G.vx / CONFIG.grain.vmax * 0.35); g.scale(sc * sx, sc * sy);
   g.fillStyle = col; g.beginPath(); g.ellipse(0, 0, rx, ry, 0, 0, TAU); g.fill();
   g.strokeStyle = 'rgba(70,45,10,.6)'; g.lineWidth = 1.5; g.stroke();
@@ -2099,6 +3018,7 @@ function drawGrain(x, y, g = ctx, st = null) {
     }
     g.stroke();
   }
+  g.fillStyle = 'rgba(255,248,226,.32)'; g.beginPath(); g.ellipse(-4.2, -6.2, 2.2, 3.6, -0.35, 0, TAU); g.fill(); // glimlichtje linksboven
   const ex = 3.6, ey = -2.6, c0 = -0.3; // ogen op c0 ± ex
   g.fillStyle = g.strokeStyle = '#1D1E1F';
   if (joy) {
@@ -2146,14 +3066,18 @@ function drawParticles() {
   for (const p of PARTS) {
     if (!p.on) continue;
     const a = clamp(p.life / p.max, 0, 1);
-    if (p.kind === 'ring') { ctx.globalAlpha = a; ctx.strokeStyle = p.color; ctx.lineWidth = 3; ctx.beginPath(); ctx.arc(p.x, p.y, p.size + (1 - a) * 26, 0, TAU); ctx.stroke(); }
+    if (p.kind === 'ring') { // perfecte passage: een gouden glansring die uitdijt
+      const r = p.size + (1 - a) * 26;
+      ctx.globalAlpha = a * 0.3; ctx.strokeStyle = '#F2C94C'; ctx.lineWidth = 7; ctx.beginPath(); ctx.arc(p.x, p.y, r, 0, TAU); ctx.stroke();
+      ctx.globalAlpha = a; ctx.strokeStyle = p.color; ctx.lineWidth = 2.6; ctx.stroke();
+    } else if (p.kind === 'glow') { const r = p.size * (0.75 + 0.45 * (1 - a)); ctx.globalAlpha = a * 0.6; ctx.drawImage(gxDot('255,214,110'), p.x - r, p.y - r, 2 * r, 2 * r); }
+    else if (p.kind === 'mist') { ctx.globalAlpha = a * a * 0.75; ctx.drawImage(gxDot('250,246,236'), p.x - p.size, p.y - p.size, 2 * p.size, 2 * p.size); } // meelwolkje bij een perfecte passage
     else if (p.kind === 'flake' || p.kind === 'grain' || p.kind === 'kiem') {
       ctx.globalAlpha = a; ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot); ctx.fillStyle = p.color;
       ctx.beginPath(); if (p.kind === 'flake') { ctx.moveTo(-p.size, -1); ctx.lineTo(p.size, -2); ctx.lineTo(p.size - 1, 2); ctx.lineTo(-p.size + 1, 1.5); } else ctx.ellipse(0, 0, p.size * 0.7, p.size, 0, 0, TAU);
       ctx.fill(); ctx.restore();
-    } else if (p.kind === 'puff') { // zachte rand zonder shadowBlur: een doorzichtige halo om een dichtere kern
-      ctx.fillStyle = p.color; ctx.globalAlpha = a * 0.3; ctx.beginPath(); ctx.arc(p.x, p.y, p.size * 1.5, 0, TAU); ctx.fill();
-      ctx.globalAlpha = a * 0.8; ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, TAU); ctx.fill();
+    } else if (p.kind === 'puff') { // meelwolkje in de silo: zachte vlekken zonder harde rand (plaatje per kleur, geen shadowBlur)
+      const r = p.size * 1.8; ctx.globalAlpha = a * 0.95; ctx.drawImage(gxDot(gxRgb(p.color)), p.x - r, p.y - r, 2 * r, 2 * r);
     }
     else { ctx.globalAlpha = a; ctx.fillStyle = p.color; ctx.fillRect(p.x - p.size / 2, p.y - p.size / 2, p.size, p.size); }
   }
@@ -2177,8 +3101,7 @@ function wrapLines(text, maxW) {
 }
 function drawHUD(lv) {
   const hb = CONFIG.HUD;
-  ctx.fillStyle = 'rgba(22,22,23,.88)'; ctx.fillRect(0, 0, W, hb);
-  ctx.fillStyle = 'rgba(207,171,0,.75)'; ctx.fillRect(0, hb - 2, W, 2);
+  gxBlit(gxHudBg(), 0, 0);
   ctx.textBaseline = 'alphabetic'; ctx.textAlign = 'left';
   ctx.fillStyle = '#F7F7F7'; ctx.font = `800 24px ${F_UI}`;
   const s = fmt(run.score); ctx.fillText(s, 14, 31);
@@ -2189,10 +3112,14 @@ function drawHUD(lv) {
   const pl = W - 6 - V.pb, pr = pl - 6;
   const maxL = run.mode === 'night' ? CONFIG.nightLives : CONFIG.lives, xl = Math.min(328, pr - 8);
   if (run.gezel) { ctx.textAlign = 'right'; ctx.font = `800 10.5px ${F_UI}`; ctx.fillStyle = '#CFAB00'; ctx.fillText('GEZEL', Math.min(266, xl - (maxL - 1) * 22 - 18), 30); ctx.textAlign = 'left'; }
-  for (let i = 0; i < maxL; i++) {
+  for (let i = 0; i < maxL; i++) { // korrels over: kleine korreltjes met een glimlichtje; kwijt = een rood omlijnd plekje
     const x = xl - (maxL - 1 - i) * 22, on = i < run.lives;
     ctx.save(); ctx.translate(x, 23); ctx.rotate(0.25); ctx.beginPath(); ctx.ellipse(0, 0, 6.5, 9, 0, 0, TAU);
-    if (on) { ctx.fillStyle = '#D9A441'; ctx.fill(); ctx.fillStyle = '#1D1E1F'; ctx.fillRect(-3, -2, 1.6, 1.6); ctx.fillRect(1.4, -2, 1.6, 1.6); } else { ctx.strokeStyle = '#C52135'; ctx.lineWidth = 2; ctx.stroke(); }
+    if (on) {
+      ctx.fillStyle = '#D9A441'; ctx.fill(); ctx.strokeStyle = 'rgba(70,45,10,.75)'; ctx.lineWidth = 1.2; ctx.stroke();
+      ctx.fillStyle = 'rgba(255,246,220,.5)'; ctx.beginPath(); ctx.ellipse(-2.4, -4, 1.5, 2.6, -0.3, 0, TAU); ctx.fill();
+      ctx.fillStyle = '#1D1E1F'; ctx.fillRect(-3, -2, 1.6, 1.6); ctx.fillRect(1.4, -2, 1.6, 1.6);
+    } else { ctx.strokeStyle = '#C52135'; ctx.lineWidth = 2; ctx.stroke(); }
     ctx.restore();
   }
   if (run.mode === 'night') {
@@ -2210,16 +3137,20 @@ function drawHUD(lv) {
   // procesbalk: Lossen > Reinigen > Conditioneren > Walsen > Zeven > Silo
   const prog = procProg(), active = procStep(prog);
   const x0 = 30, x1 = Math.min(W - 30, pl - 14), dx = (x1 - x0) / 5, yy = 48; // het laatste icoon (Silo) blijft naast de pauzeknop
-  ctx.fillStyle = 'rgba(227,225,218,.25)'; ctx.fillRect(x0, yy - 1, x1 - x0, 2);
+  ctx.fillStyle = 'rgba(227,225,218,.22)'; ctx.fillRect(x0, yy - 1, x1 - x0, 2);
   ctx.fillStyle = '#CFAB00'; ctx.fillRect(x0, yy - 1, (x1 - x0) * Math.min(1, prog / 0.985), 2);
   for (let i = 0; i < 6; i++) {
     const x = x0 + i * dx, col = i === active ? '#E78A01' : i < active ? '#CFAB00' : 'rgba(227,225,218,.62)';
-    ctx.fillStyle = '#161617'; ctx.beginPath(); ctx.arc(x, yy, 10, 0, TAU); ctx.fill();
+    if (i === active) { ctx.globalAlpha = 0.55; ctx.drawImage(gxDot('231,138,1'), x - 18, yy - 18, 36, 36); ctx.globalAlpha = 1; }
+    ctx.fillStyle = '#161617'; ctx.beginPath(); ctx.arc(x, yy, 10.5, 0, TAU); ctx.fill();
+    ctx.strokeStyle = i === active ? '#E78A01' : i < active ? 'rgba(207,171,0,.6)' : 'rgba(227,225,218,.2)'; ctx.lineWidth = 1.3; ctx.stroke();
     icon(ctx, lv.old && STEP_ICO[i] === 'rolls' ? 'stone' : STEP_ICO[i], x, yy, i === active ? 15 : 12, col); // oude molens: molensteen, vanaf 1920 walsen
   }
   const name = lv.old && i18nOld[active] ? i18nOld[active] : STEPS[active];
   ctx.font = `800 10.5px ${F_UI}`; ctx.fillStyle = '#E78A01'; ctx.textAlign = 'center';
+  try { ctx.letterSpacing = '0.6px'; } catch (e) { /* oudere browsers */ }
   ctx.fillText(name.toUpperCase(), clamp(x0 + active * dx, 44, W - 50), 69);
+  try { ctx.letterSpacing = '0px'; } catch (e) { /* idem */ }
 }
 const i18nOld = { 3: 'Malen', 4: 'Builen' };
 function drawSide() { // linkerwand: actieve pick-ups (de rechterwand blijft leeg: geen combo in beeld)
@@ -2231,7 +3162,8 @@ function drawSide() { // linkerwand: actieve pick-ups (de rechterwand blijft lee
     icon(ctx, ico, 25, y, 16, col); y += 40;
   }
 }
-// Labels: klein donker pilletje, rood randje = ontwijken, goud randje = pakken. Positie = ding (vloeiend) + gekozen plek.
+// Labels: klein donker pilletje, rood randje = ontwijken, goud randje = pakken. Positie = ding (vloeiend) + gekozen plek. Met een
+// zachte schaduw eronder, zodat het pilletje op elke achterwand los staat.
 function drawLabels(cam) {
   const C = CONFIG.label;
   ctx.font = LBL_FONT; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
@@ -2239,9 +3171,10 @@ function drawLabels(cam) {
     if (!lb.on || lb.vis <= 0 || !lb.side) continue;
     const an = lblAnchors(lb, cam); if (!an) continue;
     const p = an[Math.min(lb.ai, an.length - 1)], x = p.x + lb.dx, y = p.y + lb.dy, w = lb.w, h = LBL_H, r = h / 2;
-    ctx.globalAlpha = clamp(lb.vis * Math.min(1, lb.t / C.fadeIn) * (lb.out >= 0 ? 1 - lb.out / C.fadeOut : 1), 0, 1);
-    ctx.beginPath(); ctx.moveTo(x + r, y); ctx.arcTo(x + w, y, x + w, y + h, r); ctx.arcTo(x + w, y + h, x, y + h, r); ctx.arcTo(x, y + h, x, y, r); ctx.arcTo(x, y, x + w, y, r); ctx.closePath();
-    ctx.fillStyle = 'rgba(18,18,19,.92)'; ctx.fill();
+    const al = clamp(lb.vis * Math.min(1, lb.t / C.fadeIn) * (lb.out >= 0 ? 1 - lb.out / C.fadeOut : 1), 0, 1);
+    ctx.globalAlpha = al * 0.35; ctx.fillStyle = '#000'; gxRR(ctx, x, y + 2, w, h, r); ctx.fill();
+    ctx.globalAlpha = al;
+    gxRR(ctx, x, y, w, h, r); ctx.fillStyle = 'rgba(18,18,19,.92)'; ctx.fill();
     ctx.strokeStyle = lb.avoid ? '#F0596B' : '#CFAB00'; ctx.lineWidth = 1.8; ctx.stroke();
     ctx.fillStyle = '#F7F7F7'; ctx.fillText(lb.text, x + w / 2, y + h / 2 + 0.5);
   }
@@ -2249,31 +3182,33 @@ function drawLabels(cam) {
 }
 // Introband: doorrollende jaartal-teller plus tijdperk-titel boven de korrel. Wacht de band op een tik ('wait'), dan staat
 // onder de korrel op de stilstaande schacht een tweede paneel: Nieuw in deze molen, in molen 1 ook Zo speel je, en onderin de startvraag.
+// Beide panelen in de stijl van de kaarten: warm antraciet met afgeronde hoeken, een zachte schaduw en een gouden bovenrand.
 function drawIntro(lv) {
   const t = Wd.it, a = clamp(Math.min(t / 0.15, Wd.intro === 'out' ? 1 - Wd.io / CONFIG.intro.fade : 1), 0, 1);
   const top = 80, bandH = 132; // band eindigt boven de korrel (GY 252)
   ctx.globalAlpha = a;
-  ctx.fillStyle = 'rgba(22,22,23,.88)'; ctx.fillRect(22, top, W - 44, bandH); ctx.fillStyle = '#CFAB00'; ctx.fillRect(22, top, W - 44, 3);
-  const from = String(run.prevYear), to = String(lv.year), bw = 28, bh = 36, gap = 5, x0 = 200 - (4 * bw + 3 * gap) / 2, y0 = 90;
+  gxPanel(22, top, W - 44, bandH);
+  const from = String(run.prevYear), to = String(lv.year), bw = 28, bh = 36, gap = 5, x0 = 200 - (4 * bw + 3 * gap) / 2 + 14, y0 = 91;
   ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.font = `800 26px ${F_UI}`;
   const back = +to < +from; // na de intro: van 2026 terug naar 1846, de cijfers rollen achteruit
   for (let i = 0; i < 4; i++) {
     const a0 = +from[i], b0 = +to[i], d = ((back ? a0 - b0 : b0 - a0) + 10) % 10 + (i >= 2 && from !== to ? 10 : 0), e = reduced.matches ? 1 : ease((t / 1.2 - i * 0.07) / 0.8);
     const v = back ? a0 + 20 - d * e : a0 + d * e, x = x0 + i * (bw + gap);
-    ctx.fillStyle = '#0d0d0e'; ctx.fillRect(x, y0, bw, bh);
-    ctx.save(); ctx.beginPath(); ctx.rect(x, y0, bw, bh); ctx.clip();
+    gxRR(ctx, x, y0, bw, bh, 4); ctx.fillStyle = '#0c0c0d'; ctx.fill();
+    ctx.save(); ctx.clip();
     const fr = v - Math.floor(v), dg = Math.floor(v) % 10;
     ctx.fillStyle = '#F7F7F7'; ctx.fillText(String(dg), x + bw / 2, y0 + bh / 2 - fr * bh); ctx.fillText(String((dg + 1) % 10), x + bw / 2, y0 + bh / 2 + (1 - fr) * bh);
+    ctx.fillStyle = 'rgba(255,255,255,.08)'; ctx.fillRect(x, y0, bw, bh / 2); ctx.fillStyle = 'rgba(0,0,0,.55)'; ctx.fillRect(x, y0 + bh / 2 - 0.5, bw, 1); // telwerk: lichte bovenhelft en een naad
     ctx.restore();
-    ctx.fillStyle = 'rgba(255,255,255,.08)'; ctx.fillRect(x, y0, bw, bh / 2);
+    ctx.strokeStyle = 'rgba(207,171,0,.28)'; ctx.lineWidth = 1; gxRR(ctx, x + 0.5, y0 + 0.5, bw - 1, bh - 1, 3.5); ctx.stroke();
   }
-  drawEraVignette(lv, 30, 84, reduced.matches ? 0 : t); // klein tijdperkplaatje links van de jaarteller (x 30-122, y 84-130)
+  drawEraVignette(lv, 30, 85, reduced.matches ? 0 : t); // tijdperkplaatje links van de jaarteller (x 30-122, y 85-131)
   // maxWidth als vangnet: een te lange regel wordt iets smaller in plaats van uit het paneel te steken
-  ctx.font = `400 25px ${F_HAND}`; ctx.fillStyle = '#CFAB00'; ctx.fillText(lv.title, 200, 147, 330);
+  ctx.font = `400 25px ${F_HAND}`; ctx.fillStyle = '#E3C431'; ctx.fillText(lv.title, 200, 148, 330);
   ctx.font = `600 13px ${F_UI}`; ctx.fillStyle = '#F7F7F7';
-  const lines = wrapLines(lv.intro, 330); lines.slice(0, 2).forEach((l, i) => ctx.fillText(l, 200, 169 + i * 16));
-  ctx.font = `800 11.5px ${F_UI}`; ctx.fillStyle = '#E78A01';
-  ctx.fillText(lv.supply || `Aan de loskade: ${run.ship}.`, 200, 201, 330);
+  const lines = wrapLines(lv.intro, 330); lines.slice(0, 2).forEach((l, i) => ctx.fillText(l, 200, 170 + i * 16));
+  ctx.font = `800 11.5px ${F_UI}`; ctx.fillStyle = '#F29A1C';
+  ctx.fillText(lv.supply || `Aan de loskade: ${run.ship}.`, 200, 202, 330);
   if (Wd.iw) drawIntroNew(t, a);
   ctx.globalAlpha = 1;
 }
@@ -2308,15 +3243,16 @@ function introNewLayout() {
 function drawIntroNew(t, a) {
   const L0 = introNewLayout(), top = INTRO_NEW_TOP;
   ctx.globalAlpha = a;
-  ctx.fillStyle = 'rgba(22,22,23,.9)'; ctx.fillRect(22, top, W - 44, L0.h); ctx.fillStyle = '#CFAB00'; ctx.fillRect(22, top, W - 44, 3);
+  gxPanel(22, top, W - 44, L0.h);
   ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
   let y = top + 12;
-  const head = txt => { ctx.font = `800 11.5px ${F_UI}`; ctx.fillStyle = '#CFAB00'; ctx.fillText(txt, 38, y + 8); y += 22; };
+  const head = txt => { ctx.font = `800 11.5px ${F_UI}`; ctx.fillStyle = '#E3C431'; try { ctx.letterSpacing = '0.8px'; } catch (e) { /* oud */ } ctx.fillText(txt, 38, y + 8); try { ctx.letterSpacing = '0px'; } catch (e) { /* oud */ } y += 22; };
   if (L0.rows.length) {
     head(run.mode === 'night' ? 'NIEUW VOOR JOU' : 'NIEUW IN DEZE MOLEN');
     for (const id of L0.rows) {
       const [name, act, , grp] = THINGS[id], cy = y + 13;
       ctx.fillStyle = '#0d0d0e'; ctx.beginPath(); ctx.arc(51, cy, 13.5, 0, TAU); ctx.fill();
+      ctx.strokeStyle = grp === 1 ? 'rgba(240,89,107,.35)' : 'rgba(207,171,0,.35)'; ctx.lineWidth = 1; ctx.stroke();
       bookIcon(ctx, id, 51, cy, 25);
       ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
       ctx.font = `800 14.5px ${F_UI}`; ctx.fillStyle = '#F7F7F7'; ctx.fillText(name, 74, cy);
@@ -2336,50 +3272,23 @@ function drawIntroNew(t, a) {
   }
   // startvraag in een goudgetinte strook onderaan, zacht pulserend (niet bij verminderde beweging)
   const sy = top + L0.h - 26, pulse = reduced.matches ? 1 : 0.62 + 0.38 * (0.5 + 0.5 * Math.cos(t * 3.4));
-  ctx.fillStyle = 'rgba(207,171,0,.2)'; ctx.fillRect(22, sy, W - 44, 26);
+  ctx.save(); gxRR(ctx, 22, top, W - 44, L0.h, 9); ctx.clip(); ctx.fillStyle = 'rgba(207,171,0,.2)'; ctx.fillRect(22, sy, W - 44, 26); ctx.fillStyle = 'rgba(207,171,0,.35)'; ctx.fillRect(22, sy, W - 44, 1); ctx.restore();
   ctx.globalAlpha = a * clamp((t - 0.3) / 0.4, 0, 1) * pulse;
   ctx.textAlign = 'center'; ctx.font = `800 13px ${F_UI}`; ctx.fillStyle = '#F2D35B';
   ctx.fillText(hintTouch ? 'Tik om te beginnen' : 'Klik of druk op spatie om te beginnen', 200, sy + 13.5, 330);
   ctx.globalAlpha = a;
 }
-// Tijdperkplaatje in de introband: 100 x 50 px, alleen lijnen en vlakken. 1846 rosmolen, 1867 schoorsteen met stoom,
-// 1920-2008 schip aan de kade met zuigbuis, Molen B (en Nachtploeg) een kraan die een wals door het dak takelt.
+// Tijdperkplaatje: een klein schilderijtje van 100 x 50 (x 0,92) in de stijl van de intro: vlakke vormen, een eigen lucht, warme kleuren.
+// 1846 de rosmolen onder een rieten kap, 1867 de stoommeelfabriek aan het water, 1920 tot 2008 het schip aan de loskade (elk in de
+// kleuren van zijn tijd), Molen B een kraan die een wals door het dak takelt, de Nachtploeg de molen bij nacht. Ook op de verhaalkaart,
+// in het Molenboek en groot in het merkkader. t laat het paardje lopen, de stoom stijgen en de korrels door de zuigbuis gaan.
 function drawEraVignette(lv, x0, y0, t, gc = ctx) { // gc: ook op het kleine canvas van de verhaalkaart
-  gc.save(); gc.translate(x0, y0); gc.scale(0.92, 0.92); gc.beginPath(); gc.rect(0, -1, 102, 51); gc.clip(); gc.lineCap = 'round'; // 46 px hoog: nooit over de bandrand of de titel
-  const ink = '#C8A878', gold = '#CFAB00';
-  gc.fillStyle = 'rgba(200,168,120,.35)'; gc.fillRect(0, 48, 100, 2); // grond of kade
-  if (lv.year === 1846) { // rosmolen: liggend kamwiel op een spil, paard loopt rond aan de trekboom
-    const ph = t * 0.9, hx = 50 + Math.cos(ph) * 34, hy = 40 + Math.sin(ph) * 4, face = Math.sin(ph) > 0 ? -1 : 1;
-    const horse = () => { gc.fillStyle = ink; gc.beginPath(); gc.ellipse(hx, hy - 5, 8.5, 4.2, 0, 0, TAU); gc.ellipse(hx + face * 12, hy - 14, 3.6, 2, face * 0.5, 0, TAU); gc.fill(); // romp en kop
-      gc.strokeStyle = ink; gc.lineWidth = 3; gc.beginPath(); gc.moveTo(hx + face * 6, hy - 7); gc.lineTo(hx + face * 10, hy - 13); gc.stroke(); // hals
-      gc.lineWidth = 1.8; gc.beginPath(); gc.moveTo(hx - 5, hy - 3); gc.lineTo(hx - 6, hy + 6); gc.moveTo(hx + 5, hy - 3); gc.lineTo(hx + 6, hy + 6); gc.moveTo(hx - face * 8, hy - 6); gc.lineTo(hx - face * 11, hy); gc.stroke(); }; // benen en staart
-    if (Math.sin(ph) < 0) horse();
-    gc.strokeStyle = ink; gc.lineWidth = 2; gc.beginPath(); gc.moveTo(50, 4); gc.lineTo(50, 46); gc.moveTo(50, 30); gc.lineTo(hx, hy - 6); gc.stroke(); // spil en trekboom
-    gc.strokeStyle = gold; gc.lineWidth = 2.5; gc.beginPath(); gc.ellipse(50, 14, 30, 6, 0, 0, TAU); gc.stroke(); // kamwiel
-    gc.lineWidth = 1; gc.beginPath(); for (let i = 0; i < 6; i++) { const g = t * 0.9 + i / 6 * TAU; gc.moveTo(50, 14); gc.lineTo(50 + Math.cos(g) * 30, 14 + Math.sin(g) * 6); } gc.stroke();
-    if (Math.sin(ph) >= 0) horse();
-  } else if (lv.year === 1867) { // stoommeelfabriek: bakstenen schoorsteen met stoompluimen
-    gc.fillStyle = '#7A3B2E'; gc.fillRect(52, 18, 90 - 52, 30); gc.fillStyle = '#5c2a20'; gc.beginPath(); gc.moveTo(48, 18); gc.lineTo(71, 8); gc.lineTo(94, 18); gc.fill(); // gebouw met dak
-    gc.fillStyle = '#F2D35B'; for (let i = 0; i < 3; i++) gc.fillRect(57 + i * 11, 28, 5, 7); // verlichte ramen
-    gc.fillStyle = '#8a4434'; gc.beginPath(); gc.moveTo(26, 48); gc.lineTo(29, 16); gc.lineTo(37, 16); gc.lineTo(40, 48); gc.fill(); // schoorsteen
-    gc.strokeStyle = 'rgba(0,0,0,.3)'; gc.lineWidth = 1; gc.beginPath(); for (let y = 22; y < 48; y += 6) { gc.moveTo(28, y); gc.lineTo(39, y); } gc.stroke(); // voegen
-    gc.fillStyle = '#3a2817'; gc.fillRect(27, 14, 12, 3);
-    for (let i = 0; i < 3; i++) { const k = (t * 0.35 + i / 3) % 1; gc.fillStyle = `rgba(235,230,220,${0.5 * (1 - k)})`; gc.beginPath(); gc.arc(33 - k * 14, 11 - k * 6, 3 + k * 5, 0, TAU); gc.fill(); } // stoom
-  } else if (lv.style !== 'digi') { // aan de loskade: schip met graanruim, zuiger met buis in het ruim
-    gc.fillStyle = 'rgba(111,160,190,.35)'; gc.fillRect(0, 44, 64, 6); // water
-    gc.fillStyle = ink; gc.beginPath(); gc.moveTo(2, 34); gc.lineTo(58, 34); gc.lineTo(52, 46); gc.lineTo(8, 46); gc.fill(); // romp
-    gc.fillRect(8, 26, 10, 8); gc.fillStyle = gold; gc.fillRect(10, 28, 6, 3); // stuurhut
-    gc.fillStyle = '#5a5f64'; gc.fillRect(64, 30, 36, 18); gc.fillStyle = ink; gc.fillRect(84, 4, 10, 26); // kade en zuigtoren
-    gc.strokeStyle = '#B0B7BF'; gc.lineWidth = 3; gc.beginPath(); gc.moveTo(86, 10); gc.lineTo(40, 18); gc.lineTo(38, 36); gc.stroke(); // zuigbuis het ruim in
-    gc.fillStyle = gold; for (let i = 0; i < 3; i++) { const k = (t * 0.8 + i / 3) % 1; gc.fillRect(40 + k * 44 - 1, 18 - k * 8 - 1, 2, 2); } // korrels onderweg
-  } else { // Molen B: kraan takelt een wals door een opening in het dak
-    gc.fillStyle = '#45494d'; gc.fillRect(0, 34, 40, 14); gc.fillRect(62, 34, 38, 14); // dak met opening
-    gc.strokeStyle = '#E78A01'; gc.lineWidth = 2.5; gc.beginPath(); gc.moveTo(90, 34); gc.lineTo(90, 2); gc.lineTo(30, 2); gc.moveTo(90, 12); gc.lineTo(78, 2); gc.stroke(); // mast, giek, schoor
-    const hy = 18 + (0.5 - 0.5 * Math.cos(t * 0.9)) * 16; // wals zakt langzaam en komt terug
-    gc.strokeStyle = ink; gc.lineWidth = 1; gc.beginPath(); gc.moveTo(51, 2); gc.lineTo(51, hy - 5); gc.stroke(); // kabel
-    gc.fillStyle = '#C4CBD3'; gc.fillRect(38, hy - 5, 26, 10); gc.fillStyle = 'rgba(255,255,255,.8)'; gc.fillRect(38, hy - 3, 26, 2); // wals met glanslijn
-    gc.fillStyle = '#2a3036'; gc.fillRect(35, hy - 2, 3, 4); gc.fillRect(64, hy - 2, 3, 4); // assen
-  }
+  gc.save(); gc.translate(x0, y0); gc.scale(0.92, 0.92); // 46 px hoog: nooit over de bandrand of de titel
+  gxRR(gc, 0, 0, 100, 50, 5); gc.save(); gc.clip(); gc.lineCap = 'round'; gc.lineJoin = 'round';
+  const era = lv === NIGHT ? 'night' : lv.year === 1846 ? 'hout' : lv.year === 1867 ? 'steen' : lv.style;
+  (gxVIG[era] || gxVIG.digi)(gc, t, lv);
+  gc.restore();
+  gc.strokeStyle = 'rgba(207,171,0,.4)'; gc.lineWidth = 1.2; gxRR(gc, 0.6, 0.6, 98.8, 48.8, 4.5); gc.stroke();
   gc.restore();
 }
 function drawDebug(cam) {
@@ -2460,6 +3369,21 @@ function bonRows(kg) {
 }
 // De langste reeks verschijnt alleen na de molen: weegbon, jaarverslag en game-over
 const streakRow = n => `<tr><td>Langste reeks zonder botsing</td><td>${n}</td></tr>`;
+// Weegbon: het totaal telt in circa 0,7 s op, als een weegschaal die uitslaat; bij verminderde beweging staat er meteen het eindgetal.
+// Het tellende getal is aria-hidden: de schermlezer leest het eindgetal uit een onzichtbare kopie (.sr).
+function uiTel(td, from, to, unit) {
+  if (!td) return;
+  const txt = v => fmt(v) + unit, direct = reduced.matches || !(to > from);
+  td.innerHTML = `<span aria-hidden="true">${txt(direct ? to : from)}</span><span class="sr">${txt(to)}</span>`;
+  if (direct) return;
+  const el = td.firstChild, t0 = performance.now() + 180; // na de binnenkomst van de kaart
+  const step = now => {
+    const k = clamp((now - t0) / 700, 0, 1);
+    el.textContent = txt(from + (to - from) * (1 - Math.pow(1 - k, 3)));
+    if (k < 1 && S.screen === 'level') requestAnimationFrame(step); else el.textContent = txt(to);
+  };
+  requestAnimationFrame(step);
+}
 // Badge-chip: een knop, dus ook met Tab en een schermlezer bereikbaar. De uitleg staat in title (muis), in het label
 // (schermlezer: naam, of hij al verdiend is en hoe je hem verdient) en komt als toast bij een tik of Enter.
 function badgeEl(b, earned, iconOnly) {
@@ -2556,6 +3480,7 @@ function levelComplete() {
     `<tr><td>Korrels over: ${run.lives}</td><td>+${lifeB}</td></tr><tr><td>Precisiebonus</td><td>+${uitB}</td></tr>` +
     `<tr class="big"><td>Totaal</td><td>${fmt(run.score)} kg</td></tr><tr class="opt"><td>Zakken van 25 kg</td><td>${fmt(Math.floor(run.score / CONFIG.bag))}</td></tr>` +
     streakRow(lvS.best);
+  uiTel($('lvBon').querySelector('tr.big td:last-child'), lvS.kg0, run.score, ' kg'); // het totaal telt op
   fillUit($('lvUit'), uitHTML(lvS.perf, lvS.total) + (unlocked ? ' <b>De Nachtploeg is nu open.</b>' : ''));
   fillBadges($('lvBadges'), earned);
   $('lvFact').textContent = pickFact(run.lvl);
@@ -2655,7 +3580,7 @@ function openPick() {
   const chips = $('lvlChips'); chips.innerHTML = '';
   LEVELS.forEach((lv, i) => {
     if (i > save.maxLvl) return;
-    const b = document.createElement('button'); b.type = 'button'; b.className = 'btn'; b.innerHTML = `${lv.year}<small>${esc(lv.short)}</small>`;
+    const b = document.createElement('button'); b.type = 'button'; b.className = 'btn'; b.innerHTML = `<span class="hand">${lv.year}</span><small>${esc(lv.short)}</small>`;
     b.setAttribute('aria-label', `Start bij ${lv.year} ${lv.short}`); b.onclick = () => startCampaign(i); chips.appendChild(b);
   });
   show('pick');
@@ -2679,19 +3604,13 @@ function closeNightBrief() { if (S.screen !== 'night') return; show(nightFrom); 
 // Nachtploeg-knop op het jaarverslag: eerst het briefje als de Nachtploeg nog dicht is of het briefje nog nooit open stond, anders meteen spelen
 function nightButton(daily) { if (!save.night || !save.nightBrief) openNightBrief(); else startNight(daily); }
 // Plaatje op het briefje: de molen 's nachts, met verlichte ramen onder een maansikkel (eigen donker tegeltje, ook in het lichte thema)
+// Zelfde tekening als het tijdperkplaatje van de Nachtploeg (gxVIG.night), iets groter zodat hij het hele tegeltje vult.
 function drawBriefArt() {
   const c = $('nbArt'), k = Math.max(2, V.dpr), w = 104, h = 58;
   if (c.width !== Math.round(w * k)) { c.width = Math.round(w * k); c.height = Math.round(h * k); }
   const g = c.getContext('2d');
   g.setTransform(k, 0, 0, k, 0, 0); g.clearRect(0, 0, w, h);
-  g.fillStyle = 'rgba(247,247,247,.7)'; for (const [x, y] of [[8, 8], [22, 16], [36, 6], [50, 14], [64, 5], [74, 18]]) g.fillRect(x, y, 1.5, 1.5); // sterren
-  g.fillStyle = '#F2D35B'; g.beginPath(); g.arc(89, 13, 7, 0, TAU); g.fill();
-  g.fillStyle = '#161617'; g.beginPath(); g.arc(86, 10.5, 6.2, 0, TAU); g.fill(); // maansikkel
-  g.fillStyle = '#3c4044'; g.fillRect(10, 22, 30, 36); g.fillRect(40, 34, 36, 24); g.fillRect(80, 28, 16, 30); // molengebouw, pakhuis, silo
-  g.beginPath(); g.ellipse(88, 28, 8, 3, 0, 0, TAU); g.fill();
-  g.fillStyle = '#E78A01'; g.fillRect(10, 22, 30, 2); // oranje daklijst, net als de rand van Molen B
-  g.fillStyle = '#F2D35B';
-  for (const [x, y] of [[14, 29], [22, 29], [30, 29], [14, 38], [30, 38], [22, 47], [46, 40], [56, 40], [66, 40]]) g.fillRect(x, y, 4, 5); // verlichte ramen
+  g.save(); g.translate(-6, 0); g.scale(1.16, 1.16); g.lineCap = 'round'; g.lineJoin = 'round'; gxVIG.night(g, 0, NIGHT); g.restore();
 }
 // ---------- Molenboek ----------
 // Knoppen op titel, pauze, weegbon en game-over: met het aantal nieuwe pagina's eronder
@@ -2730,7 +3649,9 @@ function bookCanvas(id, open) {
   const c = document.createElement('canvas'), k = Math.max(2, Math.min(3, window.devicePixelRatio || 1));
   c.width = c.height = Math.round(36 * k); c.setAttribute('aria-hidden', 'true');
   const g = c.getContext('2d'); g.scale(k, k);
-  g.fillStyle = '#1b1b1c'; g.beginPath(); g.arc(18, 18, 18, 0, TAU); g.fill();
+  const rg = g.createRadialGradient(14, 12, 2, 18, 18, 18); rg.addColorStop(0, '#2a2927'); rg.addColorStop(1, '#141414');
+  g.fillStyle = rg; g.beginPath(); g.arc(18, 18, 18, 0, TAU); g.fill();
+  g.strokeStyle = open ? 'rgba(207,171,0,.45)' : 'rgba(154,149,138,.35)'; g.lineWidth = 1; g.beginPath(); g.arc(18, 18, 17.3, 0, TAU); g.stroke();
   bookIcon(g, open ? id : '?', 18, 18, 31);
   return c;
 }
@@ -2832,6 +3753,7 @@ $('bOMenu').onclick = $('bLMenu').onclick = $('bPMenu').onclick = $('bDoneMenu')
 $('bResume').onclick = resume;
 $('bStory').onclick = resumeStory;
 $('bStory').addEventListener('pointerdown', armStory);
+$('bStory').style.setProperty('--ui-wait', CONFIG.story.minWait + 's'); // zo lang vult Verder malen zich (CSS)
 const storyLift = e => { if (e.pointerId === storyHeld) storyHeld = null; };
 addEventListener('pointerup', storyLift, true); addEventListener('pointercancel', storyLift, true);
 $('btnPause').onclick = pause;
