@@ -193,6 +193,13 @@ button.badge:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
 .easy .btn.pick{background:var(--ink);border-color:var(--ink);color:var(--card)}
 #scrOver.tight1 #overBon tr:not(.big){display:none}
 #scrOver.tight2 #overBadges{display:none}
+/* weegbon van een minigame: past hij niet, dan eerst het Wist-je-dat weg, dan de zakkenregel en de kwaliteitsregel */
+#scrLevel.tight1 .fact{display:none}
+#scrLevel.tight2 #lvBon tr.opt,#scrLevel.tight2 #lvUit{display:none}
+#scrLevel .linkbtn{text-align:center;min-height:40px;padding:4px 0}
+.page h4 .bk-year{font:700 11px/1 var(--ui);letter-spacing:.08em;color:var(--muted);margin-left:8px;vertical-align:middle} /* Molenboek: pagina uit een minigame, met het jaartal */
+.mgfade{z-index:5;background:transparent;width:100%;height:100%} /* overvloeier van de jaarintro naar de minigame (jxFadeGo) */
+#lvSlot{margin-top:calc(6px*var(--s,1));font-size:calc(19px*var(--s,1))}
 .picker{display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--card2);padding:8px 10px}
 .picker p{margin:0;font:800 13px/1.3 var(--ui)}
 .slots{display:flex;gap:6px}
@@ -427,8 +434,8 @@ textarea.copy{width:100%;box-sizing:border-box;font:600 13px/1.35 var(--ui);back
     <h2>Instellingen</h2>
     <button class="btn wide" id="bGezel" type="button" aria-pressed="false">Gezel-modus (makkelijk)</button>
     <button class="btn wide" id="bSound" type="button">Geluid: uit</button>
-    <p class="hint" id="ctlHint">Sturen met de pijltjes, A/D of de muis. P: pauze, M: geluid, Esc: menu.</p>
-    <p class="hint" id="ctlHintTouch" hidden>Sturen: sleep met je duim over het scherm, de korrel volgt je.</p>
+    <p class="hint" id="ctlHint">Elke molen legt zijn besturing uit in de introband. Nachtploeg: pijltjes, A/D of de muis. P: pauze, M: geluid, Esc: menu.</p>
+    <p class="hint" id="ctlHintTouch" hidden>Elke molen legt zijn besturing uit in de introband. Nachtploeg: sleep met je duim over het scherm, de korrel volgt je.</p>
     <button class="btn primary" id="bSettingsBack" type="button" data-primary>Terug</button>
   </div>
 </section>
@@ -478,9 +485,12 @@ textarea.copy{width:100%;box-sizing:border-box;font:600 13px/1.35 var(--ui);back
     <div class="ui-bon"><table class="bon" id="lvBon"></table></div>
     <p class="uit" id="lvUit"></p>
     <div class="badges" id="lvBadges"></div>
+    <p class="hand story-slot" id="lvSlot" hidden></p>
     <p class="fact"><b>Wist je dat?</b><span id="lvFact"></span></p>
+    <div class="easy" id="lvEasyBox" hidden><b>Te moeilijk?</b><p>Probeer de Gezel-modus (makkelijk): ruimere marges en een rustiger tempo. Je kunt hem bij Instellingen weer uitzetten.</p><button class="btn" id="bLEasy" type="button">Probeer de Gezel-modus</button></div>
     <button class="btn primary" id="bNext" type="button" data-primary>Volgende molen</button>
-    <div class="row"><button class="btn bookbtn" id="bLBook" type="button">Molenboek</button><button class="btn" id="bLMenu" type="button">Menu</button></div>
+    <div class="row"><button class="btn" id="bLAgain" type="button">Nog een keer</button><button class="btn bookbtn" id="bLBook" type="button">Molenboek</button></div>
+    <button class="linkbtn" id="bLMenu" type="button">Menu</button>
   </div>
 </section>
 
@@ -537,7 +547,8 @@ textarea.copy{width:100%;box-sizing:border-box;font:600 13px/1.35 var(--ui);back
     <p>Het supermarktmerk Koopmans, met de bakmixen, is sinds 2000 van Dr. Oetker. Dit spel gaat over Royal Koopmans, de meelfabriek in Leeuwarden die aan bakkers en voedingsindustrie levert.</p>
     <button class="linkbtn" id="bIntroAgain" type="button">Bekijk de intro opnieuw</button>
     <h3>Het spel</h3>
-    <p>Stuur je korrel door de spleet tussen de walsen. Wie midden door de spleet valt, haalt een perfecte passage. Stenen, bouten en moederkoren haalt de reiniging uit het graan: stenen en metaal mogen nooit op de walsen.</p>
+    <p>Elke molen van de tijdlijn is een eigen spelletje van anderhalve tot twee minuten, over wat daar toen gebeurde. Je verdient er kilo's bloem mee, en op de weegbon zie je je uitslag. Wil je het beter doen, dan speel je dezelfde molen met Nog een keer opnieuw.</p>
+    <p>De Nachtploeg is het valspel. Stuur je korrel door de spleet tussen de walsen. Wie midden door de spleet valt, haalt een perfecte passage. Stenen, bouten en moederkoren haalt de reiniging uit het graan: stenen en metaal mogen nooit op de walsen.</p>
     <p>Elke verdieping levert bloem op, en een perfecte passage levert extra op. Meer bloem krijg je voor bonussen die je onderweg pakt, de gouden silo, de korrels die je overhoudt en je precisie. Na afloop zie je ook je langste reeks verdiepingen zonder botsing.</p>
     <p>Halverwege elke molen van de tijdlijn staat het spel even stil voor een kort verhaal over die tijd. Je gaat verder als je klaar bent met lezen.</p>
     <p>De verhalen en alles wat je in de molen tegenkomt, komen in je Molenboek. Daar lees je ze na op je eigen tempo.</p>
@@ -547,7 +558,7 @@ textarea.copy{width:100%;box-sizing:border-box;font:600 13px/1.35 var(--ui);back
     <h3>Cijfers</h3>
     <p>Krantencijfers zijn afgerond en staan er met circa bij. Eén ton bloem is goed voor circa 1.800 broden.</p>
     <h3>Besturing</h3>
-    <p>Sturen kan met de pijltjes of A/D, de muis of je duim: sleep over het scherm en de korrel volgt je. Spatie of Enter: start en verder. In het Molenboek blader je met spatie. P: pauze. M: geluid. Esc: menu.</p>
+    <p>Elke molen legt zijn besturing uit in de introband; alles werkt met de muis, met één vinger en met het toetsenbord. In de Nachtploeg stuur je met de pijltjes of A/D, de muis of je duim: sleep over het scherm en de korrel volgt je. Spatie of Enter: start en verder. In het Molenboek blader je met spatie. P: pauze. M: geluid. Esc: menu.</p>
     <p class="hint">Gemaakt met Canvas en WebAudio, zonder plaatjes of geluidsbestanden.</p>
     <p class="hint">Lettertypen: Nunito en La Belle Aurore, SIL Open Font License.</p>
     <div class="share" id="shareRow"><label for="shareUrl">Deel het spel</label><input id="shareUrl" type="text" readonly spellcheck="false" autocomplete="off"><button class="btn" id="bShare" type="button">Kopieer link</button></div>
@@ -572,11 +583,13 @@ textarea.copy{width:100%;box-sizing:border-box;font:600 13px/1.35 var(--ui);back
     <div class="sect"><p class="sect-h">Tijdperken <small id="bookCntSt"></small></p><div id="bookStories"></div></div>
     <div class="sect"><p class="sect-h">In de molen <small id="bookCntIt"></small></p>
       <h3>Dingen in de schacht</h3><div id="bookThings"></div>
-      <h3>Zo werkt de molen</h3><div id="bookMachines"></div></div>
+      <h3>Zo werkt de molen</h3><div id="bookMachines"></div>
+      <h3 id="bookMgH" hidden>Per molen</h3><div id="bookMg"></div></div>
     <button class="btn primary" id="bBookBack" type="button" data-primary>Terug</button>
   </div>
 </section>
 <div id="introVeil" class="veil" aria-hidden="true" hidden></div>
+<canvas id="mgFade" class="veil mgfade" aria-hidden="true" hidden></canvas><!-- minigames (11d): het laatste beeld van de jaarintro, vloeit in 0,5 s over naar de molen -->
 <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
 <div id="sr" class="sr" aria-live="polite"></div><!-- schermlezer: wat alleen op het canvas staat (introband, korrel kwijt, zone); onzichtbaar -->
 <div id="rotate" class="rotate" role="alert" hidden>Draai je telefoon rechtop<small>Korrelval speelt staand. Een lopend spel gaat op pauze.</small></div>
@@ -598,6 +611,8 @@ const SHARE_URL = (() => {
     return u.protocol === 'https:' && (/(^|\.)royalkoopmans\.(com|nl)$/i.test(u.hostname) || u.hostname === location.hostname) ? u.href : d;
   } catch (e) { return d; }
 })();
+// ?proef in de adresbalk: in Kies een molen staan alle molens open (alleen deze sessie; de opslag verandert niet)
+const KV_PROEF = (() => { try { return new URLSearchParams(location.search).has('proef'); } catch (e) { return false; } })();
 const CONFIG = {
   W: 400, H: 720, L: 50, R: 350, GY: 252, HUD: 74,
   // dprMax: hoogste canvasresolutie; slowFrame: gemiddelde frametijd (ms, over 1 s) waarboven de resolutie omlaag gaat (dprSteps)
@@ -718,7 +733,7 @@ const FACTS = [
 // Verhaalpauze halverwege elke molen van de tijdlijn (lvl 0..5); gecontroleerde teksten, letterlijk overnemen.
 const STORIES = [
   { lvl: 0, jaar: "1846", kop: "Een molen vlak voor de bruiloft",
-    tekst: "Uilke leende het geld van zijn familie, vlak voor zijn huwelijk met Trijntje Jans Bierma. Zijn rosmolen stond midden in het dorp Holwerd. Boekweit werd in Friesland veel verbouwd en gegeten als pannenkoek, brood en gruttenbrij. Paarden pasten goed bij zo'n molen, want ze lopen in een gelijkmatige tred. Rond 1850 draaiden er in ons land zo'n 1.300 rosmolens.",
+    tekst: "Uilke leende het geld van zijn familie, vlak voor zijn huwelijk met Trijntje Jans Bierma. Zijn rosmolen stond midden in het dorp Holwerd. Boekweit werd in Friesland veel verbouwd en gegeten als brood en gruttenbrij. Paarden pasten goed bij zo'n molen, want ze lopen in een gelijkmatige tred. Rond 1850 draaiden er in ons land zo'n 1.300 rosmolens.",
     slot: "Rustig sturen dus, net als die paarden." },
   { lvl: 1, jaar: "1867-1900", kop: "Jan houdt stand in de graancrisis",
     tekst: "In Holwerd konden grote schepen niet komen, in Leeuwarden wel. Daar kwam graan binnen uit Amerika en de Baltische staten. Zoon Jan werkte al vanaf zijn veertiende mee. In de graancrisis sloten tussen 1880 en 1900 in Nederland 56 meelfabrieken. Toen de markt terugviel, verlaagde Jan de kosten, verkocht hij in een groter gebied en hield hij de molen draaiende.",
@@ -737,12 +752,12 @@ const STORIES = [
     slot: "Elke korrel telt, ook die van jou." },
 ];
 const BADGES = [
-  { id: 'vak', name: 'Vakmanschap', ico: 'aar', desc: '75% of meer perfecte passages in een molen' },
-  { id: 'betr', name: 'Betrouwbaar', ico: 'check', desc: 'een molen zonder botsing' },
-  { id: 'ond', name: 'Ondernemend', ico: 'up', desc: 'alle bonussen van een molen' },
+  { id: 'vak', name: 'Vakmanschap', ico: 'aar', desc: '75% of meer goed in een molen' },
+  { id: 'betr', name: 'Betrouwbaar', ico: 'check', desc: 'een molen zonder fout' },
+  { id: 'ond', name: 'Ondernemend', ico: 'up', desc: "alle extra's van een molen" },
   { id: 'pas', name: 'Gepassioneerd', ico: 'heart', desc: '75 verdiepingen in de Nachtploeg' },
   { id: 'mens', name: 'Menselijk', ico: 'people', desc: 'de hele tijdlijn vanaf 1846 uitgespeeld als Gezel' },
-  { id: 'elk', name: 'Elke korrel telt', ico: 'grain', desc: 'alle Nedertarwe-korrels van een molen' },
+  { id: 'elk', name: 'Elke korrel telt', ico: 'grain', desc: 'alle Nedertarwe in een molen' },
 ];
 // Precisie (perfecte passages / totaal) bepaalt het meel: zuiverder = witter = lagere uitmaling.
 // col: kleur van dat meel, voor het meelwolkje in de silo en het kleurvlakje naast het label op de weegbon (short patent het witst).
@@ -774,41 +789,41 @@ const LABEL_TEXT = {
 // Molenboek. Teksten gecontroleerd tegen de bronbestanden (alleen high/medium); act = wat het in het spel doet.
 const BOOK_THINGS = [
   { id: 'steen', name: 'Steen', text: 'Tussen het graan zitten soms stenen. De reiniging haalt ze eruit, samen met kaf en stof, want stenen en metaal mogen nooit op de walsen komen.',
-    act: 'In het spel: ontwijken. Een oranje driehoekje bovenin waarschuwt je eerst.' },
+    act: 'In de Nachtploeg: ontwijken. Een oranje driehoekje bovenin waarschuwt je eerst.' },
   { id: 'bout', name: 'Bout', text: 'Soms zit er metaal tussen het graan. Magneten in de reiniging trekken het eruit, want metaal mag nooit op de walsen komen.',
-    act: `In het spel: ontwijken. Een oranje driehoekje bovenin waarschuwt je eerst. Pak je een magneet, dan vliegen de bouten ${CONFIG.magnet.dur} seconden lang weg.` },
+    act: `In de Nachtploeg: ontwijken. Een oranje driehoekje bovenin waarschuwt je eerst. Pak je een magneet, dan vliegen de bouten ${CONFIG.magnet.dur} seconden lang weg.` },
   { id: 'moeder', name: 'Moederkoren', text: 'Moederkoren is een giftige schimmel die in de aar groeit. De reiniging haalt het uit het graan.',
-    act: 'In het spel: ontwijken. Er komen er steeds twee, die langzaam heen en weer drijven.' },
+    act: 'In de Nachtploeg: ontwijken. Er komen er steeds twee, die langzaam heen en weer drijven.' },
   { id: 'boekweit', name: 'Boekweit', text: 'Boekweit is geen graan maar familie van de duizendknoop, en dus van nature glutenvrij. Koopmans begon er in 1846 mee in Holwerd.',
-    act: `In het spel: pakken, +${PTS.boekweit} kg bloem.` },
+    act: 'In het spel: het graan van de rosmolen in molen 1.' },
   { id: 'water', name: 'Water', text: 'Bij het conditioneren krijgt schone tarwe water en rust ze 12 tot 48 uur. Dan wordt de zemel taai en laat die schoon los van het meelrijke binnenste van de korrel.',
-    act: `In het spel: pakken, +${PTS.water} kg bloem. Daarna valt alles ${CONFIG.slowmo.dur} seconden trager.` },
+    act: `In de Nachtploeg: pakken, +${PTS.water} kg bloem. Daarna valt alles ${CONFIG.slowmo.dur} seconden trager.` },
   { id: 'nedertarwe', name: 'Nedertarwe', text: 'Nedertarwe is duurzaam geteelde tarwe van Nederlandse boeren. Ze leggen bloemenranden aan langs hun akkers en krijgen 20 euro per ton extra.',
-    act: `In het spel: pakken, +${PTS.nedertarwe} kg bloem. Pak je alle Nedertarwe in één molen, dan krijg je de badge Elke korrel telt.` },
+    act: `In de Nachtploeg: pakken, +${PTS.nedertarwe} kg bloem. In de tijdlijn geeft alle Nedertarwe van een molen de badge Elke korrel telt.` },
   { id: 'magneet', name: 'Magneet', text: 'Magneten trekken metaal uit het graan.',
-    act: `In het spel: pakken, +${PTS.magneet} kg bloem. Daarna vliegen ${CONFIG.magnet.dur} seconden lang alle bouten weg.` },
+    act: `In de Nachtploeg: pakken, +${PTS.magneet} kg bloem. Daarna vliegen ${CONFIG.magnet.dur} seconden lang alle bouten weg.` },
   { id: 'kroon', name: 'Kroon', text: 'Sinds 1976 mag Koopmans zich Koninklijk noemen. Koningin Juliana verleende toen het predicaat.',
-    act: `In het spel: pakken, +${PTS.kroon} kg bloem.` },
+    act: `In de Nachtploeg: pakken, +${PTS.kroon} kg bloem.` },
   { id: 'kiem', name: 'Kiem', text: 'De kiem is gemiddeld maar 2,5 procent van de korrel. In de meelfabriek gaat hij apart, want de olie erin maakt meel bij lang bewaren ranzig.',
-    act: `In het spel: pakken, +${PTS.kiem} kg bloem. De kiem komt maar zelden voor.` },
+    act: `In de Nachtploeg: pakken, +${PTS.kiem} kg bloem. De kiem komt maar zelden voor.` },
 ];
 const BOOK_MACHINES = [
   { id: 'rosmolen', name: 'Rosmolen', text: 'Een molen die door paarden wordt rondgedraaid. In 1846 begon Koopmans met een rosmolen voor boekweit in Holwerd. Toen Uilke in 1856 ook tarwe wilde malen, bleek de rosmolen daar niet geschikt voor.',
-    act: 'In het spel: in de eerste molen stuitert een tarwekorrel van een molensteen. Dat is een knipoog naar 1856.' },
+    act: 'In het spel: jij stuurt het paard met rondjes om de spil.' },
   { id: 'molen', name: 'Molenstenen', text: 'In een korenmolen gaat het graan in één keer tussen twee molenstenen door, en alle delen van de korrel worden samen gemalen. Een meelfabriek maalt met walsen, in veel kleine stappen.',
-    act: `In het spel: stuur door de spleet tussen de stenen. Elke verdieping levert ${PTS.pass} kg op, midden door ${PTS.pass + PTS.perfWals} kg.` },
+    act: 'In het spel: molen 1 en 2 malen met stenen, vanaf 1920 met walsen.' },
   { id: 'buil', name: 'Buil', text: 'Een buil is een zeef. Hij scheidt het meel van de grove zemelen. In 1846 ging Uilke in Holwerd boekweit builen en malen.',
-    act: `In het spel: een houten zeef met een gat. Elke verdieping levert ${PTS.pass} kg op, midden door ${PTS.pass + PTS.perfPlan} kg.` },
+    act: 'In het spel: de zeef van molen 1 en 2, voordat de plansichter kwam.' },
   { id: 'wals', name: 'Walsenstoel', text: 'In een walsenstoel draaien twee stalen walsen tegen elkaar in. In de eerste walsenstoelen zijn de walsen geribbeld en breken ze de zemel van de korrel los. Bij elke volgende staan ze dichter op elkaar, en de laatste walsen zijn bijna glad. Een korrel passeert soms wel twintig walsenstoelen.',
-    act: `In het spel: stuur door de spleet. Midden door levert ${PTS.pass + PTS.perfWals} kg op in plaats van ${PTS.pass}.` },
+    act: `In de Nachtploeg: stuur door de spleet. Midden door levert ${PTS.pass + PTS.perfWals} kg op in plaats van ${PTS.pass}.` },
   { id: 'plan', name: 'Plansichter', text: 'Een grote, hevig schuddende zeefkast met gestapelde zeven. Hij splitst het maalsel in fijne bloem en grovere delen. Omdat het maalsel van verdieping naar verdieping valt, is een meelfabriek zo hoog.',
-    act: `In het spel: de plaat schuift heen en weer. Kijk waar een gat is als jij aankomt. Midden door levert ${PTS.pass + PTS.perfPlan} kg op.` },
+    act: `In de Nachtploeg: de plaat schuift heen en weer. Kijk waar een gat is als jij aankomt. Midden door levert ${PTS.pass + PTS.perfPlan} kg op.` },
   { id: 'silo', name: 'Silo en bulkwagen', text: 'Bakkers krijgen hun bloem met de bulkwagen of in zakken van 25 kilo via de groothandel. Een bulkwagen heeft cellen van minstens 2 ton, zodat hij in één rit meerdere bakkerijen kan bedienen. De silo\'s in het spel heten naar bloemsoorten die Royal Koopmans aan bakkers levert, zoals Orion en Zuiderkroon.',
-    act: `In het spel: mik aan het eind op de gouden silo met ORDER. Daar wacht de bulkwagen: +${PTS.siloGoal} kg. Een andere silo is zakgoed: +${PTS.siloOther} kg.` },
+    act: `In het spel: de weegbon na elke molen telt je bloem in zakken van ${CONFIG.bag} kilo.` },
   { id: 'predict', name: 'Vooruitblik', text: 'Molen B is de nieuwe molen van Royal Koopmans. De nieuwe molens zijn vergaand gedigitaliseerd en melden een storing al voordat die optreedt.',
-    act: 'In het spel: in Molen B en de Nachtploeg zie je onderin een oranje kader. Daar komt de volgende spleet aan. Een piepje meldt elke nieuwe verdieping.' },
+    act: 'In de Nachtploeg: onderin zie je een oranje kader. Daar komt de volgende spleet aan. Een piepje meldt elke nieuwe verdieping.' },
   { id: 'night', name: 'Nachtploeg', text: 'De molen draait volcontinu, dag en nacht, in een vijfploegendienst.',
-    act: 'In het spel: één korrel en geen einde. Het begint rustig, met alleen walsen en stenen. Na tien verdiepingen komt er meer bij, na twintig alles. Ondertussen gaat het steeds iets sneller.' },
+    act: 'In de Nachtploeg: één korrel en geen einde. Het begint rustig, met alleen walsen en stenen. Na tien verdiepingen komt er meer bij, na twintig alles. Ondertussen gaat het steeds iets sneller.' },
 ];
 const BOOK_STORY_IDS = STORIES.map(s => 'st' + s.lvl);
 const BOOK_IDS = [...BOOK_STORY_IDS, ...BOOK_THINGS.map(b => b.id), ...BOOK_MACHINES.map(b => b.id)];
@@ -886,6 +901,7 @@ function frameSample(ms) {
   if (fps.sum < 1000) return;
   const avg = fps.sum / fps.n, cur = Math.min(window.devicePixelRatio || 1, dprCap); fps.n = fps.sum = 0;
   if (avg > CONFIG.slowFrame && cur > 1) { dprCap = S.screen === 'intro' ? 1 : CONFIG.dprSteps.find(d => d < cur) || 1; layout(); } // intro: één herbouw, niet twee
+  else if (avg > CONFIG.slowFrame && run && run.mg) mgLite(); // resolutie al op 1 en nog te traag: de lichte stand van de minigame (env.lite)
 }
 function layout() {
   const cw = app.clientWidth || innerWidth, ch = app.clientHeight || innerHeight;
@@ -906,7 +922,9 @@ function layout() {
   $('rotate').hidden = !land;
   if (land) pause();
   if (S.screen === 'over') fitOver();
+  if (S.screen === 'level') fitLevel();
   if (S.screen === 'intro') introLayout();
+  mgLayout(); // minigame: build (of resize) opnieuw, 150 ms na de laatste wijziging
 }
 // Letterbox één keer op een eigen canvas onder het speelveld; #cv tekent alleen nog het veld zelf.
 // Merkkader: warme achtergrond (licht of donker thema) met een korenaarpatroon op lage dekking, een zachte schaduw rond het veld, en op
@@ -1067,6 +1085,7 @@ const SFX = {
   silo() { AU.tone(320, 140, 0.25, 'triangle', 0.18); },
   over() { AU.tone(220, 70, 0.45, 'triangle', 0.22); },
   click() { AU.tone(900, 700, 0.03, 'square', 0.03); },
+  tok() { AU.tone(220, 110, 0.1, 'sine', 0.16); }, // doffe tok (minigames: sfx.soft, een stop die geen fout is)
 };
 
 // ============================================================
@@ -1084,6 +1103,7 @@ cv.addEventListener('pointerdown', e => {
   AU.ensure();
   // wachtende introband: deze tik start alleen het spel; hij stuurt niet en wordt geen sleepbeweging
   if (introWaiting()) { e.preventDefault(); dismissIntro(); return; }
+  if (run.mg) { mgPointer('down', e); return; } // minigame: alles via mgPointer, in logische px
   const p = toLogical(e.clientX, e.clientY);
   if (e.pointerType === 'mouse') { inputMode = 'mouse'; G.tx = clamp(p.x, xLo(), xHi()); return; }
   ptr.id = e.pointerId; ptr.lastX = p.x; ptr.moved = 0; inputMode = 'touch'; G.tx = G.x;
@@ -1092,6 +1112,7 @@ cv.addEventListener('pointerdown', e => {
 });
 cv.addEventListener('pointermove', e => {
   if (introWaiting()) return; // tijdens het lezen beweegt de korrel niet mee met de muis
+  if (run.mg) { mgPointer('move', e); return; }
   const p = toLogical(e.clientX, e.clientY);
   if (e.pointerType === 'mouse') { inputMode = 'mouse'; G.tx = clamp(p.x, xLo(), xHi()); if (S.screen === 'play') run.steered = true; return; }
   if (e.pointerId !== ptr.id) return;
@@ -1099,7 +1120,7 @@ cv.addEventListener('pointermove', e => {
   ptr.moved += Math.abs(p.x - ptr.lastX); if (ptr.moved >= 8 && S.screen === 'play') run.steered = true; // echt gesleept: het duimpje is klaar
   ptr.lastX = p.x; inputMode = 'touch'; e.preventDefault();
 });
-const ptrEnd = e => { if (e.pointerId === ptr.id) { ptr.id = null; try { cv.releasePointerCapture(e.pointerId); } catch (err) { /* al los */ } } };
+const ptrEnd = e => { if (run && run.mg) mgPointer('up', e); if (e.pointerId === ptr.id) { ptr.id = null; try { cv.releasePointerCapture(e.pointerId); } catch (err) { /* al los */ } } };
 cv.addEventListener('pointerup', ptrEnd); cv.addEventListener('pointercancel', ptrEnd);
 document.addEventListener('touchmove', e => { if (e.target === cv) e.preventDefault(); }, { passive: false });
 document.addEventListener('pointerdown', e => {
@@ -1138,6 +1159,7 @@ function newRun(mode, lvl, seed, daily) {
     // gezelFrom: molen vanaf waar Gezel aan stond (Menselijk vraagt Gezel vanaf 1846); deathsInLevel: game-overs op rij in deze molen
     gezelFrom: mode !== 'demo' && save.gezel ? (lvl || 0) : Infinity, deathsInLevel: 0,
     ship: SHIPS[Math.floor(r() * SHIPS.length)], ploeg: 'ABCDE'[Math.floor(r() * 5)], prevYear: 1800,
+    mg: null, mgN: 0, mgRes: {}, weakRow: 0, // minigames (11d): het lopende potje, aantal gespeeld, uitslag per molen, zwakke uitslagen op rij in deze molen
   };
 }
 function lvlCfg() { return run.mode === 'night' ? NIGHT : run.mode === 'demo' ? DEMO : LEVELS[Math.min(run.lvl, LEVELS.length - 1)]; }
@@ -1292,7 +1314,7 @@ function part(o) {
 function say(text, x, y, color, size, opts) {
   const t = TEXTS.find(q => !q.on) || TEXTS[0];
   Object.assign(t, { on: true, text, x, y, color: color || '#F7F7F7', size: size || 18, life: 1.0, vy: -40, font: F_UI, weight: 800 }, opts || {});
-  t.max = t.life;
+  t.max = t.life; return t; // minigames (env.say met at): de tekst zelf
 }
 // ---------- korte labels bij nieuwe dingen (geen leestekst tijdens het spelen) ----------
 // Een label hangt aan een ding: how = 'sched' (waarschuwingsdriehoekje), 'fall' (vallende steen of bout),
@@ -1565,6 +1587,7 @@ function autoSteer() { // demo op het titelscherm en zelftest: richt op het gat 
 }
 
 function update(dt) {
+  if (run.mg) return mgUpdate(dt); // minigame (11d): eigen stap; de schacht blijft voor de Nachtploeg en de titeldemo
   const demo = run.mode === 'demo', lv = lvlCfg();
   let ts = 1;
   if (Wd.slow > 0) ts = CONFIG.slowmo.scale;
@@ -1773,14 +1796,18 @@ function syncStoryBtn() { // gedimd zolang Verder malen nog niet werkt
   const b = $('bStory'), wait = !storyReady();
   if ((b.getAttribute('aria-disabled') === 'true') !== wait) { if (wait) b.setAttribute('aria-disabled', 'true'); else b.removeAttribute('aria-disabled'); }
 }
-function openStory(f) {
-  const st = STORIES.find(s => s.lvl === run.lvl);
-  run.storySeen.add(run.lvl); lvS.storyN = f.n + 1; lvS.storyCleared = clearForStory();
-  unlockPage('st' + run.lvl); // dit verhaal staat nu in het Molenboek
+function storyFill(st) { // de verhaalkaart vullen (schacht en minigames); de minigame kan de knoptekst daarna nog vervangen (def.verder)
+  $('bStory').textContent = 'Verder malen';
   $('stKicker').innerHTML = `Halverwege <span class="hand">${esc(st.jaar)}</span>`; // jaartal groot in handschrift
   $('stTitle').textContent = st.kop;
   $('stText').textContent = st.tekst;
   $('stSlot').textContent = st.slot || ''; $('stSlot').hidden = !st.slot;
+}
+function openStory(f) {
+  const st = STORIES.find(s => s.lvl === run.lvl);
+  run.storySeen.add(run.lvl); lvS.storyN = f.n + 1; lvS.storyCleared = clearForStory();
+  unlockPage('st' + run.lvl); // dit verhaal staat nu in het Molenboek
+  storyFill(st);
   storyT0 = performance.now(); storyArm = null; storyHeld = ptr.id; // ligt de stuurduim nog? dan eerst optillen
   show('story'); syncStoryBtn(); drawStoryArt(0);
 }
@@ -1794,6 +1821,7 @@ function resumeStory() {
   if (S.screen !== 'story') return;
   const ok = storyArm === null ? storyReady() : storyArm; storyArm = null;
   if (!ok) return;
+  if (run.mg) { mgResume(run.mg); show('play'); return; } // minigame: korte adempauze, dan verder
   // knipperend onkwetsbaar: minstens inv s, en tot 0,15 s nadat het eerste obstakel na de pauze voorbij is (hooguit invMax s).
   // Dat is meestal een verdieping, soms een steen of moederkoren die de reiniging liet liggen omdat hij later komt.
   // Anders loopt de onkwetsbaarheid af vlak voor dat obstakel, en kost het een korrel als je nog niet stuurt.
@@ -1858,7 +1886,7 @@ function gxDark() {
   try { return matchMedia('(prefers-color-scheme: dark)').matches; } catch (e) { return false; }
 }
 // thema gewisseld: het merkkader opnieuw (en het stilstaande veld één keer opnieuw tekenen)
-function gxTheme() { gxSt.lb = ''; still = false; }
+function gxTheme() { gxSt.lb = ''; still = false; mgLayout(); }
 try { matchMedia('(prefers-color-scheme: dark)').addEventListener('change', gxTheme); } catch (e) { /* oudere browsers */ }
 try { new MutationObserver(gxTheme).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] }); } catch (e) { /* idem */ }
 try { document.fonts.addEventListener('loadingdone', gxTheme); } catch (e) { /* zonder FontFace-API: dan blijft het reservelettertype staan */ }
@@ -2812,6 +2840,7 @@ function gxLetterbox() {
   gxSt.lb = key; gxLbPanels(c.getContext('2d'), dark);
 }
 function render(alpha) {
+  if (run.mg) return mgRender(alpha); // minigame (11d): eigen tekening met dezelfde HUD-stijl
   // het merkkader staat op #lb eronder; buiten het veld blijft #cv doorzichtig en wordt nooit beschilderd
   const k = V.s * V.dpr;
   gxLetterbox();
@@ -3408,7 +3437,7 @@ function drawIntro(lv) {
   const lines = wrapLines(lv.intro, 330); lines.slice(0, 2).forEach((l, i) => ctx.fillText(l, 200, 170 + i * 16));
   ctx.font = `800 11.5px ${F_UI}`; ctx.fillStyle = '#F29A1C';
   ctx.fillText(lv.supply || `Aan de loskade: ${run.ship}.`, 200, 202, 330);
-  if (Wd.iw) drawIntroNew(t, a);
+  if (Wd.iw) { if (run.mg) mgIntroNew(t, a); else drawIntroNew(t, a); }
   ctx.globalAlpha = 1;
 }
 // Welke soorten zitten in een molen (machines, gevaren, pick-ups; silo aan het eind van elke molen van de tijdlijn)
@@ -3540,6 +3569,7 @@ addEventListener('click', () => { acted = true; }, true); // ook een kale klik (
 function announce(msg) { const r = $('sr'); r.textContent = r.textContent === msg ? msg + '\u00a0' : msg; }
 function introSay() {
   const lv = lvlCfg(), rows = introRows(run.newRows || []).rows;
+  if (run.mg) return mgIntroSay(lv, run.mg.def);
   const nieuw = rows.length ? ` Nieuw: ${rows.map(id => THINGS[id][0] + ', ' + THINGS[id][1]).join('; ')}.` : '';
   const how = run.mode === 'camp' && run.lvl === 0 ? ` Stuur door de spleet${hintTouch ? ' door te slepen' : ' met de pijltjes'}. Midden door is perfect.` : '';
   return `${run.mode === 'night' ? 'Nachtploeg' : lv.year + ', ' + lv.title}. ${lv.intro}${nieuw}${how} ${hintTouch ? 'Tik' : 'Druk op spatie'} om te beginnen.`;
@@ -3616,19 +3646,19 @@ async function copyText(text, box, okMsg, keep) { // keep: tekstveld blijft staa
 }
 
 function startDemo() {
-  run = newRun('demo', 0, 20261846); resetWorld(); idleT0 = performance.now(); demoV = 1;
+  mgDrop(); run = newRun('demo', 0, 20261846); resetWorld(); idleT0 = performance.now(); demoV = 1;
   gxPrewarm(0); // It giet oan!: molen 1 alvast klaarzetten in rustige tijd
   if (reduced.matches) for (let i = 0; i < 300; i++) update(CONFIG.step); // verminderde beweging: stilstaande demo, maar met walsen in beeld
   show('title'); refreshTitle();
 }
 // fromYear: jaar waar de teller van de introband vandaan rolt (2026 na de intro: terug in de tijd)
-function startCampaign(lvl, fromYear) { run = newRun('camp', lvl || 0, Math.random() * 4294967296); run.prevYear = fromYear || (lvl ? LEVELS[lvl - 1].year : 1800); startLevel(true); }
+function startCampaign(lvl, fromYear) { mgDrop(); run = newRun('camp', lvl || 0, Math.random() * 4294967296); run.prevYear = fromYear || (lvl ? LEVELS[lvl - 1].year : 1800); startLevel(true); }
 // quick: Nog een korrel? in de Nachtploeg, zonder introband
 function startNight(daily, quick) {
   if (!save.night) return;
   const seed = daily ? hashStr('korrelval-' + dateKey()) : Math.random() * 4294967296;
   const prev = quick && run && run.mode === 'night' ? run.seen : null;
-  run = newRun('night', 0, seed, daily); run.prevYear = 1846; run.lives = CONFIG.nightLives;
+  mgDrop(); run = newRun('night', 0, seed, daily); run.prevYear = 1846; run.lives = CONFIG.nightLives;
   // labels alleen voor soorten die nog niet in je Molenboek stonden (net als Nieuw voor jou), ook na Nog een korrel?
   for (const id in LABEL_TEXT) if (save.book[id] || (prev && prev.has(id))) run.seen.add(id);
   startLevel(!quick);
@@ -3636,6 +3666,8 @@ function startNight(daily, quick) {
 // intro: introband tonen (titel, Volgende molen, Nachtploeg); niet bij Nog een korrel?, zodat opnieuw proberen snel blijft
 function startLevel(intro) {
   if (intro && run.mode === 'camp' && jaarWanted(run.lvl) && openJaar(run.lvl, 'auto')) return; // eerst de jaarintro (de eerste keer in deze molen), daarna opnieuw hierheen
+  if (run.mode === 'camp' && MINIGAMES[run.lvl]) return mgStartLevel(intro); // de tijdlijn speelt minigames (11d); zonder geladen minigame de schacht
+  mgDrop(); cv.setAttribute('aria-label', 'Speelveld: een tarwekorrel valt door de meelfabriek');
   run.cp ={ score: run.score, perfects: run.perfects, total: run.total, bestStreak: run.bestStreak };
   run.lives = run.mode === 'night' ? CONFIG.nightLives : CONFIG.lives; run.streak = 0;
   // eerst bepalen wat nieuw is (Nachtploeg: wat nog niet in het Molenboek staat), dan de machines van deze molen openzetten
@@ -3654,9 +3686,9 @@ function retry() {
 // Te moeilijk? > Probeer de Gezel-modus: zelfde als de knop bij Instellingen, daarna meteen opnieuw (zonder introband)
 function tryGezel() {
   save.gezel = true; persist(); refreshTitle();
-  $('easyBox').hidden = true; SCR.over.classList.remove('easy-on');
+  $('easyBox').hidden = true; SCR.over.classList.remove('easy-on'); $('lvEasyBox').hidden = true;
   nightFails = 0;
-  if (run.mode === 'camp') { run.gezel = true; run.gezelFrom = Math.min(run.gezelFrom, run.lvl); run.deathsInLevel = 0; }
+  if (run.mode === 'camp') { run.gezel = true; run.gezelFrom = Math.min(run.gezelFrom, run.lvl); run.deathsInLevel = 0; run.weakRow = 0; }
   retry(); // Nachtploeg: nieuwe run, die neemt Gezel over uit save
 }
 function levelComplete() {
@@ -3686,9 +3718,10 @@ function levelComplete() {
   fillBadges($('lvBadges'), earned);
   $('lvFact').textContent = pickFact(run.lvl);
   $('bNext').textContent = last ? 'Naar het jaarverslag' : `Volgende molen: ${LEVELS[run.lvl + 1].year}`;
+  $('lvUit').hidden = false; $('lvEasyBox').hidden = true; $('bLAgain').hidden = false; // Nog een keer werkt ook voor de schacht (retry)
   gxPrewarm(run.lvl + 1); // de volgende molen klaarzetten terwijl de weegbon er staat
   jxPrewarm(run.lvl + 1); // en de jaarintro van die molen, in rustige tijd (11c)
-  show('level'); SFX.fanfare();
+  show('level'); fitLevel(); SFX.fanfare();
 }
 function nextLevel() {
   if (run.lvl >= LEVELS.length - 1) return showDone();
@@ -3705,7 +3738,7 @@ function showDone() {
   $('doneNote').textContent = (full ? 'Je viel door alle molens van de tijdlijn.' : `Je viel van ${LEVELS[run.startLvl].year} tot Molen B.`) +
     ' Generaties lang draaiden hier de molens op vakmanschap; jij draaide een rondje mee.';
   $('doneBon').innerHTML = bonRows(run.score) + streakRow(run.bestStreak);
-  fillUit($('doneUit'), uitHTML(run.perfects, run.total));
+  fillUit($('doneUit'), run.mgN ? mgDoneLine() : uitHTML(run.perfects, run.total)); // minigames: de molens; schacht: de uitmaling
   fillBadgesAll($('doneBadges'), run.badges);
   show('done');
 }
@@ -3760,9 +3793,14 @@ function shiftLetter(i, d) {
   persist(); pickerSlot = i;
   [...$('slots').children].forEach((s, j) => { s.children[1].textContent = save.name[j]; s.classList.toggle('sel', j === i); });
 }
-function pause() { if (S.screen !== 'play') return; const lv = lvlCfg(); $('pauseInfo').textContent = run.mode === 'night' ? `Nachtploeg · verdieping ${run.passed}` : `${lv.year} · ${lv.title}`; show('pause'); }
+function pause() {
+  if (S.screen !== 'play') return;
+  const lv = lvlCfg(); $('pauseInfo').textContent = run.mode === 'night' ? `Nachtploeg · verdieping ${run.passed}` : run.mg ? `${lv.year} · ${run.mg.def.naam}` : `${lv.year} · ${lv.title}`;
+  if (run.mg) { mgRelease(run.mg); mgHook(run.mg, 'pauseHook'); } // vingers en toetsen los, dan het gebied
+  show('pause');
+}
 // korte adempauze na Verder; een wachtende introband blijft gewoon wachten (de wereld stond toch al stil)
-function resume() { if (S.screen === 'pause') { if (Wd.intro !== 'wait') G.inv = Math.max(G.inv, 0.6); show('play'); } }
+function resume() { if (S.screen === 'pause') { if (run.mg) { if (Wd.intro !== 'wait') mgResume(run.mg); } else if (Wd.intro !== 'wait') G.inv = Math.max(G.inv, 0.6); show('play'); } }
 function toMenu() { startDemo(); }
 // Het label noemt de stand (Geluid: aan of uit); geen aria-pressed erbij, want 'Geluid uit, niet ingedrukt' is een dubbele ontkenning
 function syncSoundButtons() { for (const id of ['bSound', 'bPSound']) { const b = $(id); b.textContent = save.sound ? 'Geluid: aan' : 'Geluid: uit'; b.classList.toggle('on', save.sound); } }
@@ -3771,7 +3809,7 @@ function refreshTitle() {
   gz.innerHTML = 'Gezel-modus (makkelijk)<small>ruimere spleten, tragere val</small>'; // vaste naam; aan of uit zit in aria-pressed en de donkere knop
   $('gezelNote').hidden = !save.gezel; // op het titelscherm zichtbaar zolang hij aan staat, zodat hij niet verstopt raakt
   syncSoundButtons();
-  $('bPick').hidden = save.maxLvl <= 0;
+  $('bPick').hidden = save.maxLvl <= 0 && !KV_PROEF;
   // De Nachtploeg-knop opent altijd het dienstbriefje: daar kies je Korrel van de dag of Vrije dienst, of lees je wanneer hij opengaat
   const best = save.daily[dateKey()];
   const sub = save.night ? (best ? `vandaag jouw beste: ${fmt(best)} kg` : 'eindeloos, één korrel') : 'open na molen 1';
@@ -3782,7 +3820,7 @@ function refreshTitle() {
 function openPick() {
   const chips = $('lvlChips'); chips.innerHTML = '';
   LEVELS.forEach((lv, i) => {
-    if (i > save.maxLvl) return;
+    if (i > save.maxLvl && !KV_PROEF) return;
     const b = document.createElement('button'); b.type = 'button'; b.className = 'btn'; b.innerHTML = `<span class="hand">${lv.year}</span><small>${esc(lv.short)}</small>`;
     b.setAttribute('aria-label', `Start bij ${lv.year} ${lv.short}`); b.onclick = () => startCampaign(i); chips.appendChild(b);
   });
@@ -3857,15 +3895,16 @@ function bookCanvas(id, open) {
   const rg = g.createRadialGradient(14, 12, 2, 18, 18, 18); rg.addColorStop(0, '#2a2927'); rg.addColorStop(1, '#141414');
   g.fillStyle = rg; g.beginPath(); g.arc(18, 18, 18, 0, TAU); g.fill();
   g.strokeStyle = open ? 'rgba(207,171,0,.45)' : 'rgba(154,149,138,.35)'; g.lineWidth = 1; g.beginPath(); g.arc(18, 18, 17.3, 0, TAU); g.stroke();
-  bookIcon(g, open ? id : '?', 18, 18, 31);
+  const mp = open && MG_BOOK.find(p => p.id === id); // pagina uit een minigame: eigen icoontje (ico) of de korrel
+  if (mp) mgIco(g, mp.ico, 18, 18, 24); else bookIcon(g, open ? id : '?', 18, 18, 31);
   return c;
 }
 function bookPage(item, open, fresh) {
   const d = document.createElement('div'); d.className = 'page' + (open ? '' : ' closed');
   d.appendChild(bookCanvas(item.id, open));
   const body = document.createElement('div');
-  body.innerHTML = `<h4>${esc(item.name)}${fresh ? '<span class="tag-new">nieuw</span>' : ''}</h4>` +
-    (open ? `<p>${esc(item.text)}</p><p class="act">${esc(item.act).replace(/^In het spel:/, '<b>In het spel:</b>')}</p>` : '<p>Nog niet ontdekt</p>');
+  body.innerHTML = `<h4>${esc(item.name)}${item.mg !== undefined ? `<small class="bk-year">${item.year}</small>` : ''}${fresh ? '<span class="tag-new">nieuw</span>' : ''}</h4>` +
+    (open ? `<p>${esc(item.text)}</p>${item.act ? `<p class="act">${esc(item.act).replace(/^In (het spel|de Nachtploeg):/, '<b>$&</b>')}</p>` : ''}` : '<p>Nog niet ontdekt</p>');
   d.appendChild(body); return d;
 }
 function storyPage(st, open, fresh) {
@@ -3900,11 +3939,12 @@ function renderBook() {
   fill($('bookStories'), STORIES, sid, storyPage, 'tijdperk', 'tijdperken', st => jaarReached(st.lvl));
   fill($('bookThings'), BOOK_THINGS, it => it.id, bookPage, 'ding', 'dingen');
   fill($('bookMachines'), BOOK_MACHINES, it => it.id, bookPage, 'pagina', "pagina's");
+  fill($('bookMg'), MG_BOOK, it => it.id, bookPage, 'pagina', "pagina's"); $('bookMgH').hidden = !MG_BOOK.length; // uit de minigames, per molen
   const nw = $('bookNew'); nw.innerHTML = ''; let nNew = 0;
   for (const st of STORIES) if (bookFresh[sid(st)] && isOpen(sid(st))) { nw.appendChild(storyPage(st, true, false)); nNew++; }
-  for (const it of [...BOOK_THINGS, ...BOOK_MACHINES]) if (bookFresh[it.id] && isOpen(it.id)) { nw.appendChild(bookPage(it, true, false)); nNew++; }
+  for (const it of [...BOOK_THINGS, ...BOOK_MACHINES, ...MG_BOOK]) if (bookFresh[it.id] && isOpen(it.id)) { nw.appendChild(bookPage(it, true, false)); nNew++; }
   $('bookNewSect').hidden = !nNew; $('bookCntNew').textContent = nNew === 1 ? '1 pagina' : `${nNew} pagina's`;
-  const nSt = BOOK_STORY_IDS.filter(isOpen).length, items = [...BOOK_THINGS, ...BOOK_MACHINES], nIt = items.filter(it => isOpen(it.id)).length;
+  const nSt = BOOK_STORY_IDS.filter(isOpen).length, items = [...BOOK_THINGS, ...BOOK_MACHINES, ...MG_BOOK], nIt = items.filter(it => isOpen(it.id)).length;
   $('bookCntSt').textContent = `${nSt} van ${BOOK_STORY_IDS.length} open`;
   $('bookCntIt').textContent = `${nIt} van ${items.length} open`;
   $('bBookAll').hidden = BOOK_IDS.every(isOpen);
@@ -3956,6 +3996,8 @@ $('bBookAllYes').onclick = () => { $('bookAllAsk').hidden = true; openAllPages()
 $('bBookAllNo').onclick = () => { $('bookAllAsk').hidden = true; $('bBookAll').hidden = false; try { $('bBookAll').focus({ preventScroll: true }); } catch (e) { /* oudere browsers */ } };
 $('bAgain').onclick = retry;
 $('bEasy').onclick = tryGezel;
+$('bLAgain').onclick = retry; // weegbon: Nog een keer (dezelfde molen opnieuw, zonder jaarintro en introband)
+$('bLEasy').onclick = tryGezel; // weegbon: Te moeilijk? > Gezel, daarna meteen Nog een keer
 $('bOMenu').onclick = $('bLMenu').onclick = $('bPMenu').onclick = $('bDoneMenu').onclick = toMenu;
 $('bResume').onclick = resume;
 $('bStory').onclick = resumeStory;
@@ -5237,6 +5279,7 @@ function introNext() {
   const L = ixShots();
   if (IN.t < L[IN.i].dur) { ixSnap(); IN.t = L[IN.i].dur; IN.tEnd = performance.now(); introLoop(); return; } // overvloeien naar het eindbeeld
   if (IN.i < L.length - 1) { if (IN.jy >= 0) ixSnap(); introShot(IN.i + 1); IN.tEnd = performance.now(); introLoop(); return; } // jaarintro: van buiten naar binnen overvloeien (0,32 s)
+  if (IN.jy >= 0 && MINIGAMES[IN.jy]) { jxFadeGo(); return; } // molen met minigame (11d): geen duik, het beeld vloeit in 0,5 s over (ook bij verminderde beweging)
   if (reduced.matches) { introGo(false); return; }
   IN.dive = 0; introLoop(); // It giet oan!: de camera duikt de schacht in, daarna molen 1
 }
@@ -10639,6 +10682,1040 @@ jxFilm(2026, {
 // ===== JAARINTRO 2026 EIND =====
 } catch (e) { jxFail(2026, e); }
 // ---- einde van de jaarintro's (11c) ----
+// ============================================================
+// 11d. Minigames: elke molen van de tijdlijn is een eigen spel (raamwerk; de zes gebieden staan eronder)
+// ============================================================
+// In de tijdlijn (run.mode 'camp') speelt molen i MINIGAMES[i] in plaats van de schacht. De schacht (het valspel) blijft voor de
+// Nachtploeg en de titeldemo, en als vangnet voor een molen zonder geladen minigame. Het raamwerk regelt de volgorde (jaarintro,
+// introband, het potje, het verhaal halverwege, de weegbon met Nog een keer), de HUD, de invoer, pauze en verder, de vaste stap,
+// resolutie en lichte stand, fouten in een gebied en de testhaken. Uitleg met een volledig voorbeeld voor de bouwers: minigames/raamwerk-mg.md.
+const MINIGAMES = []; // per LEVELS-index het spel van die molen (mgRegister); leeg: die molen speelt de schacht zoals vroeger
+const MG_BOOK = []; // Molenboek-pagina's uit de minigames (def.book), per molen gesorteerd (renderBook: Per molen)
+// top: hoogte van de HUD (het spel tekent eronder); breath: adempauze (s) na Verder en Verder malen; failT: na een fout in een gebied komt
+// done() vanzelf na zoveel s; storyAt: het verhaal halverwege vanaf deze voortgang; rebuild: ms wachten na een maatwissel; kgMax: plafond per potje
+const MG = { top: CONFIG.HUD, breath: 0.6, failT: 10, storyAt: CONFIG.story.at, rebuild: 150, kgMax: 3000 };
+// huisstijlkleuren voor env.pal (de LEVELS[i].pal van de molen komt erbovenop: wall, wall2, line, slab, edge, pipe, plate)
+const MG_PAL = { oranje: '#E78A01', oranjeDonker: '#D07C01', goud: '#CFAB00', antraciet: '#1D1E1F', mosterd: '#C5AA20', creme: '#F3EED2', creme2: '#F9F4DB',
+  lichtgrijs: '#F7F7F7', warmgrijs: '#E3E1DA', donkerbruin: '#664400', rood: '#C52135', blauw: '#5FA8D3', korrel: '#D9A441', goudLicht: '#E3C431', goudTekst: '#F2D35B' };
+const MG_GRAIN = { joy: false, blink: false }; // env.drawGrain zonder st: een gewone korrel (geen knipperen, geen gezichtje)
+const mgSt = { lite: false, warned: {} }; // per sessie: lichte stand aan (blijft aan), meldingen die één keer kwamen
+const mgIdx = year => LEVELS.findIndex(l => l.year === year);
+// Een gebied meldt zijn spel aan. De vorm wordt gecontroleerd, zodat een fout meteen in de console staat (en die molen de schacht speelt).
+function mgRegister(year, def) {
+  const i = mgIdx(year), need = ['build', 'start', 'update', 'draw', 'progress', 'score', 'result'];
+  if (i < 0 || !def || typeof def !== 'object' || need.some(k => typeof def[k] !== 'function')) { console.error(`minigame ${year}: ongeldige registratie (nodig: ${need.join(', ')})`); return; }
+  def.year = year; def.i = i; def.naam = String(def.naam || LEVELS[i].short).slice(0, 40);
+  def.hoe = def.hoe && def.hoe.kop ? def.hoe : null;
+  def.verder = def.verder ? String(def.verder).slice(0, 24) : null; // knoptekst op de verhaalkaart (standaard Verder malen)
+  def.nieuw = (Array.isArray(def.nieuw) ? def.nieuw : []).filter(r => r && r.name).slice(0, 3);
+  def.book = (Array.isArray(def.book) ? def.book : []).filter(p => p && p.id && p.name);
+  for (const p of def.book) if (!BOOK_IDS.includes(p.id)) { p.mg = i; p.year = year; MG_BOOK.push(p); BOOK_IDS.push(p.id); }
+  MG_BOOK.sort((a, b) => a.mg - b.mg);
+  MINIGAMES[i] = def;
+}
+// fout bij het laden van een gebied: die molen speelt de schacht (valspel) zoals vroeger, het spel loopt gewoon door
+function mgFail(year, e) { console.error('minigame ' + year + ': ' + (e && e.stack || e)); }
+function mgWarn(key, msg) { if (!mgSt.warned[key]) { mgSt.warned[key] = 1; console.warn(msg); } }
+// save() en restore() tellen: na draw van een gebied zet het raamwerk de stapel recht (een vergeten restore breekt de HUD niet)
+const mgDepth = { n: 0 };
+{ const s0 = ctx.save.bind(ctx), r0 = ctx.restore.bind(ctx); ctx.save = () => { mgDepth.n++; s0(); }; ctx.restore = () => { if (mgDepth.n > 0) mgDepth.n--; r0(); }; }
+// ---------- env: wat een gebied krijgt ----------
+function mgEnv(M) {
+  const lv = LEVELS[M.def.i], dark = gxDark();
+  const E = {
+    W, H, top: MG.top, rect: { x: 0, y: MG.top, w: W, h: H - MG.top }, dpr: V.dpr, k: V.s * V.dpr, dark, reduced: reduced.matches, gezel: !!run.gezel, lite: mgSt.lite, t: 0, alpha: 1,
+    year: lv.year, i: M.def.i, lvl: lv, pal: { ...MG_PAL, ...lv.pal }, base: dark ? ICOL.dark : ICOL.light, F_UI, F_HAND, TAU, cache: {}, jobs: [],
+    get touch() { return hintTouch; }, // de laatste invoer was een aanraking (kiest de woorden van hints)
+    rnd: null, seed: s => mulberry32(s >>> 0), clamp, lerp, ease, eio, soft: ixEase, mix: mixHex, rgba: ixA, mixC: ixMixC, fmt, rr: gxRR,
+    canvas: (w, h) => mgCanvas(M, w, h), panel: (g, x, y, w, h) => mgPanel(g, x, y, w, h), label: (g, text, x, y, o) => mgLabel(g, text, x, y, o),
+    hand: (g, size, weight) => { g.font = `${weight || 400} ${size || 24}px ${F_HAND}`; }, ui: (g, size, weight) => { g.font = `${weight || 600} ${size || 14}px ${F_UI}`; },
+    drawGrain: (x, y, g, st) => drawGrain(x, y, g || ctx, st || MG_GRAIN), icon, bookIcon,
+    say: (text, x, y, color, size, opts) => mgSay(text, x, y, color, size, opts), toast: msg => toast(msg), announce: msg => announce(String(msg)), unlock: id => unlockPage(id),
+    // geluiden, gekoppeld aan de synthese van het spel (stil als het geluid uit staat): tick, good, bad, click en een paar aliassen uit de ontwerpen
+    sfx: { tick: () => SFX.hoof(), good: () => SFX.pick(), bad: () => SFX.hit(), click: () => SFX.click(), perfect: () => SFX.perfect(), fanfare: () => SFX.fanfare(),
+      swish: () => SFX.steam(), sis: () => SFX.steam(), klik: () => SFX.click(), soft: () => SFX.tok(), tok: () => SFX.tok(), beep: () => SFX.beep(), ratel: () => SFX.ratel() }, vibrate,
+    done: () => mgDone(M),
+    sky: o => mgSky(M, o), drawSky: (g, sky, y, drift) => mgSkyDraw(g, sky, y, drift), cloud: iCloud, water: (g, y0, y1, o) => mgWater(E, g, y0, y1, o),
+    gulls: (g, birds, o) => mgGulls(E, g, birds, o), dust: (g, pts, o) => mgDust(E, g, pts, o), rays: (g, o) => mgRays(E, g, o),
+  };
+  return E;
+}
+// offscreen canvas in logische px (css-px van het veld), op de resolutie van het scherm; terugzetten met g.drawImage(c.cv, x, y, c.w, c.h).
+// Het raamwerk onthoudt ze (M.made): na een maatwissel of een lagere resolutie komt build (of resize) opnieuw, na het potje komen ze vrij.
+function mgCanvas(M, w, h) {
+  const k = V.s * V.dpr, cv = ixCanvas(Math.ceil(w * k), Math.ceil(h * k)), g = cv.getContext('2d');
+  g.setTransform(k, 0, 0, k, 0, 0); const c = { cv, g, w, h, k }; M.made.push(c); return c;
+}
+function mgFreeMade(M, zero) { if (zero) for (const c of M.made) if (c.cv) c.cv.width = c.cv.height = 0; M.made = []; }
+// paneel zoals de kaarten en de introband (gxPanel), op een eigen context
+function mgPanel(g, x, y, w, h) {
+  g.fillStyle = 'rgba(0,0,0,.3)'; gxRR(g, x, y + 3, w, h + 2, 5); g.fill();
+  g.fillStyle = 'rgba(28,27,25,.93)'; gxRR(g, x, y, w, h, 4); g.fill();
+  g.save(); g.clip(); g.fillStyle = '#CFAB00'; g.fillRect(x, y, w, 5); g.fillStyle = 'rgba(255,255,255,.035)'; g.fillRect(x, y + 5, w, Math.min(40, h * 0.3)); g.restore();
+}
+// labelpilletje zoals bij nieuwe dingen in de schacht (drawLabels): donker, gouden rand (o.avoid: rood), witte tekst; gecentreerd op x, y.
+// o: avoid, alpha (0-1), font. Geeft de breedte terug.
+function mgLabel(g, text, x, y, o) {
+  o = o || {}; const h = LBL_H, r = h / 2;
+  g.save(); g.font = o.font || LBL_FONT; g.textAlign = 'center'; g.textBaseline = 'middle';
+  const w = Math.ceil(g.measureText(text).width) + 18, x0 = x - w / 2, y0 = y - h / 2, al = o.alpha === undefined ? 1 : clamp(o.alpha, 0, 1);
+  g.globalAlpha = al * 0.35; g.fillStyle = '#000'; gxRR(g, x0, y0 + 2, w, h, r); g.fill();
+  g.globalAlpha = al; gxRR(g, x0, y0, w, h, r); g.fillStyle = 'rgba(18,18,19,.92)'; g.fill();
+  g.strokeStyle = o.avoid ? '#F0596B' : '#CFAB00'; g.lineWidth = 1.8; g.stroke();
+  g.fillStyle = '#F7F7F7'; g.fillText(text, x, y + 0.5);
+  g.restore(); return w;
+}
+// zwevende tekst (say) met opties zoals in het spel: { life, vy, font, weight } en at: () => [x, y], een bewegend anker waar de tekst aan hangt
+function mgSay(text, x, y, color, size, opts) {
+  const t = say(text, x, y, color, size, opts);
+  t.at = null;
+  if (opts && typeof opts.at === 'function') { try { const p = opts.at(); t.at = opts.at; t.ax = x - p[0]; t.ay = y - p[1]; t.dy = 0; } catch (e) { /* dan gewoon op zijn plek */ } }
+  return t;
+}
+// Lucht als één plaatje (ixSkyPaint, zoals de hoofdintro en de jaarintro's): verloop, warme gloed, zon of maan met sterren, stapelwolken.
+// o: up (logische px boven de horizon in het plaatje, standaard 60% van het veld), below (eronder, 80), night (standaard env.dark), c (kleuren,
+// aangevuld met die van de hoofdintro), en verder sunX, sunH, sunR, sun: false, stars, glow, clouds, cloudSeed (zie jaar/raamwerk.md).
+// Tekenen met env.drawSky(g, sky, yHorizon, drift): drift 0 tot 72 laat de wolken drijven (bijvoorbeeld env.t * 2).
+function mgSky(M, o) {
+  o = o || {}; const E = M.env, k = E.k, up = o.up !== undefined ? o.up : Math.ceil((H - MG.top) * 0.6), below = o.below !== undefined ? o.below : 80;
+  const night = o.night !== undefined ? !!o.night : E.dark, c = { ...(night ? ICOL.dark : ICOL.light), ...(o.c || {}) };
+  const Wp = Math.round(W * k) + Math.ceil(72 * k), Hh = Math.ceil((up + below) * k), cv = ixCanvas(Wp, Hh);
+  const gen = ixSkyPaint(cv, { ...o, P: up / 0.86, w: W, c, night, W: Wp, Hh, Y: Math.round(up * k), d: k, fine: false }); while (!gen.next().done) { /* in één keer */ }
+  const S = { cv, w: W + 72, h: up + below, up, below, k, c, mg: true }; M.made.push(S); return S;
+}
+function mgSkyDraw(g, sky, y, drift) {
+  if (!sky || !sky.mg || !sky.cv.width) return;
+  const sx = clamp(72 - (drift || 0), 0, 72) * sky.k, top = y - sky.up;
+  if (top > 0) { g.fillStyle = sky.c.sky[0]; g.fillRect(0, 0, W, top + 1); }
+  g.drawImage(sky.cv, sx, 0, Math.round(W * sky.k), sky.cv.height, 0, top, W, sky.h);
+  const yb = top + sky.h; if (yb < H) { g.fillStyle = sky.c.sky[2]; g.fillRect(0, Math.floor(yb), W, H - Math.floor(yb)); }
+}
+// water van y0 tot y1 (logische px) over de hele breedte, zoals in de hoofdintro (jxWater). o: c (kleuren water, ripple, refl, glint, lit;
+// standaard env.base), refl [[x, breedte], ...] (weerspiegeling van een gebouw), lit [x, ...] (verlichte ramen 's avonds), k (schaal), ripples (28), glints (26)
+function mgWater(E, g, y0, y1, o) {
+  o = o || {}; const span = y1 - y0; if (!(span > 0)) return;
+  const c = { ...E.base, ...(o.c || {}) }, w = W, A = E.reduced ? 0 : E.t, k = o.k || 1, rl = Math.min(90 * k, span * 0.8);
+  g.save();
+  g.fillStyle = c.water; g.fillRect(0, y0, w, span);
+  if (o.refl && c.refl) {
+    g.fillStyle = c.refl; g.beginPath();
+    for (let j = 0, y = y0 + 2; y < y0 + rl; j++, y += 7) { const q = 1 - (y - y0) / rl, sh = Math.sin(j * 1.7 + A * 1.3) * 4 * k; for (const [x, ww] of o.refl) g.rect(x + sh + (1 - q) * 30 * k, y, ww * (0.4 + 0.6 * q), 2.5); }
+    g.fill();
+  }
+  if (o.lit && c.lit) { g.fillStyle = c.lit; g.beginPath(); for (const x of o.lit) for (let y = y0 + 3; y < y0 + rl * 0.9; y += 6) g.rect(x - 1.5 * k + Math.sin(y * 0.3 + A * 2) * 2, y, 3 * k, 3); g.fill(); }
+  if (c.ripple) {
+    g.fillStyle = c.ripple; g.beginPath(); const rnd = mulberry32(5);
+    for (let i = 0, n = o.ripples !== undefined ? o.ripples : 28; i < n; i++) { const q = rnd(), y = y0 + 4 + (span - 6) * Math.pow(q, 1.4), len = (8 + 30 * q) * k, x = ((rnd() * (w + 80) + A * (5 + 12 * q)) % (w + 80)) - 40; g.rect(x, y, len, 1.5 + q); }
+    g.fill();
+  }
+  if (c.glint && !E.lite) {
+    g.fillStyle = c.glint; g.beginPath(); const gr = mulberry32(9);
+    for (let i = 0, n = o.glints !== undefined ? o.glints : 26; i < n; i++) {
+      const q = gr(), y = y0 + 3 + Math.max(0, span - 6) * Math.pow(gr(), 1.2), x = Math.pow(gr(), 1.7) * (w + 20) - 10 + Math.sin(A * 0.4 + i) * 5;
+      const f = E.reduced ? 0.8 : Math.sin(A * (2 + q * 2.6) + i * 1.7); if (f < 0.5 || (E.dark && i % 2)) continue;
+      const L = (2.5 + 7 * q) * (f - 0.4) * (0.6 + 0.7 * (y - y0) / Math.max(1, span)); g.rect(x - L / 2, y, L, 1.2);
+    }
+    g.fill();
+  }
+  g.restore();
+}
+// meeuwen, stofjes en lichtbundels van de intro's, in logische px en in de transformatie van nu (zie jaar/raamwerk.md voor de opties)
+function mgGulls(E, g, birds, o) {
+  o = o || {}; const A = E.reduced ? 0 : E.t, s = o.size || 9.5, f = s / 9.5, mv = o.drift === false ? 0 : 1, span = W + 60;
+  g.save(); g.strokeStyle = o.col || E.base.gull; g.lineWidth = o.lw || Math.max(1.3, 1.5 * f); g.lineCap = 'round'; g.lineJoin = 'round'; g.beginPath();
+  for (const [x0, y0, v, ph] of birds) { const x = x0 + mv * (Math.sin(A * 0.25 * v + ph) * 40 + A * 8 * v) * f, y = y0 + mv * Math.sin(A * 0.6 + ph) * 8 * f; ixGull(g, ((x + 30) % span + span) % span - 30, y, s, A, v, ph); }
+  g.stroke(); g.restore();
+}
+function mgDust(E, g, pts, o) {
+  o = o || {}; const list = E.lite ? pts.slice(0, Math.ceil(pts.length / 2)) : pts;
+  g.save(); g.fillStyle = o.col || E.base.dust; g.beginPath(); ixDustAt(g, list, E.reduced ? 0 : E.t, o.r || 1.3, E.reduced); g.fill(); g.restore();
+}
+function mgRays(E, g, o) {
+  o = o || {};
+  const R = { beams: o.beams || IX_BEAMS, ang: o.ang !== undefined ? o.ang : 0.32, len: o.len || 560, rise: o.rise !== undefined ? o.rise : 230, motes: Math.min(60, o.motes !== undefined ? o.motes : 36) };
+  g.save();
+  ixRays(g, o.x !== undefined ? o.x : W / 2, o.top !== undefined ? o.top : MG.top + 60, o.u || 1, o.a !== undefined ? o.a : 1, R.motes ? (E.reduced ? 0 : E.t) : -1,
+    o.beam || E.base.beam, o.mote || E.base.mote, o.str !== undefined ? o.str : E.dark ? 0.6 : 1, E.lite, R);
+  g.restore();
+}
+// icoontje voor Nieuw in deze molen en de Molenboek-pagina's: een functie (g, x, y, s), een THINGS- of machine-id, een naam van icon(), of de korrel
+function mgIco(g, ico, x, y, s) {
+  if (typeof ico === 'function') { g.save(); try { ico(g, x, y, s); } catch (e) { mgWarn('ico', 'minigame: icoontje gaf een fout: ' + (e && e.message || e)); } g.restore(); return; }
+  if (typeof ico === 'string' && (THINGS[ico] || BOOK_MACHINES.some(q => q.id === ico))) { bookIcon(g, ico, x, y, s); return; }
+  icon(g, typeof ico === 'string' && ico ? ico : 'grain', x, y, s * 0.72, '#CFAB00');
+}
+// ---------- start, potje, afloop ----------
+function mgDrop() { const M = run && run.mg; if (!M) return; mgRelease(M); clearTimeout(M.rt); mgFreeMade(M, true); run.mg = null; }
+// de toevalsreeks van dit potje: uit run.seed (bij Nog een keer anders) en de molen; window.__kvSeed legt hem vast voor een test
+const mgSeed = () => ((typeof window.__kvSeed === 'number' ? window.__kvSeed : run.seed) ^ Math.imul(run.lvl + 1, 0x9E3779B1)) >>> 0;
+// startLevel in de tijdlijn als er een minigame voor deze molen is. intro: de introband (niet bij Nog een keer).
+// Nog een keer in dezelfde molen (zelfde maat, resolutie en thema): build komt niet opnieuw, alleen start; de plaatjes van build blijven staan.
+function mgStartLevel(intro) {
+  const def = MINIGAMES[run.lvl], lv = lvlCfg(), prev = run.mg;
+  run.cp = { score: run.score, perfects: run.perfects, total: run.total, bestStreak: run.bestStreak };
+  run.lives = 0; run.streak = 0; run.newRows = [];
+  if (run.lvl === 0) unlockPage('rosmolen');
+  const reuse = prev && prev.def === def && prev.built && !prev.err && prev.env.k === V.s * V.dpr && prev.env.dark === gxDark();
+  if (!reuse) mgDrop();
+  const M = run.mg = reuse ? prev : { def, env: null, made: [], built: false, rebuilt: 0, rt: 0 };
+  Object.assign(M, { t: 0, breath: 0, story: false, err: null, failT: 0, done: false, ended: false, ptr: 0, key: 0, ptrs: new Map(), held: new Set(), res: null, again: reuse ? M.again + 1 : 0 });
+  lvS = { total: 0, perf: 0, hits: 0, picks: 0, got: 0, ned: 0, nedGot: 0, kg0: run.score, silo: null, best: 0, storyN: null, storySkip: [], storyCleared: 0 };
+  Object.assign(Wd, { t: 0, camY: 0, pcam: 0, intro: intro ? 'wait' : null, it: 0, io: 0, iw: !!intro, storyCand: null, after: -1, afterHits: 0, dying: 0, flash: 0, shakeT: 0, slow: 0, mag: 0, ending: 0, complete: false, silo: null, jg: null, thumbA: 0 });
+  for (const t of TEXTS) t.on = false;
+  for (const l of LBLS) l.on = false;
+  if (!reuse) M.env = mgEnv(M); else Object.assign(M.env, { gezel: !!run.gezel, reduced: reduced.matches, lite: mgSt.lite || M.env.lite, t: 0 });
+  M.env.rnd = mulberry32(mgSeed());
+  if (!reuse) mgBuild(M);
+  mgStart(M);
+  cv.setAttribute('aria-label', `Speelveld: ${def.naam}, ${lv.year}`);
+  show('play');
+  if (intro) announce(introSay());
+}
+// build mag een generator teruggeven (yield tussen de stappen): de eerste stappen meteen (hooguit 12 ms), de rest in de frames (mgWork)
+function mgBuild(M) {
+  try { const r = M.def.build(M.env); if (r && typeof r.next === 'function') { M.env.jobs.unshift(r); mgWork(M, 12); } M.built = true; } catch (e) { mgErr(M, 'build', e); }
+}
+function mgStart(M) { if (M.err) return; try { M.def.start(M.env); } catch (e) { mgErr(M, 'start', e); } }
+// Fout in een gebied: het noodbeeld met de naam, geen invoer meer, en na MG.failT s komt done() vanzelf (de weegbon zonder kilo's)
+function mgErr(M, where, e) {
+  if (M.err) return;
+  M.err = where; M.failT = 0; console.error(`minigame ${M.def.year} (${where}): ` + (e && e.stack || e));
+  mgRelease(M);
+}
+function mgDone(M) { if (!M.done) M.done = true; } // de weegbon komt aan het begin van de volgende stap (mgUpdate), nooit midden in draw of een handler
+function mgScore(M) { if (M.err) return 0; try { return clamp(+M.def.score(M.env) || 0, 0, MG.kgMax); } catch (e) { mgErr(M, 'score', e); return 0; } }
+function mgProgress(M) { if (M.err) return clamp(M.failT / MG.failT, 0, 1); try { return clamp(+M.def.progress(M.env) || 0, 0, 1); } catch (e) { mgErr(M, 'progress', e); return 0; } }
+function mgStoryOK(M) { if (!M.def.storyOK) return true; try { return !!M.def.storyOK(M.env); } catch (e) { mgErr(M, 'storyOK', e); return false; } }
+// Vaste stap (CONFIG.step), vanuit update(). Introband: eigen klok, de wereld wacht op een tik. Adempauze na Verder: geen stap, het beeld blijft.
+function mgUpdate(dt) {
+  const M = run.mg; if (!M) return;
+  if (Wd.intro) {
+    Wd.it += dt;
+    if (Wd.intro === 'out') { Wd.io += dt; if (Wd.io >= CONFIG.intro.fade) Wd.intro = null; }
+    if (Wd.intro === 'wait') return;
+  }
+  if (M.done && !M.ended) return mgComplete(M);
+  if (M.err) { M.failT += dt; if (M.failT >= MG.failT) mgDone(M); return; }
+  if (M.breath > 0) { M.breath -= dt; return; }
+  M.t += dt; M.env.t = M.t; Wd.t = M.t;
+  try {
+    if (window.__kvAuto && M.def.auto) M.def.auto(M.env);
+    M.def.update(dt, M.env);
+  } catch (e) { mgErr(M, 'update', e); return; }
+  for (const t of TEXTS) if (t.on) { // zwevende teksten: omhoog, of mee met hun anker (env.say met at)
+    t.life -= dt; if (t.life <= 0) { t.on = false; continue; }
+    if (t.at) { t.dy += t.vy * dt; try { const p = t.at(); t.x = p[0] + t.ax; t.y = p[1] + t.ay + t.dy; } catch (e) { t.at = null; } } else t.y += t.vy * dt;
+  }
+  if (M.done) return;
+  // het verhaal halverwege: vanaf de helft elke stap storyOK() vragen, bij de eerste true de kaart; één keer per molen per run
+  if (!M.story && CONFIG.story.on && !run.storySeen.has(run.lvl) && STORIES.some(s => s.lvl === run.lvl) && mgProgress(M) >= MG.storyAt && mgStoryOK(M)) mgOpenStory(M);
+}
+function mgOpenStory(M) {
+  const st = STORIES.find(s => s.lvl === run.lvl); if (!st) return;
+  run.storySeen.add(run.lvl); M.story = true; lvS.storyN = Math.round(mgProgress(M) * 100);
+  unlockPage('st' + run.lvl);
+  storyFill(st); $('bStory').textContent = M.def.verder || 'Verder malen';
+  storyT0 = performance.now(); storyArm = null; storyHeld = M.ptrs.size ? M.ptrs.keys().next().value : null; // ligt een vinger nog? dan eerst optillen
+  mgRelease(M); mgHook(M, 'pauseHook');
+  show('story'); syncStoryBtn(); drawStoryArt(0);
+}
+function mgHook(M, name) { if (M.err || !M.def[name]) return; try { M.def[name](M.env); } catch (e) { mgErr(M, name, e); } }
+// verder na pauze of verhaal: resumeHook meteen, dan een korte adempauze (het beeld staat, de tijd loopt niet), dan de eerste stap
+function mgResume(M) { M.breath = reduced.matches ? 0.3 : MG.breath; mgHook(M, 'resumeHook'); }
+// vingers en toetsen loslaten (pauze, verhaal, einde): het gebied krijgt van elk nog een 'up' (met cancel: true)
+function mgRelease(M) {
+  for (const [id, p] of [...M.ptrs]) { M.ptrs.delete(id); try { cv.releasePointerCapture(id); } catch (e) { /* al los */ } mgSend(M, 'pointer', { type: 'up', cancel: true, x: p.x, y: p.y, id, primary: p.primary, mouse: p.mouse, touch: !p.mouse, coarse: !p.mouse, buttons: 0 }); }
+  for (const k of [...M.held]) { M.held.delete(k); mgSend(M, 'key', { type: 'up', key: k, code: '' }); }
+}
+function mgSend(M, fn, ev) { if (M.err || M.ended || !M.def[fn]) return; try { M.def[fn](ev, M.env); } catch (e) { mgErr(M, fn, e); } }
+// de uitslag netjes maken: kg een getal 0 tot kgMax, rows [[label, waarde]] (hooguit 6), quality null of { label, note, col }, badges alleen echte ids, slot één zin, weak een bool
+function mgResult(r) {
+  r = r && typeof r === 'object' ? r : {};
+  const kg = Math.round(clamp(+r.kg || 0, 0, MG.kgMax));
+  const rows = (Array.isArray(r.rows) ? r.rows : []).filter(q => Array.isArray(q) && q.length >= 2).slice(0, 6).map(q => [String(q[0]).slice(0, 40), String(q[1]).slice(0, 24)]);
+  const q = r.quality && typeof r.quality === 'object' && r.quality.label ? { label: String(r.quality.label).slice(0, 30), note: String(r.quality.note || '').slice(0, 70), col: typeof r.quality.col === 'string' && /^#[0-9a-fA-F]{6}$/.test(r.quality.col) ? r.quality.col : null } : null;
+  const badges = [...new Set((Array.isArray(r.badges) ? r.badges : []).filter(id => id !== 'pas' && id !== 'mens' && BADGES.some(b => b.id === id)))];
+  const slot = r.slot || r.note; // note: de naam uit het ontwerp van 1846
+  return { kg, kop: r.kop ? String(r.kop).slice(0, 28) : 'Gewogen', rows, quality: q, badges, slot: slot ? String(slot).slice(0, 110) : '', weak: !!r.weak };
+}
+// It giet oan! aan het eind van een jaarintro naar een molen met minigame: het laatste beeld van de intro op #mgFade, de molen eronder
+// (introband), en het beeld vloeit in 0,5 s over. Geen duik in de opening: die hoorde bij de korrel. Ook bij verminderde beweging.
+function jxFadeGo() {
+  const f = $('mgFade');
+  try { f.width = iCv.width; f.height = iCv.height; f.getContext('2d').drawImage(iCv, 0, 0); f.hidden = false; f.style.transition = 'none'; f.style.opacity = '1'; } catch (e) { f.hidden = true; }
+  jxGo(false);
+  void f.offsetWidth; f.style.transition = 'opacity .5s cubic-bezier(.3,0,.2,1)'; f.style.opacity = '0';
+  clearTimeout(mgSt.fadeT); mgSt.fadeT = setTimeout(() => { f.hidden = true; f.width = f.height = 0; }, 560);
+}
+// Weegbon na het potje (de tegenhanger van levelComplete): kilo's bij run.score, badges, kwaliteitsregel, slotzin, Nog een keer, Te moeilijk?
+function mgComplete(M) {
+  M.ended = true; mgRelease(M); clearTimeout(M.rt);
+  let raw = null; if (!M.err) try { raw = M.def.result(M.env); } catch (e) { mgErr(M, 'result', e); }
+  const res = M.res = mgResult(raw), lv = lvlCfg(), kg0 = run.score, last = run.lvl >= LEVELS.length - 1;
+  run.score += res.kg; run.deathsInLevel = 0;
+  run.mgN = (run.mgN || 0) + 1; run.mgRes[run.lvl] = { kg: res.kg, year: lv.year, weak: res.weak };
+  run.weakRow = res.weak ? (run.weakRow || 0) + 1 : 0;
+  save.best = Math.max(save.best, run.score);
+  grant(res.badges);
+  save.maxLvl = Math.max(save.maxLvl, last ? run.lvl : run.lvl + 1);
+  const unlocked = !save.night; save.night = true; persist();
+  unlockPage('night');
+  $('lvTitle').innerHTML = `<span class="tsjoch">Tsjoch!</span> ${esc(res.kop)}`;
+  $('lvEra').textContent = `${lv.year} · ${lv.title}`;
+  $('lvBon').innerHTML = `<tr><td>Deze molen</td><td>+${fmt(res.kg)} kg</td></tr>` + res.rows.map(([a, b]) => `<tr><td>${esc(a)}</td><td>${esc(b)}</td></tr>`).join('') +
+    `<tr class="big"><td>Totaal</td><td>${fmt(run.score)} kg</td></tr><tr class="opt"><td>Zakken van 25 kg</td><td>${fmt(Math.floor(run.score / CONFIG.bag))}</td></tr>`;
+  uiTel($('lvBon').querySelector('tr.big td:last-child'), kg0, run.score, ' kg');
+  const q = res.quality, qh = q ? `${esc(q.label)}: ${q.col ? `<span class="meel" data-col="${q.col}" aria-hidden="true"></span>` : ''}<b>${esc(q.note)}</b>` : '';
+  const ue = $('lvUit'); fillUit(ue, qh + (unlocked ? (qh ? (/[.!?]$/.test(q.note) ? ' ' : '. ') : '') + '<b>De Nachtploeg is nu open.</b>' : '')); ue.hidden = !(qh || unlocked);
+  const sl = $('lvSlot'); sl.textContent = res.slot; sl.hidden = !res.slot;
+  fillBadges($('lvBadges'), res.badges);
+  $('lvFact').textContent = pickFact(run.lvl);
+  $('bNext').textContent = last ? 'Naar het jaarverslag' : `Volgende molen: ${LEVELS[run.lvl + 1].year}`;
+  $('bLAgain').hidden = false;
+  const easy = !run.gezel && run.weakRow >= 2; $('lvEasyBox').hidden = !easy; // Te moeilijk?: twee zwakke uitslagen op rij in dezelfde molen
+  jxPrewarm(run.lvl + 1); // de jaarintro van de volgende molen klaarzetten terwijl de weegbon er staat
+  show('level'); fitLevel(); SFX.fanfare();
+}
+// Jaarverslag: één regel over de molens in plaats van de uitmaling (die hoort bij de schacht)
+function mgDoneLine() {
+  const rs = Object.values(run.mgRes || {}); if (!rs.length) return '';
+  const best = rs.reduce((a, b) => b.kg > a.kg ? b : a);
+  return `${rs.length === LEVELS.length ? 'Alle zes molens' : rs.length === 1 ? 'Eén molen' : rs.length + ' molens'} gespeeld. Beste molen: ${best.year}, ${fmt(best.kg)} kg bloem.`;
+}
+// De weegbon past zonder scrollen: eerst het Wist-je-dat weg, dan de zakkenregel en de kwaliteitsregel
+function fitLevel() {
+  const sec = SCR.level, c = sec.querySelector('.card');
+  sec.classList.remove('tight1', 'tight2');
+  if (sec.hidden) return;
+  for (const k of ['tight1', 'tight2']) if (c.scrollHeight > c.clientHeight + 1) sec.classList.add(k);
+}
+// ---------- invoer: alles via het canvas, in logische px; geen eigen listeners in de gebieden ----------
+// type 'down' | 'move' | 'up'; een afgebroken aanraking (pointercancel, pauze, verhaal) komt als 'up' met cancel: true. De aanwijzer wordt
+// vastgehouden (setPointerCapture), dus move en up komen ook buiten het canvas. Een muis geeft ook move zonder knop (buttons 0).
+function mgPointer(type, e) {
+  const M = run.mg; if (!M) return;
+  const mouse = e.pointerType === 'mouse', cancel = type === 'up' && e.type === 'pointercancel';
+  if (type === 'down') { try { cv.setPointerCapture(e.pointerId); } catch (err) { /* oudere browsers */ } }
+  else if (type === 'up') { if (!M.ptrs.has(e.pointerId)) return; try { cv.releasePointerCapture(e.pointerId); } catch (err) { /* al los */ } }
+  else if (!mouse && !M.ptrs.has(e.pointerId)) return; // een vinger die niet op het veld begon
+  if (!mouse && type !== 'up') e.preventDefault();
+  const p = toLogical(e.clientX, e.clientY), ev = { type, cancel, x: p.x, y: p.y, id: e.pointerId, primary: !!e.isPrimary, mouse, touch: !mouse, coarse: !mouse, buttons: e.buttons || 0 };
+  if (type === 'down') M.ptrs.set(e.pointerId, { x: p.x, y: p.y, primary: ev.primary, mouse }); else if (type === 'up') M.ptrs.delete(e.pointerId); else if (M.ptrs.has(e.pointerId)) Object.assign(M.ptrs.get(e.pointerId), { x: p.x, y: p.y });
+  if (S.screen !== 'play' || M.err || M.ended) return;
+  if (!mouse && (type === 'down' || type === 'move')) run.steered = true;
+  M.ptr++; mgSend(M, 'pointer', ev);
+}
+// toetsen: alles behalve P, M, Esc en ` (die blijven van het spel); herhalingen (ingehouden toets) niet, dus het gebied houdt zelf bij wat ingedrukt is
+function mgKey(type, e) {
+  const M = run.mg; if (!M || S.screen !== 'play') return false;
+  const k = e.key;
+  if (k === 'p' || k === 'P' || k === 'm' || k === 'M' || k === 'Escape' || k === 'Tab' || e.code === 'Backquote' || e.ctrlKey || e.metaKey || e.altKey) return false;
+  if (k.startsWith('Arrow') || k === ' ' || k === 'Enter' || k === 'Home' || k === 'End' || k === 'PageUp' || k === 'PageDown') e.preventDefault();
+  if (type === 'down') { if (e.repeat) return true; M.held.add(k); } else { if (!M.held.has(k)) return true; M.held.delete(k); }
+  if (M.err || M.ended) return true;
+  M.key++; mgSend(M, 'key', { type, key: k, code: e.code || '' });
+  return true;
+}
+// ---------- tekenen: het gebied onder de HUD, dan de zwevende teksten, de HUD en de introband ----------
+function mgRender(alpha) {
+  const M = run.mg, k = V.s * V.dpr, lv = lvlCfg(), tf = () => ctx.setTransform(k, 0, 0, k, V.ox * V.dpr, V.oy * V.dpr);
+  gxLetterbox();
+  tf(); Object.assign(gxT, { a: k, e: V.ox * V.dpr, f: V.oy * V.dpr, on: true, id: false });
+  ctx.save(); ctx.beginPath(); ctx.rect(0, 0, W, H); ctx.clip();
+  ctx.fillStyle = lv.pal.wall; ctx.fillRect(0, 0, W, H);
+  const d0 = mgDepth.n;
+  if (M.err) mgDrawFail(M);
+  else { M.env.alpha = alpha; ctx.save(); try { M.def.draw(ctx, M.env); } catch (e) { mgErr(M, 'draw', e); } }
+  if (mgDepth.n < d0) mgWarn('stack' + M.def.year, `minigame ${M.def.year}: meer restore() dan save() in draw`);
+  while (mgDepth.n > d0) ctx.restore();
+  if (mgDepth.n < d0) { ctx.save(); ctx.beginPath(); ctx.rect(0, 0, W, H); ctx.clip(); } // het eigen kader weer terug
+  tf(); ctx.globalAlpha = 1; ctx.globalCompositeOperation = 'source-over'; ctx.lineWidth = 1; ctx.lineCap = 'butt'; ctx.lineJoin = 'miter'; ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
+  try { ctx.letterSpacing = '0px'; ctx.filter = 'none'; } catch (e) { /* oudere browsers */ }
+  drawTexts(); // zwevende teksten (env.say)
+  mgDrawHUD(M);
+  if (Wd.intro) drawIntro(lv);
+  if (S.screen !== 'play') { ctx.fillStyle = 'rgba(0,0,0,.5)'; ctx.fillRect(0, 0, W, H); } // achter een kaart gedimd
+  ctx.restore(); gxT.on = false;
+  gxFontWarm();
+  mgWork(M, 5);
+}
+// HUD boven het spel: links de kilo's van dit potje, daaronder de naam van de minigame met de voortgang en de zandloper; rechts de pauzeknop
+function mgDrawHUD(M) {
+  gxBlit(gxHudBg(), 0, 0);
+  ctx.textBaseline = 'alphabetic'; ctx.textAlign = 'left';
+  ctx.fillStyle = '#F7F7F7'; ctx.font = `800 24px ${F_UI}`;
+  const s = fmt(mgScore(M)); ctx.fillText(s, 14, 31);
+  const sw = ctx.measureText(s).width;
+  ctx.font = `600 13px ${F_UI}`; ctx.fillStyle = '#E3E1DA'; ctx.fillText('kg bloem', 20 + sw, 31);
+  const pl = W - 6 - V.pb, pr = pl - 6; // alles blijft links van de pauzeknop
+  if (run.gezel) { ctx.textAlign = 'right'; ctx.font = `800 10.5px ${F_UI}`; ctx.fillStyle = '#CFAB00'; ctx.fillText('GEZEL', pr, 30); ctx.textAlign = 'left'; }
+  const p = mgProgress(M), x0 = 14, x1 = pr - 34, yy = 62;
+  ctx.font = `800 10.5px ${F_UI}`; ctx.fillStyle = '#E78A01';
+  try { ctx.letterSpacing = '0.6px'; } catch (e) { /* oudere browsers */ }
+  ctx.fillText(M.def.naam.toUpperCase(), x0, 50, x1 - x0);
+  try { ctx.letterSpacing = '0px'; } catch (e) { /* idem */ }
+  ctx.fillStyle = 'rgba(227,225,218,.22)'; ctx.fillRect(x0, yy - 1.5, x1 - x0, 3);
+  ctx.fillStyle = '#CFAB00'; ctx.fillRect(x0, yy - 1.5, (x1 - x0) * p, 3);
+  mgHourglass(ctx, x1 + 17, 56, 17, p);
+}
+// zandloper (een voorwerp, geen klok): boven loopt leeg, onder vult zich (p 0 tot 1), met een dun straaltje zand ertussen
+function mgHourglass(g, x, y, s, p) {
+  const h = s, w = s * 0.72, hw = w / 2, hh = h / 2;
+  g.save(); g.translate(x, y);
+  g.fillStyle = '#CFAB00'; g.fillRect(-hw - 1, -hh - 2.5, w + 2, 2); g.fillRect(-hw - 1, hh + 0.5, w + 2, 2);
+  g.strokeStyle = 'rgba(227,225,218,.75)'; g.lineWidth = 1.2; g.lineJoin = 'round';
+  g.beginPath(); g.moveTo(-hw, -hh); g.lineTo(hw, -hh); g.lineTo(1.2, -1); g.lineTo(1.2, 1); g.lineTo(hw, hh); g.lineTo(-hw, hh); g.lineTo(-1.2, 1); g.lineTo(-1.2, -1); g.closePath(); g.stroke();
+  g.fillStyle = '#E78A01';
+  const yt = -hh * (1 - p); if (p < 1) { const wt = hw * (-yt / hh); g.beginPath(); g.moveTo(-wt, yt); g.lineTo(wt, yt); g.lineTo(0, 0); g.closePath(); g.fill(); } // boven
+  const yb = hh * (1 - p); if (p > 0) { const wb = hw * (yb / hh); g.beginPath(); g.moveTo(-hw, hh); g.lineTo(hw, hh); g.lineTo(wb, yb); g.lineTo(-wb, yb); g.closePath(); g.fill(); } // onder
+  if (p > 0 && p < 1) g.fillRect(-0.6, 0, 1.2, hh); // het straaltje
+  g.restore();
+}
+// Noodbeeld na een fout in een gebied: de naam, wat er is, en wanneer het verdergaat
+function mgDrawFail(M) {
+  gxPanel(40, 226, W - 80, 146);
+  ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  ctx.font = `400 26px ${F_HAND}`; ctx.fillStyle = '#E3C431'; ctx.fillText(M.def.naam, W / 2, 262, W - 110);
+  ctx.font = `600 13.5px ${F_UI}`; ctx.fillStyle = '#F7F7F7'; ctx.fillText('Deze molen doet het even niet.', W / 2, 296, W - 110);
+  ctx.fillStyle = '#E3E1DA'; ctx.fillText(`Over ${Math.max(0, Math.ceil(MG.failT - M.failT))} s gaat het verder.`, W / 2, 318, W - 110);
+  ctx.font = `800 11.5px ${F_UI}`; ctx.fillStyle = '#F2D35B'; ctx.fillText('Dat kost je niets.', W / 2, 348, W - 110);
+}
+// Introband: het paneel onder de band met Zo speel je (uit def.hoe) en Nieuw in deze molen (uit def.nieuw, hooguit 3 regels).
+// De band loopt tot y 212; zonder korrel eronder (die hoorde bij de schacht) begint het paneel op 240.
+const MG_INTRO_TOP = 240;
+function mgIntroLayout(def) {
+  const hoe = def.hoe, rows = def.nieuw;
+  let h = 12;
+  if (hoe) h += 22 + 20 + (hoe.regel ? 18 : 0) + 26;
+  if (rows.length) h += 22 + rows.length * 28 + 6;
+  return { hoe, rows, h: h + 28 };
+}
+function mgIntroNew(t, a) {
+  const def = run.mg.def, L0 = mgIntroLayout(def), top = MG_INTRO_TOP, hoe = L0.hoe;
+  ctx.globalAlpha = a;
+  gxPanel(22, top, W - 44, L0.h);
+  ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+  let y = top + 12;
+  const head = txt => { ctx.font = `800 11.5px ${F_UI}`; ctx.fillStyle = '#E3C431'; try { ctx.letterSpacing = '0.8px'; } catch (e) { /* oud */ } ctx.fillText(txt, 38, y + 8); try { ctx.letterSpacing = '0px'; } catch (e) { /* oud */ } y += 22; };
+  if (hoe) {
+    head('ZO SPEEL JE');
+    ctx.font = `800 14px ${F_UI}`; ctx.fillStyle = '#F7F7F7'; ctx.fillText(hoe.kop, 38, y + 9, 332); y += 20;
+    ctx.font = `600 13.5px ${F_UI}`; ctx.fillStyle = '#E3E1DA';
+    if (hoe.regel) { ctx.fillText(hoe.regel, 38, y + 9, 332); y += 18; }
+    ctx.fillText(String((hintTouch ? hoe.touch : hoe.toets) || hoe.touch || hoe.toets || ''), 38, y + 9, 332); y += 26;
+  }
+  if (L0.rows.length) {
+    head('NIEUW IN DEZE MOLEN');
+    for (const r of L0.rows) {
+      const cy = y + 13;
+      ctx.fillStyle = '#0d0d0e'; ctx.beginPath(); ctx.arc(51, cy, 13.5, 0, TAU); ctx.fill();
+      ctx.strokeStyle = 'rgba(207,171,0,.35)'; ctx.lineWidth = 1; ctx.stroke();
+      mgIco(ctx, r.ico, 51, cy, 25);
+      ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+      ctx.font = `800 14.5px ${F_UI}`; ctx.fillStyle = '#F7F7F7'; ctx.fillText(String(r.name), 74, cy, 150);
+      const nw = Math.min(150, ctx.measureText(String(r.name)).width);
+      if (r.act) { ctx.font = `600 13.5px ${F_UI}`; ctx.fillStyle = '#F2D35B'; ctx.fillText(' · ' + r.act, 74 + nw, cy, 370 - 74 - nw); }
+      y += 28;
+    }
+    y += 6;
+  }
+  const sy = top + L0.h - 26, pulse = reduced.matches ? 1 : 0.62 + 0.38 * (0.5 + 0.5 * Math.cos(t * 3.4));
+  ctx.save(); gxRR(ctx, 22, top, W - 44, L0.h, 4); ctx.clip(); ctx.fillStyle = 'rgba(207,171,0,.2)'; ctx.fillRect(22, sy, W - 44, 26); ctx.fillStyle = 'rgba(207,171,0,.35)'; ctx.fillRect(22, sy, W - 44, 1); ctx.restore();
+  ctx.globalAlpha = a * clamp((t - 0.3) / 0.4, 0, 1) * pulse;
+  ctx.textAlign = 'center'; ctx.font = `800 13px ${F_UI}`; ctx.fillStyle = '#F2D35B';
+  ctx.fillText(hintTouch ? 'Tik om te beginnen' : 'Klik of druk op spatie om te beginnen', 200, sy + 13.5, 330);
+  ctx.globalAlpha = a;
+}
+function mgIntroSay(lv, def) {
+  const hoe = def.hoe ? ` Zo speel je: ${def.hoe.kop} ${def.hoe.regel || ''} ${(hintTouch ? def.hoe.touch : def.hoe.toets) || ''}` : '';
+  const nieuw = def.nieuw.length ? ` Nieuw: ${def.nieuw.map(r => r.name + (r.act ? ', ' + r.act : '')).join('; ')}.` : '';
+  return `${lv.year}, ${lv.title}. ${lv.intro} ${def.naam}.${hoe}${nieuw} ${hintTouch ? 'Tik' : 'Druk op spatie'} om te beginnen.`;
+}
+// ---------- maat, resolutie en thema: build (of resize) opnieuw, 150 ms na de laatste wijziging; lichte stand op een trage telefoon ----------
+function mgLayout() { const M = run && run.mg; if (!M || M.ended) return; clearTimeout(M.rt); M.rt = setTimeout(() => mgRebuild(M), MG.rebuild); }
+function mgRebuild(M) {
+  if (run.mg !== M || M.ended) return;
+  const E = M.env, dark = gxDark();
+  if (E.k === V.s * V.dpr && E.dark === dark && E.dpr === V.dpr) return; // niets veranderd (bijvoorbeeld de telefoon dwars en weer terug)
+  Object.assign(E, { dpr: V.dpr, k: V.s * V.dpr, dark, base: dark ? ICOL.dark : ICOL.light, reduced: reduced.matches, lite: mgSt.lite || E.lite });
+  mgFreeMade(M, false); E.jobs = []; M.rebuilt++; still = false; // de oude plaatjes blijven bestaan tot niemand ze meer gebruikt (geen fout bij een late drawImage)
+  if (M.err) return;
+  try {
+    if (M.def.resize) M.def.resize(E);
+    else { E.cache = {}; const r = M.def.build(E); if (r && typeof r.next === 'function') { E.jobs.unshift(r); mgWork(M, 12); } }
+  } catch (e) { mgErr(M, M.def.resize ? 'resize' : 'build', e); }
+}
+function mgLite() { if (mgSt.lite) return; mgSt.lite = true; const M = run && run.mg; if (M && M.env) M.env.lite = true; }
+// werk in stapjes: generatoren in env.jobs (ook wat build teruggeeft), na het tekenen hooguit ms per frame (ook achter de wachtende introband)
+function mgWork(M, ms) {
+  const J = M.env && M.env.jobs; if (!J || !J.length) return;
+  const t0 = performance.now();
+  while (J.length && performance.now() - t0 < ms) {
+    const j = J[0];
+    try { if (!j || typeof j.next !== 'function' || j.next().done) J.shift(); } catch (e) { J.shift(); mgWarn('job' + M.def.year, `minigame ${M.def.year}: fout in een stapje (build of env.jobs): ` + (e && e.message || e)); }
+  }
+}
+// ---------- testhaak: window.__korrelval.mg() ----------
+function mgState() {
+  const M = run && run.mg, base = { open: !!M, screen: S.screen, mode: run ? run.mode : null, lvl: run ? run.lvl : null, games: LEVELS.map((l, k) => !!MINIGAMES[k]), kg: run ? run.score : 0, auto: !!window.__kvAuto, fast: window.__kvFast || 1 };
+  if (!M) return base;
+  return { ...base, naam: M.def.naam, year: M.def.year, t: +M.t.toFixed(3), progress: +mgProgress(M).toFixed(3), score: mgScore(M), paused: S.screen === 'pause', storyShown: M.story, storyOpen: S.screen === 'story',
+    pointerEvents: M.ptr, keyEvents: M.key, held: [...M.held], fingers: M.ptrs.size, intro: Wd.intro, breath: +Math.max(0, M.breath).toFixed(3), done: M.done, ended: M.ended, err: M.err, lite: !!M.env.lite, dpr: V.dpr, k: +M.env.k.toFixed(3),
+    built: M.built, rebuilt: M.rebuilt, again: M.again, jobs: M.env.jobs.length, made: M.made.length, weakRow: run.weakRow || 0, gezel: !!run.gezel, result: M.res, book: MG_BOOK.map(p => p.id) };
+}
+// ------------------------------------------------------------------------------------------------------------------------------
+// INTERFACE VOOR DE BOUWERS VAN DE MINIGAMES (uitleg met een volledig voorbeeld: minigames/raamwerk-mg.md)
+// Elke molen heeft hieronder een eigen gebied tussen twee merkregels. Pas alleen je eigen gebied aan. Alle namen in je gebied beginnen
+// met je prefix: m46, m67, m20, m76, m08 of m26 (ook constanten). Elk gebied staat in een eigen blok (try { ... }): een fout bij het laden
+// kost alleen die minigame (die molen speelt dan de schacht), met een melding in de console, niet het spel.
+//
+// Wat een gebied levert: mgRegister(jaartal, { naam, hoe, nieuw, book, verder, build, start, update, draw, pointer, key, progress, storyOK,
+//   pauseHook, resumeHook, score, result, auto, resize })
+//   naam                korte naam voor de HUD en de weegbon (hooguit circa 30 tekens)
+//   hoe                 { kop, regel, touch, toets }: Zo speel je op de introband (kop hooguit circa 45 tekens, elk één korte regel)
+//   nieuw               0 tot 3 regels { name, act, ico } voor Nieuw in deze molen (ico: functie (g, x, y, s), een THINGS-id of een icon()-naam)
+//   book                extra Molenboek-pagina's [{ id, name, text, act, ico }] (id met prefix, bv. 'm46-zandloper'); openen met env.unlock(id)
+//   verder              optioneel: de knoptekst op de verhaalkaart (standaard Verder malen)
+//   build(env)          één keer per start en opnieuw na een andere maat, resolutie of thema (env.cache is dan leeg): voortekenen in env.canvas.
+//                       Mag een generator zijn (yield tussen de stappen): de eerste stappen meteen, de rest in de frames. Niet bij Nog een keer.
+//   start(env)          begin van een potje (ook bij Nog een keer); zet hier je toestand op nul. env.rnd is dan opnieuw geseed.
+//   update(dt, env)     spellogica per vaste stap (CONFIG.step, 1/120 s); env.t is de speltijd in s
+//   draw(g, env)        één frame op het speelcanvas, onder de HUD (vanaf env.top); de transformatie staat op logische px (400 x 720)
+//   pointer(ev, env)    { type: 'down'|'move'|'up', cancel, x, y, id, primary, mouse, touch, coarse, buttons } in logische px (met pointer capture)
+//   key(ev, env)        { type: 'down'|'up', key, code }; geen herhalingen, dus houd zelf bij wat ingedrukt is
+//   progress()          0 tot 1 (zandloper in de HUD; het verhaal halverwege komt vanaf 0,5)
+//   storyOK()           optioneel: true als het verhaal nu mag komen (rustig moment); het raamwerk vraagt het elke stap vanaf 0,5
+//   pauseHook(env), resumeHook(env)   optioneel: bij pauze en verhaal, en bij verder (daarna een adempauze van 0,6 s, dan de eerste stap)
+//   score()             kilo's van dit potje (HUD)
+//   result()            na afloop { kg, kop, rows: [[label, waarde], ...], quality: { label, note, col } | null, badges: [ids], slot, weak }
+//   auto(env)           speelt zelf redelijk (tests, window.__kvAuto), elke stap voor update
+//   resize(env)         optioneel: in plaats van build opnieuw na een maatwissel (maak dan zelf je env.canvas-plaatjes opnieuw)
+//   Het gebied meldt het einde zelf met env.done(); daarna komt de weegbon.
+//
+// Wat een gebied krijgt in env: W, H, top, rect, dpr, k, dark, reduced, gezel, lite, touch, t, alpha, year, i, lvl, pal, base, F_UI, F_HAND, TAU,
+//   cache, jobs, rnd(), seed(n), clamp, lerp, ease, eio, soft, mix, rgba, mixC, fmt, rr, canvas(w, h), panel(g, x, y, w, h), label(g, text, x, y, o),
+//   hand(g, size), ui(g, size, weight), drawGrain(x, y, g, st), icon, bookIcon, say(text, x, y, color, size, opts), toast, announce, unlock,
+//   sfx { tick, good, bad, click, perfect, fanfare, swish, sis, klik, soft, tok, beep, ratel }, vibrate, done, sky(o), drawSky(g, sky, y, drift),
+//   cloud, water(g, y0, y1, o), gulls, dust, rays. Zie raamwerk-mg.md.
+// Regels: alleen je eigen gebied, prefix, geen DOM, geen eigen listeners, geen localStorage, niets van buiten, save() en restore() in paren.
+// Snelheid: statische lagen in build (env.canvas), geen filter of blur per frame, 60 fps op 400x800 dpr 2 bij CPU 4x, nooit onder circa 50.
+// ------------------------------------------------------------------------------------------------------------------------------
+try {
+// ===== MINIGAME 1846 BEGIN =====
+// 1846: de minigame is nog niet klaar; deze molen speelt voorlopig het valspel.
+// ===== MINIGAME 1846 EIND =====
+} catch (e) { mgFail(1846, e); }
+// ---- niet aanpassen: scheiding voor git merge-file (1846 en 1867, regel 1 van 5) ----
+// ---- niet aanpassen: scheiding voor git merge-file (1846 en 1867, regel 2 van 5) ----
+// ---- niet aanpassen: scheiding voor git merge-file (1846 en 1867, regel 3 van 5) ----
+// ---- niet aanpassen: scheiding voor git merge-file (1846 en 1867, regel 4 van 5) ----
+// ---- niet aanpassen: scheiding voor git merge-file (1846 en 1867, regel 5 van 5) ----
+try {
+// ===== MINIGAME 1867 BEGIN =====
+// 1867: de minigame is nog niet klaar; deze molen speelt voorlopig het valspel.
+// ===== MINIGAME 1867 EIND =====
+} catch (e) { mgFail(1867, e); }
+// ---- niet aanpassen: scheiding voor git merge-file (1867 en 1920, regel 1 van 5) ----
+// ---- niet aanpassen: scheiding voor git merge-file (1867 en 1920, regel 2 van 5) ----
+// ---- niet aanpassen: scheiding voor git merge-file (1867 en 1920, regel 3 van 5) ----
+// ---- niet aanpassen: scheiding voor git merge-file (1867 en 1920, regel 4 van 5) ----
+// ---- niet aanpassen: scheiding voor git merge-file (1867 en 1920, regel 5 van 5) ----
+try {
+// ===== MINIGAME 1920 BEGIN =====
+// Zeefwacht (1920): de sichtervloer van de meelfabriek aan het Noordvliet (ontwerp: minigames/mg-ontwerp-1920.md). De plansichter hangt
+// aan stokken en schudt in kleine rondjes; vier stromen (zemelen, grove gries, fijne gries, bloem) lopen uit de sokken. De speler strijkt
+// proefplankjes glad, tikt het vak met een gescheurd doek (het draadje) en laat verstopte zeven borstelen. De bloemzak vult met de tijd
+// en krijgt aan het eind zijn naam naar witheid. Alles in toneelcoördinaten (360 x 566, s = W / 360, onderaan verankerd, het plafond
+// bovenaan het veld); de stilstaande lagen (achter, kast, zak, los zeefraam) staan als plaatjes in env.cache (build in stappen).
+const m20T = Math.PI * 2;
+const m20KL = {
+  licht: { kalk: '#E6DFC9', vlek: 'rgba(120,100,60,.06)', tegel: '#3F6B52', tegel2: '#4A775D', voeg: '#2F4F3D', glans: 'rgba(214,255,226,.2)', sierrand: '#2A4636', sierLicht: 'rgba(239,230,200,.55)',
+    balk: '#8A6A44', ligger: '#6B4A2B', vloer: '#9A7650', vloerNaad: 'rgba(80,52,28,.42)', kast: '#8A6A44', kastLicht: '#A8865A', kastRand: '#6B4A2B', gaas: '#E4DCC2', gaasLijn: '#CFC4A6', gaasNieuw: '#F3EEE2', sleuf: '#3A2A1C',
+    stok: '#C8A878', stokDonker: '#A8865A', stokAchter: '#B49868', sok: '#E8E0CC', sokDonker: '#C9C0AA', touw: '#7A5A3A', pijp: '#A07A4A', pijpDonker: '#7A5A3A', pijpRing: '#6B4E32',
+    as: '#5A5E63', asLicht: '#868C92', schijf: '#4A4F55', schijfLicht: '#7C8389', ijzer: '#3A3F44', riem: '#6B4A2B', riemLicht: '#8E6A44', naad: '#3A2614',
+    kap: '#2F5A43', kapBinnen: '#F3EEE2', lamp: '#FFF0C2', kegel: 'rgba(255,214,140,', kegelA: 0.2, gloed: 'rgba(255,204,120,', gloedA: 0.2,
+    plank: '#C8A878', plankNerf: '#A8865A', hoopSchaduw: '#E6DCC2', spikkel: '#3A2A1C', zak: '#D9CDAA', zakSlap: 'rgba(217,205,170,.55)', zakSchaduw: '#C2B48E', zakWeef: 'rgba(110,90,50,.12)', naam: '#1D1E1F',
+    borstel: '#5A4632', film: 'rgba(185,169,138,.85)', scheur: '#3A2A1C', draad: '#5A3A1E', doel: 'rgba(207,171,0,.35)' },
+  donker: { kalk: '#3E372D', vlek: 'rgba(0,0,0,.045)', tegel: '#1F3A2B', tegel2: '#24432F', voeg: '#142519', glans: 'rgba(214,255,226,.07)', sierrand: '#132419', sierLicht: 'rgba(239,230,200,.14)',
+    balk: '#3A2A1C', ligger: '#2A1E14', vloer: '#4A3826', vloerNaad: 'rgba(0,0,0,.35)', kast: '#5A4630', kastLicht: '#6E5638', kastRand: '#3A2A1C', gaas: '#4A4433', gaasLijn: '#6E6650', gaasNieuw: '#6A6450', sleuf: '#1E160F',
+    stok: '#7A6A4E', stokDonker: '#5E5038', stokAchter: '#6A5C44', sok: '#8F887A', sokDonker: '#6E675A', touw: '#4A3A28', pijp: '#5A4630', pijpDonker: '#3A2A1C', pijpRing: '#2E2116',
+    as: '#2E3236', asLicht: '#4A5056', schijf: '#2A2E32', schijfLicht: '#4A4F55', ijzer: '#1E2124', riem: '#4A3220', riemLicht: '#5E4430', naad: '#1E140B',
+    kap: '#24432F', kapBinnen: '#F3EEE2', lamp: '#FFE6A3', kegel: 'rgba(255,204,120,', kegelA: 0.34, gloed: 'rgba(255,204,120,', gloedA: 0.32,
+    plank: '#8A6A44', plankNerf: '#6E5638', hoopSchaduw: '#6E675A', spikkel: '#1A1208', zak: '#8F887A', zakSlap: 'rgba(143,136,122,.55)', zakSchaduw: '#6E675A', zakWeef: 'rgba(0,0,0,.18)', naam: '#F3EED2',
+    borstel: '#3A2A1C', film: 'rgba(94,86,68,.9)', scheur: '#1A1208', draad: '#3A2410', doel: 'rgba(207,171,0,.45)' },
+};
+const m20C = { creme: '#F3EED2', oranje: '#E78A01', goud: '#CFAB00' }; // huisstijl, alleen in de UI-laag
+const m20WIT = [[100, '#FDFCF7'], [75, '#F0E3C2'], [50, '#DCC08A'], [25, '#C9A066'], [0, '#AE804A']]; // bloemkleur(w): dezelfde stops als UIT
+// de vier stromen (sok k hoort bij vak k): kleur, breedte, valsnelheid en korrel; ze verschillen ook in dikte en korrel voor wie kleuren slecht ziet
+const m20STR = [
+  { col: '#8A5A2E', rand: '#C9A24A', randW: 1.5, w: 9, v: 110, korrel: 'vlok', kc: ['#6B4A2B', '#B07A42'], stap: 6 },
+  { col: '#D9B565', rand: null, w: 11, v: 130, korrel: 'korrel', kc: ['#C19A3F'], stap: 4 },
+  { col: '#EDE0BC', rand: null, w: 12, v: 140, korrel: 'stip', kc: ['#D9C89A'], stap: 3 },
+  { col: null, rand: '#DCD2B4', randW: 1, w: 16, v: 120, korrel: null, kc: [], stap: 0 },
+];
+const m20X = [90, 150, 210, 270]; // middelpunt van sok 1 tot 4
+const m20LBL = [['zemelen', 90, 338], ['grove gries', 150, 356], ['fijne gries', 210, 338], ['bloem', 270, 356]]; // labels onder de sokken, één keer bij het begin
+const m20P = { pauze: [[11, 8.5, 6.5], [14, 11, 9]], jit: [1.5, 1.5, 1], schep: [[8, 7, 6], [10, 9, 8]], f: [[2.0, 2.4, 2.8], [1.6, 1.9, 2.2]], kg: [7, 9, 11], grens: [[40, 70], [45, 75]] }; // [normaal, Gezel] per fase
+const m20VakY = k => 112 + (k - 1) * 44; // bovenkant van de band van vak k (1 boven, 4 onder)
+const m20 = {
+  s: 1, ox: 0, oy: 0, yC: 0, fase: 'start', t: 0, tS: 0, kgSok: 0, w: 100, bonus: 0, bonusGezegd: false,
+  raamT: -1, hintT: 0, hint: false, riem: 0, riemT: 0, phi: 0, amp: 0, ampDoel: 0, ampRate: 1, fRamp: 0, stroomT: 0,
+  probleem: null, stop: 0, wissel: null, nieuwGaas: [0, 0, 0, 0], flash: [0, 0, 0, 0], borstel: null, railsT: -1, breed: [1, 1, 1, 1], labelsT: -1,
+  hoop: null, strijk: { x: 30, t: -1, dur: 0.25, van: 30, naar: 118, op: false }, veeg: null,
+  volgendProbleem: 0, volgendeSchep: 0, nProb2: 0, nScheur: 0, eersteScheurVak: 0, laatsteVak: 0, ooitGezien: false, eersteVerstop: false,
+  storyWacht: false, storyGezien: false, storyAt: 0, quiet: 0, adem: 0, eindT0: 0, cursor: { on: false, vak: 1 }, says: [],
+  teller: { scheppen: 0, scheppenTelt: 0, geveegd: 0, opTijd: 0, scheuren: 0, gewisseld: 0, vroeg: 0, verstopt: 0, geborsteld: 0, fout: 0 },
+  autoFout: false, autoFoutT: 0, autoFoutKlaar: false, bloemW: -1, bloemCol: null, korrels: null,
+};
+// ---------- hulpjes ----------
+function m20RR(g, x, y, w, h, r) { g.beginPath(); g.moveTo(x + r, y); g.arcTo(x + w, y, x + w, y + h, r); g.arcTo(x + w, y + h, x, y + h, r); g.arcTo(x, y + h, x, y, r); g.arcTo(x, y, x + w, y, r); g.closePath(); }
+function m20Poly(g, pts) { g.beginPath(); g.moveTo(pts[0], pts[1]); for (let i = 2; i < pts.length; i += 2) g.lineTo(pts[i], pts[i + 1]); g.closePath(); }
+const m20Kl = env => env.cache.kl || (env.cache.kl = env.dark ? m20KL.donker : m20KL.licht);
+function m20Maten(env) { const m = m20; m.s = env.W / 360; m.ox = 0; m.oy = env.top + env.rect.h - 566 * m.s; m.yC = (env.top - m.oy) / m.s; }
+const m20Fase = (env, tS) => { const gr = m20P.grens[env.gezel ? 1 : 0]; return tS < gr[0] ? 0 : tS < gr[1] ? 1 : 2; };
+function m20Bloem(env, w) { // bloemkleur(w), lineair tussen de stops; onthouden per hele witheid
+  const m = m20, q = Math.round(env.clamp(w, 0, 100)); if (m.bloemW === q && m.bloemCol) return m.bloemCol;
+  const st = m20WIT; let c = st[0][1];
+  for (let i = 0; i < st.length - 1; i++) if (q <= st[i][0] && q >= st[i + 1][0]) { c = env.mix(st[i + 1][1], st[i][1], (q - st[i + 1][0]) / (st[i][0] - st[i + 1][0])); break; }
+  m.bloemW = q; m.bloemCol = c; return c;
+}
+const m20Naam = w => w >= 90 ? ['Patentbloem', `witheid ${w}, de witste bloem, in het Engels short patent`, '#FDFCF7'] : w >= 75 ? ['Bloem', `witheid ${w}, in het Engels long patent`, '#F0E3C2']
+  : w >= 50 ? ['Meel', `witheid ${w}, alles samen, in het Engels straight grade`, '#DCC08A'] : ['Volkoren', `witheid ${w}, de hele korrel, zemel en al`, '#AE804A'];
+function m20Say(env, tekst, x, y, kleur) { // zwevende tekst op een vaste toneelplek; bij verminderde beweging zonder te stijgen; lichte stand: hooguit drie tegelijk
+  const m = m20;
+  if (env.lite) { m.says = m.says.filter(q => m.t - q < 1.2); if (m.says.length >= 3) return; m.says.push(m.t); }
+  env.say(tekst, m.ox + x * m.s, m.oy + y * m.s, kleur, Math.round(18 * m.s), { life: 1 + tekst.length * 0.035, vy: env.reduced ? 0 : -36 });
+}
+const m20Kg = () => { const T = m20.teller; return Math.floor(m20.kgSok) + T.geveegd * 10 + (T.gewisseld - T.vroeg) * 40 + T.vroeg * 60 + T.geborsteld * 30; };
+const m20Progress = () => m20.fase === 'start' ? 0 : m20.fase === 'eind' ? 1 : Math.min(1, m20.tS / 90);
+const m20Rustig = () => { const m = m20; return !m.probleem && m.stop <= 0 && !m.borstel && !m.wissel && (!m.hoop || m.hoop.vlak) && m.strijk.t < 0 && !m.veeg; };
+// ---------- build: de stilstaande lagen, in stappen ----------
+function* m20Build(env) {
+  m20Maten(env); m20Kl(env);
+  env.cache.achter = yield* m20Achter(env); yield;
+  env.cache.kast = m20KastLaag(env); yield;
+  const z = m20ZakLagen(env); env.cache.zakSlap = z[0]; env.cache.zakVol = z[1]; yield;
+  env.cache.raam = m20RaamLaag(env); yield;
+  env.cache.labels = m20LabelLaag(env);
+}
+function* m20Achter(env) { // plafond, as, muur, sierrand, tegels, plint, vloer, lamp met lichtkegel, pijpen, tafel en plankje: één plaatje van het hele speelvlak, in drie stappen
+  const m = m20, K = m20Kl(env), c = env.canvas(env.W, env.rect.h), g = c.g, s = m.s, yC = m.yC, rnd = env.seed(1920);
+  g.save(); g.scale(s, s); g.translate(0, -yC);
+  g.fillStyle = K.balk; g.fillRect(0, yC, 360, 36); g.fillStyle = K.vloerNaad; for (let y = yC + 9; y < yC + 35; y += 9) g.fillRect(0, y, 360, 1);
+  g.fillStyle = K.ligger; for (const x of [60, 180, 300]) g.fillRect(x - 3, yC, 6, 36);
+  g.fillStyle = K.as; g.fillRect(0, yC + 22, 360, 6); g.fillStyle = K.asLicht; g.fillRect(0, yC + 22, 360, 1.5);
+  g.fillStyle = K.schijf; g.beginPath(); g.arc(180, yC + 25, 14, 0, m20T); g.fill(); g.strokeStyle = K.schijfLicht; g.lineWidth = 2; g.beginPath(); g.arc(180, yC + 25, 12.5, 0, m20T); g.stroke();
+  g.fillStyle = K.kalk; g.fillRect(0, yC + 36, 360, 330 - yC - 36);
+  g.fillStyle = 'rgba(0,0,0,.14)'; g.fillRect(0, yC + 36, 360, 3);
+  if (!env.lite) { g.fillStyle = K.vlek; g.globalAlpha = 0.5; for (let i = 0; i < 9; i++) { g.beginPath(); g.ellipse(rnd() * 360, yC + 50 + rnd() * 270, 10 + rnd() * 18, 6 + rnd() * 10, rnd() * 3, 0, m20T); g.fill(); } g.globalAlpha = 1; }
+  g.fillStyle = K.sierLicht; g.fillRect(0, 326.5, 360, 1.5); g.fillStyle = K.sierrand; g.fillRect(0, 328, 360, 4);
+  g.restore(); yield; g.save(); g.scale(s, s); g.translate(0, -yC);
+  g.fillStyle = K.voeg; g.fillRect(0, 332, 360, 208);
+  for (let j = 0, y = 334; y < 536; j++, y += 28) for (let i = 0, x = -12; x < 360; i++, x += 28) {
+    g.fillStyle = (i + j) % 3 === 0 ? K.tegel2 : K.tegel; g.fillRect(x, y, 26, Math.min(26, 536 - y));
+    g.fillStyle = K.glans; g.fillRect(x, y, 8, 1); g.fillRect(x, y, 1, Math.min(8, 536 - y));
+  }
+  g.fillStyle = K.voeg; g.fillRect(0, 536, 360, 4);
+  g.restore(); yield; g.save(); g.scale(s, s); g.translate(0, -yC);
+  g.fillStyle = K.vloer; g.fillRect(0, 540, 360, 30); g.fillStyle = K.vloerNaad; for (let x = 6; x < 360; x += 12) g.fillRect(x, 540, 1, 30); g.fillRect(0, 540, 360, 1.5);
+  // houten pijpen onder sok 1 tot 3: trechtermond en pijp door de vloer (de gries gaat terug naar een fijnere walsenstoel, de zemelen naar het veevoer; zonder bordje)
+  for (let k = 0; k < 3; k++) { const x = m20X[k];
+    g.fillStyle = K.pijp; m20Poly(g, [x - 15, 396, x + 15, 396, x + 9, 414, x - 9, 414]); g.fill(); g.fillRect(x - 7, 414, 14, 126);
+    g.fillStyle = K.pijpDonker; g.fillRect(x + 3, 414, 4, 126); m20Poly(g, [x + 9, 396, x + 15, 396, x + 9, 414, x + 5, 414]); g.fill();
+    g.fillStyle = K.pijpRing; g.fillRect(x - 16, 395, 32, 2); g.fillRect(x - 8, 469, 16, 3); }
+  // tafel en proefplankje
+  g.fillStyle = K.kastRand; g.fillRect(30, 554, 6, 12); g.fillRect(162, 554, 6, 12);
+  g.fillStyle = K.kast; g.fillRect(24, 528, 150, 28); g.fillStyle = K.kastLicht; g.fillRect(24, 528, 150, 2); g.fillStyle = K.kastRand; g.fillRect(24, 554, 150, 2);
+  g.fillStyle = K.plank; m20RR(g, 30, 480, 134, 48, 4); g.fill(); g.strokeStyle = K.kast; g.lineWidth = 1.5; g.stroke();
+  g.strokeStyle = K.plankNerf; g.lineWidth = 1; g.beginPath(); for (const y of [490, 504, 518]) { g.moveTo(34, y); for (let x = 34; x <= 160; x += 14) g.quadraticCurveTo(x + 7, y + (x / 14 % 2 ? 2.5 : -2.5), x + 14, y); } g.stroke();
+  // lamp: snoer, groene emaillen kap, lampje; gloed om de lamp en de lichtkegel naar het plankje (vlakke treden, geen verloop)
+  g.strokeStyle = K.ijzer; g.lineWidth = 1.2; g.beginPath(); g.moveTo(40, yC + 36); g.lineTo(40, 44); g.stroke();
+  for (const [r, a] of [[17, 0.5], [11, 0.7], [6.5, 1]]) { g.fillStyle = K.gloed + (K.gloedA * a).toFixed(3) + ')'; g.beginPath(); g.arc(40, 60, r, 0, m20T); g.fill(); }
+  for (const [wq, lq, a] of [[1, 1, 0.36], [0.55, 0.6, 0.5]]) { const cx = 40 + 57 * lq, hw = (5 + 50 * lq) * wq, yb = 62 + 462 * lq; g.fillStyle = K.kegel + (K.kegelA * a).toFixed(3) + ')'; m20Poly(g, [40 - 5 * wq, 62, 40 + 5 * wq, 62, cx + hw, yb, cx - hw, yb]); g.fill(); }
+  g.fillStyle = K.kap; m20Poly(g, [35, 44, 45, 44, 53, 58, 27, 58]); g.fill();
+  g.fillStyle = K.kapBinnen; g.beginPath(); g.ellipse(40, 58, 13, 2.5, 0, 0, m20T); g.fill();
+  g.fillStyle = K.lamp; g.beginPath(); g.ellipse(40, 60.5, 3, 3.5, 0, 0, m20T); g.fill();
+  g.restore(); return c;
+}
+function m20Gaas(g, K, k, y) { // het gaasvenster van vak k (grof boven, fijn onder)
+  const maas = [7, 5, 3.5, 2.5][k - 1];
+  g.fillStyle = K.gaas; g.fillRect(72, y + 6, 218, 30);
+  g.strokeStyle = K.gaasLijn; g.lineWidth = 1; g.beginPath();
+  for (let x = 72 + maas; x < 290; x += maas) { g.moveTo(x, y + 6); g.lineTo(x, y + 36); }
+  for (let yy = y + 6 + maas; yy < y + 36; yy += maas) { g.moveTo(72, yy); g.lineTo(290, yy); }
+  g.stroke();
+  g.strokeStyle = 'rgba(0,0,0,.28)'; g.lineWidth = 1; g.strokeRect(72.5, y + 6.5, 217, 29);
+}
+function m20KastLaag(env) { // de kast: deksel, hoekstijlen, klemmen, vier vakken met lijst, kleurstrook en gaas (scheur, film en borstels komen er per frame bovenop)
+  const m = m20, K = m20Kl(env), s = m.s, c = env.canvas(Math.ceil(262 * s), Math.ceil(194 * s)), g = c.g;
+  g.save(); g.scale(s, s); g.translate(-49, -98);
+  g.fillStyle = K.kast; g.fillRect(50, 98, 260, 192);
+  for (let k = 1; k <= 4; k++) { const y = m20VakY(k);
+    g.fillStyle = K.kastLicht; g.fillRect(58, y, 244, 1.5); g.fillStyle = K.kastRand; g.fillRect(58, y + 40.5, 244, 1.5); if (k < 4) g.fillRect(58, y + 42, 244, 2);
+    m20Gaas(g, K, k, y);
+    g.fillStyle = [m20STR[0].col, m20STR[1].col, m20STR[2].col, '#FDFCF7'][k - 1]; g.fillRect(60, y + 4, 8, 34); g.strokeStyle = K.kastRand; g.lineWidth = 1; g.strokeRect(60.5, y + 4.5, 7, 33); }
+  g.fillStyle = K.kastLicht; g.fillRect(50, 98, 260, 2); g.fillStyle = K.kastRand; g.fillRect(50, 110, 260, 2); g.fillRect(50, 286, 260, 4);
+  g.fillStyle = K.kastRand; g.fillRect(50, 98, 8, 192); g.fillRect(302, 98, 8, 192); g.fillStyle = K.kastLicht; g.fillRect(50, 98, 1.5, 192); g.fillRect(302, 98, 1.5, 192);
+  g.fillStyle = K.ijzer; for (let i = 0; i < 4; i++) { g.fillRect(51, 122 + i * 44, 6, 3); g.fillRect(303, 122 + i * 44, 6, 3); }
+  g.restore(); return c;
+}
+function m20ZakPad(g, d) { // de jutezak: hals x 250 tot 290, lijf x 228 tot 312, y 400 tot 540; d: zoveel px smaller (de slappe zak)
+  g.beginPath(); g.moveTo(250 + d, 400); g.lineTo(290 - d, 400); g.lineTo(290 - d, 412); g.quadraticCurveTo(312 - d, 416, 312 - d, 444); g.lineTo(312 - d, 532);
+  g.quadraticCurveTo(312 - d, 540, 304 - d, 540); g.lineTo(236 + d, 540); g.quadraticCurveTo(228 + d, 540, 228 + d, 532); g.lineTo(228 + d, 444); g.quadraticCurveTo(228 + d, 416, 250 + d, 412); g.closePath();
+}
+function m20ZakLagen(env) { // twee plaatjes: de hele zak slap (doorschijnend) en de volle zak met weefsel en schaduwkant
+  const m = m20, K = m20Kl(env), s = m.s, maak = () => { const c = env.canvas(Math.ceil(88 * s), Math.ceil(144 * s)); c.g.save(); c.g.scale(s, s); c.g.translate(-226, -398); return c; };
+  const a = maak(); m20ZakPad(a.g, 2); a.g.fillStyle = K.zakSlap; a.g.fill(); a.g.restore();
+  const b = maak(), g = b.g; m20ZakPad(g, 0); g.fillStyle = K.zak; g.fill(); g.save(); g.clip();
+  g.strokeStyle = K.zakWeef; g.lineWidth = 1; g.beginPath(); for (let d = -140; d < 160; d += 5) { g.moveTo(228 + d, 400); g.lineTo(228 + d + 140, 540); g.moveTo(312 - d, 400); g.lineTo(312 - d - 140, 540); } g.stroke();
+  g.fillStyle = K.zakSchaduw; g.fillRect(302, 400, 12, 140); g.fillStyle = 'rgba(0,0,0,.08)'; g.fillRect(228, 536, 84, 4);
+  g.restore(); g.restore(); return [a, b];
+}
+function m20RaamLaag(env) { // het losse zeefraam van de start: dezelfde lijst en het fijne gaas van vak 4
+  const m = m20, K = m20Kl(env), s = m.s, c = env.canvas(Math.ceil(248 * s), Math.ceil(42 * s)), g = c.g;
+  g.save(); g.scale(s, s); g.translate(-56, -(m20VakY(4) - 2));
+  const y = m20VakY(4);
+  g.fillStyle = K.kast; g.fillRect(58, y, 244, 42); g.fillStyle = K.kastLicht; g.fillRect(58, y, 244, 1.5); g.fillStyle = K.kastRand; g.fillRect(58, y + 40.5, 244, 1.5); g.fillRect(58, y, 1.5, 42); g.fillRect(300.5, y, 1.5, 42);
+  m20Gaas(g, K, 4, y);
+  g.restore(); return c;
+}
+function m20LabelLaag(env) { // de vier labels bij de sokken als één plaatje (in logische px), zodat het begin van het schudden licht blijft
+  const m = m20, s = m.s, y0 = Math.floor(m.oy + 338 * s - 24), c = env.canvas(env.W, 72);
+  for (const [tx, x, y] of m20LBL) env.label(c.g, tx, m.ox + x * s, m.oy + y * s - y0);
+  c.y0 = y0; return c;
+}
+// ---------- start: alles op nul ----------
+function m20Start(env) {
+  const m = m20; m20Maten(env);
+  Object.assign(m, { fase: 'start', t: 0, tS: 0, kgSok: 0, w: 100, bonus: 0, bonusGezegd: false, raamT: -1, hintT: 0, hint: false, riem: 0, riemT: 0, phi: 0, amp: 0, ampDoel: 0, ampRate: 1, fRamp: 0, stroomT: 0,
+    probleem: null, stop: 0, wissel: null, nieuwGaas: [0, 0, 0, 0], flash: [0, 0, 0, 0], borstel: null, railsT: -1, breed: [1, 1, 1, 1], labelsT: -1, hoop: null, veeg: null,
+    volgendProbleem: env.gezel ? 12 : 10, volgendeSchep: 6, nProb2: 0, nScheur: 0, eersteScheurVak: 0, laatsteVak: 0, ooitGezien: false, eersteVerstop: false,
+    storyWacht: false, storyGezien: false, storyAt: 0, quiet: 0, adem: 0, eindT0: 0, says: [], bloemW: -1, bloemCol: null, autoFoutKlaar: false });
+  Object.assign(m.strijk, { x: 30, t: -1, dur: 0.25, van: 30, naar: 118, op: false }); Object.assign(m.cursor, { on: false, vak: 1 });
+  Object.assign(m.teller, { scheppen: 0, scheppenTelt: 0, geveegd: 0, opTijd: 0, scheuren: 0, gewisseld: 0, vroeg: 0, verstopt: 0, geborsteld: 0, fout: 0 });
+  m.autoFout = env.rnd() < 0.25; m.autoFoutT = 20 + env.rnd() * 40; // de automaat: in één op de vier potjes één keer een heel vak tikken (de tests raken dan ook Doek heel)
+  if (!m.korrels) { const r = env.seed(1920), L = []; for (let k = 0; k < 3; k++) { const st = m20STR[k], a = []; for (let p = r() * st.stap; p < 76; p += st.stap) a.push([p, (r() - 0.5) * (st.w - 3), r() * 2]); L.push(a); } m.korrels = L; }
+}
+// ---------- de planner: update per vaste stap ----------
+function m20Update(dt, env) {
+  const m = m20, gz = env.gezel ? 1 : 0, red = env.reduced;
+  m.t += dt;
+  if (m.amp < m.ampDoel) m.amp = Math.min(m.ampDoel, m.amp + dt * m.ampRate); else if (m.amp > m.ampDoel) m.amp = Math.max(m.ampDoel, m.amp - dt * m.ampRate);
+  const fi = m.fase === 'schud' ? m20Fase(env, m.tS) : m.fase === 'eind' ? 2 : 0, f = red ? 1.2 : m20P.f[gz][fi] * m.fRamp;
+  m.phi += m20T * f * dt; m.riemT += dt * m.amp;
+  for (let k = 0; k < 4; k++) { if (m.flash[k] > 0) m.flash[k] -= dt; if (m.nieuwGaas[k] > 0) m.nieuwGaas[k] -= dt; }
+  const S = m.strijk; if (S.t >= 0) { S.t += dt; S.x = env.lerp(S.van, S.naar, env.ease(S.t / S.dur)); if (S.t >= S.dur) { S.t = -1; S.x = S.naar; } }
+  else if (!m.veeg && S.x !== 30) { S.x += (30 - S.x) * Math.min(1, dt * 6); if (Math.abs(S.x - 30) < 0.3) S.x = 30; }
+  const H = m.hoop; if (H) { if (!H.vlak && H.groei < 1) H.groei = red ? 1 : Math.min(1, H.groei + dt / 0.2); if (H.vlak && H.plat < 1) H.plat = red ? 1 : Math.min(1, H.plat + dt / 0.25); }
+  if (m.fase === 'start') {
+    if (m.raamT < 0) { m.hintT += dt; if (!m.hint && m.hintT >= 5) { m.hint = true; m20Say(env, 'Tik het zeefraam', 180, 360, m20C.creme); } if (m.hintT >= 10) m20Schuif(env); }
+    else { m.raamT += dt; if (m.raamT >= (red ? 0.3 : 0.6)) m20Schudden(env); }
+    return;
+  }
+  if (m.fase === 'eind') {
+    const e = m.t - m.eindT0; m.stroomT += dt;
+    if (!m.bonusGezegd && e >= 0.8) { m.bonusGezegd = true; m20Say(env, 'Witheid +' + m.bonus, 270, 392, m20C.goud); }
+    if (e >= (red ? 1.2 : 2.2)) env.done();
+    return;
+  }
+  // schudden
+  m.tS += dt; m.riem = Math.min(1, m.tS / 0.3); m.fRamp = env.clamp((m.tS - 0.3) / 1, 0, 1);
+  if (m.labelsT >= 0) { m.labelsT += dt; if (m.labelsT > 3.6) m.labelsT = -1; }
+  if (m.adem > 0) m.adem -= dt;
+  if (fi >= 1 && m.railsT < 0) { m.railsT = 0; env.sfx.tick(); m20Say(env, 'Borsteltjes erbij', 180, 90, m20C.creme); env.announce('Borsteltjes erbij'); }
+  if (m.railsT >= 0 && m.railsT < 0.5) m.railsT += dt;
+  if (m.stop > 0) { m.stop -= dt; if (m.stop <= 0) { m.stop = 0; if (m.amp === 0 || m.ampDoel === 0) { m.ampDoel = 1; m.ampRate = 1 / 0.4; } } }
+  if (m.wissel) { m.wissel.t += dt; if (m.wissel.t >= m.wissel.dur) m.wissel = null; }
+  const P = m.probleem;
+  if (P && P.soort === 'scheur') { const open = m.tS - P.t0; m.w = Math.max(0, m.w - (open < 5 ? (gz ? 0.2 : 0.25) : (gz ? 0.6 : 0.9)) * dt); if (gz && !P.gezien && open >= 8) m20Zie(env); }
+  else if (P) P.film = Math.min(1, (m.tS - P.t0) / 2);
+  if (m.borstel) { m.borstel.t += dt; if (m.borstel.t >= 0.8) m20Geborsteld(env); }
+  for (let k = 0; k < 4; k++) { // breedte van de stromen: bij een verstopping k dikker en k+1 dunner (vak 4: de bloem dunner, stroom 3 dikker), in 0,6 s
+    let doel = 1; if (P && P.soort === 'verstop') { const v = P.vak - 1; if (v === 3) { if (k === 3) doel = 0.4; else if (k === 2) doel = 1.5; } else { if (k === v) doel = 1.5; else if (k === v + 1) doel = 0.4; } }
+    const b = m.breed[k]; m.breed[k] = b < doel ? Math.min(doel, b + dt / 0.6 * 1.1) : Math.max(doel, b - dt / 0.6 * 1.1); }
+  if (m.stop <= 0) { m.kgSok += m20P.kg[fi] * dt * (P && P.soort === 'verstop' ? (gz ? 0.75 : 0.6) : 1); m.stroomT += dt; }
+  if ((!m.hoop || m.hoop.vlak) && m.tS >= m.volgendeSchep && m.tS <= 86 && !m.storyWacht && m.adem <= 0) m20Schep(env);
+  if (m.hoop && !m.hoop.vlak && !m.hoop.hint && m.tS - m.hoop.t0 >= 10) { m.hoop.hint = true; m20Say(env, 'Strijk het plankje', 97, 462, m20C.creme); }
+  if (!m.probleem && !m.borstel && m.tS >= m.volgendProbleem && m.tS <= 84 && !m.storyWacht && m.adem <= 0) m20NieuwProbleem(env);
+  if (m20Progress() >= 0.5 && !m.storyGezien && !m.storyWacht) { m.storyWacht = true; m.storyAt = m.tS; m.quiet = 0; }
+  if (m.storyWacht) { m.quiet = m20Rustig() ? m.quiet + dt : 0; if (m.quiet > 1.5 || m.tS - m.storyAt > 8.5) { m.storyWacht = false; m.storyGezien = true; } } // geen verhaal (Nog een keer): niet blijven wachten
+  if (m.tS >= 90) { // zak vol: de kast komt tot stilstand, de stromen lopen leeg, de zak krijgt zijn touw en zijn naam
+    m.fase = 'eind'; m.eindT0 = m.t; m.bonus = Math.round(3 * m.w); m.ampDoel = 0; m.ampRate = 1 / (red ? 0.5 : 1.5); m.stroomT = 0; m.veeg = null;
+    m20Say(env, 'Zak vol', 270, 392, m20C.goud); env.vibrate(30); env.announce('Zak vol'); env.unlock('m20-witheid');
+  }
+}
+function m20Schuif(env) { const m = m20; if (m.fase !== 'start' || m.raamT >= 0) return; m.raamT = 0; env.sfx.click(); }
+function m20Schudden(env) { const m = m20; m.fase = 'schud'; m.tS = 0; m.riem = 0; m.fRamp = 0; m.ampDoel = 1; m.ampRate = 1; m.labelsT = 0; m.stroomT = 0; env.unlock('m20-zeefwacht'); }
+function m20Schep(env) { const m = m20; m.hoop = { t0: m.tS, vlak: false, plat: 0, groei: 0, w0: m.w, spikkels: null, hint: false, telt: m.tS <= 84 }; m.teller.scheppen++; if (m.hoop.telt) m.teller.scheppenTelt++; env.sfx.tick(); }
+function m20PlanVolgend(env) { const m = m20, fi = m20Fase(env, m.tS); m.volgendProbleem = m.tS + m20P.pauze[env.gezel ? 1 : 0][fi] + (env.rnd() * 2 - 1) * m20P.jit[fi]; }
+function m20NieuwProbleem(env) { // fase 1 alleen scheuren; fase 2 om en om (eerst een verstopping); fase 3 willekeurig 60/40. Nooit hetzelfde vak als het vorige probleem
+  const m = m20, fi = m20Fase(env, m.tS);
+  let soort; if (fi === 0) soort = 'scheur'; else if (fi === 1) { soort = m.nProb2 % 2 === 0 ? 'verstop' : 'scheur'; m.nProb2++; } else soort = env.rnd() < 0.6 ? 'scheur' : 'verstop';
+  let vak, n = 0; do { vak = 1 + Math.floor(env.rnd() * 4); n++; } while (n < 20 && (vak === m.laatsteVak || (soort === 'scheur' && m.nScheur === 1 && vak === m.eersteScheurVak)));
+  if (soort === 'scheur') {
+    m.probleem = { soort, vak, t0: m.tS, gezien: false, tZie: 0, sx: 95 + env.rnd() * 160, sy: m20VakY(vak) + 12 + env.rnd() * 18, lot: env.rnd(), halo: m.nScheur === 0 || !!env.gezel };
+    if (m.nScheur === 0) m.eersteScheurVak = vak; m.nScheur++; m.teller.scheuren++;
+  } else {
+    m.probleem = { soort, vak, t0: m.tS, film: 0, halo: !!env.gezel }; m.teller.verstopt++;
+    if (!m.eersteVerstop) { m.eersteVerstop = true; m20Say(env, 'Zeef verstopt', 180, 90, m20C.oranje); env.announce('Zeef verstopt'); }
+  }
+}
+function m20Zie(env) { // de scheur wordt gezien (door het plankje, of in Gezel vanzelf): zichtbaar in het vak, oranje lijst, langer draadje
+  const m = m20, P = m.probleem; if (!P || P.soort !== 'scheur' || P.gezien) return;
+  P.gezien = true; P.tZie = m.tS;
+  if (!m.ooitGezien) { m.ooitGezien = true; m20Say(env, 'Tik het vak met het draadje', 180, 90, m20C.creme); env.unlock('m20-doek'); }
+}
+function m20Veeg(env, viaTik) { // de veeg over het plankje: de hoop wordt een vlakke strook; spikkels verraden een open scheur
+  const m = m20, H = m.hoop, S = m.strijk; if (m.fase !== 'schud') return;
+  if (viaTik && S.t < 0) { S.van = S.x; S.naar = S.x < 74 ? 118 : 30; S.t = 0; }
+  if (!H || H.vlak) return;
+  H.vlak = true; H.plat = 0; H.tVlak = m.tS; m.teller.geveegd++; if (H.telt && m.tS - H.t0 <= 5) m.teller.opTijd++;
+  const fi = m20Fase(env, m.tS); m.volgendeSchep = Math.max(H.t0 + m20P.schep[env.gezel ? 1 : 0][fi], m.tS + 1.5);
+  const P = m.probleem;
+  if (P && P.soort === 'scheur') {
+    const n = 5 + Math.floor(env.rnd() * 4), sp = []; for (let i = 0; i < n; i++) sp.push([46 + env.rnd() * 102, 496 + env.rnd() * 14, 1.2 + env.rnd() * 0.6]); H.spikkels = sp;
+    m20Say(env, 'Spikkels', 97, 462, m20C.oranje); env.sfx.bad(); env.vibrate(15); env.announce('Spikkels'); m20Zie(env);
+  } else { m20Say(env, 'Schoon', 97, 462, m20C.creme); env.sfx.swish(); }
+}
+function m20TikVak(k, env) { // een tik op vak k (of de sok eronder): doek wisselen, borstelen, of nakijken (Doek heel)
+  const m = m20, gz = !!env.gezel, P = m.probleem; if (m.fase !== 'schud' || m.stop > 0) return;
+  if (P && P.vak === k) {
+    if (P.soort === 'scheur') {
+      const vroeg = !P.gezien; m.teller.gewisseld++; if (vroeg) m.teller.vroeg++;
+      m.stop = gz ? 0.6 : 1.0; m.ampDoel = 0; m.ampRate = 1 / 0.15; m.wissel = { vak: k, t: 0, dur: m.stop }; m.nieuwGaas[k - 1] = 3 + m.stop; m.probleem = null; m.laatsteVak = k;
+      m20Say(env, vroeg ? 'Op tijd gezien +60' : 'Doek gewisseld +40', 180, 90, m20C.goud); env.sfx.good(); m20PlanVolgend(env);
+    } else if (!m.borstel) { m.borstel = { vak: k, t: 0 }; env.sfx.click(); }
+    return;
+  }
+  m.teller.fout++; m.stop = gz ? 0.6 : 1.2; m.ampDoel = 0; m.ampRate = 1 / 0.15; m.flash[k - 1] = 0.2; m20Say(env, 'Doek heel', 180, 90, m20C.creme); env.sfx.bad();
+}
+function m20Geborsteld(env) { const m = m20, P = m.probleem; m.borstel = null; if (P && P.soort === 'verstop') { m.teller.geborsteld++; m.laatsteVak = P.vak; m.probleem = null; m20Say(env, 'Geborsteld +30', 180, 90, m20C.goud); env.sfx.good(); m20PlanVolgend(env); } }
+// ---------- invoer ----------
+function m20VakAt(x, y) { if (x >= 50 && x <= 310 && y >= 112 && y < 288) return Math.min(4, 1 + Math.floor((y - 112) / 44)); if (y >= 290 && y <= 398) for (let k = 0; k < 4; k++) if (Math.abs(x - m20X[k]) <= 28) return k + 1; return 0; }
+const m20InPlank = (x, y) => x >= 18 && x <= 176 && y >= 468 && y <= 540;
+function m20Pointer(ev, env) {
+  const m = m20; if (!ev.primary) return;
+  const x = (ev.x - m.ox) / m.s, y = (ev.y - m.oy) / m.s;
+  if (ev.type === 'down') {
+    if (m.fase === 'start') { if (x >= 42 && x <= 318 && y >= 284 && y <= 354) m20Schuif(env); return; }
+    if (m.fase !== 'schud') return;
+    if (m20InPlank(x, y)) { m.veeg = { id: ev.id, x0: x, y0: y, t0: m.t, moved: false }; m.strijk.t = -1; m.strijk.x = env.clamp(x - 23, 30, 118); return; }
+    const k = m20VakAt(x, y); if (k) m20TikVak(k, env);
+  } else if (ev.type === 'move') {
+    if (!m.veeg || ev.id !== m.veeg.id) return;
+    m.strijk.x = env.clamp(x - 23, 30, 118);
+    if (!m.veeg.moved && Math.abs(x - m.veeg.x0) >= 30) { m.veeg.moved = true; m20Veeg(env, false); }
+  } else { const v = m.veeg; if (!v || ev.id !== v.id) return; m.veeg = null;
+    if (!v.moved && !ev.cancel) m20Veeg(env, true); } // een tik, een lange druk of een te korte veeg strijkt ook: de veeg mag slordig
+}
+function m20Key(ev, env) {
+  if (ev.type !== 'down') return; const m = m20, k = ev.key;
+  if (m.fase === 'start') { if (k === ' ' || k === 'Enter') m20Schuif(env); return; }
+  if (m.fase !== 'schud') return;
+  if (k === ' ' || k === 'ArrowLeft' || k === 'ArrowRight') m20Veeg(env, true);
+  else if (k >= '1' && k <= '4' && k.length === 1) m20TikVak(+k, env);
+  else if (k === 'ArrowUp' || k === 'ArrowDown') { if (m.cursor.on) m.cursor.vak = env.clamp(m.cursor.vak + (k === 'ArrowDown' ? 1 : -1), 1, 4); m.cursor.on = true; }
+  else if (k === 'Enter') { m.cursor.on = true; m20TikVak(m.cursor.vak, env); }
+}
+function m20Auto(env) { // speelt redelijk: strijkt na 0,8 s, wisselt een gezien doek na 0,6 s, ziet een verborgen scheur in de helft van de gevallen zelf (na 2,5 s), borstelt na 1 s
+  const m = m20, P = m.probleem;
+  if (m.fase === 'start') { if (m.raamT < 0 && m.t >= 1) m20Schuif(env); return; }
+  if (m.fase !== 'schud') return;
+  if (m.hoop && !m.hoop.vlak && m.tS - m.hoop.t0 >= 0.8 && m.strijk.t < 0) { m20Veeg(env, true); return; }
+  if (m.stop > 0) return;
+  if (P && P.soort === 'scheur') { if (P.gezien ? m.tS - P.tZie >= 0.6 : P.lot < 0.5 && m.tS - P.t0 >= 2.5) m20TikVak(P.vak, env); }
+  else if (P && !m.borstel && m.tS - P.t0 >= 1) m20TikVak(P.vak, env);
+  else if (!P && m.autoFout && !m.autoFoutKlaar && m.tS > m.autoFoutT) { m.autoFoutKlaar = true; m20TikVak(1 + Math.floor(env.rnd() * 4), env); }
+}
+function m20Pause() { m20.amp = 0; m20.ampDoel = 0; m20.veeg = null; }
+function m20Resume(env) { // na het verhaal (en na een gewone pauze): anderhalve seconde adem, het schudden komt in 0,6 s terug
+  const m = m20; if (m.fase !== 'schud') return;
+  if (m.storyWacht) { m.storyGezien = true; m.storyWacht = false; }
+  m.adem = 1.5; const fi = m20Fase(env, m.tS);
+  m.volgendeSchep = Math.max(m.volgendeSchep, m.tS + 2.5); m.volgendProbleem = Math.max(m.volgendProbleem, m.tS + 1.5 + m20P.pauze[env.gezel ? 1 : 0][fi] * 0.5);
+  if (m.stop <= 0) { m.ampDoel = 1; m.ampRate = 1 / 0.6; }
+}
+const m20StoryOK = () => m20.fase === 'schud' && m20Progress() >= 0.5 && (m20Rustig() || m20.tS - m20.storyAt > 8);
+// ---------- tekenen ----------
+function m20Draw(g, env) {
+  const m = m20, C = env.cache, K = m20Kl(env), s = m.s, red = env.reduced, lite = env.lite, T = m.t;
+  const A = (red ? 1 : 3) * m.amp, dx = Math.cos(m.phi) * A, dy = Math.sin(m.phi) * A * 0.6, bx = red ? dx : Math.cos(m.phi - 0.3) * A * 0.5, by = red ? dy : Math.sin(m.phi - 0.3) * A * 0.3;
+  const P = m.probleem, fi = m.fase === 'schud' ? m20Fase(env, m.tS) : m.fase === 'eind' ? 2 : 0, bloem = m20Bloem(env, m.w), wS = m.fase === 'start' ? 0 : m.fase === 'eind' ? 1 : Math.min(1, m.tS / 1);
+  g.save(); g.translate(m.ox, m.oy); g.scale(s, s);
+  if (C.achter) g.drawImage(C.achter.cv, 0, m.yC, 360, env.rect.h / s); else { g.fillStyle = K.kalk; g.fillRect(0, m.yC, 360, 566 - m.yC); }
+  // de riemschijf draait (één omwenteling per seconde), de riem loopt van de schijf naar de aandrijfkop; in de start hangt hij slap
+  { const a = red ? 0.4 : T * m20T; g.strokeStyle = K.schijfLicht; g.lineWidth = 2; g.beginPath(); for (let i = 0; i < 6; i++) { const b = a + i * m20T / 6; g.moveTo(180 + Math.cos(b) * 3, m.yC + 25 + Math.sin(b) * 3); g.lineTo(180 + Math.cos(b) * 11.5, m.yC + 25 + Math.sin(b) * 11.5); } g.stroke();
+    g.fillStyle = K.schijfLicht; g.beginPath(); g.arc(180, m.yC + 25, 3, 0, m20T); g.fill(); }
+  { const y0 = m.yC + 25, y1 = 82 + dy, bulge = 6 * (1 - m.riem), L = y1 - y0;
+    g.strokeStyle = K.riem; g.lineWidth = 5; g.lineCap = 'butt';
+    for (const [xa, xb, sd] of [[172, 174 + dx, -1], [188, 186 + dx, 1]]) { g.beginPath(); g.moveTo(xa, y0); g.quadraticCurveTo((xa + xb) / 2 + sd * bulge * 2, (y0 + y1) / 2, xb, y1); g.stroke(); }
+    g.fillStyle = K.naad; const v = red ? 0 : m.riemT * 90; // veternaden om de 18 px: links omlaag, rechts omhoog
+    for (const [xa, xb, dir] of [[172, 174 + dx, 1], [188, 186 + dx, -1]]) for (let k = 0; k < L / 18 + 1; k++) { const q = (((k * 18 + dir * v) % L) + L) % L / L, bq = 6 * (1 - m.riem) * 4 * q * (1 - q) * (xa < 180 ? -1 : 1); g.fillRect(env.lerp(xa, xb, q) + bq - 2.5, env.lerp(y0, y1, q) - 0.75, 5, 1.5); } }
+  g.fillStyle = K.as; g.fillRect(178 + dx, 70 + dy, 4, 12); g.fillStyle = K.ijzer; g.fillRect(166 + dx, 82 + dy, 28, 16); g.beginPath(); g.arc(190 + dx, 76 + dy, 5, 0, m20T); g.fill();
+  // de stokken: bovenkant vast aan het plafond, onderkant volgt de kast (bij verminderde beweging recht)
+  for (const [x, w, col, sch] of [[88, 5, K.stokAchter, null], [272, 5, K.stokAchter, null], [62, 6, K.stok, K.stokDonker], [298, 6, K.stok, K.stokDonker]]) {
+    const tx = red ? x + dx : x; g.fillStyle = col; m20Poly(g, [tx - w / 2, m.yC + 36, tx + w / 2, m.yC + 36, x + dx + w / 2, 98 + dy, x + dx - w / 2, 98 + dy]); g.fill();
+    if (sch) { g.fillStyle = sch; m20Poly(g, [tx + w / 2 - 2, m.yC + 36, tx + w / 2, m.yC + 36, x + dx + w / 2, 98 + dy, x + dx + w / 2 - 2, 98 + dy]); g.fill(); } }
+  // de kast als geheel, met de kleurstroken, de klemmen en het gaas; daarop per vak wat verandert
+  g.save(); g.translate(dx, dy);
+  if (C.kast) g.drawImage(C.kast.cv, 49, 98, 262, 194); else { g.fillStyle = K.kast; g.fillRect(50, 98, 260, 192); }
+  const pulse = red ? 1 : 0.5 + 0.5 * Math.sin(T * m20T);
+  for (let k = 1; k <= 4; k++) {
+    const y = m20VakY(k), ng = m.nieuwGaas[k - 1];
+    if (m.fase === 'start' && k === 4 && (m.raamT < 0 || m.raamT < (red ? 0.2 : 0.5))) { g.fillStyle = K.sleuf; g.fillRect(72, y + 6, 218, 30); g.fillStyle = K.kastRand; g.fillRect(72, y + 8, 218, 2); g.fillRect(72, y + 34, 218, 2); }
+    if (m.wissel && m.wissel.vak === k) { const q = env.ease(m.wissel.t / 0.5); g.fillStyle = K.gaasNieuw; g.fillRect(72, y + 6, 218 * q, 30); g.fillStyle = K.kastRand; g.fillRect(72 + 218 * q - 1, y + 6, 2, 30); }
+    else if (ng > 0) { g.globalAlpha = Math.min(1, ng / 0.6) * 0.6; g.fillStyle = K.gaasNieuw; g.fillRect(72, y + 6, 218, 30); g.globalAlpha = 1; }
+    if (P && P.vak === k && P.soort === 'verstop' && (!m.borstel || m.borstel.t < 0.4)) { // de film van rechts, bij het borstelen van beide kanten weggeveegd
+      const ext = 0.6 * 218 * P.film, q = m.borstel ? env.eio(m.borstel.t / 0.4) : 0;
+      g.save(); g.beginPath(); g.rect(72 + 109 * q, y + 6, 218 - 218 * q, 30); g.clip(); g.fillStyle = K.film;
+      g.beginPath(); g.ellipse(290 - ext * 0.25, y + 21, ext * 0.6, 16, 0, 0, m20T); g.ellipse(290 - ext * 0.6, y + 15, ext * 0.45, 12, 0.3, 0, m20T); g.ellipse(290 - ext * 0.75, y + 27, ext * 0.4, 10, -0.2, 0, m20T); g.fill(); g.restore(); }
+    if (m.railsT >= 0) { // borstelrails: schuiven in 0,5 s van links naar binnen; het blok schuift langzaam heen en weer, bij een beurt twee blokken van de uiteinden naar het midden en terug
+      const rq = env.ease(m.railsT / 0.5), x0 = 72 - 218 * (1 - rq); g.save(); g.beginPath(); g.rect(72, y + 30, 218, 8); g.clip();
+      g.fillStyle = K.borstel; g.fillRect(x0, y + 35, 218, 1);
+      const blok = bxx => { g.fillStyle = K.borstel; g.fillRect(bxx, y + 32, 36, 4); g.fillStyle = K.stok; for (let i = 1; i < 36; i += 3) g.fillRect(bxx + i, y + 36, 1, 1.5); };
+      if (m.borstel && m.borstel.vak === k) { const t = m.borstel.t, q = t < 0.4 ? env.eio(t / 0.4) : env.eio((0.8 - t) / 0.4); blok(72 + 55 * q); blok(254 - 55 * q); }
+      else blok(x0 + (red ? 0 : (218 - 36) * (0.5 + 0.5 * Math.sin(T * m20T / 3 + k * 1.3))));
+      g.restore(); }
+    if (P && P.vak === k && P.soort === 'scheur' && P.gezien) { // de scheur: kartel, oranje lijst en rand (gezien scheur); flikkert bij 3 Hz (niet bij verminderde beweging)
+      g.fillStyle = env.rgba(m20C.oranje, 0.5); g.beginPath(); g.rect(58, y, 244, 42); g.rect(72, y + 6, 218, 30); g.fill('evenodd');
+      g.strokeStyle = m20C.oranje; g.lineWidth = 2; g.strokeRect(59, y + 1, 242, 40);
+      g.strokeStyle = !red && Math.floor(T * 6) % 2 ? '#8A5A2E' : K.scheur; g.lineWidth = 3; g.lineJoin = 'round'; g.beginPath(); g.moveTo(P.sx, P.sy); g.lineTo(P.sx + 4, P.sy - 2.5); g.lineTo(P.sx + 7, P.sy + 2); g.lineTo(P.sx + 11, P.sy - 1); g.lineTo(P.sx + 14, P.sy + 2.5); g.stroke(); }
+    if (P && P.vak === k && P.halo && (P.soort === 'verstop' || P.gezien)) { g.strokeStyle = K.doel; g.lineWidth = 6; g.globalAlpha = 0.55 + 0.45 * pulse; m20RR(g, 55, y - 3, 250, 48, 6); g.stroke(); g.globalAlpha = 1; }
+    if (m.flash[k - 1] > 0) { g.fillStyle = env.rgba(m20C.creme, m.flash[k - 1] / 0.2 * 0.6); g.fillRect(58, y, 244, 42); }
+    if (m.cursor.on && m.cursor.vak === k && m.fase === 'schud') { g.strokeStyle = m20C.oranje; g.lineWidth = 2; m20RR(g, 57, y - 1, 246, 44, 4); g.stroke(); }
+  }
+  g.restore();
+  // sokken: boven aan de kast, onder met vertraging (ze golven); verstopt hangt slapper; een bruin draadje verraadt een scheur
+  for (let k = 0; k < 4; k++) {
+    const x = m20X[k], tx = x + dx, ty = 290 + dy, ux = x + bx, uy = 322 + by, sl = P && P.soort === 'verstop' && P.vak === k + 1 ? 0.86 : 1, hw = 14, lw = 9 * sl;
+    g.fillStyle = K.sok; m20Poly(g, [tx - hw, ty, tx + hw, ty, ux + lw, uy, ux - lw, uy]); g.fill(); g.strokeStyle = K.sokDonker; g.lineWidth = 1; g.stroke(); // dunne rand: op de lichte kalk valt de sok anders weg
+    g.fillStyle = K.sokDonker; m20Poly(g, [tx + hw - 6, ty, tx + hw, ty, ux + lw, uy, ux + lw - 4, uy]); g.fill();
+    g.strokeStyle = K.touw; g.lineWidth = 2; g.beginPath(); g.moveTo(tx - hw + 1, ty + 8); g.lineTo(tx + hw - 1, ty + 8); g.stroke(); g.fillStyle = K.touw; g.beginPath(); g.arc(tx + hw - 3, ty + 8, 2, 0, m20T); g.fill();
+  }
+  // de vier stromen: kleur, dikte en korrel; tijdens een stop staan ze stil, aan het eind lopen ze leeg
+  { const leeg = m.fase === 'eind' ? env.clamp((m.t - m.eindT0) / 0.8, 0, 1) : 0, fw = 1 + 0.1 * fi, sT = m.stroomT, vK = red ? 60 : 1, scheurVak = P && P.soort === 'scheur' ? P.vak - 1 : -1;
+    for (let k = 0; k < 4 && wS > 0; k++) {
+      const st = m20STR[k], w = st.w * fw * m.breed[k] * wS, x = m20X[k] + bx, y0 = 322 + by + 76 * leeg, y1 = k === 3 ? 400 : 398, h = y1 - y0; if (h <= 1 || w < 1) continue;
+      const col = k === 3 ? bloem : st.col; g.fillStyle = col; g.fillRect(x - w / 2, y0, w, h);
+      if (st.rand) { g.fillStyle = st.rand; g.fillRect(x - w / 2, y0, st.randW, h); g.fillRect(x + w / 2 - st.randW, y0, st.randW, h); }
+      if (lite) continue;
+      const v = red ? 60 : st.v;
+      if (k === 1) { g.fillStyle = col; for (let yy = 0; yy < h; yy += 6) { const r = ((yy * 7 + 3) % 5) / 5 - 0.5; g.fillRect(x - w / 2 - 1 + (r > 0 ? 0 : 1), y0 + yy, 1, 3); g.fillRect(x + w / 2 + (r > 0 ? 0 : -1), y0 + yy + 3, 1, 3); } }
+      if (st.korrel) { for (const [p, ox, ph] of m.korrels[k]) { const yy = ((p + v * sT) % 76 + 76) % 76; if (yy > h - 2) continue; const kx = x + ox * m.breed[k];
+        if (st.korrel === 'vlok') { g.fillStyle = st.kc[Math.floor(p / 6) % 2]; if (((ph + sT * 2) % 2) < 1) g.fillRect(kx - 1.5, y0 + yy, 3, 2); else g.fillRect(kx - 1, y0 + yy - 0.5, 2, 3); }
+        else if (st.korrel === 'korrel') { g.fillStyle = st.kc[0]; g.fillRect(kx - 1, y0 + yy, 2, 2); } else { g.fillStyle = st.kc[0]; g.fillRect(kx - 0.5, y0 + yy, 1, 1); } } }
+      else { g.fillStyle = 'rgba(255,255,255,.4)'; const gy = ((sT * (red ? 60 : 120)) % 76 + 76) % 76; if (gy < h - 4) g.fillRect(x - w / 2 + 1, y0 + gy, w - 2, 4); }
+      if (scheurVak >= 0 && (k === 3 || k === scheurVak)) { const n = k === 3 ? 1 : 2; g.fillStyle = K.spikkel; for (let i = 0; i < n; i++) { const yy = ((sT * v + i * 38 + k * 17) % 76 + 76) % 76; if (yy < h - 2) { g.fillRect(x - 1 + (i ? 3 : -2), y0 + yy, 2, 2); if (k === 3 && m.w < 40) { g.strokeStyle = m20C.creme; g.lineWidth = 1; g.strokeRect(x - 1.5 + (i ? 3 : -2), y0 + yy - 0.5, 3, 3); } } } }
+    } }
+  // het bruine draadje uit de sok van het gescheurde vak (over de stroom heen, aan de rand van de sok): zwaait zacht, langer als de scheur gezien is; bij de wissel valt het en vaagt weg
+  for (let k = 0; k < 4; k++) if (P && P.soort === 'scheur' && P.vak === k + 1 || m.wissel && m.wissel.vak === k + 1) {
+    const ux = m20X[k] + bx + 7, uy = 322 + by, gez = P && P.gezien, len = gez ? 20 : 14, sw = red ? 0 : Math.sin(T * m20T * 1.5) * (gez ? 5 : 3), fall = m.wissel ? env.clamp(m.wissel.t / 0.3, 0, 1) : 0;
+    g.globalAlpha = 1 - fall; g.strokeStyle = K.draad; g.lineWidth = 2.5; g.lineCap = 'round'; g.beginPath(); g.moveTo(ux, uy - 2 + fall * 20); g.quadraticCurveTo(ux + sw * 0.4, uy + len * 0.6 + fall * 20, ux + sw, uy + len + fall * 20); g.stroke(); g.globalAlpha = 1; g.lineCap = 'butt'; }
+  // de zak: slap, en gevuld tot de hoogte van de voortgang; de bloem in de hals heeft de kleur van nu; aan het eind het touw en de naam
+  { const pr = m20Progress();
+    if (C.zakSlap) g.drawImage(C.zakSlap.cv, 226, 398, 88, 144); else { g.fillStyle = K.zakSlap; m20ZakPad(g, 2); g.fill(); }
+    if (pr > 0 && C.zakVol) { const yv = 540 - 128 * pr; g.save(); g.beginPath(); g.rect(226, yv, 88, 542 - yv); g.clip(); g.drawImage(C.zakVol.cv, 226, 398, 88, 144); g.restore(); }
+    if (wS > 0) { g.fillStyle = bloem; g.beginPath(); g.ellipse(270, 410, 15 * wS, 4, 0, 0, m20T); g.fill(); g.fillRect(255, 410, 30, 3); }
+    if (m.fase === 'eind') { const q = env.clamp((m.t - m.eindT0 - 0.5) / 0.6, 0, 1); if (q > 0) { g.globalAlpha = q;
+      g.strokeStyle = K.touw; g.lineWidth = 3; g.beginPath(); g.moveTo(248, 414); g.lineTo(292, 414); g.stroke(); g.lineWidth = 2; g.beginPath(); g.ellipse(292, 411, 4, 2.5, -0.5, 0, m20T); g.ellipse(295, 416, 4, 2.5, 0.5, 0, m20T); g.stroke();
+      g.save(); g.translate(270, 480); g.rotate(-4 * Math.PI / 180); env.hand(g, 30); g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillStyle = K.naam; g.fillText(m20Naam(Math.round(m.w))[0], 0, 0, 80); g.restore(); g.globalAlpha = 1; } } }
+  // het proefplankje: de hoop, de vlakke strook met spikkels, de strijker en de oranje rand als de hoop blijft liggen
+  { const H = m.hoop, S = m.strijk;
+    if (H && H.plat > 0) { g.globalAlpha = H.plat; g.fillStyle = bloem; m20RR(g, 40, 492, 114, 22, 3); g.fill();
+      if (H.spikkels) { g.fillStyle = K.spikkel; for (const [sx, sy, r] of H.spikkels) { g.beginPath(); g.arc(sx, sy, r, 0, m20T); g.fill(); } if (m.w < 40) { g.strokeStyle = m20C.creme; g.lineWidth = 1; for (const [sx, sy, r] of H.spikkels) { g.beginPath(); g.arc(sx, sy, r + 0.5, 0, m20T); g.stroke(); } } }
+      g.globalAlpha = 1; }
+    if (H && H.plat < 1) { const sc = (0.6 + 0.4 * H.groei) * (1 - H.plat), hc = m20Bloem(env, H.w0);
+      g.fillStyle = K.hoopSchaduw; g.beginPath(); g.ellipse(97, 507, 38 * sc, 6 * sc, 0, 0, m20T); g.fill();
+      g.fillStyle = hc; g.beginPath(); g.ellipse(80, 504, 22 * sc, 8 * sc, 0, 0, m20T); g.ellipse(114, 504, 22 * sc, 8 * sc, 0, 0, m20T); g.ellipse(97, 501, 36 * sc, 11 * sc, 0, 0, m20T); g.fill();
+      g.fillStyle = 'rgba(255,255,255,.3)'; g.beginPath(); g.ellipse(94, 496, 20 * sc, 4 * sc, 0, 0, m20T); g.fill(); m.bloemW = -1; }
+    if (H && !H.vlak && m.tS - H.t0 >= 5) { g.strokeStyle = m20C.oranje; g.lineWidth = 2; g.globalAlpha = 0.5 + 0.5 * pulse; m20RR(g, 28, 478, 138, 52, 5); g.stroke(); g.globalAlpha = 1; }
+    const sy = S.t >= 0 || m.veeg ? 490 : 470; g.fillStyle = K.plankNerf; m20RR(g, S.x, sy, 46, 8, 2); g.fill(); g.fillStyle = K.kast; g.beginPath(); g.arc(S.x + 23, sy, 3.5, 0, m20T); g.fill(); }
+  // de start: het losse zeefraam onder de kast, met een gouden gloed; bij de tik schuift het omhoog in de lege sleuf
+  if (m.fase === 'start' && C.raam && (m.raamT < 0 || m.raamT < (red ? 0.2 : 0.5))) {
+    const q = m.raamT < 0 ? 0 : env.ease(m.raamT / (red ? 0.3 : 0.6)), sc = 1.06 - 0.06 * q, y = 300 - 52 * q, w = 248 * sc, h = 42 * sc, x = 180 - w / 2;
+    if (q === 0) { g.strokeStyle = K.doel; g.lineWidth = 10; g.globalAlpha = red ? 1 : 0.6 + 0.6 * pulse; m20RR(g, x - 2, y - 4, w + 4, h + 4, 6); g.stroke(); g.globalAlpha = 1; }
+    g.fillStyle = 'rgba(0,0,0,.18)'; g.fillRect(x + 3, y + 1, w, h); g.drawImage(C.raam.cv, x, y - 2, w, h);
+  }
+  g.restore();
+  // de labels bij de sokken, één keer, 3 s (in logische px)
+  if (m.labelsT >= 0) { const a = m.labelsT < 3 ? 1 : 1 - (m.labelsT - 3) / 0.6, L = C.labels;
+    if (L) { g.globalAlpha = a; g.drawImage(L.cv, 0, L.y0, L.w, L.h); g.globalAlpha = 1; } else for (const [tx, x, y] of m20LBL) env.label(g, tx, m.ox + x * s, m.oy + y * s, { alpha: a }); }
+}
+// ---------- score en weegbon ----------
+function m20Score() { const m = m20; return m20Kg() + (m.fase === 'eind' ? Math.round(m.bonus * Math.min(1, Math.max(0, (m.t - m.eindT0 - 0.8) / 0.6))) : 0); }
+function m20Result(env) {
+  const m = m20, T = m.teller, wR = Math.round(m.w), [naam, note, col] = m20Naam(wR), kg = m20Kg() + m.bonus;
+  const rows = [['Bloem uit de sok', `+${env.fmt(Math.floor(m.kgSok))} kg`], ['Proefplankjes gestreken', `${T.geveegd} van ${T.scheppen}, +${T.geveegd * 10} kg`],
+    ['Doeken gewisseld', `${T.gewisseld} van ${T.scheuren}, +${(T.gewisseld - T.vroeg) * 40 + T.vroeg * 60} kg`]];
+  if (T.verstopt) rows.push(['Zeven geborsteld', `${T.geborsteld} van ${T.verstopt}, +${T.geborsteld * 30} kg`]);
+  rows.push([`Witheid ${wR}`, `+${m.bonus} kg`]);
+  const badges = []; if (wR >= 90) badges.push('vak'); if (T.fout === 0 && T.geveegd > 0 && T.opTijd >= T.scheppenTelt) badges.push('betr'); if (T.vroeg >= (env.gezel ? 2 : 3)) badges.push('ond');
+  return { kg, rows, quality: { label: naam, note, col }, badges, weak: kg < 800 || wR < 50 };
+}
+// ---------- icoontjes (Nieuw in deze molen en het Molenboek) ----------
+function m20IcoPlank(g, x, y, s) {
+  const w = s * 0.82, h = s * 0.46; g.fillStyle = '#C8A878'; m20RR(g, x - w / 2, y - h / 2, w, h, 3); g.fill(); g.strokeStyle = '#8A6A44'; g.lineWidth = 1.5; g.stroke();
+  g.fillStyle = '#FDFCF7'; m20RR(g, x - w * 0.38, y - h * 0.24, w * 0.76, h * 0.48, 2); g.fill();
+  g.fillStyle = '#3A2A1C'; for (const [px, py] of [[-0.22, -0.04], [0.02, 0.1], [0.24, -0.08]]) { g.beginPath(); g.arc(x + px * w, y + py * h, 1.3, 0, m20T); g.fill(); }
+}
+function m20IcoDraad(g, x, y, s) {
+  const w = s * 0.5, t = y - s * 0.38, b = y + s * 0.08; g.fillStyle = '#E8E0CC'; m20Poly(g, [x - w / 2, t, x + w / 2, t, x + w * 0.32, b, x - w * 0.32, b]); g.fill();
+  g.fillStyle = '#C9C0AA'; m20Poly(g, [x + w / 2 - 4, t, x + w / 2, t, x + w * 0.32, b, x + w * 0.32 - 3, b]); g.fill();
+  g.strokeStyle = '#5A3A1E'; g.lineWidth = 2; g.lineCap = 'round'; g.beginPath(); g.moveTo(x + 2, b); g.quadraticCurveTo(x - 4, b + s * 0.12, x + 3, b + s * 0.22); g.quadraticCurveTo(x + 8, b + s * 0.3, x + 1, b + s * 0.4); g.stroke();
+}
+function m20IcoZak(g, x, y, s) {
+  const w = s * 0.56, h = s * 0.72; g.fillStyle = '#D9CDAA'; g.beginPath(); g.moveTo(x - w * 0.25, y - h / 2); g.lineTo(x + w * 0.25, y - h / 2); g.lineTo(x + w * 0.25, y - h * 0.36); g.quadraticCurveTo(x + w / 2, y - h * 0.3, x + w / 2, y - h * 0.1);
+  g.lineTo(x + w / 2, y + h * 0.42); g.quadraticCurveTo(x + w / 2, y + h / 2, x + w * 0.4, y + h / 2); g.lineTo(x - w * 0.4, y + h / 2); g.quadraticCurveTo(x - w / 2, y + h / 2, x - w / 2, y + h * 0.42); g.lineTo(x - w / 2, y - h * 0.1); g.quadraticCurveTo(x - w / 2, y - h * 0.3, x - w * 0.25, y - h * 0.36); g.closePath(); g.fill();
+  g.fillStyle = '#FDFCF7'; g.beginPath(); g.ellipse(x, y - h * 0.36, w * 0.22, h * 0.07, 0, 0, m20T); g.fill(); g.strokeStyle = '#7A5A3A'; g.lineWidth = 1.5; g.beginPath(); g.moveTo(x - w * 0.3, y - h * 0.3); g.lineTo(x + w * 0.3, y - h * 0.3); g.stroke();
+}
+mgRegister(1920, { naam: 'Zeefwacht',
+  hoe: { kop: 'Houd de bloem wit', regel: 'Zie je spikkels, tik dan het vak met het draadje.', touch: 'Veeg over het plankje, tik een zeefvak.', toets: 'Spatie strijkt, cijfer 1 tot 4 tikt een vak.' },
+  nieuw: [{ name: 'Proefplankje', act: 'spikkels zijn een scheur', ico: m20IcoPlank }, { name: 'Gescheurd doek', act: 'tik het vak met het draadje', ico: m20IcoDraad }, { name: 'Verstopte zeef', act: 'tik, de borsteltjes vegen', ico: 'sieve' }],
+  book: [
+    { id: 'm20-zeefwacht', name: 'Zeefwacht', ico: 'plan',
+      text: 'De plansichter van 1887 hangt aan stokken en schudt in kleine rondjes. Binnenin liggen zeven op elkaar, de grofste boven. Zo splitst hij het maalsel in bloem, fijne en grove gries en zemelen. De gries gaat terug naar een fijnere walsenstoel, soms wel twintig keer. Een echte sichter had 8 tot 15 zeven; het spel toont er vier.',
+      act: 'In het spel: schuif het laatste zeefraam erin. Dan begint het schudden en lopen vier stromen uit de sokken, elk anders van kleur, dikte en korrel.' },
+    { id: 'm20-doek', name: 'Zijden doek', ico: m20IcoDraad,
+      text: 'Het gaas van de zeven was van zijde. Scheurt het, dan komen stukjes zemel in de bloem. Molenaars zagen dat aan donkere spikkels: ze streken een schep bloem vlak op een plankje. Dat strijkplankje kennen we uit de Amerikaanse molenaarspraktijk; of het ook in Leeuwarden lag, weten we niet. Borsteltjes onder de zeven hielden het gaas open.',
+      act: 'In het spel: strijk elk plankje glad. Spikkels betekenen een scheur: tik het vak met het bruine draadje. Een verstopte zeef tik je ook, dan vegen de borsteltjes.' },
+    { id: 'm20-witheid', name: 'Witheid', ico: m20IcoZak,
+      text: 'Hoe meer zemel in de bloem, hoe donkerder ze is en hoe minder het brood rijst. De witste stroom heet patentbloem; alle stromen samen heten in het Engels straight grade. Volkoren is de hele korrel, zemel en al. Zemelen zijn veevoer, en veevoer maakte Koopmans na 1881 ook.',
+      act: 'In het spel: elke scheur die openstaat maakt de zak grauwer. Aan het eind krijgt de zak zijn naam: patentbloem, bloem, meel of volkoren.' }],
+  build: m20Build, start: m20Start, update: m20Update, draw: m20Draw, pointer: m20Pointer, key: m20Key,
+  progress: m20Progress, storyOK: m20StoryOK, pauseHook: m20Pause, resumeHook: m20Resume, score: m20Score, result: m20Result, auto: m20Auto });
+// ===== MINIGAME 1920 EIND =====
+} catch (e) { mgFail(1920, e); }
+// ---- niet aanpassen: scheiding voor git merge-file (1920 en 1976, regel 1 van 5) ----
+// ---- niet aanpassen: scheiding voor git merge-file (1920 en 1976, regel 2 van 5) ----
+// ---- niet aanpassen: scheiding voor git merge-file (1920 en 1976, regel 3 van 5) ----
+// ---- niet aanpassen: scheiding voor git merge-file (1920 en 1976, regel 4 van 5) ----
+// ---- niet aanpassen: scheiding voor git merge-file (1920 en 1976, regel 5 van 5) ----
+try {
+// ===== MINIGAME 1976 BEGIN =====
+// 1976: de minigame is nog niet klaar; deze molen speelt voorlopig het valspel.
+// ===== MINIGAME 1976 EIND =====
+} catch (e) { mgFail(1976, e); }
+// ---- niet aanpassen: scheiding voor git merge-file (1976 en 2008, regel 1 van 5) ----
+// ---- niet aanpassen: scheiding voor git merge-file (1976 en 2008, regel 2 van 5) ----
+// ---- niet aanpassen: scheiding voor git merge-file (1976 en 2008, regel 3 van 5) ----
+// ---- niet aanpassen: scheiding voor git merge-file (1976 en 2008, regel 4 van 5) ----
+// ---- niet aanpassen: scheiding voor git merge-file (1976 en 2008, regel 5 van 5) ----
+try {
+// ===== MINIGAME 2008 BEGIN =====
+// 2008: de minigame is nog niet klaar; deze molen speelt voorlopig het valspel.
+// ===== MINIGAME 2008 EIND =====
+} catch (e) { mgFail(2008, e); }
+// ---- niet aanpassen: scheiding voor git merge-file (2008 en 2026, regel 1 van 5) ----
+// ---- niet aanpassen: scheiding voor git merge-file (2008 en 2026, regel 2 van 5) ----
+// ---- niet aanpassen: scheiding voor git merge-file (2008 en 2026, regel 3 van 5) ----
+// ---- niet aanpassen: scheiding voor git merge-file (2008 en 2026, regel 4 van 5) ----
+// ---- niet aanpassen: scheiding voor git merge-file (2008 en 2026, regel 5 van 5) ----
+try {
+// ===== MINIGAME 2026 BEGIN =====
+// 2026: de minigame is nog niet klaar; deze molen speelt voorlopig het valspel.
+// ===== MINIGAME 2026 EIND =====
+} catch (e) { mgFail(2026, e); }
+// ---- einde van de minigames (11d) ----
 
 function primary() { const b = SCR[S.screen] && SCR[S.screen].querySelector('[data-primary]'); if (b && !b.disabled) b.click(); }
 // Toetsen die de pagina eromheen laten scrollen (iframe op de site): tijdens het spelen en de wachtende introband doen ze niets
@@ -10661,6 +11738,7 @@ addEventListener('keydown', e => {
   }
   // intro: pijltje rechts = Verder, links = vorig shot, Esc = Overslaan (of terug naar het menu bij opnieuw bekijken); spatie en Enter doen de hoofdknop
   if (S.screen === 'intro' && (k === 'ArrowRight' || k === 'ArrowLeft' || k === 'Escape')) { e.preventDefault(); if (!e.repeat) { if (k === 'Escape') introSkip(); else if (k === 'ArrowLeft') introPrev(); else introNext(); } return; }
+  if (S.screen === 'play' && run.mg && mgKey('down', e)) return; // minigame: alle toetsen behalve P, M, Esc en ` gaan naar het gebied
   if (k === 'ArrowLeft' || k === 'a' || k === 'A') { keys.left = true; if (S.screen === 'play') e.preventDefault(); return; }
   if (k === 'ArrowRight' || k === 'd' || k === 'D') { keys.right = true; if (S.screen === 'play') e.preventDefault(); return; }
   if (S.screen === 'boek' && k === ' ' && !(e.target && /^bBookAll(Yes|No)?$/.test(e.target.id) && focusByKey)) {
@@ -10685,6 +11763,7 @@ addEventListener('keydown', e => {
 });
 addEventListener('keyup', e => {
   const k = e.key;
+  if (run && run.mg) mgKey('up', e);
   if (S.screen === 'boek' && k === ' ' && e.target && e.target.id === 'bBookBack') e.preventDefault(); // spatie bladert, sluit niet
   if (k === 'ArrowLeft' || k === 'a' || k === 'A') keys.left = false;
   if (k === 'ArrowRight' || k === 'd' || k === 'D') keys.right = false;
@@ -10774,6 +11853,7 @@ window.__korrelval = { introAt: (i, t) => { IN.hold = i !== null; if (IN.hold) {
   // jaarintro's (11c): jaar(i) opent jaarintro i (0 = 1846 ... 5 = 2026; einde: terug naar het menu), jaarAt(i, shot, t) houdt shot op tijd t vast
   // (jaarAt(i, 'duik', p): de duik op p van 0 tot 1; jaarAt(null): loslaten), jaarState() geeft de toestand
   jaar: (i, from) => openJaar(i, from || 'test'), jaarAt: (i, s, t) => jxTestAt(i, s, t), jaarState: () => jxState(),
+  mg: () => mgState(), // minigames (11d): toestand van het lopende potje
   state: () => ({ screen: S.screen, mode: run.mode, lvl: run.lvl, score: run.score, lives: run.lives, streak: run.streak, bestStreak: run.bestStreak, x: G.x, passed: run.passed, total: run.total, perfects: run.perfects, hits: lvS.hits, t: Wd.t, intro: Wd.intro, camY: Wd.camY, nFloors: Wd.floors.length + Wd.sched.length + Wd.haz.length, gezel: run.gezel, inv: G.inv,
   zone: run.mode === 'night' ? nightZone(run.passed) : null, nightOpen: save.night, nightBrief: save.nightBrief, // Nachtploeg: zone (0 = Slotermeer) en het dienstbriefje
   // verhaalpauze: open = kaart in beeld, seen = molens met getoond verhaal (deze run), at = verdieping op de helft, shownAt = verdieping waarna het verscheen,
