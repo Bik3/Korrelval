@@ -11212,7 +11212,516 @@ try {
 // ---- niet aanpassen: scheiding voor git merge-file (1846 en 1867, regel 5 van 5) ----
 try {
 // ===== MINIGAME 1867 BEGIN =====
-// 1867: de minigame is nog niet klaar; deze molen speelt voorlopig het valspel.
+// Vuur onder de ketel (minigames/mg-ontwerp-1867.md). De kleine stoomgrutterij aan het Vliet in Leeuwarden, 1867: jij bent de knecht die
+// de ketel stookt. Tik links voor brandstof, houd rechts ingedrukt voor water, en houd de wijzer van de manometer in de groene band; dan
+// draaien de stenen en vult de zak zich. De molenaar zet de graantoevoer stap voor stap verder open, tot de band voorbij het klepmerk
+// schuift: de machine van 2 pk haalt het niet meer. Geen levens, geen game-over; na 102,5 s (Gezel 106,5 s) komt de weegbon.
+// Het beeld volgt op shot 2 van de jaarintro (zelfde vormen en kleuren). De kleurtabel staat hier opnieuw: het jaarintro-gebied heeft zijn
+// eigen blok. Alle namen beginnen met m67. Vaste lagen één keer in build (env.canvas), per frame alleen wat beweegt.
+const m67T = Math.PI * 2, m67DT = 1 / 120;
+const m67Kleur = { // [dag, avond], uit j67Kleur, plus de eigen kleuren van het spel
+  muur: ['#704D44', '#2E211E'], muurS: ['#644039', '#241916'], muurD: ['#4F3833', '#1C1412'], voeg: ['#8E7066', '#3C2D27'], muurL: ['#8A665C', '#3A2B26'],
+  balk: ['#6B4A2B', '#2A190D'], balkL: ['#8A6A44', '#3A2616'], balkS: ['#4E3520', '#1C1108'], plank: ['#7A5A38', '#2E2014'], zolder: ['#3E2C1C', '#160E08'],
+  vloer: ['#9C7A52', '#3A2A1C'], vloerN: ['#866642', '#30231A'], vloerF: ['#5E4428', '#1E140C'], balkF: ['#4A3420', '#1A1009'],
+  nis: ['#2A1A12', '#120A06'], ketel: ['#33383D', '#1C1F22'], ketelL: ['#4C5359', '#2A2F33'], klink: ['#6A7076', '#3A3F44'],
+  ijzer: ['#3A3F44', '#23272B'], ijzerD: ['#2A2E32', '#16191C'], ijzerL: ['#7E858C', '#4A5056'], staal: ['#B9BEC2', '#7A8086'],
+  messing: ['#C9A24A', '#8A6E2E'], messingL: ['#EED489', '#B8963E'],
+  riem: ['#6B4226', '#3E2615'], riemN: ['#3E2414', '#1E120A'], riemL: ['#9A6A44', '#5A3A22'],
+  mhout: ['#7A5634', '#3A2818'], mhoutL: ['#A07A4A', '#4E3822'], mhoutS: ['#5A3E24', '#2A1C10'], kuip: ['#8A6038', '#4A3220'], kuipS: ['#694828', '#33220F'], hoepel: ['#3A3F44', '#1A1C1F'],
+  steen: ['#7E7B81', '#46444A'], steenD: ['#625F66', '#323037'], steenL: ['#9A979D', '#5A585E'], steenS: ['#535058', '#29272D'], kgat: ['#2E2722', '#120E0B'],
+  kgraan: ['#A9843F', '#7A5E2A'], kgraanL: ['#C49C55', '#97763A'], meel: ['#E2DACA', '#9C9482'], meelzak: ['#D4CAB2', '#7E7766'], meelzakS: ['#B8AD93', '#655F51'],
+  bmens: ['#2A2522', '#0E0C0B'], molenaar: ['#5A524A', '#2E2925'], bturf: ['#5A3B26', '#24170F'], bturfL: ['#6E4A30', '#2E1E14'],
+  rglas: ['#CFE3EA', '#1D2A3B'], rkoz: ['#E6DFCF', '#3A3530'], lamp: ['#BDB6A6', '#FFE2A0'], lampArm: ['#2E3236', '#16181A'],
+  band: ['#4F8A3C', '#6FB35A'], bandR: ['#2E5A28', '#2E5A28'], merk: ['#C8451F', '#C8451F'], plaat: ['#F3EED2', '#D8D2BE'],
+  pglas: ['#CFE3EA', '#6E8A96'], pwater: ['#7FA7B4', '#4E6E7C'], vuur: ['#F29A3A', '#FF9A3C'], vuurK: ['#FFD27A', '#FFE1A0'], stoom: ['#F3EED2', '#E8E2D2'], rook: ['#A0998F', '#5E5A57'],
+};
+function m67Pal(dark) { const n = dark ? 1 : 0, p = {}; for (const k in m67Kleur) p[k] = m67Kleur[k][n]; return p; }
+// de staande indeling voor 400 x 720 (W, top 74, speelvlak P = 646), uit de procenten van het ontwerp (hoofdstuk 1a)
+function m67Geo(env) {
+  const W = env.W, T = env.top, P = env.rect.h, X = f => Math.round(f * W), Y = f => Math.round(T + f * P), G = { W, T, P, H: env.H };
+  G.balk = { y0: T, y1: T + 24 }; G.as = { y: T + 34, x0: 14, x1: W - 14, r: 14, sch: [X(0.23), X(0.5), X(0.93)] };
+  G.wiel = { x: X(0.23), y: Y(0.20), r: W * 0.15 };
+  G.raam = { x: X(0.5), y: Y(0.14), w: W * 0.08, h: P * 0.10 };
+  G.vink = { x: X(0.57), w: 12 }; G.plat = { x0: X(0.57) - 6, y: Y(0.34) }; // de standvink en het houten vloertje van de steenzolder erop
+  G.kaar = { x: X(0.76), y0: Y(0.08), y1: Y(0.15), w0: 72, w1: 18, rail: { x0: X(0.67), x1: X(0.795), y: Y(0.14) } };
+  G.kuip = { x0: X(0.62), x1: X(0.90), y0: Y(0.18), y1: Y(0.27) }; G.stoel = { y1: Y(0.34) }; G.schijf2 = { x: X(0.93), y: Y(0.31), r: 10 };
+  G.molenaar = { x: X(0.62), y: Y(0.34), h: P * 0.19 };
+  G.pijpM = { x: X(0.865), y0: Y(0.265), y1: Y(0.37) }; G.zak = { x0: X(0.835), x1: X(0.915), y0: Y(0.38), y1: Y(0.485) };
+  G.meter = { x: X(0.5), y: Y(0.41), r: W * 0.15 };
+  G.ketel = { x: X(0.295), y: Y(0.68), r: W * 0.18 }; G.nis = { x0: X(0.065), x1: X(0.525), top: Y(0.46) };
+  G.deur = { x0: X(0.225), x1: X(0.365), y0: Y(0.70), y1: Y(0.78) }; G.gloed = { x: X(0.295), y: Y(0.79) };
+  G.pijp = { x: X(0.32), y0: G.ketel.y - G.ketel.r + 6, y1: Y(0.36), x0: X(0.08), w: 6.4, wiel: X(0.20), flens: X(0.14) };
+  G.klep = { x: X(0.395), y: Y(0.565), w: 16, h: 14, len: W * 0.09 };
+  G.peil = { x0: X(0.445), x1: X(0.49), y0: Y(0.59), y1: Y(0.715) };
+  G.stapel = { x0: 4, y1: Y(0.84), bw: W * 0.022, bh: P * 0.032 };
+  G.stoker = { x: X(0.40), y: Y(0.84), h: P * 0.18, xPomp: X(0.54) };
+  G.pomp = { x0: X(0.67), x1: X(0.73), y0: Y(0.62), y1: Y(0.84), px: X(0.70), py: Y(0.64), hx: X(0.58), hy: Y(0.61) };
+  G.knecht = { x: X(0.555), y: Y(0.84), h: P * 0.18 };
+  G.vloer = { y: Y(0.84) }; G.hint = { y: Y(0.93), xl: X(0.18), xr: X(0.82) };
+  return G;
+}
+const m67C = { pal: null, G: null, bg: null, gloed: null, pil: {} }; // wat build maakt (de canvassen staan ook in env.cache)
+// de toestand van een potje (start zet alles terug); links en rechts: de aanwijzers (id's) die op elke helft liggen
+const m67S = { t: 0, T: 102.5, gezel: false, vuur: 0.4, water: 0.75, druk: 0.3, stand: 1, bandC: 0.3, bandA: 0.3, bandB: 0.3, bandT: 1, bandD: 1.2, klepT: 0, vuurUit: false, fase: 0,
+  kg: 0, kgVast: false, tijdBand: 0, tijdTotaal: 0, band5: 0, tot5: 0, afblazen: 0, vuurUitN: 0, laagsteWater: 0.75, pompAuto: false, pompt: false, knechtPompt: false,
+  links: new Set(), rechts: new Set(), toetsL: false, toetsR: false, toets: false, stappen: [], stapI: 0, overT: 32, stapT: 0, gratie: 1.5, holdT: 0, adem: 0, half: 0, over: -1,
+  buitenT: 0, zegT: -9, waterLaagT: -9, eersteT: -9, onder: false, eersteSchep: false, lastIn: 0, uitleg: 0, uitlegTekst: '', bandGl: 0, linksGoud: 0, kgMijl: 0, vonk: [], slotT: -1, slotRun: 1, schud: 0, schudden: false, auto: null, puffs: [], rook: 0, pufT: 0, pluimT: 0,
+  vlamD: 0.4, wielV: 0, wielA: 0, riemP: 0, loperP: 0, fD: 0, wijzer: 0.3, waterD: 0.75, schepT: 0, slagP: 0, slagN: 0, knechtP: 0, weg: -1, stokerX: 0, schuifX: 0, armT: 0, pijlT: 0, hintGoud: 0 };
+const m67Hoek = p => (135 + 270 * p) * Math.PI / 180; // druk 0..1 op de wijzerplaat: van linksonder met de klok mee naar rechtsonder
+const m67Kern = stand => stand >= 6 ? 1.0 : 0.30 + 0.12 * (stand - 1); // de kern van de groene band per stand
+function m67Zeg(env, tekst, x, y, kl, o) { env.say(tekst, x, y, kl, 16, Object.assign(env.reduced ? { vy: 0, life: 1.4 } : {}, o || {})); }
+// ---------- build: de vaste laag (muur, nis, balk, raam of lamp, ketelplaat, stoel, kuip, kaar, pomp, vloer, manometerhuis) ----------
+function* m67Build(env) {
+  const G = m67C.G = m67Geo(env), pal = m67C.pal = m67Pal(env.dark);
+  m67C.bg = null; m67C.gloed = null; m67C.pil = {}; m67C.fl = env.canvas(1, 1); // (fl: om tekst te meten) na een maat- of themawissel zijn de oude plaatjes ongeldig
+  const bg = yield* m67Bg(env, G, pal); yield; // de vaste laag in vijf stappen (draw toont tot dan de kale muur)
+  const gl = m67Zacht(env, env.dark ? '255,150,60' : '255,160,70', env.dark ? 0.34 : 0.26); yield;
+  for (const [tk, kl, ico] of [['tik: brandstof', '#F3EED2', 'schep'], ['tik: brandstof', '#CFAB00', 'schep'], ['water loopt nog mee', '#D8D2BE', 'pomp'], ['houd: water', '#F3EED2', 'pomp'], ['houd: water', '#CFAB00', 'pomp']]) m67PilC(env, tk, kl, ico); // de vloerhints alvast
+  m67C.bg = env.cache.bg = bg; m67C.gloed = env.cache.gloed = gl;
+}
+
+function m67Zacht(env, rgb, a0) { // zachte gloed, één keer getekend op ware grootte (zoals de jaarintro: geen getrapte schijven, geen verloop of schaal per frame)
+  const c = env.canvas(220, 152), q = c.g, gr = q.createRadialGradient(0, 0, 0, 0, 0, 1);
+  for (const [o, f] of [[0, 1], [0.2, 0.78], [0.42, 0.48], [0.65, 0.22], [0.85, 0.07], [1, 0]]) gr.addColorStop(o, `rgba(${rgb},${(a0 * f).toFixed(3)})`);
+  q.save(); q.translate(110, 76); q.scale(110, 76); q.fillStyle = gr; q.fillRect(-1, -1, 2, 2); q.restore(); return c;
+}
+function* m67Bg(env, G, pal) {
+  const c = env.canvas(G.W, G.P), g = c.g, rnd = env.seed(1867), dk = env.dark, W = G.W, T = G.T, H = G.H, lite = env.lite, V = G.vloer.y;
+  g.translate(0, -T);
+  const ci = (x, y, r, kl) => { g.fillStyle = kl; g.beginPath(); g.arc(x, y, r, 0, m67T); g.fill(); };
+  // de achterwand van baksteen, met een roetrand onderaan en hier en daar een plekje voegen (zoals j67Geo2)
+  g.fillStyle = pal.muur; g.fillRect(0, T, W, H - T);
+  g.fillStyle = env.rgba(pal.muurD, 0.45); g.fillRect(0, V - 90, W, 90); g.fillStyle = pal.muurD; g.fillRect(0, V - 36, W, 36);
+  for (let i = 0; i < 60; i++) { const x = rnd() * W, y = T + 30 + rnd() * (V - T - 90), n = 2 + Math.floor(rnd() * 4);
+    for (let k = 0; k < n; k++) { g.fillStyle = rnd() < 0.5 ? pal.voeg : pal.muurS; g.fillRect(x + (k % 2) * 9 + Math.floor(k / 2) * 17, y + Math.floor(k / 2) * 6.5 - (k % 2) * 6.5, 15, 5); } }
+  // overdag: de lichtbundel uit het raam naar linksonder, in drie treden; 's avonds: de warme gloed van de lamp op de muur
+  const R = G.raam;
+  if (!dk) { const ux = -0.58, uy = 0.81, L = 470;
+    for (const [al, f] of lite ? [[0.09, 1]] : [[0.06, 1], [0.05, 0.62], [0.05, 0.3]]) { const w = R.w * 0.95 * f, x0 = R.x - w / 2, x1 = R.x + w / 2, y0 = R.y - R.h * 0.4;
+      g.fillStyle = 'rgba(255,226,160,' + al + ')'; g.beginPath(); g.moveTo(x0, y0); g.lineTo(x1, y0 + 4); g.lineTo(x1 + ux * L + 30 * f, y0 + uy * L); g.lineTo(x0 + ux * L - 56 * f, y0 + uy * L); g.closePath(); g.fill(); } }
+  else { const gr = g.createRadialGradient(R.x, R.y, 0, R.x, R.y, 150); gr.addColorStop(0, 'rgba(255,196,110,.34)'); gr.addColorStop(0.4, 'rgba(255,196,110,.14)'); gr.addColorStop(1, 'rgba(255,196,110,0)'); g.fillStyle = gr; g.fillRect(R.x - 150, R.y - 150, 300, 300); }
+  yield;
+  // de gemetselde boog van het ketelhuis met de donkere nis erachter
+  { const N = G.nis, cx = (N.x0 + N.x1) / 2, r = (N.x1 - N.x0) / 2, cy = N.top + r;
+    g.fillStyle = pal.voeg; g.beginPath(); g.moveTo(N.x0 - 8, V); g.lineTo(N.x0 - 8, cy); g.arc(cx, cy, r + 8, Math.PI, 0); g.lineTo(N.x1 + 8, V); g.closePath(); g.fill();
+    g.fillStyle = pal.nis; g.beginPath(); g.moveTo(N.x0, V); g.lineTo(N.x0, cy); g.arc(cx, cy, r, Math.PI, 0); g.lineTo(N.x1, V); g.closePath(); g.fill();
+    if (dk) { g.fillStyle = 'rgba(255,154,60,.18)'; g.beginPath(); g.ellipse(G.gloed.x, V + 24, 118, 26, 0, 0, m67T); g.fill(); } } // 's avonds een vlek op de vloer (de vloer komt eroverheen)
+  // zolderbalk met de hangers van de drijfas; de as zelf (de schijven draaien per frame)
+  g.fillStyle = pal.zolder; g.fillRect(0, T, W, 6); g.fillStyle = pal.balk; g.fillRect(0, T + 6, W, 18); g.fillStyle = pal.balkL; g.fillRect(0, T + 6, W, 2); g.fillStyle = pal.balkS; g.fillRect(0, T + 22, W, 2);
+  g.fillStyle = pal.ijzerD; for (const x of G.as.sch) { g.fillRect(x - 9, T + 24, 18, 3); g.fillRect(x - 2, T + 26, 4, 8); g.fillRect(x - 7, G.as.y - 6, 14, 12); }
+  g.fillStyle = pal.ijzer; g.fillRect(G.as.x0, G.as.y - 3, G.as.x1 - G.as.x0, 6); g.fillStyle = pal.ijzerL; g.fillRect(G.as.x0, G.as.y - 3, G.as.x1 - G.as.x0, 1.5);
+  // de houten standvink achter de molenaar en het vloertje van de steenzolder erop
+  g.fillStyle = pal.balk; g.fillRect(G.vink.x - 6, T + 24, 12, V - T - 24); g.fillStyle = pal.balkL; g.fillRect(G.vink.x - 6, T + 24, 3, V - T - 24);
+  g.fillStyle = pal.balk; g.fillRect(G.plat.x0, G.plat.y + 5, W - G.plat.x0, 9); g.fillStyle = pal.balkS; g.fillRect(G.plat.x0, G.plat.y + 12, W - G.plat.x0, 2);
+  g.fillStyle = pal.plank; g.fillRect(G.plat.x0, G.plat.y, W - G.plat.x0, 6); g.fillStyle = pal.mhoutL; g.fillRect(G.plat.x0, G.plat.y, W - G.plat.x0, 1.5);
+  g.fillStyle = pal.balk; g.beginPath(); g.moveTo(G.vink.x + 6, G.plat.y + 14); g.lineTo(G.vink.x + 34, G.plat.y + 14); g.lineTo(G.vink.x + 6, G.plat.y + 42); g.closePath(); g.fill(); // korbeel
+  // het raam (overdag) of de lamp aan de muur (avond)
+  if (!dk) { const x0 = R.x - R.w / 2, y0 = R.y - R.h / 2, w = R.w, h = R.h;
+    g.fillStyle = pal.rkoz; g.beginPath(); g.moveTo(x0 - 2, y0 + h); g.lineTo(x0 - 2, y0 + 6); g.quadraticCurveTo(R.x, y0 - 8, x0 + w + 2, y0 + 6); g.lineTo(x0 + w + 2, y0 + h); g.closePath(); g.fill();
+    g.fillStyle = pal.rglas; g.beginPath(); g.moveTo(x0 + 1.5, y0 + h - 2); g.lineTo(x0 + 1.5, y0 + 7); g.quadraticCurveTo(R.x, y0 - 4, x0 + w - 1.5, y0 + 7); g.lineTo(x0 + w - 1.5, y0 + h - 2); g.closePath(); g.fill();
+    g.fillStyle = pal.rkoz; g.fillRect(R.x - 0.8, y0, 1.6, h); g.fillRect(x0, y0 + h * 0.42, w, 1.4); g.fillStyle = pal.muurL; g.fillRect(x0 - 4, y0 + h, w + 8, 3); }
+  else { g.fillStyle = pal.lampArm; g.fillRect(R.x - 12, R.y - 20, 3, 14); g.fillRect(R.x - 12, R.y - 8, 12, 3); g.fillStyle = pal.messing; g.beginPath(); g.ellipse(R.x, R.y - 4, 4, 2.2, 0, 0, m67T); g.fill(); }
+  yield;
+  // de ketel: eerst de romp in de nis (de cilinder loopt naar achteren), dan de ronde ijzeren plaat met glans en klinknagels, de vuurdeur
+  { const K = G.ketel, r = K.r;
+    g.fillStyle = env.mix(pal.ketel, pal.nis, 0.45); env.rr(g, K.x - r * 0.9, K.y - r * 1.02, r * 1.9, r * 1.6, 18); g.fill();
+    ci(K.x, K.y, r, pal.ketel);
+    g.fillStyle = pal.ketelL; g.beginPath(); g.arc(K.x, K.y, r, Math.PI * 1.02, Math.PI * 1.42); g.arc(K.x, K.y, r * 0.82, Math.PI * 1.42, Math.PI * 1.02, true); g.closePath(); g.fill();
+    if (!lite) for (let i = 0; i < 16; i++) { const b = i * m67T / 16; ci(K.x + Math.cos(b) * r * 0.87, K.y + Math.sin(b) * r * 0.87, 2.4, pal.klink); }
+    const D = G.deur; g.fillStyle = pal.ijzerD; g.fillRect(D.x0 - 4, D.y0 - 4, D.x1 - D.x0 + 8, D.y1 - D.y0 + 8); g.fillStyle = pal.nis; g.fillRect(D.x0, D.y0, D.x1 - D.x0, D.y1 - D.y0);
+    g.fillStyle = pal.ijzerL; g.fillRect(D.x1 + 6, D.y0 + 10, 3, 14); } // scharnier
+  // stoompijp van de ketelschouder omhoog en naar links, met een flens en een handwiel; het pijpje naar de manometer
+  { const Pp = G.pijp, w = Pp.w, M = G.meter;
+    g.fillStyle = pal.ijzer; g.fillRect(Pp.x - w / 2, Pp.y1 - w / 2, w, Pp.y0 - Pp.y1 + w / 2); g.fillRect(Pp.x0, Pp.y1 - w / 2, Pp.x - Pp.x0, w);
+    g.fillStyle = pal.ijzerL; g.fillRect(Pp.x0, Pp.y1 - w / 2, Pp.x - Pp.x0 + w / 2, 1.5); g.fillRect(Pp.x - w / 2, Pp.y1, 1.5, Pp.y0 - Pp.y1);
+    g.fillStyle = pal.ijzerD; g.fillRect(Pp.flens - 3, Pp.y1 - w / 2 - 3, 6, w + 6); g.fillRect(Pp.x - w / 2 - 3, Pp.y1 + 30, w + 6, 6);
+    g.fillStyle = pal.messing; g.fillRect(Pp.wiel - 1.5, Pp.y1 - w / 2 - 14, 3, 14); g.beginPath(); g.arc(Pp.wiel, Pp.y1 - w / 2 - 16, 8, 0, m67T); g.arc(Pp.wiel, Pp.y1 - w / 2 - 16, 5.5, 0, m67T, true); g.fill(); g.fillRect(Pp.wiel - 1, Pp.y1 - w / 2 - 24, 2, 16); g.fillRect(Pp.wiel - 8, Pp.y1 - w / 2 - 17, 16, 2);
+    g.fillStyle = pal.ijzer; g.fillRect(M.x - 2.5, M.y + M.r + 2, 5, 16); g.fillRect(Pp.x, M.y + M.r + 14, M.x - Pp.x, 4.5); g.fillStyle = pal.ijzerL; g.fillRect(Pp.x, M.y + M.r + 14, M.x - Pp.x, 1);
+    const Kp = G.klep; g.fillStyle = pal.messing; env.rr(g, Kp.x - Kp.w / 2, Kp.y - Kp.h, Kp.w, Kp.h + 4, 3); g.fill(); g.fillStyle = pal.messingL; g.fillRect(Kp.x - Kp.w / 2 + 2, Kp.y - Kp.h + 2, 4, Kp.h - 2); } // het huis van de veiligheidsklep
+  // het peilglas: messing frame met twee pijpjes naar de ketel
+  { const P = G.peil; g.fillStyle = pal.messing; g.fillRect(P.x0 - 2, P.y0 - 4, P.x1 - P.x0 + 4, P.y1 - P.y0 + 8); g.fillStyle = pal.messingL; g.fillRect(P.x0 - 2, P.y0 - 4, 2, P.y1 - P.y0 + 8);
+    g.fillStyle = pal.ijzer; g.fillRect(P.x0 - 12, P.y0 + 2, 10, 4); g.fillRect(P.x0 - 12, P.y1 - 6, 10, 4); }
+  yield;
+  // de maalstoel op de steenzolder, de liggende as naar de schijf, de steenkuip in doorsnede (ligger en loper; de spikkels van de loper per frame)
+  { const K = G.kuip, S = G.stoel, k0 = K.x0, k1 = K.x1, mid = (k0 + k1) / 2, y0 = K.y0, y1 = K.y1, sc = G.schijf2;
+    g.fillStyle = pal.ijzer; g.fillRect(mid - 2, y1, 4, sc.y - y1); g.fillRect(mid, sc.y - 2.5, sc.x - mid, 5); g.fillStyle = pal.ijzerL; g.fillRect(mid, sc.y - 2.5, sc.x - mid, 1);
+    for (const x of [k0 + 4, k1 - 12]) { g.fillStyle = pal.mhout; g.fillRect(x, y1, 8, S.y1 - y1); g.fillStyle = pal.mhoutL; g.fillRect(x, y1, 2, S.y1 - y1); }
+    g.fillStyle = pal.mhoutS; g.fillRect(k0 + 4, y1 + 18, k1 - k0 - 8, 5); g.fillStyle = pal.mhout; g.fillRect(k0, y1 - 2, k1 - k0, 7); g.fillStyle = pal.mhoutL; g.fillRect(k0, y1 - 2, k1 - k0, 1.5);
+    g.fillStyle = pal.kuipS; g.fillRect(k0 + 6, y0 + 4, k1 - k0 - 12, y1 - y0 - 6); // binnenkant van de kuip
+    const lig0 = y1 - 20, lig1 = y1 - 6, spl = lig0 - 3, lop0 = y0 + 8, lop1 = spl;
+    g.fillStyle = pal.steenD; env.rr(g, k0 + 8, lig0, k1 - k0 - 16, lig1 - lig0, 3); g.fill(); // ligger (ligt stil)
+    for (let i = 0; i < 30; i++) { g.fillStyle = rnd() < 0.5 ? pal.steenL : pal.steenS; g.fillRect(k0 + 10 + rnd() * (k1 - k0 - 22), lig0 + 2 + rnd() * (lig1 - lig0 - 5), 2.6, 1.6); }
+    g.fillStyle = pal.kgat; g.fillRect(k0 + 8, spl, k1 - k0 - 16, 3); g.fillStyle = pal.meel; g.fillRect(k0 + 8, spl + 0.5, 7, 2); g.fillRect(k1 - 15, spl + 0.5, 7, 2); // maalspleet met wat meel aan de rand
+    g.fillStyle = pal.steen; env.rr(g, k0 + 8, lop0, mid - 8 - k0 - 8, lop1 - lop0, 3); g.fill(); env.rr(g, mid + 8, lop0, k1 - 8 - mid - 8, lop1 - lop0, 3); g.fill(); // loper, met het kropgat in het midden
+    for (const x of [k0, k1 - 8]) { g.fillStyle = pal.kuip; g.fillRect(x, y0, 8, y1 - y0); g.fillStyle = pal.kuipS; g.fillRect(x + 2.5, y0, 1.2, y1 - y0); g.fillRect(x + 5, y0, 1.2, y1 - y0); g.fillStyle = pal.hoepel; g.fillRect(x - 1, y0 + 10, 10, 4); g.fillRect(x - 1, y1 - 14, 10, 4); }
+    g.fillStyle = pal.kuip; g.fillRect(k0, y1 - 6, k1 - k0, 6); g.fillRect(k0 - 2, y0, mid - 9 - k0 + 2, 5); g.fillRect(mid + 9, y0, k1 + 2 - mid - 9, 5); g.fillStyle = pal.mhoutL; g.fillRect(k0 - 2, y0, k1 - k0 + 4, 1.5); }
+  // de kaar op een bok, in doorsnede met graan erin; de messing rail met vijf kerven (de schuif en de schuddebak per frame)
+  { const Ka = G.kaar, x = Ka.x, y0 = Ka.y0, y1 = Ka.y1, w0 = Ka.w0, w1 = Ka.w1, Rl = Ka.rail;
+    for (const bx of [x - w0 / 2 - 4, x + w0 / 2 + 2]) { g.fillStyle = pal.mhout; g.fillRect(bx, y0 + 2, 4, G.kuip.y0 - y0 - 2); }
+    g.fillStyle = pal.mhoutS; g.beginPath(); g.moveTo(x - w0 / 2, y0); g.lineTo(x + w0 / 2, y0); g.lineTo(x + w1 / 2, y1); g.lineTo(x - w1 / 2, y1); g.closePath(); g.fill();
+    g.fillStyle = pal.kgraan; g.beginPath(); g.moveTo(x - w0 / 2 + 7, y0 + 8); g.quadraticCurveTo(x, y0 + 2, x + w0 / 2 - 7, y0 + 8); g.lineTo(x + w1 / 2 - 1, y1 - 2); g.lineTo(x - w1 / 2 + 1, y1 - 2); g.closePath(); g.fill();
+    for (let i = 0; i < 40; i++) { const f = rnd(), yy = y0 + 9 + f * (y1 - y0 - 14), hw = (w0 / 2 - 8) * (1 - f) + w1 / 2 - 1; g.fillStyle = rnd() < 0.5 ? pal.kgraanL : pal.kgraan; g.fillRect(x - hw + rnd() * 2 * hw, yy, 3, 2); }
+    g.fillStyle = pal.mhout; g.beginPath(); g.moveTo(x - w0 / 2 - 3, y0 - 2); g.lineTo(x - w0 / 2 + 5, y0 - 2); g.lineTo(x - w1 / 2 + 4, y1); g.lineTo(x - w1 / 2 - 2, y1); g.closePath(); g.moveTo(x + w0 / 2 + 3, y0 - 2); g.lineTo(x + w0 / 2 - 5, y0 - 2); g.lineTo(x + w1 / 2 - 4, y1); g.lineTo(x + w1 / 2 + 2, y1); g.closePath(); g.fill();
+    g.fillStyle = pal.mhoutL; g.fillRect(x - w0 / 2 - 4, y0 - 4, w0 + 8, 3);
+    g.fillStyle = pal.mhout; g.fillRect(Rl.x0 - 6, Rl.y - 7, Rl.x1 - Rl.x0 + 12, 4); // dwarslat van de bok
+    g.fillStyle = pal.messing; g.fillRect(Rl.x0, Rl.y - 2, Rl.x1 - Rl.x0, 5); g.fillStyle = pal.messingL; g.fillRect(Rl.x0, Rl.y - 2, Rl.x1 - Rl.x0, 1.2);
+    g.fillStyle = pal.ijzerD; for (let k = 0; k < 5; k++) g.fillRect(m67SchuifX(G, k + 1) - 1, Rl.y - 1, 2, 3); g.fillRect(m67SchuifX(G, 6) - 1.5, Rl.y - 3, 3, 7); }
+  // meelpijp door het vloertje; de haken van de zak (de zak zelf vult zich per frame)
+  { const Pm = G.pijpM; g.fillStyle = pal.mhout; g.fillRect(Pm.x - 5, Pm.y0, 10, Pm.y1 - Pm.y0); g.fillStyle = pal.mhoutL; g.fillRect(Pm.x - 5, Pm.y0, 2, Pm.y1 - Pm.y0); g.fillStyle = pal.mhoutS; g.fillRect(Pm.x - 7, Pm.y1 - 4, 14, 4);
+    g.fillStyle = pal.ijzerD; for (const hx of [G.zak.x0 + 4, G.zak.x1 - 4]) g.fillRect(hx - 1, G.plat.y + 14, 2, G.zak.y0 - G.plat.y - 12); }
+  yield;
+  // de waterpomp: gietijzeren staande pomp met messing kraan, leiding langs de vloer naar de ketel (de zwengel per frame)
+  { const Po = G.pomp; g.fillStyle = pal.ijzer; g.fillRect(Po.x0 - 6, Po.y1 - 8, Po.x1 - Po.x0 + 12, 8); g.fillRect(Po.x0, Po.y0 + 4, Po.x1 - Po.x0, Po.y1 - Po.y0 - 4);
+    g.fillStyle = pal.ijzerL; g.fillRect(Po.x0 + 2, Po.y0 + 4, 3, Po.y1 - Po.y0 - 12); g.fillStyle = pal.ijzerD; g.fillRect(Po.x0 - 3, Po.y0 + 24, Po.x1 - Po.x0 + 6, 5); g.fillRect(Po.x0 - 3, Po.y1 - 30, Po.x1 - Po.x0 + 6, 5);
+    g.fillStyle = pal.ijzer; env.rr(g, Po.x0 - 3, Po.y0 - 6, Po.x1 - Po.x0 + 6, 12, 4); g.fill(); g.fillStyle = pal.ijzerL; g.fillRect(Po.x0 - 1, Po.y0 - 5, Po.x1 - Po.x0 + 2, 2);
+    g.fillStyle = pal.messing; g.fillRect(Po.x0 - 9, Po.y0 + 40, 9, 5); g.fillRect(Po.x0 - 11, Po.y0 + 36, 4, 10); g.fillRect(Po.x0 - 12, Po.y0 + 34, 6, 2);
+    g.fillStyle = pal.ijzer; g.fillRect(G.ketel.x + 20, Po.y1 - 10, Po.x0 - 20 - G.ketel.x, 4); g.fillRect(Po.x0 - 4, Po.y1 - 10, 4, 10); g.fillStyle = pal.ijzerL; g.fillRect(G.ketel.x + 20, Po.y1 - 10, Po.x0 - 20 - G.ketel.x, 1); }
+  // de vloer: planken met naden, onderaan de koppen van de vloerbalken
+  g.fillStyle = pal.vloer; g.fillRect(0, V, W, H - V); g.fillStyle = pal.vloerN; g.fillRect(0, V, W, 2); for (let x = 6; x < W; x += 27) g.fillRect(x, V, 2, H - V - 20);
+  g.fillStyle = pal.vloerF; g.fillRect(0, H - 20, W, 20); g.fillStyle = pal.balkF; for (let x = -8; x < W; x += 48) g.fillRect(x, H - 20, 16, 20); g.fillStyle = pal.vloerN; g.fillRect(0, H - 22, W, 2);
+  // de manometer: ijzeren huis, messing ring, antraciet rand, crème plaat met streepjes (band, klepmerk en wijzer per frame)
+  { const M = G.meter, r = M.r; ci(M.x, M.y, r + 7, pal.ijzer); ci(M.x, M.y, r + 4, pal.ijzerD); ci(M.x, M.y, r + 2.5, pal.messing);
+    g.fillStyle = pal.messingL; g.beginPath(); g.arc(M.x, M.y, r + 2, Math.PI * 1.05, Math.PI * 1.6); g.arc(M.x, M.y, r - 1, Math.PI * 1.6, Math.PI * 1.05, true); g.closePath(); g.fill();
+    ci(M.x, M.y, r - 2, '#1D1E1F'); ci(M.x, M.y, r - 5, pal.plaat);
+    g.strokeStyle = '#1D1E1F'; for (let i = 0; i <= 20; i++) { const a = m67Hoek(i / 20), lang = i % 2 === 0, c = Math.cos(a), s = Math.sin(a); g.lineWidth = lang ? 2 : 1.2; g.beginPath(); g.moveTo(M.x + c * r * 0.6, M.y + s * r * 0.6); g.lineTo(M.x + c * r * (lang ? 0.69 : 0.66), M.y + s * r * (lang ? 0.69 : 0.66)); g.stroke(); } }
+  // velg, naaf en glans van het vliegwiel en de schijven (draaien niet zichtbaar mee; de spaken komen per frame)
+  m67WielRand(g, pal, G.wiel.x, G.wiel.y, G.wiel.r, G.wiel.r * 0.14); for (const x of G.as.sch) m67WielRand(g, pal, x, G.as.y, G.as.r, 4); m67WielRand(g, pal, G.schijf2.x, G.schijf2.y, G.schijf2.r, 3);
+  return c;
+}
+const m67SchuifX = (G, stand) => stand >= 6 ? G.kaar.rail.x1 - 4 : G.kaar.rail.x0 + 4 + (stand - 1) * 10; // de plek van de schuif op de rail per stand
+// ---------- start en de regels ----------
+function m67Start(env) {
+  const S = m67S, gz = S.gezel = !!env.gezel, G = m67C.G;
+  Object.assign(S, { t: 0, T: gz ? 106.5 : 102.5, vuur: 0.4, water: 0.75, druk: 0.3, stand: 1, bandC: 0.3, bandA: 0.3, bandB: 0.3, bandT: 1, bandD: 1.2, klepT: 0, vuurUit: false, fase: 0,
+    kg: 0, kgVast: false, tijdBand: 0, tijdTotaal: 0, band5: 0, tot5: 0, afblazen: 0, vuurUitN: 0, laagsteWater: 0.75, pompAuto: false, pompt: false, knechtPompt: false,
+    toetsL: false, toetsR: false, toets: false, stapI: 0, overT: gz ? 36 : 32, stapT: 0, gratie: 1.5, holdT: 0, adem: 0, half: 0, over: -1,
+    buitenT: 0, zegT: -9, waterLaagT: -9, eersteT: -9, onder: false, eersteSchep: false, lastIn: 0, uitleg: 0, uitlegTekst: '', bandGl: 0, linksGoud: 0, kgMijl: 0, vonk: [], slotT: -1, slotRun: 1, schud: 0, schudden: false, auto: null, puffs: [], rook: 0, pufT: 0, pluimT: 0,
+    vlamD: 0.4, wielV: 1, wielA: 0, riemP: 0, loperP: 0, fD: 1, wijzer: 0.3, waterD: 0.75, schepT: 0, slagP: 0, slagN: 0, knechtP: 0, weg: -1, stokerX: G.stoker.x, schuifX: m67SchuifX(G, 1), armT: 0, pijlT: 0, hintGoud: 0 });
+  S.links.clear(); S.rechts.clear();
+  S.stappen = gz ? [[26, 2], [52, 3], [72, 4], [88, 5], [100, 6]] : [[22, 2], [47, 3], [65, 4], [82, 5], [96, 6]];
+  env.unlock('m67-stoker');
+}
+function m67Schep(env) {
+  const S = m67S, G = m67C.G, D = G.deur;
+  if (S.vuurUit) { if (S.t - S.eersteT >= 3) { S.eersteT = S.t; m67Zeg(env, 'eerst water', (D.x0 + D.x1) / 2, D.y0 - 16, '#CFAB00'); } return; }
+  S.vuur = Math.min(1, S.vuur + 0.16); S.schepT = 0.5; env.sfx.tick(); env.vibrate(12); m67Vonk(env);
+  if (!S.eersteSchep) { S.eersteSchep = true; S.uitleg = 5; S.uitlegTekst = 'wijzer in groen'; } // na de eerste schep: wat je ermee doet, bij de manometer zelf
+}
+function m67Vonk(env) { // een paar vonkjes uit de deur bij elke schep (niet bij verminderde beweging of de lichte stand)
+  const S = m67S, D = m67C.G.deur; if (env.reduced || env.lite) return;
+  for (let i = 0; i < 4; i++) { const q = k => Math.abs(Math.sin(S.t * 91.7 + i * 12.9 + k * 4.1) * 43758.5) % 1; S.vonk.push({ x: D.x0 + (D.x1 - D.x0) * (0.25 + 0.5 * q(0)), y: D.y0 + 6, vx: (q(1) - 0.5) * 60, vy: -70 - q(2) * 60, life: 0.35 + 0.2 * q(3) }); }
+  if (S.vonk.length > 12) S.vonk.splice(0, S.vonk.length - 12);
+}
+function m67Stap(stand, env) {
+  const S = m67S, G = m67C.G, Ka = G.kaar;
+  S.stand = stand; S.stapT = 0; S.armT = 0.6; S.bandA = S.bandC; S.bandB = m67Kern(stand); S.bandT = 0; S.bandD = stand >= 6 ? 2 : 1.2;
+  if (stand < 6) { S.bandGl = 2.5; if (stand === 2) { S.uitleg = 3.5; S.uitlegTekst = 'meer vuur nodig'; } } // de band schuift: een gloed erop, de eerste keer met uitleg
+  if (stand >= 6) { S.kgVast = true; S.slotT = S.t; m67Zeg(env, 'helemaal open', Ka.x, Ka.y0 + 6, '#F3EED2'); env.unlock('m67-tweepk'); }
+  else m67Zeg(env, 'meer graan', Ka.x, Ka.y0 + 6, '#F3EED2');
+  env.sfx.tick();
+}
+function m67Overdracht(env) {
+  const S = m67S, G = m67C.G, Po = G.pomp;
+  S.fase = 1; S.over = S.t; S.weg = 0; S.pijlT = 3; S.hintGoud = 3; S.knechtPompt = false;
+  m67Zeg(env, 'nu ook het water', Po.px - 16, Po.y0 - 20, '#F3EED2', { life: 1.6 });
+  env.toast('Vanaf nu ook het water. Houd rechts ingedrukt.'); env.unlock('m67-ketel');
+}
+function m67Update(dt, env) {
+  const S = m67S, G = m67C.G, gz = S.gezel, t = S.t += dt;
+  S.stapT += dt; if (S.gratie > 0) S.gratie -= dt; if (S.adem > 0) S.adem -= dt; else if (S.half > 0) S.half -= dt;
+  if (S.armT > 0) S.armT -= dt; if (S.schepT > 0) S.schepT -= dt; if (S.pijlT > 0) S.pijlT -= dt; if (S.hintGoud > 0) S.hintGoud -= dt; if (S.schud > 0) S.schud -= dt; if (S.rook > 0) S.rook -= dt; if (S.uitleg > 0) S.uitleg -= dt; if (S.bandGl > 0) S.bandGl -= dt; if (S.linksGoud > 0) S.linksGoud -= dt;
+  if (S.weg >= 0 && S.weg < 3) S.weg += dt;
+  // de molenaar zet een stap; de overdracht van het water
+  const st = S.stappen; while (S.stapI < st.length && t >= st[S.stapI][0]) { m67Stap(st[S.stapI][1], env); S.stapI++; }
+  if (S.fase === 0 && t >= S.overT) m67Overdracht(env);
+  if (S.bandT < 1) { S.bandT = Math.min(1, S.bandT + dt / S.bandD); S.bandC = env.lerp(S.bandA, S.bandB, env.eio(S.bandT)); }
+  const hw = gz ? 0.10 : 0.07, lo = S.bandC - hw, hi = S.bandC + hw;
+  // invoer: links vasthouden telt als traag tikken; rechts vasthouden pompt (pas vanaf de overdracht)
+  if (S.links.size > 0 || S.toetsL) { S.holdT += dt; if (S.holdT >= 0.7) { S.holdT = 0; m67Schep(env); } } else S.holdT = 0;
+  const pompt = S.pompt = S.fase >= 1 && (S.rechts.size > 0 || S.toetsR || S.pompAuto);
+  if (S.fase === 0) { if (S.water < 0.70) S.knechtPompt = true; else if (S.water >= 0.85) S.knechtPompt = false; }
+  const rust = S.adem > 0, halfF = S.half > 0 ? 0.5 : 1;
+  if (pompt || (S.fase === 0 && S.knechtPompt)) { S.slagP += dt / 0.6; const n = Math.floor(S.slagP); if (n > S.slagN) { S.slagN = n; if (pompt) env.sfx.click(); } }
+  if (!rust) {
+    if (!S.vuurUit) S.vuur = Math.max(0, S.vuur - (0.03 + 0.05 * S.vuur) * (gz ? 0.8 : 1) * dt);
+    if (pompt || (S.fase === 0 && S.knechtPompt)) S.water = Math.min(1, S.water + (gz ? 0.12 : 0.10) * dt);
+    if (!S.vuurUit) { let vb = (0.012 + 0.03 * S.vuur) * (gz ? 0.75 : 1) * halfF; if (S.over >= 0 && t - S.over < 4) vb *= 0.5; S.water = Math.max(0, S.water - vb * dt); }
+    if (S.water < 0.20) { if (!S.onder) { S.onder = true; env.sfx.bad(); } if (t - S.waterLaagT >= 4 && !S.vuurUit) { S.waterLaagT = t; m67Zeg(env, 'water laag', G.peil.x1 + 38, G.peil.y0 + 10, '#CFAB00'); } } else S.onder = false;
+    S.laagsteWater = Math.min(S.laagsteWater, S.water);
+    if (S.water <= 0 && !S.vuurUit) { S.vuurUit = true; S.vuur = 0; S.vuurUitN++; S.rook = 2; env.sfx.bad(); m67Zeg(env, 'vuur uit, eerst water', (G.deur.x0 + G.deur.x1) / 2, G.deur.y0 - 16, '#CFAB00', { life: 1.6 }); }
+    else if (S.vuurUit && S.water >= 0.30) { S.vuurUit = false; S.vuur = 0.25; S.schepT = 0.5; m67Zeg(env, 'weer aan', (G.deur.x0 + G.deur.x1) / 2, G.deur.y0 - 16, '#E78A01'); }
+    if (S.gratie <= 0) { // de druk: het vuur maakt stoom, de machine gebruikt stoom, de klep blaast af (koud voedingswater weggelaten: voor een beginner onzichtbaar)
+      let d = 0.20 * (S.vuurUit ? 0 : S.vuur) - 0.09 * (1 + 0.12 * (S.stand - 1)) * (0.5 + S.druk) * halfF;
+      if (S.klepT > 0) d -= 0.12;
+      S.druk = env.clamp(S.druk + d * dt, 0, 1); }
+    if (S.klepT > 0) S.klepT = Math.max(0, S.klepT - dt);
+    else if (S.druk >= (gz ? 0.90 : 0.88)) { S.klepT = 1.5; S.afblazen++; env.sfx.sis(); m67Zeg(env, 'stoom weg', G.klep.x + 18, G.klep.y - 26, '#CFAB00'); if (env.reduced) m67Puf(env, G.klep.x, G.klep.y - G.klep.h, 0, 0, 10, 20, 0.5, 1.6, 0); }
+  }
+  // draaien en tellen
+  const inBand = S.druk >= lo && S.druk <= hi, uitF = gz ? 0.07 : 0.05;
+  let f = inBand ? 1 : Math.max(0, 1 - (S.druk < lo ? lo - S.druk : S.druk - hi) / uitF); if (S.klepT > 0 || S.vuurUit || S.kgVast) f = 0;
+  let run = S.druk >= lo ? 1 : Math.max(0, 1 - (lo - S.druk) / 0.12);
+  if (!S.kgVast && !rust) { S.kg += (8 + 3 * (S.stand - 1)) * (gz ? 0.85 : 1) * f * dt; // Gezel: ruimer en langer, dus iets trager malen (niet meer kg bij even goed spel)
+    S.tijdTotaal += dt; if (f === 1) S.tijdBand += dt; if (S.stand === 5) { S.tot5 += dt; if (f === 1) S.band5 += dt; } }
+  if (!S.kgVast && Math.floor(S.kg / 100) > S.kgMijl) { S.kgMijl = Math.floor(S.kg / 100); m67Zeg(env, '+100 kg', env.W - 44, G.zak.y0 - 10, '#E78A01'); } // de zak: elke 100 kg een teken
+  if (!S.kgVast) {
+    if (!inBand) { S.buitenT += dt; if (S.buitenT >= 1.5 && t - S.zegT >= 6) { S.zegT = t; const laag = S.druk < lo; m67Zeg(env, laag ? 'te laag' : 'te hoog', G.meter.x, G.meter.y - G.meter.r - 14, '#F3EED2'); if (laag && !S.vuurUit) S.linksGoud = 3; } } // te laag: de hint voor brandstof licht goud op
+    else { if (S.buitenT >= 1) env.sfx.good(); S.buitenT = 0; }
+  } else { // het slot: de score staat vast, het vliegwiel zakt weg, de molenaar schudt het hoofd, dan de weegbon
+    const s = t - S.slotT; if (s >= 1.5) S.slotRun = Math.max(0, 1 - (s - 1.5) / 5);
+    if (s >= 3 && !S.schudden) { S.schudden = true; S.schud = 1.2; m67Zeg(env, 'de machine haalt het niet', Math.max(G.wiel.x + 20, 112), G.wiel.y + G.wiel.r + 18, '#F3EED2', { life: 2.5, vy: env.reduced ? 0 : -12 }); }
+    if (s >= 6.5) env.done();
+  }
+  // wat het beeld bijhoudt: vlam, vliegwiel (traag), riemen, loper, wijzer (ease), water in het peilglas, de stoker en de schuif
+  const tgt = S.kgVast ? S.slotRun : run;
+  S.vlamD += ((S.vuurUit ? 0 : S.vuur) - S.vlamD) * Math.min(1, dt / 0.4);
+  S.wielV += (tgt - S.wielV) * Math.min(1, dt / 0.8); S.wielA += S.wielV * 0.75 * m67T * dt; S.riemP += S.wielV * 0.75 * m67T * G.wiel.r * dt;
+  S.fD += ((S.kgVast ? 0 : f) - S.fD) * Math.min(1, dt / 0.3); S.loperP += S.wielV * S.fD * 0.3 * 0.75 * m67T * G.wiel.r * dt;
+  S.wijzer += ((rust ? S.wijzer : S.druk) - S.wijzer) * Math.min(1, dt / 0.15);
+  S.waterD += (S.water - S.waterD) * Math.min(1, dt / 0.3);
+  const naarPomp = pompt && (S.weg < 0 || S.weg >= 0.6), sx = naarPomp ? G.stoker.xPomp : G.stoker.x; S.stokerX += (sx - S.stokerX) * Math.min(1, dt / (env.reduced ? 0.05 : 0.3));
+  S.schuifX += (m67SchuifX(G, S.stand) - S.schuifX) * Math.min(1, dt / (env.reduced ? 0.1 : 0.5));
+  // stoom en rook (hooguit acht wolkjes, lite vier)
+  if (S.klepT > 0 && !env.reduced) { S.pluimT -= dt; if (S.pluimT <= 0) { S.pluimT = 0.25; m67Puf(env, G.klep.x + 2, G.klep.y - G.klep.h - 2, 42, -42, 4, 18, 0.55, 0.9, 0); } }
+  else if (S.druk > hi && S.klepT <= 0 && !env.reduced && !S.kgVast) { S.pufT -= dt; if (S.pufT <= 0) { S.pufT = 0.8; m67Puf(env, G.klep.x + 2, G.klep.y - G.klep.h - 2, 14, -36, 3, 8, 0.32, 0.7, 0); } }
+  if (S.rook > 0) { S.pufT -= dt; if (S.pufT <= 0) { S.pufT = 0.33; m67Puf(env, (G.deur.x0 + G.deur.x1) / 2 + (env.rnd() - 0.5) * 20, G.deur.y0 + 4, env.reduced ? 0 : 12, env.reduced ? -10 : -46, 5, 15, 0.42, 1.3, 1); } }
+  for (let i = S.vonk.length - 1; i >= 0; i--) { const v = S.vonk[i]; v.life -= dt; if (v.life <= 0) { S.vonk.splice(i, 1); continue; } v.x += v.vx * dt; v.y += v.vy * dt; v.vy += 140 * dt; }
+  for (let i = S.puffs.length - 1; i >= 0; i--) { const p = S.puffs[i]; p.life -= dt; if (p.life <= 0) { S.puffs.splice(i, 1); continue; } p.x += p.vx * dt; p.y += p.vy * dt; }
+}
+function m67Puf(env, x, y, vx, vy, r0, r1, a, life, rook) { const P = m67S.puffs, max = env.lite ? 4 : 8; if (P.length >= max) P.shift(); P.push({ x, y, vx, vy, r0, r1, a, life, max: life, rook }); }
+// ---------- invoer ----------
+function m67Pointer(ev, env) {
+  const S = m67S, L = ev.x < env.W / 2;
+  if (ev.type === 'down') { if (ev.y < env.top) return; S.toets = false; S.lastIn = S.t; if (L) { S.links.add(ev.id); S.holdT = 0; m67Schep(env); } else S.rechts.add(ev.id); }
+  else if (ev.type === 'move') { if (!S.links.has(ev.id) && !S.rechts.has(ev.id)) return; // een vinger die van helft wisselt, wisselt van taak (zonder nieuwe schep)
+    if (L && S.rechts.has(ev.id)) { S.rechts.delete(ev.id); S.links.add(ev.id); S.holdT = 0; } else if (!L && S.links.has(ev.id)) { S.links.delete(ev.id); S.rechts.add(ev.id); } }
+  else { S.links.delete(ev.id); S.rechts.delete(ev.id); }
+}
+function m67Key(ev, env) {
+  const S = m67S, k = String(ev.key || '').toLowerCase(), on = ev.type === 'down', L = k === 'arrowleft' || k === 'a' || k === 't', R = k === 'arrowright' || k === 'd' || k === 'w';
+  if (!L && !R) return;
+  S.toets = true; if (on) S.lastIn = S.t;
+  if (L) { if (on && !S.toetsL) { S.holdT = 0; m67Schep(env); } S.toetsL = on; } else S.toetsR = on;
+}
+function m67Pause() { const S = m67S; S.links.clear(); S.rechts.clear(); S.toetsL = S.toetsR = false; S.holdT = 0; S.pompAuto = false; }
+function m67Resume() { m67S.adem = 1.0; m67S.half = 2.0; }
+function m67StoryOK() {
+  const S = m67S, hw = S.gezel ? 0.10 : 0.07;
+  if (S.klepT > 0 || S.vuurUit || S.water < 0.30) return false;
+  if (S.t >= 60) return true; // komt het niet voor 60 s, dan vervalt de eis van de rust in de band
+  if (S.t < S.overT + 2 || S.stapT < 1.5) return false;
+  const nx = S.stappen[S.stapI]; if (nx && nx[0] - S.t < 2) return false;
+  if (S.links.size || S.rechts.size || S.toetsL || S.toetsR) return false;
+  return Math.abs(S.druk - S.bandC) <= hw + 0.06;
+}
+// ---------- tekenen ----------
+// silhouet in de stijl van de jaarintro (kiel, pet, klompen), in eenheden u (hoogte circa 17,5 u), voeten op (x, y), kijkrichting dir.
+// o: kol, hand en hand2 ([x, y] van de voorste en de achterste hand; weg: hangend), loop (0-1 looppas of null), buig (0-1 voorover), hoofd (dx)
+function m67Fig(g, x, y, u, dir, o) {
+  const w = o.loop, st = w == null ? 0 : Math.sin(w * m67T), bob = w == null ? 0 : -0.35 * u * Math.abs(Math.cos(w * m67T)), b = o.buig || 0;
+  const hy = y - 7.6 * u + bob, sy = y - 14.2 * u + bob + b * 2.4 * u, sx = x + dir * b * 3.6 * u;
+  g.fillStyle = o.kol; g.beginPath();
+  if (w == null) for (const s of [1, -1]) { const fx = x + s * 1.1 * u; g.moveTo(x - 0.8 * u, hy); g.lineTo(x + 0.8 * u, hy); g.lineTo(fx + 0.75 * u, y - 0.6 * u); g.lineTo(fx - 0.75 * u, y - 0.6 * u); g.closePath(); g.rect(fx - 1.1 * u + dir * 0.5 * u, y - u, 2.4 * u, u); }
+  else for (const s of [1, -1]) { const a = st * 0.42 * s, fx = x + Math.sin(a) * 7.2 * u, fy = hy + Math.cos(a) * 7.2 * u; g.moveTo(x - 0.75 * u, hy); g.lineTo(x + 0.75 * u, hy); g.lineTo(fx + 0.6 * u, fy - 0.4 * u); g.lineTo(fx - 0.6 * u, fy - 0.4 * u); g.closePath(); g.rect(fx - 1.1 * u + dir * 0.4 * u, fy - 1.1 * u, 3 * u, 1.1 * u); }
+  g.moveTo(sx - 1.9 * u, sy); g.lineTo(sx + 1.9 * u, sy); g.lineTo(x + 2.7 * u, hy + 0.6 * u); g.lineTo(x - 2.7 * u, hy + 0.6 * u); g.closePath(); // de kiel, wijd uitlopend
+  const hx = sx + (o.hoofd || 0), hh = sy - 1.4 * u; g.moveTo(hx + 1.15 * u, hh); g.arc(hx, hh, 1.15 * u, 0, m67T);
+  g.moveTo(hx - 1.35 * u, hh - 0.7 * u); g.lineTo(hx + 1.3 * u, hh - 0.9 * u); g.lineTo(hx + 1.3 * u + 1.1 * u * dir, hh - 0.3 * u); g.lineTo(hx - 1.35 * u, hh - 0.1 * u); g.closePath(); // pet met klep
+  const arm = (ax, ay, tx, ty) => { const dx = tx - ax, dy = ty - ay, L = Math.hypot(dx, dy) || 1, nx = -dy / L * 0.5 * u, ny = dx / L * 0.5 * u; g.moveTo(ax + nx, ay + ny); g.lineTo(tx + nx, ty + ny); g.lineTo(tx - nx, ty - ny); g.lineTo(ax - nx, ay - ny); g.closePath(); };
+  const h1 = o.hand || [sx + dir * 2.2 * u + st * 0.8 * u, sy + 6.4 * u], h2 = o.hand2 || [sx - dir * 2.0 * u - st * 0.8 * u, sy + 6.4 * u];
+  arm(sx - dir * 1.4 * u, sy + 0.6 * u, h2[0], h2[1]); arm(sx + dir * 1.4 * u, sy + 0.6 * u, h1[0], h1[1]);
+  g.fill();
+  return { sx, sy, hy };
+}
+// riem tussen twee schijven (open riem): twee rechte stukken met naden die meelopen (off: px)
+function m67Riem(g, pal, x1, y1, r1, x2, y2, r2, b, off, sp) {
+  const dx = x2 - x1, dy = y2 - y1, D = Math.hypot(dx, dy), ex = dx / D, ey = dy / D, nx = -ey, ny = ex, c = (r1 - r2) / D, s = Math.sqrt(1 - c * c);
+  for (const sd of [1, -1]) {
+    const mx = c * ex + s * nx * sd, my = c * ey + s * ny * sd, ax = x1 + (r1 + b / 2) * mx, ay = y1 + (r1 + b / 2) * my, bx = x2 + (r2 + b / 2) * mx, by = y2 + (r2 + b / 2) * my;
+    const ln = Math.hypot(bx - ax, by - ay), ux = (bx - ax) / ln, uy = (by - ay) / ln;
+    g.fillStyle = pal.riem; g.beginPath(); g.moveTo(ax + mx * b / 2, ay + my * b / 2); g.lineTo(bx + mx * b / 2, by + my * b / 2); g.lineTo(bx - mx * b / 2, by - my * b / 2); g.lineTo(ax - mx * b / 2, ay - my * b / 2); g.fill();
+    g.fillStyle = pal.riemL; g.beginPath(); g.moveTo(ax - mx * b * 0.1, ay - my * b * 0.1); g.lineTo(bx - mx * b * 0.1, by - my * b * 0.1); g.lineTo(bx - mx * b * 0.4, by - my * b * 0.4); g.lineTo(ax - mx * b * 0.4, ay - my * b * 0.4); g.fill();
+    if (!sp) continue;
+    g.fillStyle = pal.riemN; g.beginPath(); const o = ((off * sd) % sp + sp) % sp;
+    for (let p = o; p < ln; p += sp) { const px = ax + ux * p, py = ay + uy * p; g.rect(px - 1.2, py - b / 2, 2.4, b); }
+    g.fill();
+  }
+}
+// wiel of schijf: velg, naaf en glans draaien niet mee, die staan in de vaste laag (m67WielRand); per frame alleen de spaken, alle wielen in één pad
+function m67WielRand(g, pal, x, y, r, rw) {
+  g.fillStyle = pal.ijzer; g.beginPath(); g.arc(x, y, r, 0, m67T); g.arc(x, y, r - rw, 0, m67T, true); g.fill(); g.beginPath(); g.arc(x, y, r * 0.2, 0, m67T); g.fill();
+  g.fillStyle = pal.ijzerL; g.beginPath(); g.arc(x, y, r - rw * 0.25, Math.PI * 1.05, Math.PI * 1.55); g.arc(x, y, r - rw * 0.7, Math.PI * 1.55, Math.PI * 1.05, true); g.fill();
+  g.beginPath(); g.arc(x - r * 0.04, y - r * 0.04, r * 0.08, 0, m67T); g.fill();
+}
+function m67Spaken(g, x, y, r, rw, n, a) { // voegt de spaken toe aan het pad van nu
+  for (let i = 0; i < n; i++) { const b = a + i * m67T / n, c = Math.cos(b), s = Math.sin(b), w0 = r * 0.075, w1 = r * 0.045; g.moveTo(x + c * r * 0.16 - s * w0, y + s * r * 0.16 + c * w0); g.lineTo(x + c * (r - rw * 0.6) - s * w1, y + s * (r - rw * 0.6) + c * w1); g.lineTo(x + c * (r - rw * 0.6) + s * w1, y + s * (r - rw * 0.6) - c * w1); g.lineTo(x + c * r * 0.16 + s * w0, y + s * r * 0.16 - c * w0); g.closePath(); }
+}
+function m67Pil(g, env, tekst, cx, y, alpha, kl, ico) { // vloerhint: donkere pil met een icoontje en korte tekst (één keer getekend per tekst en kleur)
+  const c = m67PilC(env, tekst, kl, ico);
+  cx = env.clamp(cx, 8 + c.w / 2, env.W - 8 - c.w / 2);
+  g.globalAlpha = alpha; g.drawImage(c.cv, Math.round(cx - c.w / 2), Math.round(y - c.h / 2), c.w, c.h); g.globalAlpha = 1;
+}
+function m67PilC(env, tekst, kl, ico) {
+  const key = tekst + kl; let c = m67C.pil[key]; if (c) return c;
+  const m = m67C.fl.g; m.save(); env.ui(m, 13, 800); const tw = m.measureText(tekst).width; m.restore();
+  c = m67C.pil[key] = env.canvas(Math.ceil(tw + 42), 24); m67PilTeken(c.g, env, tekst, c.w, c.h, kl, ico); return c;
+}
+function m67PilTeken(g, env, tekst, w, h, kl, ico) {
+  const x0 = 0, y = h / 2; env.ui(g, 13, 800); g.textAlign = 'left'; g.textBaseline = 'middle';
+  g.fillStyle = 'rgba(29,30,31,.55)'; env.rr(g, x0, 0, w, h, 12); g.fill();
+  const ix = x0 + 16; g.fillStyle = kl;
+  if (ico === 'schep') { g.fillRect(ix - 7, y + 3, 10, 2); g.save(); g.translate(ix, y); g.rotate(-0.7); g.fillRect(-1, -9, 2, 10); g.restore(); g.fillRect(ix - 4, y - 7, 6, 5); }
+  else { g.fillRect(ix - 3, y - 4, 6, 12); g.fillRect(ix - 11, y - 6, 12, 2); g.fillRect(ix - 11, y - 8, 3, 4); g.beginPath(); g.moveTo(ix + 7, y - 2); g.lineTo(ix + 10, y + 3); g.arc(ix + 7, y + 4, 3, -0.3, Math.PI + 0.3); g.closePath(); g.fill(); }
+  g.fillText(tekst, x0 + 30, y + 0.5);
+}
+function m67Draw(g, env) {
+  const S = m67S, G = m67C.G, pal = m67C.pal, bg = m67C.bg, dk = env.dark, red = env.reduced, lite = env.lite, t = S.t, W = env.W, T = env.top;
+  if (!bg) { g.fillStyle = pal ? pal.muur : env.pal.wall; g.fillRect(0, T, W, env.H - T); return; }
+  g.drawImage(bg.cv, 0, T, bg.w, bg.h);
+  const fl = red ? 0.5 : 0.5 + 0.22 * Math.sin(t * 7.3) + 0.16 * Math.sin(t * 12.9 + 1.3) + 0.12 * Math.sin(t * 21.7 + 2.1); // flakkeren (0-1), nooit knipperen
+  // 1. de gloed van het vuur op vloer, muur en ketel, en de vlammen in de deur
+  { const D = G.deur, v = S.vlamD, gl = m67C.gloed;
+    if (gl && v > 0.02) { g.globalAlpha = (dk ? 1 : 0.55) * (0.3 + 0.7 * v) * (0.82 + 0.18 * fl); g.drawImage(gl.cv, G.gloed.x - 110, G.gloed.y - 76, 220, 152); g.globalAlpha = 1; }
+    if (v > 0.02) { const dw = D.x1 - D.x0, dh = D.y1 - D.y0, hh = Math.min(dh / 1.1 - 1, dh * (0.2 + 0.8 * v) * (1 + 0.12 * (fl - 0.5) * 2)); // binnen de deur (geen clip per frame)
+      for (const [kl, f] of [[pal.vuur, 1], [pal.vuurK, 0.55]]) { g.fillStyle = kl; g.beginPath();
+        for (let i = 0; i < 3; i++) { const cx = D.x0 + dw * (0.22 + 0.28 * i), bw = dw * 0.2 * f, h = hh * f * (i === 1 ? 1 : 0.8) * (red ? 1 : 1 + 0.1 * Math.sin(t * 9 + i * 2)), tip = cx + (red ? 0 : Math.sin(t * 5 + i) * 3);
+          g.moveTo(cx - bw, D.y1); g.quadraticCurveTo(cx - bw * 0.9, D.y1 - h * 0.55, tip, D.y1 - h); g.quadraticCurveTo(cx + bw * 0.9, D.y1 - h * 0.55, cx + bw, D.y1); g.closePath(); }
+        g.fill(); } }
+    if (S.vuurUit || v <= 0.02) { g.fillStyle = env.rgba(pal.rook, 0.5); g.fillRect(D.x0 + 4, D.y1 - 8, D.x1 - D.x0 - 8, 6); } } // de resten in de deur
+  // 2. de stapel brandstof (slinkt van boven af met de tijd, en één blok per afblazen)
+  { const St = G.stapel, n = Math.max(0, 30 - Math.floor(30 * Math.min(1, t / S.T)) - S.afblazen);
+    for (const [kl, z] of [[pal.bturf, 1], [pal.bturfL, 0]]) { g.fillStyle = kl; g.beginPath(); // twee kleuren om en om, elk één pad
+      for (let i = 0; i < n; i++) { const r = Math.floor(i / 5), k = i % 5; if (((r * 2 + k) % 3 ? 1 : 0) === z) g.rect(St.x0 + k * St.bw + (r % 2) * St.bw / 2, St.y1 - (r + 1) * St.bh, St.bw - 1, St.bh - 1.5); }
+      g.fill(); } }
+  // 3. de veiligheidsklep (hefboom met gewicht; tilt bij afblazen) en het peilglas (glas, water, streepjes)
+  { const K = G.klep, up = S.klepT > 0 ? (red ? 1 : Math.min(1, S.klepT / 0.2, (1.5 - S.klepT) / 0.15 + 1)) : 0, a = -0.26 * up;
+    g.save(); g.translate(K.x, K.y - K.h + 4); g.rotate(a); g.fillStyle = pal.ijzer; g.fillRect(-4, -1.5, K.len, 3); g.fillStyle = pal.ijzerD; g.beginPath(); g.arc(K.len - 4, 0, 5, 0, m67T); g.fill(); g.restore();
+    g.fillStyle = pal.ijzerD; g.beginPath(); g.arc(K.x, K.y - K.h + 4, 2.2, 0, m67T); g.fill();
+    const P = G.peil, w = P.x1 - P.x0 - 4, h = P.y1 - P.y0 - 4, golf = red ? 0 : Math.sin(t * m67T * 2), lvl = P.y1 - 2 - (h - 2) * S.waterD + golf;
+    g.fillStyle = pal.pglas; g.fillRect(P.x0 + 2, P.y0 + 2, w, h);
+    g.fillStyle = pal.pwater; g.fillRect(P.x0 + 2, lvl, w, P.y1 - 2 - lvl); g.fillStyle = 'rgba(255,255,255,.35)'; g.fillRect(P.x0 + 2, lvl, w, 1.5);
+    for (const [f, dik] of [[0.8, 0], [0.5, 0], [0.2, 1]]) { const y = P.y1 - 2 - (h - 2) * f; if (dik) { const b = S.water < 0.2 ? 5 : 3; g.fillStyle = '#8E3B2A'; g.fillRect(P.x0 + 2, y - b / 2, w, b); g.beginPath(); g.moveTo(P.x1 + 3, y - 4); g.lineTo(P.x1 + 9, y); g.lineTo(P.x1 + 3, y + 4); g.closePath(); g.fill(); }
+      else { g.fillStyle = '#1D1E1F'; g.fillRect(P.x0 + 2, y - 0.6, w, 1.2); } } }
+  // 4. drijfas met schijven, de riemen met naden, het vliegwiel met kruk en drijfstang
+  { const A = G.as, Wl = G.wiel, sp = lite ? 120 : 60, wa = S.wielA, ra = wa * Wl.r / A.r;
+    m67Riem(g, pal, Wl.x, Wl.y, Wl.r, A.sch[0], A.y, A.r, 7, red ? 0 : S.riemP, sp); // bij verminderde beweging staan de naden stil
+    m67Riem(g, pal, A.sch[2], A.y, A.r, G.schijf2.x, G.schijf2.y, G.schijf2.r, 6, red ? 0 : S.riemP, sp);
+    g.fillStyle = pal.ijzer; g.beginPath(); for (const x of A.sch) m67Spaken(g, x, A.y, A.r, 4, 4, ra);
+    m67Spaken(g, G.schijf2.x, G.schijf2.y, G.schijf2.r, 3, 4, ra * A.r / G.schijf2.r); m67Spaken(g, Wl.x, Wl.y, Wl.r, Wl.r * 0.14, 6, wa); g.fill();
+    const kx = Wl.x + Math.cos(wa) * Wl.r * 0.32, ky = Wl.y + Math.sin(wa) * Wl.r * 0.32, L = 150, cx = kx - Math.sqrt(L * L - (ky - Wl.y) * (ky - Wl.y)), ang = Math.atan2(ky - Wl.y, kx - cx), sn = Math.sin(ang) * 3.2, cs = Math.cos(ang) * 3.2;
+    g.fillStyle = pal.ijzerD; g.beginPath(); g.arc(Wl.x, Wl.y, 9, 0, m67T); g.fill(); g.fillStyle = pal.ijzer; g.beginPath(); g.moveTo(cx + sn, Wl.y - cs); g.lineTo(kx + sn, ky - cs); g.lineTo(kx - sn, ky + cs); g.lineTo(cx - sn, Wl.y + cs); g.fill();
+    g.fillStyle = pal.staal; g.beginPath(); g.arc(kx, ky, 3, 0, m67T); g.fill(); }
+  // 5. de stenen: de loper draait (spikkels schuiven), het kropgat, de schuddebak tikt, het graanstraaltje, de schuif op de rail; meelzak
+  { const K = G.kuip, k0 = K.x0, k1 = K.x1, mid = (k0 + k1) / 2, lop0 = K.y0 + 8, span = k1 - k0 - 16, so = S.loperP;
+    g.beginPath(); g.fillStyle = pal.steenS; for (let i = 0; i < 22; i += 2) { const x = k0 + 8 + ((i * 2.71 * 4 + so) % span); if (Math.abs(x - mid) < 9) continue; g.rect(x, lop0 + 2 + ((i * 0.377) % 1) * 9, 2.6, 1.6); } g.fill();
+    g.beginPath(); g.fillStyle = pal.steenL; for (let i = 1; i < 22; i += 2) { const x = k0 + 8 + ((i * 2.71 * 4 + so) % span); if (Math.abs(x - mid) < 9) continue; g.rect(x, lop0 + 2 + ((i * 0.377) % 1) * 9, 2.6, 1.6); } g.fill();
+    g.fillStyle = pal.kgat; g.fillRect(mid - 6, lop0 - 1, 12, 16); g.fillStyle = pal.kgraan; g.fillRect(mid - 4, lop0 + 9, 8, 3);
+    const Ka = G.kaar, tik = red || S.stand >= 6 && S.wielV < 0.05 ? 0 : 1.6 * Math.sin(t * m67T * 3) * Math.min(1, S.wielV * 2), dikte = 1.5 + 1.2 * S.stand;
+    g.fillStyle = pal.mhout; g.beginPath(); g.moveTo(Ka.x + 4 + tik, Ka.y1 + 1); g.lineTo(Ka.x + 13 + tik, Ka.y1 + 5); g.lineTo(Ka.x + 3 + tik, Ka.y1 + 14); g.lineTo(Ka.x - 7 + tik, Ka.y1 + 12); g.closePath(); g.fill(); // schuddebak
+    g.fillStyle = pal.kgraanL; g.beginPath(); for (let i = 0; i < 8; i++) { const f = red ? i / 8 : ((t * 1.6 + i / 8) % 1), y = Ka.y1 + 12 + f * (lop0 - 12 - Ka.y1), x = Ka.x - dikte / 2 + ((i * 0.37) % 1) * dikte; g.rect(x, y, Math.max(1.5, dikte * 0.45), 3); } g.fill();
+    g.fillStyle = pal.mhoutL; g.fillRect(S.schuifX - 4, Ka.rail.y - 7, 8, 11); g.fillStyle = pal.mhoutS; g.fillRect(S.schuifX - 4, Ka.rail.y + 2, 8, 2); g.fillStyle = pal.messing; g.fillRect(S.schuifX - 1.5, Ka.rail.y - 10, 3, 4);
+    const Z = G.zak, vul = Math.min(1, S.kg / 1200), fh = (Z.y1 - Z.y0 - 10) * vul, zw = Z.x1 - Z.x0; // de zak: slap waar hij leeg is, bol waar hij vol is
+    g.fillStyle = pal.meelzakS; g.beginPath(); g.moveTo(Z.x0 + 4, Z.y0); g.lineTo(Z.x1 - 4, Z.y0); g.quadraticCurveTo(Z.x1 - 10, Z.y0 + (Z.y1 - Z.y0) * 0.5, Z.x1 - 8, Z.y1); g.lineTo(Z.x0 + 8, Z.y1); g.quadraticCurveTo(Z.x0 + 10, Z.y0 + (Z.y1 - Z.y0) * 0.5, Z.x0 + 4, Z.y0); g.fill();
+    if (fh > 1) { const y = Z.y1 - fh; g.fillStyle = pal.meelzak; g.beginPath(); g.moveTo(Z.x0 + 2, y + 6); g.quadraticCurveTo(Z.x0 + zw * 0.5, y - 4, Z.x1 - 2, y + 6); g.lineTo(Z.x1 - 1, Z.y1 - 4); g.quadraticCurveTo(Z.x0 + zw * 0.5, Z.y1 + 3, Z.x0 + 1, Z.y1 - 4); g.closePath(); g.fill();
+      g.fillStyle = pal.meelzakS; g.fillRect(Z.x1 - 6, y + 8, 4, Z.y1 - y - 14); }
+    if (S.fD > 0.2 && !red) { g.fillStyle = pal.meel; g.beginPath(); for (let i = 0; i < 5; i++) { const f = (t * 2 + i / 5) % 1; g.rect(G.pijpM.x - 2 + (i % 3), G.pijpM.y1 + f * (Z.y0 - G.pijpM.y1), 2, 2.5); } g.fill(); } // meelstraaltje
+    else if (S.fD > 0.2) { g.fillStyle = pal.meel; g.fillRect(G.pijpM.x - 1.5, G.pijpM.y1, 3, Z.y0 - G.pijpM.y1); } }
+  // 6. de molenaar bij de schuif (stapt, aan het eind schudt hij het hoofd), de stoker met de schop of aan de zwengel, de knecht (eerste stuk)
+  { const Mo = G.molenaar, u = Mo.h / 17.5, Ka = G.kaar, hx = S.schuifX, hy = Ka.rail.y + 3, dx = hx - Mo.x, lean = env.clamp((dx - 44) / 40, 0, 0.9), hoofd = S.schud > 0 && !red ? Math.sin((1.2 - S.schud) * m67T * 1.67) * 0.5 * u : 0;
+    m67Fig(g, Mo.x, Mo.y, u, 1, { kol: pal.molenaar, hand: [hx, hy], buig: lean, hoofd });
+    const Po = G.pomp, pompt = S.pompt || (S.fase === 0 && S.knechtPompt), ph = S.slagP % 1, zw = red ? (ph < 0.5 ? 1 : -1) : Math.sin(ph * m67T), base = Math.atan2(Po.hy - Po.py, Po.hx - Po.px), L = Math.hypot(Po.hx - Po.px, Po.hy - Po.py);
+    const za = base + 0.22 * zw, zx = Po.px + Math.cos(za) * L, zy = Po.py + Math.sin(za) * L; // de zwengel
+    g.fillStyle = pal.ijzer; g.save(); g.translate(Po.px, Po.py); g.rotate(za); g.fillRect(-6, -2, L + 4, 4); g.restore(); g.fillStyle = pal.ijzerD; g.beginPath(); g.arc(Po.px, Po.py, 3.5, 0, m67T); g.fill(); g.fillStyle = pal.messing; g.fillRect(zx - 5, zy - 3, 9, 6);
+    const St = G.stoker, su = St.h / 17.5, sx = S.stokerX, aanPomp = sx > (St.x + St.xPomp) / 2;
+    if (aanPomp) m67Fig(g, sx, St.y, su, 1, { kol: pal.bmens, hand: [zx - 2, zy], hand2: [zx + 2, zy - 2], buig: 0.15 + 0.1 * zw });
+    else { const q = S.schepT > 0 ? 1 - S.schepT / 0.5 : 0, sw = q > 0 ? (red ? (q < 0.4 ? 1 : 0) : Math.sin(q * Math.PI)) : 0, F = m67Fig(g, sx, St.y, su, -1, { kol: pal.bmens, hand: [sx - 2.4 * su - 2.6 * su * sw, St.y - 9 * su - 0.6 * su * sw], hand2: [sx + 0.8 * su - 2.6 * su * sw, St.y - 11 * su - 0.4 * su * sw], buig: 0.6 * sw });
+      const bx = env.lerp(sx - 6.8 * su, G.deur.x1 - 12, sw), by = env.lerp(St.y - 1.2 * su, G.deur.y1 - 14, sw), h1x = sx - 2.4 * su - 2.6 * su * sw, h1y = St.y - 9 * su - 0.6 * su * sw, h2x = sx + 0.8 * su - 2.6 * su * sw, h2y = St.y - 11 * su - 0.4 * su * sw;
+      g.strokeStyle = pal.mhout; g.lineWidth = 2.6; g.beginPath(); g.moveTo(h2x, h2y); g.lineTo(bx, by); g.stroke(); g.fillStyle = pal.ijzer; g.save(); g.translate(bx, by); g.rotate(Math.atan2(by - h1y, bx - h1x)); g.fillRect(-2, -5, 11, 10); g.restore();
+      if (q > 0 && q < 0.5 && !S.vuurUit) { g.fillStyle = pal.bturfL; g.fillRect(bx - 1, by - 9, 6, 4); g.fillRect(bx + 3, by - 7, 5, 3); } void F; }
+    if (S.weg < 2) { const Kn = G.knecht, ku = Kn.h / 17.5; if (S.weg < 0) m67Fig(g, Kn.x, Kn.y, ku, 1, { kol: pal.bmens, hand: [zx - 2, zy], hand2: [zx + 2, zy - 2], buig: pompt ? 0.15 + 0.1 * zw : 0.1 });
+      else { const s = S.weg, kx = Kn.x + 95 * s; m67Fig(g, kx, Kn.y, ku, 1, { kol: pal.bmens, loop: red ? null : s * 2.2 }); } } }
+  // 7. de manometer: de groene band met eindstreepjes, het klepmerk, de wijzer
+  { const M = G.meter, r = M.r, hw = S.gezel ? 0.10 : 0.07, lo = S.bandC - hw, hi = S.bandC + hw, merk = S.gezel ? 0.90 : 0.88;
+    if (S.bandGl > 0) { g.globalAlpha = Math.min(1, S.bandGl / 0.5) * (red ? 0.45 : 0.3 + 0.2 * Math.sin(t * m67T * 1.5)); g.strokeStyle = '#CFAB00'; g.lineWidth = r * 0.16 + 9; g.lineCap = 'round'; // de band is verschoven: gouden gloed
+      g.beginPath(); g.arc(M.x, M.y, r * 0.8, m67Hoek(Math.min(lo, 0.99)), m67Hoek(Math.min(hi, 1))); g.stroke(); g.globalAlpha = 1; }
+    g.lineCap = 'butt'; g.strokeStyle = S.fD > 0.9 && !S.kgVast ? env.mixC(pal.band, '#D8F0B8', 0.3) : pal.band; g.lineWidth = r * 0.16; g.beginPath(); g.arc(M.x, M.y, r * 0.8, m67Hoek(Math.min(lo, 0.99)), m67Hoek(Math.min(hi, 1))); g.stroke(); // in de band licht hij op; stand 6: de band loopt tot het eind van de schaal, niet erbuiten
+    g.strokeStyle = pal.bandR; g.lineWidth = 2.5; g.beginPath(); for (const p of [lo, hi]) { if (p > 1) continue; const a = m67Hoek(p), c = Math.cos(a), s = Math.sin(a); g.moveTo(M.x + c * r * 0.72, M.y + s * r * 0.72); g.lineTo(M.x + c * r * 0.96, M.y + s * r * 0.96); } g.stroke();
+    { const a = m67Hoek(merk), c = Math.cos(a), s = Math.sin(a); g.strokeStyle = pal.merk; g.lineWidth = 3; g.beginPath(); g.moveTo(M.x + c * r * 0.72, M.y + s * r * 0.72); g.lineTo(M.x + c * r * 0.96, M.y + s * r * 0.96); g.stroke();
+      g.fillStyle = pal.merk; g.beginPath(); g.moveTo(M.x + c * r * 0.92, M.y + s * r * 0.92); g.lineTo(M.x + c * r * 1.08 - s * 5, M.y + s * r * 1.08 + c * 5); g.lineTo(M.x + c * r * 1.08 + s * 5, M.y + s * r * 1.08 - c * 5); g.closePath(); g.fill(); }
+    const tril = red ? 0 : 0.004 * Math.sin(t * m67T * 3) * S.wielV, a = m67Hoek(env.clamp(S.wijzer + tril, -0.02, 1.02));
+    g.save(); g.translate(M.x, M.y); g.rotate(a); g.fillStyle = '#1D1E1F'; g.beginPath(); g.moveTo(-r * 0.2, -3); g.lineTo(r * 0.9, -1.2); g.lineTo(r * 0.9, 1.2); g.lineTo(-r * 0.2, 3); g.closePath(); g.fill(); g.beginPath(); g.arc(-r * 0.2, 0, 4.5, 0, m67T); g.fill(); g.restore();
+    g.fillStyle = pal.messing; g.beginPath(); g.arc(M.x, M.y, 5.5, 0, m67T); g.fill(); g.fillStyle = pal.messingL; g.beginPath(); g.arc(M.x - 1.5, M.y - 1.5, 2, 0, m67T); g.fill(); }
+  if (S.uitleg > 0 && S.uitlegTekst) { const M = G.meter, y = M.y + M.r + 22, al = Math.min(1, S.uitleg / 0.4); // korte uitleg bij de manometer, met een pijltje ernaar
+    env.label(g, S.uitlegTekst, M.x, y, { alpha: al }); g.globalAlpha = al; g.fillStyle = '#CFAB00'; g.beginPath(); g.moveTo(M.x - 6, y - 13); g.lineTo(M.x + 6, y - 13); g.lineTo(M.x, y - 20); g.closePath(); g.fill(); g.globalAlpha = 1; }
+  // 8. de lamp (avond: hij brandt en flakkert licht), stofjes in de bundel (overdag)
+  { const R = G.raam; if (dk) { g.fillStyle = '#FFE9B4'; g.beginPath(); g.ellipse(R.x, R.y - 14, 6.4, 8.5, 0, 0, m67T); g.fill(); g.fillStyle = '#FFF7DC'; g.beginPath(); g.ellipse(R.x, R.y - 13 - 0.6 * fl, 2.2, 4.2 + 0.8 * fl, 0, 0, m67T); g.fill(); }
+    else if (!lite && !red) { g.fillStyle = 'rgba(255,240,205,.7)'; g.beginPath(); for (let i = 0; i < 12; i++) { const p = (i * 0.618 + t * 0.012) % 1, d = ((i * 0.37) % 1 - 0.5) * 24, x = R.x - 0.58 * p * 380 + d * 0.8 + Math.sin(t * 0.5 + i) * 3, y = R.y + 0.81 * p * 380 + d + Math.sin(t * 0.7 + i * 2) * 2.5; g.rect(x, y, 1.6, 1.6); } g.fill(); } }
+  // 9. stoom en rook
+  for (const p of S.puffs) { const f = p.life / p.max, r = env.lerp(p.r1, p.r0, f); g.globalAlpha = p.a * f * Math.min(1, (1 - f) * 6 + 0.2); g.fillStyle = p.rook ? pal.rook : pal.stoom; g.beginPath(); g.arc(p.x, p.y, r, 0, m67T); g.arc(p.x + r * 0.7, p.y + r * 0.25, r * 0.7, 0, m67T); g.arc(p.x - r * 0.55, p.y + r * 0.3, r * 0.55, 0, m67T); g.fill(); }
+  g.globalAlpha = 1;
+  if (S.vonk.length) { g.fillStyle = '#FFD27A'; g.beginPath(); for (const v of S.vonk) g.rect(v.x - 1.2, v.y - 1.2, 2.4, 2.4); g.fill(); } // vonkjes
+  // 10. de vloerhints en de gouden pijl bij de overdracht
+  { const Hn = G.hint, puls = !red && (!S.eersteSchep || S.linksGoud > 0 || (t < 30 && t - S.lastIn >= 8)), al = puls ? 0.8 + 0.2 * Math.sin(t * m67T) : 1;
+    const dy = S.toets ? 16 : 0; // de toetsteksten zijn samen breder dan het veld: links iets hoger, rechts iets lager
+    m67Pil(g, env, S.toets ? 'pijl links of T: brandstof' : 'tik: brandstof', Hn.xl, Hn.y - dy, al, S.linksGoud > 0 ? '#CFAB00' : '#F3EED2', 'schep');
+    if (S.fase === 0) m67Pil(g, env, 'water loopt nog mee', Hn.xr, Hn.y + dy, 0.6, '#D8D2BE', 'pomp');
+    else m67Pil(g, env, S.toets ? 'houd pijl rechts of W: water' : 'houd: water', Hn.xr, Hn.y + dy, 1, S.hintGoud > 0 ? '#CFAB00' : '#F3EED2', 'pomp');
+    if (S.pijlT > 0) { const Po = G.pomp, bob = red ? 0 : Math.sin(t * m67T * 1.2) * 4, y = Po.hy - 30 + bob; g.globalAlpha = Math.min(1, S.pijlT / 0.4) * (red ? 1 : 0.75 + 0.25 * Math.sin(t * m67T * 1.2)); g.fillStyle = '#CFAB00'; g.beginPath(); g.moveTo(Po.hx - 11, y - 14); g.lineTo(Po.hx + 11, y - 14); g.lineTo(Po.hx, y); g.closePath(); g.fill(); g.globalAlpha = 1; } }
+}
+// ---------- score en weegbon, automaat, icoontjes ----------
+function m67Score() { return Math.floor(m67S.kg); }
+function m67Result() {
+  const S = m67S, gz = S.gezel, kgBand = Math.floor(S.kg), pct = S.tijdTotaal > 0 ? Math.round(100 * S.tijdBand / S.tijdTotaal) : 0, pct5 = S.tot5 > 0 ? Math.round(100 * S.band5 / S.tot5) : 0;
+  const actief = pct >= 40, zuinig = S.afblazen === 0 && actief, peil = S.laagsteWater >= 0.20, laatste = pct5 >= 50, bonus = (zuinig ? 150 : 0) + (peil ? 100 : 0) + (laatste ? 100 : 0), kg = kgBand + bonus;
+  const fmt = n => String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  const rows = [['Gemalen met de wijzer in de band', fmt(kgBand) + ' kg'], ['Tijd in de band', pct + '%'],
+    zuinig ? ['Zuinig gestookt, niet afgeblazen', '+150 kg'] : ['Afgeblazen', S.afblazen + ' keer'],
+    peil ? ['Water altijd op peil', '+100 kg'] : S.vuurUitN > 0 ? ['Vuur uit door laag water', S.vuurUitN + ' keer'] : ['Water onder het streepje geweest', 'geen bonus'],
+    ['Laatste stand, tijd in de band', laatste ? pct5 + '%, +100 kg' : pct5 + '%']];
+  const q = pct >= 80 ? ['Vaste hand', '#E78A01'] : pct >= 60 ? ['Goede stoker', '#CFAB00'] : pct >= 40 ? ['Leerling aan de ketel', '#C5AA20'] : ['Eerste dag aan de ketel', '#A8A29A'];
+  const badges = []; if (pct >= (gz ? 60 : 70)) badges.push('vak'); if (zuinig && S.vuurUitN === 0) badges.push('betr'); if (zuinig && peil && laatste) badges.push('ond');
+  return { kg, rows, quality: { label: q[0], note: `De wijzer stond ${pct}% van de tijd in de groene band.`, col: q[1] },
+    slot: 'Deze machine van 2 pk bleek al snel te klein, hoe goed je ook stookte. Hij moest vervangen worden.', badges, weak: kg < (gz ? 350 : 450) || pct < 35 };
+}
+// de automaat: een eenvoudige regelaar die het evenwichtsvuur van de stand zoekt en in stukjes pompt (circa 900 tot 1.100 kg); nu en
+// dan slordig (per potje anders), zodat de tests ook afblazen en laag water zien
+function m67Auto(env) {
+  const S = m67S; if (S.kgVast) { S.pompAuto = false; return; }
+  const A = S.auto || (S.auto = { cd: 0, hold: false, off: 0, offT: 0, weg: 0, wegT: 8 + env.rnd() * 6, slordig: env.rnd() < 0.5 ? 1 : 0, zorg: env.rnd() < 0.3 ? 0.13 : 0.45 + env.rnd() * 0.3 });
+  A.cd -= m67DT; A.offT -= m67DT; A.wegT -= m67DT; if (A.weg > 0) A.weg -= m67DT;
+  if (A.wegT <= 0) { A.wegT = 13 + env.rnd() * 7; A.weg = 2.5 + env.rnd() * 2; } // en soms kijkt hij even niet naar het vuur
+  if (A.offT <= 0) { A.offT = 4 + env.rnd() * 4; A.off = -0.13 + env.rnd() * 0.18; } // een mens mikt niet precies: nu eens wat laag, dan wat hoog
+  const c = m67Kern(S.stand) + A.off, hw = S.gezel ? 0.10 : 0.07, lo = c - hw;
+  const vEq = (Math.max(0.1, c) + 0.5) * 0.09 * (1 + 0.12 * (S.stand - 1)) / 0.20, slordig = A.slordig && S.t > 60 && S.t < 70 ? 0.3 : 0;
+  const doel = Math.min(1, vEq + (S.druk < c ? 0.08 : 0) + slordig);
+  if (!S.vuurUit && A.cd <= 0 && A.weg <= 0 && S.vuur < doel && (S.druk < c + 0.02 || slordig)) { m67Schep(env); A.cd = 0.35; }
+  if (S.fase >= 1) {
+    if (S.water < A.zorg || (S.vuurUit && S.water < 0.35)) A.hold = true;
+    if (S.water > 0.8 || (S.druk < lo - 0.02 && S.water > 0.3 && !S.vuurUit)) A.hold = false;
+    S.pompAuto = A.hold;
+  }
+}
+function m67IcoMeter(g, x, y, s) { const r = s * 0.46; g.fillStyle = '#1D1E1F'; g.beginPath(); g.arc(x, y, r, 0, m67T); g.fill(); g.fillStyle = '#F3EED2'; g.beginPath(); g.arc(x, y, r * 0.82, 0, m67T); g.fill();
+  g.strokeStyle = '#4F8A3C'; g.lineWidth = r * 0.22; g.beginPath(); g.arc(x, y, r * 0.6, m67Hoek(0.42), m67Hoek(0.62)); g.stroke();
+  g.save(); g.translate(x, y); g.rotate(m67Hoek(0.52)); g.fillStyle = '#1D1E1F'; g.fillRect(-r * 0.15, -r * 0.07, r * 0.85, r * 0.14); g.restore(); g.fillStyle = '#C9A24A'; g.beginPath(); g.arc(x, y, r * 0.12, 0, m67T); g.fill(); }
+function m67IcoVuur(g, x, y, s) { const r = s * 0.46; g.fillStyle = '#5A3B26'; g.fillRect(x - r * 0.9, y + r * 0.25, r * 1.8, r * 0.55); g.fillStyle = '#6E4A30'; g.fillRect(x - r * 0.9, y + r * 0.25, r * 1.8, r * 0.12);
+  g.fillStyle = '#F29A3A'; g.beginPath(); g.moveTo(x - r * 0.55, y + r * 0.3); g.quadraticCurveTo(x - r * 0.6, y - r * 0.4, x, y - r * 0.95); g.quadraticCurveTo(x + r * 0.6, y - r * 0.4, x + r * 0.55, y + r * 0.3); g.closePath(); g.fill();
+  g.fillStyle = '#FFD27A'; g.beginPath(); g.moveTo(x - r * 0.25, y + r * 0.3); g.quadraticCurveTo(x - r * 0.2, y - r * 0.1, x, y - r * 0.45); g.quadraticCurveTo(x + r * 0.2, y - r * 0.1, x + r * 0.25, y + r * 0.3); g.closePath(); g.fill(); }
+function m67IcoPomp(g, x, y, s) { const r = s * 0.46; g.fillStyle = '#3A3F44'; g.fillRect(x - r * 0.25, y - r * 0.35, r * 0.5, r * 1.25); g.fillRect(x - r * 0.5, y + r * 0.75, r, r * 0.15);
+  g.fillStyle = '#7E858C'; g.fillRect(x - r * 0.95, y - r * 0.55, r * 1.1, r * 0.16); g.fillRect(x - r * 0.95, y - r * 0.75, r * 0.2, r * 0.4);
+  g.fillStyle = '#5FA8D3'; g.beginPath(); g.moveTo(x + r * 0.55, y - r * 0.1); g.lineTo(x + r * 0.78, y + r * 0.3); g.arc(x + r * 0.55, y + r * 0.38, r * 0.24, -0.35, Math.PI + 0.35); g.closePath(); g.fill(); }
+mgRegister(1867, { naam: 'Vuur onder de ketel',
+  hoe: { kop: 'Houd de wijzer in de groene band', regel: 'Vuur geeft druk, de stenen gebruiken druk.', // de rest legt het spel in beeld uit, op het moment zelf
+    touch: 'Tik links voor brandstof, houd rechts ingedrukt voor water.', toets: 'Pijl links of T: brandstof. Pijl rechts of W ingedrukt: water.' },
+  nieuw: [{ name: 'Manometer', act: 'wijzer in de groene band houden', ico: m67IcoMeter }, { name: 'Brandstof', act: 'tik links, het vuur zakt vanzelf', ico: m67IcoVuur }, { name: 'Waterpomp', act: 'houd rechts, komt na een poosje', ico: m67IcoPomp }],
+  book: [
+    { id: 'm67-stoker', name: 'De knecht aan de ketel', ico: m67IcoVuur, text: 'Bij een kleine stoommolen bediende de molenaar zelf of zijn knecht de stoommachine, na een korte opleiding van de machinefabrikant. Zuinig stoken leerde hij door ervaring. Een koude ketel opstoken was duur, dus een stoommolen moest zoveel mogelijk doordraaien.',
+      act: 'In het spel: jij bent die knecht. Tik links voor brandstof en houd de wijzer in de groene band, dan draaien de stenen en vult de zak zich.' },
+    { id: 'm67-ketel', name: 'Klep, manometer en peilglas', ico: m67IcoMeter, text: 'Een stoomketel had drie wachters: een veiligheidsklep die te hoge druk afblaast, een manometer voor de druk en een peilglas voor het water. Te laag water was de grootste oorzaak van ketelongelukken. Omwonenden van de eerste stoommolens waren bang voor het springen van de ketel en voor rook en lawaai.',
+      act: 'In het spel: te hoog en de klep blaast stoom af, dat kost brandstof. Zakt het water tot onder het streepje, dan gaat het vuur uit en moet je eerst pompen. Ontploffen kan hier niet.' },
+    { id: 'm67-tweepk', name: 'Twee pk', ico: m67IcoPomp, text: 'De stoommachine in de fabriek van Hein Blok Wybrandi had 2 pk. Dat bleek al snel te weinig, en de machine moest vervangen worden. Waarmee gestookt werd, turf of kolen, weten we niet. In 1856 klaagde een stoommolen in Leeuwarden dat hij door de duurte van turf met minder voordeel draaide.',
+      act: 'In het spel: de molenaar zet de graantoevoer stap voor stap verder open, tot de groene band buiten bereik schuift. Dan houdt de machine het niet meer, hoe goed je ook stookt. Je score staat dan al vast.' }],
+  build: m67Build, start: m67Start, update: m67Update, draw: m67Draw, pointer: m67Pointer, key: m67Key,
+  progress: () => Math.min(1, m67S.t / m67S.T), storyOK: m67StoryOK, pauseHook: m67Pause, resumeHook: m67Resume, score: m67Score, result: m67Result, auto: m67Auto });
 // ===== MINIGAME 1867 EIND =====
 } catch (e) { mgFail(1867, e); }
 // ---- niet aanpassen: scheiding voor git merge-file (1867 en 1920, regel 1 van 5) ----
