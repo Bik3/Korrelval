@@ -11202,7 +11202,595 @@ function mgState() {
 // ------------------------------------------------------------------------------------------------------------------------------
 try {
 // ===== MINIGAME 1846 BEGIN =====
-// 1846: de minigame is nog niet klaar; deze molen speelt voorlopig het valspel.
+// Rondje om de spil (mg-ontwerp-1846.md). Rondjes draaien met muis, vinger of toetsen om de spil: het paard volgt je hand met speling en
+// demping (nooit onder de hand), de spil en het kamwiel draaien mee, en alleen als de wijzer van de stapmeter in de groene band staat tikt
+// de schudbak en loopt er meel in de zak. Te snel: het paard houdt in en stokt (Ho). Hup bij de open deur, graanbak bijvullen, zak
+// wisselen; een lege graanbak laat de steen warm lopen en dan loopt er verkleurd meel (telt mee, staat apart op de bon). 90 s.
+// Alle namen beginnen met m46. Het veld is 400 x 720 (staand): de maten uit hoofdstuk 1.2, de kleuren uit j46Kl (hoofdstuk 1.5).
+// Schermhoek a: 0 = rechts, 90 graden = boven (de deur), 180 = links, 270 = onder (de camera). Het paard loopt met de klok mee (A daalt).
+const m46TAU = Math.PI * 2, m46DUUR = 90, m46RATE = 12, m46ZAKKG = 400, m46OM = m46TAU / 10; // kg per s in de band; kg per zak; rad/s per rondje per 10 s
+const m46KL = { // l: dag (licht thema), d: avond (donker thema); uit j46Kl, plus warmTun, verkleurd, sandLit en de UI-kleuren
+  l: { roofIn: '#1F150B', wall: '#3B2816', wall2: '#523822', wallSeam: 'rgba(14,8,3,.6)', rafter: '#2C1D0F', slit: 'rgba(250,228,180,.25)',
+    doorOut: '#F4EAD2', doorOut2: '#D9CDA8', doorWood: '#5A3F26', doorWoodSh: '#3A2817', patch: 'rgba(255,224,160,.30)', mote: 'rgba(255,240,205,.8)',
+    loam: '#5E4A30', loam2: '#54422A', sand: '#C9B386', sandSh: '#AD9766', hoof: 'rgba(110,90,56,.45)', sandLit: null,
+    spindle: '#5E3F22', spindleLit: '#80592F', spindleSh: '#3A2614', iron: '#2A2A2A', ironHi: 'rgba(220,220,220,.35)', taats: '#7D7A72',
+    rim: '#7A4F26', rimLit: '#9C6A38', rimSh: '#4E3218', cog: '#C99A3A', cogSh: '#93702A', arm: '#6B4424', sweep: '#6E4B2A', sweepLit: '#8E6638',
+    stave: '#C8A878', pinion: '#5A3F26', steel: '#3A3A3C', steelHi: '#9AA0A6', stool: '#5A3F26', stoolSh: '#3E2A18', tun: '#7A5634', tunLit: '#9A6E42', tunSh: '#5B3E24',
+    lid: '#8A6A44', edge: '#E9C68C', warmTun: '#8E4A2A', stone: '#5F6468', stoneLit: '#80868B', eye: '#16100A', hopper: '#7A5634', hopperLit: '#9A6E42', hopperSh: '#5B3E24',
+    trestle: '#4A3320', seed: '#3B2C21', seedHi: '#6E5A45', meal: '#DCD5C7', mealSh: '#B8B0A0', verkleurd: '#A88E70', sack: '#CDBE9C', sackSh: '#A89878', sackTie: '#7A6A50',
+    bolter: '#5E4128', bolterSh: '#3E2A18', horse: '#6E472A', horseSh: '#4E301C', horseRim: '#E4B377', mane: '#2A1A0C', hoofC: '#2A221C', harness: '#1E140C',
+    collar: '#3E2A18', collarPad: '#6B4A2B', brass: '#C7A257', band: '#8FB46A', wijzer: '#F3EED2', gloed: '#CFAB00', tekst: '#F3EED2', lamp: null },
+  d: { roofIn: '#0E0904', wall: '#1E140B', wall2: '#2A1C10', wallSeam: 'rgba(0,0,0,.6)', rafter: '#120B05', slit: 'rgba(90,110,140,.25)',
+    doorOut: '#3B4A5C', doorOut2: '#2C3846', doorWood: '#2A1C10', doorWoodSh: '#1A1008', patch: 'rgba(110,140,180,.10)', mote: 'rgba(255,226,170,.85)',
+    loam: '#2A2016', loam2: '#241B12', sand: '#6E5C40', sandSh: '#55452E', hoof: 'rgba(20,14,8,.45)', sandLit: '#B08A55',
+    spindle: '#2E1E10', spindleLit: '#8A5E30', spindleSh: '#160E06', iron: '#151515', ironHi: 'rgba(255,214,140,.4)', taats: '#3A3834',
+    rim: '#3E2814', rimLit: '#8A5A2C', rimSh: '#1E1209', cog: '#B07A34', cogSh: '#5A3E18', arm: '#33200F', sweep: '#33200F', sweepLit: '#7A522A',
+    stave: '#8A7248', pinion: '#2A1A0C', steel: '#1E1E20', steelHi: '#C8A070', stool: '#2A1A0C', stoolSh: '#180F06', tun: '#3E2A16', tunLit: '#94693F', tunSh: '#24180C',
+    lid: '#4A3820', edge: '#E0A25A', warmTun: '#6E3A22', stone: '#3E4246', stoneLit: '#6E7276', eye: '#0A0704', hopper: '#3E2A16', hopperLit: '#8A6238', hopperSh: '#24180C',
+    trestle: '#22160A', seed: '#2A1F17', seedHi: '#8A7050', meal: '#BDB4A2', mealSh: '#8E8676', verkleurd: '#7E6A52', sack: '#6E6656', sackSh: '#4E483C', sackTie: '#3A342A',
+    bolter: '#2E1E10', bolterSh: '#180F06', horse: '#3A2616', horseSh: '#24170C', horseRim: '#E0A25A', mane: '#140C06', hoofC: '#100C08', harness: '#0E0905',
+    collar: '#1E140B', collarPad: '#3A2616', brass: '#E0B064', band: '#7FA35C', wijzer: '#F3EED2', gloed: '#CFAB00', tekst: '#F3EED2', lamp: '#FFE9B0' },
+};
+// de indeling voor 400 x 720 (ontwerp 1.2, staand): spil C, ringstraal R, platte projectie met k = 0,62; hoogte: hz px per meter
+const m46L = (() => {
+  const W = 400, top = 74, Hp = 646, H = top + Hp, R = Math.min(0.36 * W, 0.30 * Hp), k = 0.62, Cx = W / 2, Cy = top + 0.54 * Hp, hz = R * 0.70 / 2.65, m = R / 2.65;
+  const yVloer = Cy - 1.9 * R * k, yWand = yVloer - 3.2 * hz, dw = 2.9 * m / 2, dx0 = Cx - dw, dx1 = Cx + dw, dy0 = yVloer - 2.8 * hz; // verre wand en deur
+  const ka = 135 * Math.PI / 180, Kx = Cx + 1.3 * R * Math.cos(ka), Ky = Cy - 1.3 * R * Math.sin(ka) * k, lidY = Ky - 2.1 * hz, stoelY = Ky - 1.65 * hz, kr = 0.65 * m; // maalstoel en kuip
+  const Cw = Cy - 2.7 * hz, rx = 1.3 * R, ry = 1.3 * R * k, Px = Cx + rx * Math.cos(ka), Py = Cw - ry * Math.sin(ka); // kamwielrand (2,7 m) en het rondsel erop
+  const bak = { x: 0.235 * W, y: top + 0.248 * Hp, w: 0.30 * R, h: 0.28 * R }, zak = { x: 0.06 * W, w: 0.22 * R, y0: top + 0.33 * Hp, y1: top + 0.43 * Hp };
+  const rij = { x0: 0.03 * W, x1: 0.14 * W, y0: top + 0.44 * Hp, y1: top + 0.50 * Hp }, meter = { x: 0.15 * W, y: top + 0.90 * Hp, r: 0.28 * R };
+  const buil = { x0: 0.55 * W, x1: 0.95 * W, y0: top + 0.86 * Hp, y1: H + 12 }, lant = { x: 0.74 * W, y: yVloer - 2.25 * hz }, yRing = Cy - 1.17 * R * k;
+  return { W, top, Hp, H, R, k, Cx, Cy, hz, m, yVloer, yWand, dx0, dx1, dy0, ka, Kx, Ky, lidY, stoelY, kr, Cw, rx, ry, Px, Py, bak, zak, rij, meter, buil, lant, yRing };
+})();
+const m46 = { K: m46KL.l, st: null, meter: null, env: null, motes: [], hoeven: [], deeltjes: [], hand: { x: 0, y: 0, t: -9, down: false, mouse: false, on: false },
+  toasts: {}, gezegd: {}, keys: {} };
+const m46P = (d, a, h) => [m46L.Cx + d * m46L.R * Math.cos(a), m46L.Cy - d * m46L.R * m46L.k * Math.sin(a) - (h || 0) * m46L.hz]; // vloerpunt (ringstralen, hoek, m hoog)
+// paardruimte: f langs de looprichting, l naar de spil toe (ringstralen), h meter hoog; het voetpunt staat op de ring onder hoek A
+const m46H = (f, l, h) => { const L = m46L, A = m46.A, sA = Math.sin(A), cA = Math.cos(A); return [L.Cx + (cA + f * sA - l * cA) * L.R, L.Cy - (sA - f * cA - l * sA) * L.R * L.k - (h || 0) * L.hz]; };
+const m46Mix3 = (v, f) => { const i = Math.min(1, Math.floor(f)); return v[i] + (v[i + 1] - v[i]) * (f - i); }; // fase 0, 1, 2 met de overgangen ertussen
+const m46Fase = t => t < 30 ? 0 : t < 33 ? (t - 30) / 3 : t < 60 ? 1 : t < 63 ? 1 + (t - 60) / 3 : 2;
+const m46PolyAdd = (g, p) => { g.moveTo(p[0][0], p[0][1]); for (let i = 1; i < p.length; i++) g.lineTo(p[i][0], p[i][1]); g.closePath(); }; // erbij in het lopende pad
+const m46Poly = (g, p) => { g.beginPath(); m46PolyAdd(g, p); };
+const m46Blit = (g, c, x, y) => { const k = c.k; g.drawImage(c.cv, Math.round(x * k) / k, Math.round(y * k) / k, c.cv.width / k, c.cv.height / k); }; // een plaatje op het pixelraster, op ware grootte (geen herbemonstering)
+const m46Ell = (g, x, y, rx, ry) => { g.beginPath(); g.ellipse(x, y, rx, ry, 0, 0, m46TAU); };
+const m46Lijn = (g, a, b, w, col, cap) => { g.beginPath(); g.moveTo(a[0], a[1]); g.lineTo(b[0], b[1]); g.lineWidth = w; g.strokeStyle = col; g.lineCap = cap || 'round'; g.stroke(); };
+// ---------- build: de stilstaande laag (dak, wanden, deur, vloer, ring, maalstoel, zak, builkist) en de wijzerplaat, in stappen ----------
+function m46Build(env) { return m46Bouw(env); } // een generator: het raamwerk bouwt in stapjes
+function* m46Bouw(env) {
+  const L = m46L, K = m46.K = env.dark ? m46KL.d : m46KL.l; m46.env = env;
+  const c = env.canvas(L.W, L.Hp), g = c.g; g.save(); g.translate(0, -L.top); m46.st = null; m46.stilC = null; m46.draaiTxt = null; m46.pijlen = null; m46.popTxt = null; m46.zakSpr = null; m46.spilSpr = null; m46.wielF = null; m46.vastC = null; m46.meterC = null;
+  // dak, verre wand met staande planken en lichtkieren, balk, de open deur
+  g.fillStyle = K.roofIn; g.fillRect(0, L.top, L.W, L.yWand - L.top + 1);
+  g.fillStyle = K.wall; g.fillRect(0, L.yWand, L.W, L.yVloer - L.yWand);
+  g.fillStyle = K.wall2; for (let x = 7; x < L.W; x += 28) g.fillRect(x, L.yWand, 13, L.yVloer - L.yWand);
+  g.fillStyle = K.wallSeam; for (let x = 0; x < L.W; x += 14) g.fillRect(x, L.yWand, 1, L.yVloer - L.yWand);
+  if (!env.dark) { g.fillStyle = K.slit; for (const x of [43, 99, 323, 365]) g.fillRect(x, L.yWand + 12, 1.5, L.yVloer - L.yWand - 26); }
+  g.fillStyle = K.doorOut; g.fillRect(L.dx0, L.dy0, L.dx1 - L.dx0, L.yVloer - L.dy0);
+  g.fillStyle = K.doorOut2; g.fillRect(L.dx0, L.dy0 + (L.yVloer - L.dy0) * 0.56, L.dx1 - L.dx0, (L.yVloer - L.dy0) * 0.44);
+  g.fillStyle = K.rafter; g.fillRect(0, L.yWand, L.W, 8);
+  // plankje met een zandloper (decor; de zandloper die telt staat in de HUD) links van de deur
+  g.fillStyle = K.rafter; g.fillRect(L.dx0 - 44, L.dy0 + 34, 30, 4); g.fillStyle = K.stoolSh; g.fillRect(L.dx0 - 41, L.dy0 + 36, 24, 2);
+  { const x = L.dx0 - 29, y = L.dy0 + 18; g.fillStyle = K.trestle; g.fillRect(x - 6, y - 2, 12, 2); g.fillRect(x - 6, y + 14, 12, 2);
+    g.beginPath(); g.moveTo(x - 4.5, y); g.lineTo(x + 4.5, y); g.lineTo(x + 0.8, y + 7); g.lineTo(x + 4.5, y + 14); g.lineTo(x - 4.5, y + 14); g.lineTo(x - 0.8, y + 7); g.closePath(); g.strokeStyle = K.stave; g.lineWidth = 1; g.stroke();
+    g.fillStyle = K.sandSh; g.beginPath(); g.moveTo(x - 3, y + 2); g.lineTo(x + 3, y + 2); g.lineTo(x, y + 7); g.closePath(); g.fill(); g.beginPath(); g.moveTo(x - 4, y + 13.5); g.lineTo(x + 4, y + 13.5); g.lineTo(x + 1.5, y + 10); g.lineTo(x - 1.5, y + 10); g.closePath(); g.fill(); }
+  yield;
+  // vloer: leem, dichtbij iets donkerder; overdag het lichtvlak van de deur, 's avonds de lantaarnkring (drie vlakke ellipsen)
+  g.fillStyle = K.loam; g.fillRect(0, L.yVloer, L.W, L.H - L.yVloer);
+  g.fillStyle = K.loam2; g.fillRect(0, L.top + 0.70 * L.Hp, L.W, L.H);
+  if (!env.dark) { const hw = (L.dx1 - L.dx0) * 0.75; m46Poly(g, [[L.dx0, L.yVloer], [L.dx1, L.yVloer], [L.Cx + hw, L.yRing], [L.Cx - hw, L.yRing]]); g.fillStyle = K.patch; g.fill(); }
+  else for (const [rx, ry, a] of [[120, 36, 0.08], [78, 24, 0.18], [40, 12, 0.30]]) { m46Ell(g, L.Cx, L.yVloer + 8, rx, ry); g.fillStyle = `rgba(255,214,140,${a})`; g.fill(); }
+  // de deurbladen staan naar binnen open (schuin langs de opening)
+  for (const s of [-1, 1]) { const x = s < 0 ? L.dx0 : L.dx1, w = 0.18 * L.R * s;
+    m46Poly(g, [[x, L.dy0], [x, L.yVloer], [x + w, L.yVloer + 17], [x + w, L.dy0 + 17]]); g.fillStyle = K.doorWood; g.fill();
+    m46Poly(g, [[x + w * 0.8, L.dy0 + 14], [x + w, L.dy0 + 17], [x + w, L.yVloer + 17], [x + w * 0.8, L.yVloer + 14]]); g.fillStyle = K.doorWoodSh; g.fill(); }
+  yield;
+  // zandring (0,83 tot 1,17 R) met het uitgelopen spoor en hoefafdrukken; 's avonds is het kwart bij de deur iets lichter
+  const ring = (r0, r1, col) => { g.beginPath(); g.ellipse(L.Cx, L.Cy, r1 * L.R, r1 * L.R * L.k, 0, 0, m46TAU); g.ellipse(L.Cx, L.Cy, r0 * L.R, r0 * L.R * L.k, 0, 0, m46TAU, true); g.fillStyle = col; g.fill('evenodd'); };
+  ring(0.83, 1.17, K.sand); ring(0.93, 1.07, K.sandSh);
+  if (K.sandLit) { g.beginPath(); g.ellipse(L.Cx, L.Cy, 1.17 * L.R, 1.17 * L.R * L.k, 0, -Math.PI * 0.25, -Math.PI * 0.75, true); g.ellipse(L.Cx, L.Cy, 0.83 * L.R, 0.83 * L.R * L.k, 0, -Math.PI * 0.75, -Math.PI * 0.25); g.closePath(); g.fillStyle = K.sandLit; g.globalAlpha = 0.28; g.fill(); g.globalAlpha = 1; }
+  { const r = env.seed(1846); g.fillStyle = K.hoof; g.beginPath(); for (let i = 0; i < 40; i++) { const a = i / 40 * m46TAU + r() * 0.08; for (const d of [0.965, 1.035]) { const p = m46P(d, a, 0); g.moveTo(p[0] + 2.4, p[1]); g.ellipse(p[0], p[1], 2.4, 1.5, 0, 0, m46TAU); } } g.fill(); }
+  yield;
+  // taatspot: een ronde kei met een donker gat; de spil zelf komt elk frame (vóór of achter het paard)
+  m46Ell(g, L.Cx, L.Cy + 1, 0.18 * L.R, 0.18 * L.R * L.k); g.fillStyle = K.taats; g.fill(); m46Ell(g, L.Cx, L.Cy, 9, 5); g.fillStyle = K.eye; g.fill();
+  // builkist tegen de achterwand, onderin rechts (decor, zoals in de jaarintro)
+  { const b = L.buil; g.fillStyle = K.bolter; g.fillRect(b.x0, b.y0, b.x1 - b.x0, b.y1 - b.y0); g.fillStyle = K.bolterSh; g.fillRect(b.x0, b.y0 + 14, b.x1 - b.x0, b.y1 - b.y0 - 14); g.fillRect(b.x0, b.y0 + 13, b.x1 - b.x0, 1.5);
+    g.fillStyle = K.stoolSh; for (const x of [b.x0 + 24, b.x0 + (b.x1 - b.x0) / 2, b.x1 - 24]) g.fillRect(x, b.y0 + 14, 2, b.y1 - b.y0); }
+  yield;
+  m46Stoel(g, env, K);
+  yield;
+  if (env.dark) { // de lantaarn aan de rechter deurpost
+    const x = L.lant.x, y = L.lant.y; g.fillStyle = '#111'; g.fillRect(x - 0.5, L.yWand + 8, 1, y - 14 - L.yWand - 8);
+    g.fillStyle = '#2A2A2A'; g.fillRect(x - 6, y - 14, 12, 3); g.fillRect(x - 5.5, y + 11, 11, 2.5); g.fillStyle = K.lamp; g.fillRect(x - 4.5, y - 11, 9, 22); }
+  m46RandTeken(g); // de kamwielrand draait niet mee: in de stille laag (de kammen komen per frame als plaatje)
+  g.restore(); m46.st = c;
+  yield;
+  // de wijzerplaat van de stapmeter: een hoefijzer (220 graden, opening onder) met hoefafdrukken als schaalstreepjes; de band en de wijzer komen per frame
+  const mc = env.canvas(110, 110), mg2 = mc.g, M = L.meter, r = M.r; mg2.save(); mg2.translate(55, 55);
+  mg2.beginPath(); mg2.arc(0, 0, r, Math.PI * 0.89, Math.PI * 2.11); mg2.lineWidth = 11; mg2.lineCap = 'round'; mg2.strokeStyle = K.iron; mg2.stroke();
+  mg2.beginPath(); mg2.arc(0, 0, r + 5.5, Math.PI * 0.89, Math.PI * 2.11); mg2.arc(0, 0, r - 5.5, Math.PI * 2.11, Math.PI * 0.89, true); mg2.lineWidth = 1.2; mg2.lineCap = 'butt'; mg2.strokeStyle = '#C8A878'; mg2.stroke();
+  for (const q of [0, 0.5, 1.0, 1.5, 2.0]) { const a = Math.PI * (0.89 + q / 2 * 1.22), x = Math.cos(a) * (r - 12), y = Math.sin(a) * (r - 12); mg2.fillStyle = 'rgba(243,238,210,.55)'; mg2.beginPath(); mg2.ellipse(x, y, 2.6, 2, a + Math.PI / 2, 0, m46TAU); mg2.fill(); mg2.fillStyle = K.iron; mg2.beginPath(); mg2.ellipse(x, y, 1.1, 0.9, a + Math.PI / 2, 0, m46TAU); mg2.fill(); }
+  mg2.restore(); m46.meter = mc;
+  yield;
+  { const w = 0.11 * L.R, sc = env.canvas(Math.ceil(w + 4), Math.ceil(L.Cy + 5 - L.top)), sg = sc.g; sg.save(); sg.translate(-(L.Cx - w / 2 - 2), -(L.top - 2)); m46SpilTeken(sg, K); sg.restore(); m46.spilSpr = sc; } // de spil
+  m46.wielF = null; const wf = [];
+  for (let q = 0; q < m46WF; q++) { const c = env.canvas(408, 254), cg = c.g; cg.save(); cg.translate(204 - L.Cx, 127 - L.Cw); m46WielTeken(cg, env, q / m46WF * m46TAU / 72); cg.restore(); wf.push(c); yield; }
+  m46.wielF = wf;
+  m46.vastC = env.canvas(170, 260); m46.vastKey = null; m46.meterC = env.canvas(110, 110); m46.meterKey = null; // lagen die alleen bij een zichtbare verandering opnieuw getekend worden
+  yield;
+  { const tc = env.canvas(280, 32), tg = tc.g; env.ui(tg, 18, 800); tg.textAlign = 'center'; tg.textBaseline = 'middle'; tg.lineWidth = 4; tg.lineJoin = 'round'; // de zin van de beginhint, voorgetekend
+    tg.strokeStyle = 'rgba(20,20,21,.8)'; tg.strokeText('Draai rondjes om de spil', 140, 16); tg.fillStyle = K.tekst; tg.fillText('Draai rondjes om de spil', 140, 16); m46.draaiTxt = tc; }
+  { const pc = env.canvas(64, 22), pg = pc.g; env.ui(pg, 13, 800); pg.textAlign = 'center'; pg.textBaseline = 'middle'; pg.lineWidth = 3.5; pg.lineJoin = 'round'; // +25 kg bij de zak, voorgetekend
+    pg.strokeStyle = 'rgba(20,20,21,.85)'; pg.strokeText('+25 kg', 32, 11); pg.fillStyle = K.tekst; pg.fillText('+25 kg', 32, 11); m46.popTxt = pc; }
+  { const zc = env.canvas(16, 38), zg = zc.g, x = 8, yb = 37, zw = 14; // een dichtgebonden volle zak
+    zg.fillStyle = K.sack; zg.beginPath(); zg.moveTo(x - zw / 2, yb); zg.lineTo(x + zw / 2, yb); zg.lineTo(x + zw / 2 - 1, yb - 28); zg.lineTo(x + 3, yb - 36); zg.lineTo(x - 3, yb - 36); zg.lineTo(x - zw / 2 + 1, yb - 28); zg.closePath(); zg.fill();
+    zg.fillStyle = K.sackSh; zg.fillRect(x + 1, yb - 26, zw / 2 - 2, 26); zg.fillStyle = K.sackTie; zg.fillRect(x - 4, yb - 31, 8, 2.5); m46.zakSpr = zc; }
+  m46.pijlen = [m46Pijl(env, 1.05, 2.1), m46Pijl(env, -2.1, -1.05)]; // twee pijlen langs de zandring, met de klok mee (onder van rechts naar links, boven van links naar rechts)
+  m46.stilC = env.canvas(L.W, L.Hp); m46.stilKlaar = false; // het eerste beeld, zolang de introband wacht (t = 0)
+}
+// een gouden pijl langs de zandring (ringhoek t0 tot t1 in canvasgraden), voorgetekend op een klein plaatje
+function m46Pijl(env, t0, t1) {
+  const L = m46L, pts = []; for (let i = 0; i <= 16; i++) { const t = t0 + (t1 - t0) * i / 16; pts.push([L.Cx + L.R * Math.cos(t), L.Cy + L.R * L.k * Math.sin(t)]); }
+  const x0 = Math.floor(Math.min(...pts.map(q => q[0])) - 16), y0 = Math.floor(Math.min(...pts.map(q => q[1])) - 16), x1 = Math.ceil(Math.max(...pts.map(q => q[0])) + 16), y1 = Math.ceil(Math.max(...pts.map(q => q[1])) + 16);
+  const c = env.canvas(x1 - x0, y1 - y0), g = c.g; g.save(); g.translate(-x0, -y0); g.lineCap = 'round';
+  const kop = [L.Cx + L.R * Math.cos(t1), L.Cy + L.R * L.k * Math.sin(t1)], tx = -Math.sin(t1), ty = Math.cos(t1) * L.k, tl = Math.hypot(tx, ty), ux = tx / tl, uy = ty / tl;
+  for (const [w, col] of [[8, 'rgba(20,20,21,.55)'], [4, '#CFAB00']]) { g.beginPath(); g.ellipse(L.Cx, L.Cy, L.R, L.R * L.k, 0, t0, t1 - 0.12); g.lineWidth = w; g.strokeStyle = col; g.stroke();
+    g.beginPath(); g.moveTo(kop[0] + ux * 9, kop[1] + uy * 9); g.lineTo(kop[0] - ux * 7 - uy * 8, kop[1] - uy * 7 + ux * 8); g.lineTo(kop[0] - ux * 7 + uy * 8, kop[1] - uy * 7 - ux * 8); g.closePath(); g.fillStyle = col; g.fill(); if (w > 4) { g.lineWidth = 3; g.stroke(); } }
+  g.restore(); return { c, x: x0, y: y0 };
+}
+// maalstoel: vier palen met balken en een trapje, daarop de achtkantige kuip met het deksel, het oog en de steenspil; de meelpijp met de lege zak; het bokje van de graanbak
+function m46Stoel(g, env, K) {
+  const L = m46L, Kx = L.Kx, Ky = L.Ky, ox = 0.62 * L.m, oy = 0.62 * L.m * L.k, kr = L.kr;
+  // trapje (drie treden) aan de verre kant, links boven
+  g.fillStyle = K.stoolSh; for (let i = 0; i < 3; i++) { const x = Kx - ox - 30 + i * 9, y = Ky - oy - 6 - i * 16; g.fillRect(x, y, 16, 3); g.fillRect(x + 2, y + 3, 2, 13); g.fillRect(x + 12, y + 3, 2, 13); }
+  // achterste palen, balken, voorste palen
+  const paal = (x, y, col) => { g.fillStyle = col; g.fillRect(x - 2.5, L.stoelY + (y - Ky), 5, Ky - L.stoelY); };
+  paal(Kx - ox, Ky - oy, K.stoolSh); paal(Kx + ox, Ky - oy, K.stoolSh);
+  g.fillStyle = K.stoolSh; g.fillRect(Kx - ox, Ky - oy - 0.86 * L.hz - 4, 2 * ox, 4);
+  m46Poly(g, [[Kx - ox - 3, L.stoelY + oy], [Kx + ox + 3, L.stoelY + oy], [Kx + ox + 3, L.stoelY - oy], [Kx - ox - 3, L.stoelY - oy]]); g.fillStyle = K.stool; g.fill();
+  g.fillStyle = K.stoolSh; g.fillRect(Kx - ox - 3, L.stoelY + oy - 5, 2 * ox + 6, 5);
+  paal(Kx - ox, Ky + oy, K.stool); paal(Kx + ox, Ky + oy, K.stool);
+  g.fillStyle = K.stool; g.fillRect(Kx - ox, Ky + oy - 0.86 * L.hz - 4, 2 * ox, 4); g.fillStyle = K.stoolSh; g.fillRect(Kx - ox, Ky + oy - 0.86 * L.hz - 1, 2 * ox, 1);
+  // kuip: achtkant, de zijvlakken aan de kant van de camera (onderste helft) zichtbaar; ijzeren band; deksel met naden en lichtrand
+  const V = y => Array.from({ length: 8 }, (_, i) => { const a = (i + 0.5) * Math.PI / 4; return [Kx + Math.cos(a) * kr, y - Math.sin(a) * kr * L.k]; });
+  const vb = V(L.stoelY), vt = V(L.lidY);
+  for (let i = 0; i < 8; i++) { const j = (i + 1) % 8, am = (i + 1) * Math.PI / 4; if (Math.sin(am) > 0.01) continue; // alleen de nabije vlakken
+    m46Poly(g, [vb[i], vb[j], vt[j], vt[i]]); g.fillStyle = Math.abs(Math.cos(am)) < 0.5 ? K.tunSh : K.tun; g.fill(); }
+  g.beginPath(); for (let i = 4; i <= 8; i++) { const v = vb[i % 8]; if (i === 4) g.moveTo(v[0], v[1] - 7); else g.lineTo(v[0], v[1] - 7); } g.strokeStyle = K.iron; g.lineWidth = 1.5; g.stroke();
+  m46Poly(g, vt); g.fillStyle = K.lid; g.fill();
+  g.strokeStyle = K.stoolSh; g.lineWidth = 1; g.beginPath(); for (const dx of [-14, 0, 14]) { g.moveTo(Kx + dx, L.lidY - kr * L.k + 2); g.lineTo(Kx + dx, L.lidY + kr * L.k - 2); } g.stroke();
+  g.beginPath(); for (let i = 0; i <= 4; i++) { const v = vt[i % 8]; if (i === 0) g.moveTo(v[0], v[1]); else g.lineTo(v[0], v[1]); } g.strokeStyle = K.edge; g.lineWidth = 1.5; g.lineCap = 'round'; g.stroke();
+  // het oog: een ring blauwe steen om een donker gat; de ijzeren steenspil recht omhoog tot het rondsel op de wielrand
+  m46Ell(g, Kx, L.lidY, 0.08 * L.R + 4, (0.08 * L.R + 4) * L.k); g.fillStyle = K.stone; g.fill();
+  m46Ell(g, Kx - 1, L.lidY - 0.5, 0.08 * L.R + 2, (0.08 * L.R + 2) * L.k); g.fillStyle = K.stoneLit; g.globalAlpha = 0.6; g.fill(); g.globalAlpha = 1;
+  m46Ell(g, Kx, L.lidY, 0.08 * L.R, 0.08 * L.R * L.k); g.fillStyle = K.eye; g.fill();
+  g.fillStyle = K.steel; g.fillRect(Kx - 0.015 * L.R, L.Py, 0.03 * L.R, L.lidY - L.Py); g.fillStyle = K.steelHi; g.fillRect(Kx - 0.015 * L.R + 1, L.Py, 1, L.lidY - L.Py);
+  // meelpijp (houten koker) van de linker voorkant van de kuip naar de zak; de zak hangt open aan twee haken (de inhoud komt per frame)
+  const Z = L.zak, zx = Z.x + Z.w / 2;
+  m46Lijn(g, [Kx - kr * 0.55, L.stoelY - 2], [zx + 4, Z.y0 - 8], 9, K.stoolSh, 'butt'); m46Lijn(g, [Kx - kr * 0.55, L.stoelY - 4], [zx + 4, Z.y0 - 10], 5, K.stool, 'butt');
+  g.fillStyle = K.harness; g.fillRect(Z.x + 3, Z.y0 - 4, 2, 7); g.fillRect(Z.x + Z.w - 5, Z.y0 - 4, 2, 7);
+  m46Poly(g, [[Z.x, Z.y0], [Z.x + Z.w, Z.y0], [Z.x + Z.w - 2, Z.y1 - 4], [Z.x + Z.w - 6, Z.y1], [Z.x + 6, Z.y1], [Z.x + 2, Z.y1 - 4]]); g.fillStyle = K.sack; g.fill();
+  g.strokeStyle = K.sackSh; g.lineWidth = 2; g.lineJoin = 'round'; g.stroke();
+  // bokje van de graanbak (de bak zelf komt per frame, met de vulling)
+  const B = L.bak; g.strokeStyle = K.trestle; g.lineWidth = 3.5; g.lineCap = 'butt'; g.beginPath();
+  g.moveTo(B.x - B.w * 0.36, B.y - B.h * 0.1); g.lineTo(B.x - B.w * 0.5, L.lidY + 6); g.moveTo(B.x + B.w * 0.36, B.y - B.h * 0.1); g.lineTo(B.x + B.w * 0.5, L.lidY + 6); g.moveTo(B.x - B.w * 0.44, L.lidY - 6); g.lineTo(B.x + B.w * 0.44, L.lidY - 6); g.stroke();
+}
+// ---------- start: alles op nul (ook bij Nog een keer) ----------
+function m46Start(env) {
+  const m = m46; m.env = env; m.K = env.dark ? m46KL.d : m46KL.l;
+  Object.assign(m, { t: 0, over: false, overT: 0, afgelost: false, doneT: 0, doneSent: false, phiHand: 0, phiPaard: 0, A: Math.PI * 1.5, Adeg: 270, thPrev: 0, kalibreer: true, e: 0, w: 0, wMax: 1.19, tempo: 0,
+    moe: 0, snel: 0, eHoog: 0, stok: 0, stokW0: 0, stoks: 0, boost: 0, slepen: 0, inZone: false, hupped: true, passages: 0, hups: 0, gloedDeur: false,
+    bak: 1, vullingen: 0, bakLeegGemeld: false, warm: 0, warmGemeld: false, warmOoit: false, zak: 0, zakV: 0, zakken: 0, vloer: 0, goed: 0, verkleurd: 0, loopt: false, inBand: false,
+    hold: 0, kalm: 0, tBand: 0, tTotaal: 0, keyTempo: 0, keyLaatst: -1, tikDown: null, laatsteTik: -9, animVul: 0, animWissel: 0, wisselN: 0, oor: 0, stilT: 0, bewogen: false, hintDraai: 0,
+    fase: 0, stapN: 0, wijzer: 0, bandLo: env.gezel ? 0.75 : 0.85, bandHi: env.gezel ? 1.5 : 1.35, autoHand: false, autoLaatst: -9, autoStok: env.rnd() < 0.5, autoBegin: 0.6 + env.rnd() * 0.8, autoLaat: env.rnd() < 0.5, autoLeegT: -1, autoReact: 0.3, zoneT: 0, hint: null, spawn: 0,
+    pops: [], inBandT: 0, geleerd: false, deurAan: false, uitBandT: 0, meterHints: 0, viaToets: false, kgPop: 0 });
+  m.toasts = {}; m.gezegd = {}; m.deeltjes.length = 0; m.stilKlaar = false; m.vastKey = null; m.meterKey = null;
+  Object.assign(m.hand, { x: 0, y: 0, t: -9, down: false, mouse: false, on: false });
+  const r = env.seed(4646); m.motes = Array.from({ length: 20 }, () => [r(), r(), r() * m46TAU]);
+  env.unlock('m46-kamwiel');
+}
+// ---------- de regels, per vaste stap (volgorde uit ontwerp hoofdstuk 10) ----------
+function m46Update(dt, env) {
+  const m = m46, L = m46L, gz = env.gezel, sfx = env.sfx;
+  m.t += dt; const f = m46Fase(m.t);
+  m.bandLo = m46Mix3(gz ? [0.75, 0.75, 0.80] : [0.85, 0.90, 0.95], f); m.bandHi = m46Mix3(gz ? [1.50, 1.50, 1.45] : [1.35, 1.30, 1.25], f);
+  if (m.t >= m46DUUR && !m.over) { m.over = true; m.overT = 0; m.gloedDeur = false; m.hint = null; m.hintDraai = 0; }
+  // 2. de virtuele hand (toetsen of de automaat); 3. aftellen
+  if (!m.over && m.keyTempo > 0 && m.hold <= 0) m.phiHand += m.keyTempo * m46OM * dt;
+  m.hold = Math.max(0, m.hold - dt); m.kalm = Math.max(0, m.kalm - dt); m.slepen = Math.max(0, m.slepen - dt); m.boost = Math.max(0, m.boost - dt);
+  m.animVul = Math.max(0, m.animVul - dt); m.animWissel = Math.max(0, m.animWissel - dt); m.oor = Math.max(0, m.oor - dt); m.hintDraai = Math.max(0, m.hintDraai - dt);
+  if (m.hint) { m.hint.t -= dt; if (m.hint.t <= 0) m.hint = null; }
+  // 4. speling, doelsnelheid, het plafond (moe en de deurdip), versnellen en remmen
+  if (m.hold > 0) m.phiHand = m.phiPaard + m.e; // het leidsel staat even vast: geen speling opbouwen
+  if (m.phiHand - m.phiPaard > m46TAU) m.phiHand = m.phiPaard + m46TAU; if (m.phiHand - m.phiPaard < -m46TAU / 4) m.phiHand = m.phiPaard - m46TAU / 4;
+  m.e = m.phiHand - m.phiPaard;
+  const dipAan = (m.inZone && !m.hupped) || m.slepen > 0, dip = dipAan ? Math.min(gz ? 0.30 : 0.50, m46Mix3(gz ? [0.10, 0.15, 0.20] : [0.15, 0.25, 0.35], f) + (gz ? 0.15 : 0.25) * m.moe) : 0;
+  m.wMax = (1.9 - 0.8 * m.moe) * m46OM * (1 - dip);
+  const wDoel = m.over ? 0 : env.clamp(0.8 * m.e, 0, m.wMax);
+  if (m.stok > 0) { m.stok -= dt; const u = env.clamp((2 - m.stok) / 0.5, 0, 1); m.w = Math.min(m.w, env.lerp(m.stokW0, 0.15, u)); if (m.stok <= 0) { m.stok = 0; m.phiHand = m.phiPaard; m.e = 0; m.snel = 0; m.eHoog = 0; } }
+  else if (m.over) m.w = Math.max(0, m.w - 0.5 * dt);
+  else if (m.hold <= 0) m.w += env.clamp(wDoel - m.w, -0.9 * dt, (m.boost > 0 ? 0.8 : 0.5) * dt);
+  m.phiPaard += m.w * dt;
+  const prevA = m.Adeg; let A = Math.PI * 1.5 - m.phiPaard; A -= Math.floor(A / m46TAU) * m46TAU; m.A = A; m.Adeg = A * 180 / Math.PI;
+  m.tempo = m.w * 10 / m46TAU;
+  // 5. de deurzone (A tussen 75 en 120 graden): bij binnenkomen gloeit de deur, bij 90 graden telt de passage, zonder hup sleept het paard nog 2,5 s
+  const inZ = m.deurAan && m.Adeg >= 75 && m.Adeg <= 120 && !m.over;
+  if (inZ && !m.inZone) { m.inZone = true; m.hupped = false; m.zoneT = m.t; m.gloedDeur = true; if (m.hups === 0 && (m.toasts.deur || 0) < 3) { m.toasts.deur = (m.toasts.deur || 0) + 1; m46Hint(m.viaToets ? 'Spatie: hup' : 'Hup: tik nu', L.Cx, L.yVloer + 22, env, 'deur'); if (m.toasts.deur === 1) env.announce('Hup: tik nu'); } }
+  if (!inZ && m.inZone) { m.inZone = false; m.gloedDeur = false; if (m.hint && m.hint.wat === 'deur') m.hint.t = Math.min(m.hint.t, 0.3); if (!m.hupped) m.slepen = 2.5; }
+  if (m.deurAan && prevA > 90 && m.Adeg <= 90 && prevA - m.Adeg < 180) m.passages++;
+  // 6. te snel: inhouden en stokken; moe worden
+  if (m.stok <= 0 && !m.over) {
+    if (m.tempo > (gz ? 1.8 : 1.6)) m.snel += dt; else m.snel = Math.max(0, m.snel - 2 * dt);
+    if (m.e > (gz ? 1.2 : 1) * Math.PI) m.eHoog += dt; else m.eHoog = 0;
+    if ((m.snel > 0.5 || m.eHoog > 0.25) && !m.gezegd.rustig) { m.gezegd.rustig = true; m46Say('Rustig aan', 0.3, 2.3, env.F_UI, 700, m.K.tekst, 16, env); }
+    if (m.snel >= 1 || m.eHoog >= 0.5) { m.stok = 2; m.stokW0 = m.w; m.stoks++; m.moe = Math.min(1, m.moe + 0.12); m.snel = 0; m.eHoog = 0; sfx.bad(); m46Say('Ho', 0.6, 2.4, env.F_HAND, 400, m.K.gloed, 22, env); }
+  }
+  const g2 = m46Mix3([0.5, 1.0, 1.3], f);
+  if (!m.over) m.moe = env.clamp(m.moe + dt * (g2 * 0.005 + (m.tempo > m.bandHi ? 0.006 : 0) + (dipAan ? 0.003 : 0)) * (gz ? 0.5 : 1), 0, 1);
+  // 7. tempo in de band: meel; graanbak zakt; warme steen; zak vol; de tred
+  m.inBand = m.tempo >= m.bandLo && m.tempo <= m.bandHi;
+  const loopt = m.loopt = m.inBand && m.bak > 0 && m.stok <= 0 && !m.over;
+  if (loopt) {
+    const kg = m46RATE * dt;
+    if (m.zak >= m46ZAKKG) m.vloer += kg; else { m.zak += kg; if (m.warm > 0.35) { m.verkleurd += kg; m.zakV += kg; } else m.goed += kg; }
+    m.bak = Math.max(0, m.bak - dt / (gz ? 40 : 32));
+    if (m.bak <= 0 && !m.bakLeegGemeld) { m.bakLeegGemeld = true; env.say('Graanbak leeg', L.bak.x, L.bak.y - 34, m.K.tekst, 16, { font: env.F_UI, weight: 700, vy: env.reduced ? 0 : -30, life: 1.3 }); }
+  }
+  if (m.bak <= 0 && m.w > 0.25 && !m.over) m.warm += dt * (gz ? 0.08 : 0.12);
+  else if (loopt) m.warm -= dt * (gz ? 0.08 : 0.06);
+  else if (m.w < 0.05 || !m.inBand) m.warm -= dt * (gz ? 0.08 : 0.03);
+  m.warm = env.clamp(m.warm, 0, 1);
+  if (m.warm > 0.35 && !m.warmGemeld) { m.warmGemeld = true; m.warmOoit = true; env.unlock('m46-meel'); env.say('Steen warm', L.Kx, L.lidY - 28, m.K.gloed, 16, { font: env.F_UI, weight: 700, vy: env.reduced ? 0 : -30, life: 1.3 }); }
+  if (m.warm < 0.2) m.warmGemeld = false;
+  if (m.zak >= m46ZAKKG && !m.gezegd['zak' + m.zakken]) { m.gezegd['zak' + m.zakken] = true; env.say('Zak vol', L.zak.x + L.zak.w / 2, L.zak.y0 - 16, m.K.tekst, 16, { font: env.F_UI, weight: 700, vy: env.reduced ? 0 : -30, life: 1.3 });
+    if (!m.toasts.zak) { m.toasts.zak = true; m46Hint(m.viaToets ? 'Spatie: wisselen' : 'Tik: wisselen', L.zak.x + L.zak.w / 2, L.zak.y1 + 18, env); env.announce('Zak vol: tik om te wisselen'); } }
+  if (m.bak <= 0.25 && !m.toasts.bak && !m.over) { m.toasts.bak = true; m46Hint(m.viaToets ? 'Spatie: bijvullen' : 'Tik: bijvullen', L.bak.x, L.bak.y - 42, env); env.announce('Graanbak bijna leeg: tik'); }
+  if (m.t > 5 && m.hold <= 0 && m.kalm <= 0 && !m.over) { m.tTotaal += dt; if (m.inBand) m.tBand += dt; }
+  if (m.inBand && m.w > 0.05 && !m.over) m.inBandT += dt;
+  if (!m.geleerd && m.inBandT >= 1.5) { m.geleerd = true; sfx.good(); m46Say('Goed zo', 0.2, 2.3, env.F_HAND, 400, m.K.tekst, 22, env); }
+  if (!m.deurAan && m.inBandT >= 4) m.deurAan = true;
+  const stuurt = m.keyTempo > 0 || (m.hand.on && (m.hand.down || (m.hand.mouse && m.t - m.hand.t < 1.5))); // de speler stuurt nu echt
+  if (m.geleerd && stuurt && !m.over && m.stok <= 0 && m.w > 0.05 && !m.inBand) m.uitBandT += dt; else if (m.uitBandT > 0) m.uitBandT = 0;
+  if (m.uitBandT > 2.5 && m.meterHints < 3 && !m.hint) { m.meterHints++; m.uitBandT = -4; m46Hint('Wijzer in het groen', L.meter.x, L.meter.y - L.meter.r - 24, env, 'meter'); }
+  if (m.goed + m.verkleurd >= m.kgPop + 25) { m.kgPop += 25; if (m.pops.length < 3) m.pops.push(0); }
+  for (let i = m.pops.length - 1; i >= 0; i--) { m.pops[i] += dt; if (m.pops[i] >= 0.9) m.pops.splice(i, 1); }
+  // 8. de hint als er niets gebeurt: na 2,5 s zonder beweging terwijl het paard staat (één keer per potje)
+  if (!m.over && m.geleerd && m.w < 0.05) { m.stilT += dt; if (m.stilT >= 2.5 && !m.gezegd.draai) { m.gezegd.draai = true; m.hintDraai = 4; } } else m.stilT = 0;
+  // 9. stapfase (cyclus 1,1 s bij bandtempo) met een tik per stap in de band; de wijzer volgt het tempo gedempt
+  if (m.w >= 0.05) { m.fase += dt * (m.w / 0.70) / 1.1 * m46TAU; const n = Math.floor(m.fase / Math.PI); if (n !== m.stapN) { m.stapN = n; if (m.inBand && !m.over) sfx.tick(); } }
+  m.wijzer += (m.tempo - m.wijzer) * Math.min(1, dt * 8);
+  if (loopt && !env.reduced) { m.spawn += dt; while (m.spawn > 0.04) { m.spawn -= 0.04; if (m.deeltjes.length < 12) m.deeltjes.push({ t: 0, x: (env.rnd() - 0.5) * 4, v: m.warm > 0.35 }); } }
+  for (let i = m.deeltjes.length - 1; i >= 0; i--) { const d = m.deeltjes[i]; d.t += dt; if (d.t >= 0.4) m.deeltjes.splice(i, 1); }
+  // 10. het einde: het leidsel gaat los, het paard remt uit en wordt afgelost
+  if (m.over) { m.overT += dt;
+    if (!m.afgelost && (m.w < 0.05 || m.overT >= 2.5)) { m.afgelost = true; m.w = 0; m.doneT = 1.4; env.unlock('m46-meel'); sfx.good(); m46Say('Afgelost', 0.2, 2.4, env.F_HAND, 400, m.K.tekst, 24, env); }
+    if (m.afgelost) { m.doneT -= dt; if (m.doneT <= 0 && !m.doneSent) { m.doneSent = true; env.done(); } } }
+}
+// zwevende tekst boven het paard (hangt aan het dier mee) en een kort labelpilletje bij een gloeiend ding (in plaats van een toast)
+function m46Say(tekst, f, h, font, weight, col, size, env) { const p = m46H(f, 0, h); env.say(tekst, p[0], p[1], col, size, { font, weight, vy: env.reduced ? 0 : -28, life: 1.4, at: () => m46H(f, 0, h) }); }
+function m46Hint(tekst, x, y, env, wat) { m46.hint = { tekst, x, y, w: 0, t: 3.2, max: 3.2, wat }; }
+// de handeling van een tik (ontwerp 2.6): hup, bijvullen, wisselen, in die volgorde; met een plek mag het ook eerder op het ding zelf
+function m46Act(plek, env, zakEerst) { // zakEerst: alleen de automaat, als hij de graanbak bewust laat leeglopen
+  const m = m46, L = m46L; if (m.over) return;
+  m.laatsteTik = m.t;
+  if (m.inZone && !m.hupped && m.stok <= 0) { // hup bij de deur
+    m.hupped = true; m.gloedDeur = false; m.slepen = 0; m.moe = Math.max(0, m.moe - 0.10); m.hups++; m.boost = 1.5; m.hint = null;
+    env.sfx.good(); env.vibrate(20); env.unlock('m46-paard');
+    env.say('Hup', L.Cx, L.dy0 + 46, m.K.tekst, 22, { font: env.F_HAND, weight: 400, vy: env.reduced ? 0 : -36, life: 1.1 }); return;
+  }
+  const B = L.bak, Z = L.zak, opBak = plek && Math.hypot(plek[0] - B.x, plek[1] - B.y) < 1.4 * B.w * 0.75, opZak = plek && plek[0] > Z.x - 0.15 * Z.w - 8 && plek[0] < Z.x + 1.15 * Z.w + 8 && plek[1] > Z.y0 - 12 && plek[1] < Z.y1 + 12;
+  if (!zakEerst && (m.bak <= 0.25 || (opBak && m.bak < 0.6))) { m.bak = 1; m.vullingen++; m.animVul = 0.8; m.hold = 1.2; m.bakLeegGemeld = false; m.toasts.bak = true; m.hint = null; env.sfx.click(); return; }
+  if (m.zak >= m46ZAKKG || (opZak && m.zak >= 0.8 * m46ZAKKG)) { m.animWissel = 0.8; m.wisselN = m.zakken; m.zakken++; m.zak = 0; m.zakV = 0; m.hold = 1.2; m.hint = null; env.sfx.click(); return; }
+  env.sfx.click(); if (!env.reduced) m.oor = 0.3; // een tik in het niets: geen straf, het paard flikkert met een oor
+}
+// ---------- invoer: hoekmeting om de spil (2.2), tik herkennen (2.6), toetsen (2.14) ----------
+function m46Draai(x, y, env) {
+  const m = m46, L = m46L, dx = x - L.Cx, dy = -(y - L.Cy) / L.k; if (Math.hypot(dx, dy) < 0.12 * L.R) return; // te dicht bij de spil: ruis
+  const th = Math.atan2(dy, dx);
+  if (m.kalibreer) { m.kalibreer = false; m.thPrev = th; m.phiHand = m.phiPaard + (m.hold > 0 ? m.e : 0); return; }
+  let d = th - m.thPrev; d -= Math.round(d / m46TAU) * m46TAU; m.thPrev = th;
+  if (Math.abs(d) > 1.2 || m.hold > 0) return; // een sprong, of het leidsel staat even vast
+  m.phiHand -= d; // met de klok mee (th daalt) loopt de hand vóór
+  if (Math.abs(d) > 0.003) { m.bewogen = true; m.stilT = 0; m.keyTempo = 0; m.autoHand = false; m.viaToets = false; }
+}
+function m46Pointer(ev, env) {
+  const m = m46, h = m.hand;
+  if (ev.type === 'down') {
+    if (!ev.primary) { m46Act([ev.x, ev.y], env); return; }
+    Object.assign(h, { x: ev.x, y: ev.y, t: m.t, down: true, mouse: !!ev.mouse, on: true }); m.tikDown = { x: ev.x, y: ev.y, t: m.t, moved: false }; return;
+  }
+  if (!ev.primary) return;
+  if (ev.type === 'move') {
+    Object.assign(h, { x: ev.x, y: ev.y, t: m.t, mouse: !!ev.mouse, on: true });
+    const td = m.tikDown;
+    if (td && !td.moved) { if (Math.hypot(ev.x - td.x, ev.y - td.y) >= 14 || m.t - td.t > 0.3) { td.moved = true; m.kalibreer = true; } else return; }
+    if (!m.over) m46Draai(ev.x, ev.y, env);
+  } else { // up: een korte tik zonder verplaatsing is een tik; verder stopt de hand
+    const td = m.tikDown; m.tikDown = null; h.down = false;
+    if (td && !ev.cancel && !td.moved && m.t - td.t <= 0.3) m46Act([td.x, td.y], env);
+    if (!ev.mouse) { m.kalibreer = true; h.on = false; }
+  }
+}
+function m46Key(ev, env) {
+  if (ev.type !== 'down') return; const m = m46, k = ev.key; m.viaToets = true;
+  const op = k === 'ArrowRight' || k === 'ArrowUp' || k === 'd' || k === 'D' || k === 'w' || k === 'W', af = k === 'ArrowLeft' || k === 'ArrowDown' || k === 'a' || k === 'A' || k === 's' || k === 'S';
+  if (op || af) { if (m.t - m.keyLaatst < 0.15) return; m.keyLaatst = m.t; m.keyTempo = env.clamp(m.keyTempo + (op ? 0.2 : -0.2), 0, 2.2); m.autoHand = true; m.bewogen = true; m.stilT = 0; m.hand.on = false; m.hand.down = false; }
+  else if (k === ' ' || k === 'Enter') m46Act(null, env);
+}
+function m46Pause() { const m = m46; m.hand.down = false; m.tikDown = null; }
+function m46Resume() { const m = m46; m.kalibreer = true; m.hand.down = false; m.hand.on = false; m.tikDown = null; m.moe = Math.max(0, m.moe - 0.30); m.warm = Math.min(m.warm, 0.2); m.slepen = 0; m.snel = 0; m.eHoog = 0; m.kalm = 1.5; m.stilT = 0; m.deeltjes.length = 0; }
+function m46StoryOK() { const m = m46; return !m.over && m.stok <= 0 && m.hold <= 0 && !(m.Adeg > 60 && m.Adeg < 135) && m.bak > 0.30 && m.zak < 0.95 * m46ZAKKG && m.t - m.laatsteTik > 0.5 && m.t >= 3; }
+// ---------- de automaat (ontwerp 6): via de toetsenbordweg in het midden van de band, met een hup, bijvullen en wisselen; soms één keer stokken ----------
+function m46Auto(env) {
+  const m = m46; if (m.over) return;
+  m.autoHand = true; m.bewogen = true; m.stilT = 0;
+  if (m.t < m.autoBegin) { m.keyTempo = 0; return; } // even kijken voor je begint
+  m.keyTempo = (m.bandLo + m.bandHi) / 2 + 0.12 * Math.sin(m.t / 5);
+  if (m.autoStok && m.t >= 12 && m.t < 14) m.keyTempo = 2.0;
+  const laat = m.autoLaat && m.vullingen === 1; // de tweede graanbak een keer te laat: de steen loopt warm
+  if (laat && m.bak <= 0 && m.autoLeegT < 0) m.autoLeegT = m.t;
+  const bakNu = laat ? m.autoLeegT >= 0 && m.t - m.autoLeegT >= 5 : m.bak <= 0.25;
+  const deur = m.inZone && !m.hupped && m.stok <= 0 && m.t - m.zoneT >= m.autoReact;
+  if (m.t - m.autoLaatst >= 0.4 && (deur || bakNu || m.zak >= m46ZAKKG)) { m.autoLaatst = m.t; if (deur) m.autoReact = 0.15 + env.rnd() * 0.45; m46Act(null, env, !deur && !bakNu && m.zak >= m46ZAKKG); }
+}
+// ---------- tekenen, per frame: de stille laag, dan wat beweegt (volgorde uit ontwerp 1.8) ----------
+function m46Draw(g, env) {
+  const m = m46, L = m46L, K = m.K;
+  if (!m.st) { g.fillStyle = K.loam; g.fillRect(0, L.top, L.W, L.Hp); return; }
+  if (m.t === 0 && m.stilC) { // tijdens de introband staat alles stil: één keer tekenen, daarna alleen kopiëren
+    if (!m.stilKlaar) { const c = m.stilC.g; c.save(); c.clearRect(0, 0, L.W, L.Hp); c.translate(0, -L.top); m46DrawAlles(c, env); c.restore(); m.stilKlaar = true; }
+    m46Blit(g, m.stilC, 0, L.top); return;
+  }
+  m46DrawAlles(g, env);
+}
+function m46DrawAlles(g, env) {
+  const m = m46, L = m46L;
+  g.save();
+  m46Blit(g, m.st, 0, L.top);
+  m46DrawVast(g, env);
+  if (m.gloedDeur) m46DrawGloedVloer(g, env); // het lichtvlak gloeit onder het paard, de deur erboven
+  m46DrawNaaf(g, env);
+  if (Math.sin(m.A) > 0) { m46DrawPaard(g, env); m46DrawSpil(g, env); } else { m46DrawSpil(g, env); m46DrawPaard(g, env); } // op de verre helft vóór de spil
+  m46DrawWiel(g, env);
+  m46DrawGloed(g, env); m46DrawHand(g, env);
+  if (!env.lite && !env.reduced) m46DrawStof(g, env);
+  g.restore();
+  m46DrawMeter(g, env); m46DrawHints(g, env);
+}
+// graanbak met vulling en schudbak, zak met inhoud, meelstroom, rij volle zakken, warme kuiprand, lantaarnvlam, bijvul- en wisselanimatie
+function m46DrawVast(g, env) {
+  const m = m46, L = m46L, K = m.K, B = L.bak, Z = L.zak;
+  // schudbak (schuin gootje van de bak naar het oog), trilt 1 px als er meel loopt; de graanbak ligt er in de laag overheen
+  const tk = m.loopt && !env.reduced ? Math.sin(m.t * 22) : 0, tip = [B.x, B.y + B.h / 2 - 2 + tk], oog = [L.Kx + 3, L.lidY - 2];
+  m46Lijn(g, tip, oog, 9, K.hopperSh, 'butt'); m46Lijn(g, [tip[0], tip[1] - 2], [oog[0], oog[1] - 2], 5, K.hopper, 'butt');
+  const zh = Z.y1 - Z.y0 - 8, vol = Math.min(1, m.zak / m46ZAKKG), hv = zh * vol, hvV = zh * Math.min(vol, m.zakV / m46ZAKKG), n = Math.min(3, m.zakken - (m.animWissel > 0 ? 1 : 0));
+  const key = `${Math.round(m.bak * 60)}|${Math.round(hv)}|${Math.round(hvV)}|${n}|${Math.round(m.warm * 30)}|${Math.round(Math.min(m.vloer, 400) / 8)}`;
+  if (m.vastC) { if (key !== m.vastKey) { const c = m.vastC.g; c.save(); c.clearRect(0, 0, m.vastC.w, m.vastC.h); c.translate(0, -m46VY); m46VastLaag(c, env, hv, hvV, n); c.restore(); m.vastKey = key; }
+    m46Blit(g, m.vastC, 0, m46VY); }
+  else m46VastLaag(g, env, hv, hvV, n);
+  const hx = B.w / 2, ty = B.y - B.h / 2 + 8;
+  if (m.animVul > 0) { // een zak kantelt boven de bak (de knecht blijft buiten beeld) en er valt boekweit in
+    const u = 1 - m.animVul / 0.8, rot = -1.1 * env.eio(Math.min(1, u * 1.6)), x = B.x + 16, y = ty - 26;
+    g.save(); g.translate(x, y); g.rotate(rot); g.fillStyle = K.sack; g.beginPath(); g.ellipse(0, -11, 8, 12, 0, 0, m46TAU); g.fill(); g.fillStyle = K.sackSh; g.fillRect(-4, -25, 8, 4); g.restore();
+    if (u > 0.3) { g.fillStyle = K.seed; g.beginPath(); for (let i = 0; i < 6; i++) { const q = (u - 0.3) / 0.7, yy = y - 6 + q * 28 + i * 3, xx = x - 10 + i * 2.2 - q * 6; g.moveTo(xx + 1.2, yy); g.arc(xx, yy, 1.2, 0, m46TAU); } g.fill(); }
+  }
+  // meelstroom uit de pijp: korreltjes die in 0,4 s vallen; vol = naast de zak op de vloer; bij verminderde beweging een stilstaand streepje
+  const px = Z.x + Z.w / 2 + 4, py0 = Z.y0 - 6, naast = m.zak >= m46ZAKKG, py1 = naast ? Z.y1 + 2 : Z.y1 - 5 - hv;
+  if (m.loopt && env.reduced) { g.fillStyle = m.warm > 0.35 ? K.verkleurd : K.meal; g.fillRect(px - 1 + (naast ? 14 : 0), py0, 2, py1 - py0); }
+  else if (m.deeltjes.length) { g.beginPath(); let col = null; for (const d of m.deeltjes) { const u = d.t / 0.4, x = px + d.x + (naast ? 6 + u * 12 : 0), y = py0 + u * u * (py1 - py0); if (col === null) col = d.v; g.moveTo(x + 1.1, y); g.arc(x, y, 1.1, 0, m46TAU); } g.fillStyle = col ? K.verkleurd : K.meal; g.fill(); }
+  // de zak die net gewisseld wordt (schuift naar de rij)
+  if (m.animWissel > 0 && m.zakSpr) { const rij = L.rij, zw = 14, u = env.eio(1 - m.animWissel / 0.8), x0 = Z.x + Z.w / 2, y0 = Z.y1, x1 = rij.x0 + 2 + Math.min(2, m.wisselN) * (zw + 1.5) + zw / 2, y1 = rij.y1, sc = env.lerp(1.9, 1, u), x = env.lerp(x0, x1, u), yb = env.lerp(y0, y1, u);
+    g.drawImage(m.zakSpr.cv, x - 8 * sc, yb - 37 * sc, 16 * sc, 38 * sc); }
+  if (env.dark) { const fl = env.reduced ? 1 : 0.92 + 0.08 * Math.sin(m.t * 9.1) * Math.sin(m.t * 5.3 + 1); g.globalAlpha = fl; g.fillStyle = '#FFF6D8'; m46Ell(g, L.lant.x, L.lant.y + 1, 1.6, 3.2); g.fill(); g.globalAlpha = 1; }
+}
+const m46VY = 150; // de laag van graanbak, kuiprand, zak en volle zakken: x 0 tot 170, y 150 tot 410
+function m46VastLaag(g, env, hv, hvV, n) {
+  const m = m46, L = m46L, K = m.K, B = L.bak, Z = L.zak;
+  if (m.warm > 0.01) { // de kuiprand kleurt mee met de warme steen
+    const kr = L.kr, col = env.mixC(K.tun, K.warmTun, m.warm); g.fillStyle = col;
+    for (let i = 4; i < 8; i++) { const a0 = (i + 0.5) * Math.PI / 4, a1 = (i + 1.5) * Math.PI / 4;
+      m46Poly(g, [[L.Kx + Math.cos(a0) * kr, L.stoelY - Math.sin(a0) * kr * L.k], [L.Kx + Math.cos(a1) * kr, L.stoelY - Math.sin(a1) * kr * L.k], [L.Kx + Math.cos(a1) * kr, L.lidY - Math.sin(a1) * kr * L.k], [L.Kx + Math.cos(a0) * kr, L.lidY - Math.sin(a0) * kr * L.k]]); g.globalAlpha = Math.abs(Math.cos((a0 + a1) / 2)) < 0.5 ? 0.75 : 0.95; g.fill(); }
+    g.globalAlpha = 1;
+  }
+  // graanbak: omgekeerde piramide; binnenin zakt de boekweit met de voorraad
+  const hx = B.w / 2, hy = B.w / 2 * L.k, ty = B.y - B.h / 2 + 8, tp = B.y + B.h / 2;
+  m46Poly(g, [[B.x - hx, ty], [B.x, ty + hy], [B.x, tp]]); g.fillStyle = K.hopper; g.fill();
+  m46Poly(g, [[B.x, ty + hy], [B.x + hx, ty], [B.x, tp]]); g.fillStyle = K.hopperLit; g.fill();
+  m46Poly(g, [[B.x - hx, ty], [B.x, ty - hy], [B.x + hx, ty], [B.x, ty + hy]]); g.fillStyle = K.hopperSh; g.fill();
+  if (m.bak > 0.02) { const s = 0.3 + 0.7 * m.bak, cy = ty + (1 - s) * (tp - ty) * 0.75; m46Poly(g, [[B.x - hx * s, cy], [B.x, cy - hy * s], [B.x + hx * s, cy], [B.x, cy + hy * s]]); g.fillStyle = K.seed; g.fill();
+    g.fillStyle = K.seedHi; g.beginPath(); for (let i = 0; i < 7; i++) { const a = i * 2.4, rr = 0.55 * s * (0.3 + 0.7 * ((i * 7) % 5) / 5); g.moveTo(B.x + Math.cos(a) * hx * rr + 1, cy + Math.sin(a) * hy * rr); g.arc(B.x + Math.cos(a) * hx * rr, cy + Math.sin(a) * hy * rr, 1, 0, m46TAU); } g.fill(); }
+  // de zak: het lichte vlak stijgt met de inhoud, met bovenop een band verkleurd meel als dat erin zit
+  if (hv > 0.2) { g.fillStyle = K.meal; g.fillRect(Z.x + 5, Z.y1 - 5 - hv, Z.w - 10, hv); if (hvV > 0.5) { g.fillStyle = K.verkleurd; g.fillRect(Z.x + 5, Z.y1 - 5 - hv, Z.w - 10, hvV); } g.fillStyle = K.mealSh; g.fillRect(Z.x + 5, Z.y1 - 5 - hv, Z.w - 10, 1); }
+  if (m.vloer > 0.5) { m46Ell(g, Z.x + Z.w / 2 + 20, Z.y1 + 3, Math.min(14, 4 + m.vloer / 12), Math.min(5, 1.5 + m.vloer / 40)); g.fillStyle = K.meal; g.globalAlpha = 0.85; g.fill(); g.globalAlpha = 1; }
+  // de rij volle zakken (hooguit 3)
+  const rij = L.rij, zw = 14; if (m.zakSpr) for (let i = 0; i < n; i++) { const x = rij.x0 + 2 + i * (zw + 1.5) + zw / 2; m46Blit(g, m.zakSpr, x - 8, rij.y1 - 37); }
+}
+// naaf en schoren van het kamwiel (onder het paard); de spil (vóór of achter het paard); de kamwielrand met kammen en het rondsel (erbovenop)
+function m46DrawNaaf(g, env) {
+  const m = m46, L = m46L, K = m.K, R = L.R;
+  g.strokeStyle = K.arm; g.lineCap = 'butt';
+  g.globalAlpha = 0.35; g.lineWidth = 2; g.beginPath(); for (let i = 0; i < 4; i++) { const a = m.A + 0.4 + i * Math.PI / 2; g.moveTo(L.Cx + 0.45 * R * Math.cos(a), L.Cw + 4 - 0.45 * R * L.k * Math.sin(a)); g.lineTo(L.Cx, L.Cy - 1.3 * L.hz); } g.stroke();
+  g.globalAlpha = 0.5; g.lineWidth = 5; g.beginPath(); for (let i = 0; i < 4; i++) { const a = m.A + 0.4 + i * Math.PI / 2; g.moveTo(L.Cx, L.Cw); g.lineTo(L.Cx + 0.45 * R * Math.cos(a), L.Cw - 0.45 * R * L.k * Math.sin(a)); } g.stroke();
+  g.globalAlpha = 1; m46Ell(g, L.Cx, L.Cw, 0.125 * R, 0.125 * R * L.k); g.fillStyle = K.arm; g.fill();
+}
+function m46DrawSpil(g, env) { const m = m46, L = m46L; if (m.spilSpr) m46Blit(g, m.spilSpr, L.Cx - 0.055 * L.R - 2, L.top - 2); else m46SpilTeken(g, m.K); }
+function m46SpilTeken(g, K) {
+  const L = m46L, w = 0.11 * L.R, x0 = L.Cx - w / 2, y1 = L.Cy + 3, y0 = L.top - 2;
+  g.fillStyle = K.spindle; g.fillRect(x0, y0, w, y1 - y0); g.fillStyle = K.spindleLit; g.fillRect(x0, y0, w * 0.3, y1 - y0); g.fillStyle = K.spindleSh; g.fillRect(x0 + w * 0.72, y0, w * 0.28, y1 - y0);
+  for (const h of [0.55, 1.95, 3.1]) { const y = L.Cy - h * L.hz; g.fillStyle = K.iron; g.fillRect(x0 - 1.5, y - 2.5, w + 3, 4); g.fillStyle = K.ironHi; g.fillRect(x0 - 1.5, y - 2.5, w + 3, 1); }
+}
+const m46WF = 6; // zes voorgetekende standen van de kammen (het patroon herhaalt zich elke 5 graden)
+function m46RandTeken(g) { // de doorzichtige kamwielrand (draait niet mee): in de stille laag
+  const L = m46L, K = m46.K, R = L.R; g.save(); g.globalAlpha = 0.45; g.lineWidth = 0.08 * R; g.lineCap = 'butt';
+  g.beginPath(); g.ellipse(L.Cx, L.Cw, L.rx, L.ry, 0, Math.PI, m46TAU); g.strokeStyle = K.rimLit; g.stroke();
+  g.beginPath(); g.ellipse(L.Cx, L.Cw, L.rx, L.ry, 0, 0, Math.PI); g.strokeStyle = K.rim; g.stroke(); g.restore();
+}
+function m46WielTeken(g, env, A) { // de 72 kammen in stand A
+  const L = m46L, K = m46.K, R = L.R; g.save();
+  g.globalAlpha = env.dark ? 0.75 : 0.6; g.lineWidth = 2; g.strokeStyle = K.cog; g.beginPath();
+  for (let i = 0; i < 72; i++) { const a = A + i * m46TAU / 72, c = Math.cos(a), s = Math.sin(a); g.moveTo(L.Cx + 1.34 * R * c, L.Cw - 1.34 * R * L.k * s); g.lineTo(L.Cx + 1.40 * R * c, L.Cw - 1.40 * R * L.k * s); }
+  g.stroke(); g.restore();
+}
+function m46DrawWiel(g, env) {
+  const m = m46, L = m46L, K = m.K, R = L.R, per = m46TAU / 72, f = ((m.A % per) + per) % per;
+  if (m.wielF) m46Blit(g, m.wielF[Math.min(m46WF - 1, Math.floor(f / per * m46WF))], L.Cx - 204, L.Cw - 127); // rand en kammen: de stand die het dichtst bij het paard zit
+  else { m46RandTeken(g); m46WielTeken(g, env, m.A); }
+  g.lineCap = 'butt';
+  // het rondsel op de rand aan de kant van de kuip: een schijfje met staven dat 18 keer zo snel draait (de staven op alpha 0,4, zodat het niet flikkert)
+  const pr = 0.09 * R, th = -18 * m.A;
+  m46Ell(g, L.Px, L.Py + 9, pr, pr * L.k); g.fillStyle = K.pinion; g.fill();
+  g.strokeStyle = K.stave; g.globalAlpha = 0.4; g.lineWidth = 2; g.beginPath();
+  for (let i = 0; i < 6; i++) { const a = th + i * Math.PI / 3; if (Math.sin(a) > 0) continue; const x = L.Px + Math.cos(a) * pr, y = L.Py - Math.sin(a) * pr * L.k; g.moveTo(x, y); g.lineTo(x, y + 9); }
+  g.stroke(); g.globalAlpha = 1;
+  m46Ell(g, L.Px, L.Py, pr, pr * L.k); g.fillStyle = K.pinion; g.fill(); m46Ell(g, L.Px, L.Py, pr * 0.55, pr * L.k * 0.55); g.fillStyle = K.stave; g.globalAlpha = 0.5; g.fill(); g.globalAlpha = 1;
+}
+// het paard (ontwerp 1.4), in paardruimte rond zijn voetpunt op de ring; met trekboom, strengen en leidsel
+function m46DrawPaard(g, env) {
+  const m = m46, L = m46L, K = m.K, R = L.R, hz = L.hz, A = m.A, sA = Math.sin(A), cA = Math.cos(A), H = m46H;
+  const stil = m.w < 0.05, stok = m.stok > 0, moe = m.moe, loopt = !stil;
+  const ell = (f, l, h, rf, rl) => { g.save(); g.transform(R * sA, R * L.k * cA, -R * cA, R * L.k * sA, L.Cx + R * cA, L.Cy - R * L.k * sA - h * hz); g.beginPath(); g.ellipse(f, l, rf, rl, 0, 0, m46TAU); g.restore(); };
+  const sway = loopt && !stok ? 0.12 - 0.03 * moe : 0, nod = loopt && !stok ? 0.03 * Math.sin(m.fase) : 0;
+  const kopH = 1.6 - 0.35 * moe - (stil && !stok ? 0.15 : 0) + (stok ? 0.22 : 0) + (m.afgelost ? -0.1 : 0), kopF = 0.66 - (stok ? 0.06 : 0);
+  const lFar = H(0, 0.08, 0)[1] < H(0, -0.08, 0)[1] ? 0.08 : -0.08, benen = [[0.22, 1, 0], [0.22, -1, Math.PI], [-0.24, 1, Math.PI / 2], [-0.24, -1, Math.PI * 1.5]];
+  if (!env.lite) { ell(0.02, 0, 0, 0.30, 0.10); g.fillStyle = 'rgba(0,0,0,.18)'; g.fill(); }
+  // trekboom van de spil (1,2 m) naar de zwingel achter het paard (1,0 m), met de lichtkant; de verre streng
+  const zw = H(-0.5, 0, 1.0), spil = [L.Cx, L.Cy - 1.2 * hz];
+  m46Lijn(g, spil, zw, 0.05 * R, K.sweep, 'butt'); m46Lijn(g, [spil[0], spil[1] - 2], [zw[0], zw[1] - 2], 2, K.sweepLit, 'butt');
+  m46Lijn(g, H(-0.5, -0.09, 1.0), H(-0.5, 0.09, 1.0), 3, K.sweep, 'round');
+  const benenPaar = (ver, col) => { const voet = []; g.beginPath(); // twee benen in één streek
+    for (const [f, s, ph] of benen) { if ((s * 0.08 === lFar) !== ver) continue; const sw = stok && f > 0 ? 0.08 : sway * Math.sin(m.fase + ph), a = H(f, s * 0.08, 1.0), b = H(f + sw, s * 0.09, 0); g.moveTo(a[0], a[1]); g.lineTo(b[0], b[1]); voet.push(b); }
+    g.lineWidth = 0.035 * R; g.strokeStyle = col; g.lineCap = 'round'; g.stroke(); };
+  const streng = s => m46Lijn(g, H(0.30, s * 0.12, 1.1), H(-0.5, s * 0.085, 1.0), 1.2, K.harness, 'round');
+  streng(-Math.sign(lFar));
+  benenPaar(true, K.horseSh);
+  // lijf: lichtrand (naar boven verschoven), schaduw onderin, het lijf zelf
+  if (!env.lite) { ell(0.02, 0, 1.2 + 2 / hz, 0.31, 0.115); g.fillStyle = K.horseRim; g.fill(); }
+  ell(0.02, 0, 1.2 - 3 / hz, 0.31, 0.115); g.fillStyle = K.horseSh; g.fill();
+  ell(0.02, 0, 1.2, 0.31, 0.115); g.fillStyle = K.horse; g.fill();
+  { const sw2 = env.reduced || !loopt ? 1 : 1 + 0.5 * Math.sin(m.t * 2.3), a = H(-0.29, 0, 1.15), b = H(-0.38, 0.03 * sw2, 0.95), c = H(-0.45, 0.05 * sw2, 0.72); g.beginPath(); g.moveTo(a[0], a[1]); g.quadraticCurveTo(b[0], b[1], c[0], c[1]); g.lineWidth = 3.2; g.strokeStyle = K.mane; g.lineCap = 'round'; g.stroke(); } // staart
+  benenPaar(false, K.horse);
+  // hals met manen, haam, kop met oren, oogkleppen en halster
+  m46Poly(g, [H(0.27, 0.10, 1.2), H(0.27, -0.10, 1.2), H(0.57, -0.06, kopH - 0.05), H(0.57, 0.06, kopH - 0.05)]); g.fillStyle = K.horse; g.fill();
+  m46Lijn(g, H(0.30, 0, 1.3), H(0.59, 0, kopH + 0.02), 0.04 * R, K.mane, 'round');
+  ell(0.30, 0, 1.25, 0.045, 0.135); g.lineWidth = 0.04 * R; g.strokeStyle = K.collar; g.stroke();
+  { const p = H(0.30, -0.135, 1.25); m46Ell(g, p[0], p[1], 2.2, 2.2); g.fillStyle = K.brass; g.fill(); }
+  const kopY = nod * R; g.save(); g.translate(0, kopY);
+  ell(kopF, 0.02, kopH, 0.10, 0.05); g.fillStyle = K.horse; g.fill();
+  g.beginPath(); for (const s of [-1, 1]) { const plat = stok || (m.oor > 0 && s > 0 && m.oor < 0.2); const tip = plat ? H(kopF - 0.15, s * 0.05, kopH + 0.05) : H(kopF - 0.11, s * 0.045, kopH + 0.14);
+    m46PolyAdd(g, [H(kopF - 0.05, s * 0.02, kopH + 0.02), tip, H(kopF - 0.09, s * 0.055, kopH + 0.02)]); } g.fillStyle = K.horseSh; g.fill();
+  g.beginPath(); for (const s of [-1, 1]) m46PolyAdd(g, [H(0.62, s * 0.06, kopH + 0.04), H(0.68, s * 0.06, kopH + 0.04), H(0.68, s * 0.08, kopH - 0.04), H(0.62, s * 0.08, kopH - 0.04)]); g.fillStyle = K.harness; g.fill();
+  m46Lijn(g, H(0.71, -0.05, kopH - 0.02), H(0.71, 0.05, kopH - 0.02), 1.3, K.harness, 'butt');
+  g.restore();
+  { const s0 = Math.sign(lFar), a = H(0.30, s0 * 0.12, 1.1), b = H(-0.5, s0 * 0.085, 1.0); g.beginPath(); g.moveTo(a[0], a[1]); g.lineTo(b[0], b[1]); // de voorste streng en het leidsel
+    if (!m.over) { const c = H(0.70, 0.05, kopH - 0.05 + nod * R / hz); g.moveTo(c[0], c[1]); g.lineTo(L.Cx, L.Cy - 1.3 * hz); }
+    g.lineWidth = 1.2; g.strokeStyle = K.harness; g.lineCap = 'round'; g.stroke(); }
+}
+// gloed om wat om een tik vraagt (rand en vulling, pulserend; bij verminderde beweging vast), het leidsel in je hand
+function m46DrawGloed(g, env) {
+  const m = m46, L = m46L, a = env.reduced ? 0.5 : 0.5 + 0.15 * Math.sin(m.t * 1.2 * m46TAU), vul = `rgba(207,171,0,${(0.18 * a / 0.5).toFixed(3)})`;
+  g.strokeStyle = m.K.gloed; g.lineWidth = 4; g.lineJoin = 'round';
+  if (m.gloedDeur) { g.globalAlpha = 1; g.fillStyle = vul; g.fillRect(L.dx0, L.dy0, L.dx1 - L.dx0, L.yVloer - L.dy0);
+    g.globalAlpha = a; g.strokeRect(L.dx0 - 2, L.dy0 - 2, L.dx1 - L.dx0 + 4, L.yVloer - L.dy0 + 4); }
+  if (m.bak <= 0.25 && !m.over) { const B = L.bak, hx = B.w / 2 + 4, hy = B.w / 2 * L.k + 3, ty = B.y - B.h / 2 + 8; m46Poly(g, [[B.x - hx, ty], [B.x, ty - hy], [B.x + hx, ty], [B.x, B.y + B.h / 2 + 3]]); g.globalAlpha = 1; g.fillStyle = vul; g.fill(); g.globalAlpha = a; g.stroke(); }
+  if (m.zak >= m46ZAKKG && !m.over) { const Z = L.zak; g.globalAlpha = 1; g.fillStyle = vul; g.fillRect(Z.x - 4, Z.y0 - 6, Z.w + 8, Z.y1 - Z.y0 + 10); g.globalAlpha = a; env.rr(g, Z.x - 4, Z.y0 - 6, Z.w + 8, Z.y1 - Z.y0 + 10, 4); g.stroke(); }
+  g.globalAlpha = 1;
+}
+function m46DrawGloedVloer(g, env) {
+  const m = m46, L = m46L, a = env.reduced ? 0.5 : 0.5 + 0.15 * Math.sin(m.t * 1.2 * m46TAU), hw = (L.dx1 - L.dx0) * 0.75;
+  m46Poly(g, [[L.dx0, L.yVloer], [L.dx1, L.yVloer], [L.Cx + hw, L.yRing], [L.Cx - hw, L.yRing]]); g.fillStyle = `rgba(207,171,0,${(0.18 * a / 0.5).toFixed(3)})`; g.fill();
+}
+function m46DrawHand(g, env) {
+  const m = m46, L = m46L, h = m.hand; if (m.over) return;
+  let p = null;
+  if (h.on && (h.down || (h.mouse && m.t - h.t < 1.5))) p = [h.x, h.y];
+  else if (m.autoHand && m.keyTempo > 0) p = m46P(1.25, Math.PI * 1.5 - m.phiHand, 0);
+  if (!p) return;
+  g.beginPath(); g.moveTo(L.Cx, L.Cy - 1.3 * L.hz); g.lineTo(p[0], p[1]); g.moveTo(p[0] + 7, p[1]); g.arc(p[0], p[1], 7, 0, m46TAU); g.strokeStyle = 'rgba(243,238,210,.4)'; g.lineWidth = 1.5; g.lineCap = 'round'; g.stroke();
+}
+function m46DrawStof(g, env) {
+  const m = m46, L = m46L, K = m.K; g.fillStyle = K.mote; g.beginPath();
+  if (!env.dark) { const w = (L.dx1 - L.dx0) * 0.7, hh = L.yRing - L.yVloer; for (const [a, b, ph] of m.motes) { const x = L.Cx + (a - 0.5) * 2 * w * (0.7 + 0.5 * b) + Math.sin(m.t * 0.4 + ph) * 4, y = L.yVloer - 30 + b * (hh + 30) + Math.cos(m.t * 0.3 + ph) * 3; g.moveTo(x + 1.2, y); g.arc(x, y, 1.2, 0, m46TAU); } }
+  else for (const [a, b, ph] of m.motes.slice(0, 12)) { const x = L.lant.x + (a - 0.5) * 70 + Math.sin(m.t * 0.4 + ph) * 3, y = L.lant.y + (b - 0.4) * 60 + Math.cos(m.t * 0.3 + ph) * 3; g.moveTo(x + 1.1, y); g.arc(x, y, 1.1, 0, m46TAU); }
+  g.fill();
+}
+// de stapmeter: wijzerplaat (voorgetekend), de groene band van deze fase (met crème rand als de wijzer erin staat), de wijzer
+function m46DrawMeter(g, env) {
+  const m = m46, L = m46L, M = L.meter, K = m.K, hoek = q => Math.PI * (0.89 + env.clamp(q, 0, 2) / 2 * 1.22);
+  const inBand = m.wijzer >= m.bandLo && m.wijzer <= m.bandHi, key = `${Math.round(m.wijzer * 120)}|${Math.round(m.bandLo * 100)}|${Math.round(m.bandHi * 100)}|${inBand}`;
+  if (m.meterC) { if (key !== m.meterKey) { const c = m.meterC.g; c.save(); c.clearRect(0, 0, 110, 110); c.translate(55 - M.x, 55 - M.y); m46MeterTeken(c, env, hoek, inBand); c.restore(); m.meterKey = key; } // alleen opnieuw als de wijzer of de band verschuift
+    m46Blit(g, m.meterC, M.x - 55, M.y - 55); }
+  else m46MeterTeken(g, env, hoek, inBand);
+}
+function m46MeterTeken(g, env, hoek, inBand) {
+  const m = m46, M = m46L.meter, K = m.K;
+  if (m.meter) m46Blit(g, m.meter, M.x - 55, M.y - 55);
+  const a0 = hoek(m.bandLo), a1 = hoek(m.bandHi);
+  g.beginPath(); g.arc(M.x, M.y, M.r, a0, a1); g.lineWidth = 7; g.lineCap = 'butt'; g.strokeStyle = K.band; g.stroke();
+  if (inBand) { g.beginPath(); g.arc(M.x, M.y, M.r + 4.5, a0, a1); g.arc(M.x, M.y, M.r - 4.5, a1, a0, true); g.closePath(); g.lineWidth = 1.5; g.strokeStyle = K.wijzer; g.stroke(); }
+  const a = hoek(m.wijzer); g.beginPath(); g.moveTo(M.x - Math.cos(a) * 6, M.y - Math.sin(a) * 6); g.lineTo(M.x + Math.cos(a) * (M.r - 4), M.y + Math.sin(a) * (M.r - 4)); g.lineWidth = 2.5; g.lineCap = 'round'; g.strokeStyle = K.wijzer; g.stroke();
+  g.beginPath(); g.arc(M.x, M.y, 4, 0, m46TAU); g.fillStyle = K.wijzer; g.fill(); g.beginPath(); g.arc(M.x, M.y, 1.8, 0, m46TAU); g.fillStyle = K.iron; g.fill();
+}
+// korte hints: een labelpilletje bij het gloeiende ding (hooguit drie woorden) en, als er niets gebeurt, de regel boven de ring
+function m46DrawHints(g, env) {
+  const m = m46, L = m46L;
+  if (m.popTxt && m.pops.length) { g.save(); for (const u0 of m.pops) { const u = u0 / 0.9; g.globalAlpha = Math.min(1, (1 - u) * 2.5); m46Blit(g, m.popTxt, L.zak.x + L.zak.w / 2 + 4 - 32, L.zak.y0 - 21 - (env.reduced ? 0 : 24 * u)); } g.restore(); }
+  if (m.hint) { const h = m.hint, al = Math.min(1, (h.max - h.t) / 0.2, h.t / 0.3); if (!h.w) h.w = env.label(g, h.tekst, -999, -999, { alpha: 0 }); env.label(g, h.tekst, env.clamp(h.x, h.w / 2 + 8, L.W - h.w / 2 - 8), h.y, { alpha: al }); }
+  const begin = !m.geleerd && !m.over;
+  if (begin || m.hintDraai > 0) { const al = begin ? 1 : Math.min(1, (4 - m.hintDraai) / 0.3, m.hintDraai / 0.5), puls = env.reduced ? 0.9 : 0.75 + 0.25 * Math.sin(m.t * 4);
+    g.save(); g.globalAlpha = al; g.lineCap = 'round';
+    if (m.pijlen) { g.globalAlpha = al * puls; for (const q of m.pijlen) m46Blit(g, q.c, q.x, q.y); }
+    g.globalAlpha = al; const ty2 = L.Cy + 1.17 * L.R * L.k + 34;
+    if (m.draaiTxt) m46Blit(g, m.draaiTxt, L.Cx - 140, ty2 - 16);
+    else { env.ui(g, 18, 800); g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillStyle = m.K.tekst; g.fillText('Draai rondjes om de spil', L.Cx, ty2); }
+    g.restore(); }
+}
+// ---------- score en weegbon (ontwerp 3) ----------
+function m46Score() { return Math.round(m46.goed + m46.verkleurd); }
+function m46Result(env) {
+  const m = m46, gz = env.gezel, tred = m.tTotaal > 0 ? env.clamp(m.tBand / m.tTotaal, 0, 1) : 0, bonus = Math.round((gz ? 100 : 150) * tred), pct = Math.round(tred * 100);
+  const goed = Math.round(m.goed), verk = Math.round(m.verkleurd), vloer = Math.round(m.vloer), tot = goed + verk, q = tot > 0 ? goed / tot : 1, kg = goed + verk + bonus;
+  const rows = [['Goed meel', '+' + env.fmt(goed) + ' kg']];
+  if (verk > 0) rows.push(['Verkleurd meel', '+' + env.fmt(verk) + ' kg']);
+  if (vloer > 0) rows.push(['Op de vloer', env.fmt(vloer) + ' kg']);
+  if (m.passages > 0) rows.push(['Hup bij de deur', `${m.hups} van ${m.passages}`]); // lege regels laten we weg, zodat de bon ook bij een zwak potje past
+  if (m.zakken > 0) rows.push(['Zakken vol', String(m.zakken)]);
+  if (bonus > 0) rows.push([`Gelijkmatige tred (${pct}%)`, '+' + env.fmt(bonus) + ' kg']);
+  if (rows.length < 6) rows.push(['Zandloper, keuze van het spel', '1,5 min']); // de bon heeft plaats voor zes rijen
+  const quality = tot <= 0 ? null : q >= 0.97 ? { label: 'Goed meel', note: 'Grijs boekweitmeel met spikkels, voor brood en pap.', col: '#DCD5C7' }
+    : q >= 0.85 ? { label: 'Licht verkleurd', note: 'De steen liep even warm: de graanbak was leeg.', col: '#C4B29A' }
+      : { label: 'Verkleurd meel', note: 'De steen liep vaak warm, omdat de graanbak leeg stond.', col: '#A88E70' };
+  const badges = []; if (tred >= (gz ? 0.65 : 0.75) && tot > 0) badges.push('vak'); if (m.stoks === 0 && !m.warmOoit && tot > 0) badges.push('betr'); if (m.passages >= 1 && m.hups === m.passages && m.zakken >= 2) badges.push('ond');
+  return { kg, rows, quality, badges, slot: 'Boekweitmeel voor brood en pap. Zo begon Koopmans in 1846: met paardenkracht en geleend geld.', weak: kg < (gz ? 300 : 400) };
+}
+// ---------- icoontjes (Nieuw in deze molen en het Molenboek): vlakke vormen in twee of drie kleuren ----------
+function m46IcoMeter(g, x, y, s) { const r = s * 0.36; g.save(); g.translate(x, y + s * 0.06); g.lineCap = 'round'; g.beginPath(); g.arc(0, 0, r, Math.PI * 0.89, Math.PI * 2.11); g.lineWidth = s * 0.13; g.strokeStyle = '#C8A878'; g.stroke();
+  g.beginPath(); g.arc(0, 0, r, Math.PI * 1.35, Math.PI * 1.75); g.lineWidth = s * 0.11; g.strokeStyle = '#8FB46A'; g.stroke(); g.beginPath(); g.moveTo(0, 0); g.lineTo(Math.cos(Math.PI * 1.55) * r * 0.85, Math.sin(Math.PI * 1.55) * r * 0.85); g.lineWidth = s * 0.07; g.strokeStyle = '#F3EED2'; g.stroke(); g.beginPath(); g.arc(0, 0, s * 0.06, 0, m46TAU); g.fillStyle = '#F3EED2'; g.fill(); g.restore(); }
+function m46IcoDeur(g, x, y, s) { g.save(); g.translate(x, y); g.fillStyle = '#3B2816'; g.fillRect(-s * 0.36, -s * 0.38, s * 0.72, s * 0.76); g.fillStyle = '#F4EAD2'; g.fillRect(-s * 0.2, -s * 0.28, s * 0.4, s * 0.56); g.strokeStyle = '#CFAB00'; g.lineWidth = s * 0.06; g.strokeRect(-s * 0.2, -s * 0.28, s * 0.4, s * 0.56); g.restore(); }
+function m46IcoBak(g, x, y, s) { g.save(); g.translate(x, y); g.beginPath(); g.moveTo(-s * 0.36, -s * 0.36); g.lineTo(s * 0.36, -s * 0.36); g.lineTo(0, s * 0.08); g.closePath(); g.fillStyle = '#9A6E42'; g.fill(); g.beginPath(); g.moveTo(-s * 0.26, -s * 0.34); g.lineTo(s * 0.26, -s * 0.34); g.lineTo(0, -s * 0.02); g.closePath(); g.fillStyle = '#3B2C21'; g.fill();
+  g.fillStyle = '#CDBE9C'; g.beginPath(); g.moveTo(-s * 0.16, s * 0.4); g.lineTo(s * 0.16, s * 0.4); g.lineTo(s * 0.13, s * 0.14); g.lineTo(-s * 0.13, s * 0.14); g.closePath(); g.fill(); g.fillStyle = '#7A6A50'; g.fillRect(-s * 0.14, s * 0.12, s * 0.28, s * 0.05); g.restore(); }
+function m46IcoPaard(g, x, y, s) { g.save(); g.translate(x, y); g.fillStyle = '#6E472A'; g.beginPath(); g.moveTo(-s * 0.3, s * 0.4); g.lineTo(-s * 0.1, -s * 0.1); g.lineTo(s * 0.02, -s * 0.34); g.lineTo(s * 0.14, -s * 0.3); g.lineTo(s * 0.3, -s * 0.02); g.lineTo(s * 0.34, s * 0.16); g.lineTo(s * 0.1, s * 0.18); g.lineTo(0, s * 0.4); g.closePath(); g.fill();
+  g.fillStyle = '#2A1A0C'; g.beginPath(); g.moveTo(-s * 0.12, -s * 0.08); g.lineTo(-s * 0.02, -s * 0.36); g.lineTo(s * 0.06, -s * 0.3); g.lineTo(-s * 0.04, -s * 0.04); g.closePath(); g.fill(); g.fillStyle = '#1E140C'; g.fillRect(s * 0.06, -s * 0.12, s * 0.12, s * 0.1); g.restore(); }
+function m46IcoWiel(g, x, y, s) { g.save(); g.translate(x, y); g.beginPath(); g.arc(0, 0, s * 0.3, 0, m46TAU); g.lineWidth = s * 0.1; g.strokeStyle = '#7A4F26'; g.stroke(); g.strokeStyle = '#C99A3A'; g.lineWidth = s * 0.05; g.beginPath(); for (let i = 0; i < 12; i++) { const a = i * Math.PI / 6; g.moveTo(Math.cos(a) * s * 0.36, Math.sin(a) * s * 0.36); g.lineTo(Math.cos(a) * s * 0.44, Math.sin(a) * s * 0.44); } g.stroke();
+  g.beginPath(); g.arc(0, 0, s * 0.1, 0, m46TAU); g.fillStyle = '#C8A878'; g.fill(); g.restore(); }
+function m46IcoMeel(g, x, y, s) { g.save(); g.translate(x, y); g.fillStyle = '#CDBE9C'; g.beginPath(); g.moveTo(-s * 0.3, s * 0.4); g.lineTo(s * 0.3, s * 0.4); g.lineTo(s * 0.26, -s * 0.1); g.lineTo(s * 0.1, -s * 0.3); g.lineTo(-s * 0.1, -s * 0.3); g.lineTo(-s * 0.26, -s * 0.1); g.closePath(); g.fill();
+  g.fillStyle = '#DCD5C7'; g.beginPath(); g.ellipse(0, -s * 0.3, s * 0.16, s * 0.07, 0, 0, m46TAU); g.fill(); g.fillStyle = '#7A6A50'; g.fillRect(-s * 0.14, -s * 0.24, s * 0.28, s * 0.05); g.restore(); }
+mgRegister(1846, { naam: 'Rondje om de spil',
+  hoe: { kop: 'Houd het paard in een rustige stap', regel: 'Draai rondjes om de spil, dan loopt het paard en maalt de steen. Tik op wat gloeit.',
+    touch: 'Vinger: rondjes om de spil. Tik voor een hup, de zak of de graanbak.', toets: 'Pijl rechts of D sneller, links of A langzamer. Spatie: hup, zak of graanbak.' },
+  nieuw: [{ name: 'Stapmeter', act: 'houd de wijzer in de groene band', ico: m46IcoMeter }, { name: 'Hup bij de deur', act: 'tik als de deur gloeit', ico: m46IcoDeur }, { name: 'Graanbak en zak', act: 'tik als ze gloeien', ico: m46IcoBak }],
+  book: [
+    { id: 'm46-paard', name: 'Het rosmolenpaard', ico: m46IcoPaard,
+      text: 'Een rosmolenpaard was een rustig dier, vaak wat ouder. Het droeg oogkleppen tegen afleiding en duizeligheid en liep meestal alleen zijn rondjes, met de zon mee. Bij een luik of de open deur hield het soms in; daar werd het aangespoord. Het was zwaar werk, dus de paarden werden regelmatig afgelost. In de grutterij van het Openluchtmuseum houdt een zandloper de tijd bij.',
+      act: 'In het spel: het paard volgt je hand op een afstandje. Komt het bij de deur, tik dan voor een hup. Trek je te hard, dan houdt het in. Hoe lang een dienst in Holwerd duurde, weet niemand; de anderhalve minuut van de zandloper is een keuze van het spel.' },
+    { id: 'm46-kamwiel', name: 'Kamwiel en rondsel', ico: m46IcoWiel,
+      text: 'Het paard trekt aan een boom die aan de houten spil zit. Boven zijn hoofd draait het grote kamwiel mee. De kammen grijpen in een klein rondsel op de ijzeren steenspil, en zo draait de steen veel sneller dan het paard loopt. In de rosmolen van Zeddam stapt het paard 5 kilometer per uur, maakt het wiel 5 toeren per minuut en de steen 90: achttien keer zo snel.',
+      act: 'In het spel: de stapmeter laat zien of het paard op tempo loopt. Alleen in de groene band tikt de schudbak en loopt er meel in de zak.' },
+    { id: 'm46-meel', name: 'Boekweitmeel', ico: m46IcoMeel,
+      text: 'Boekweit maalde je voorzichtig. Loopt de steen op niets, dan wordt hij warm, en warm meel verbrandt gemakkelijk en verkleurt. Een lege graanbak is dus een slecht teken. Het meel ging in Holwerd naar brood en pap. Zo begon Koopmans in 1846: met paardenkracht en geleend geld.',
+      act: 'In het spel: houd de graanbak gevuld. Meel uit een warme steen is verkleurd meel; het telt mee als kilo\'s, maar het staat apart op de weegbon.' }],
+  verder: 'Verder draaien',
+  build: m46Build, start: m46Start, update: m46Update, draw: m46Draw, pointer: m46Pointer, key: m46Key,
+  progress: () => Math.min(1, m46.t / m46DUUR), storyOK: m46StoryOK, pauseHook: m46Pause, resumeHook: m46Resume,
+  score: m46Score, result: m46Result, auto: m46Auto });
 // ===== MINIGAME 1846 EIND =====
 } catch (e) { mgFail(1846, e); }
 // ---- niet aanpassen: scheiding voor git merge-file (1846 en 1867, regel 1 van 5) ----
