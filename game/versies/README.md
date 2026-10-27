@@ -13,3 +13,5 @@ korrelval-v4-nachtploeg-korrel.html is het spel zoals het op 20 oktober 2026 onl
 korrelval-v5-intro.html is het spel zoals het op 21 oktober 2026 online stond: met de intro waarin je de maaltoren in vliegt en het opgeruimde titelscherm. Dit is de stand vóór de grote mooimaakronde.
 
 korrelval-v6-mooi.html is het spel zoals het op 22 oktober 2026 online stond: mooier gemaakt in de stijl van Royal Koopmans, met de intro door het tarweveld, maar nog zonder de jaarintro's per molen. Dit is de stand vóór de jaarintro's.
+
+korrelval-v7-jaarintros.html is het spel zoals het op 26 oktober 2026 online stond: met een jaarintro per molen (het paard in de rosmolen van 1846 tot Molen B in 2026), maar nog met het vallende korreltje als spel in elke molen. Dit is de stand vóór de minigames per molen.
