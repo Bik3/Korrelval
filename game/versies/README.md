@@ -15,3 +15,5 @@ korrelval-v5-intro.html is het spel zoals het op 21 oktober 2026 online stond: m
 korrelval-v6-mooi.html is het spel zoals het op 22 oktober 2026 online stond: mooier gemaakt in de stijl van Royal Koopmans, met de intro door het tarweveld, maar nog zonder de jaarintro's per molen. Dit is de stand vóór de jaarintro's.
 
 korrelval-v7-jaarintros.html is het spel zoals het op 26 oktober 2026 online stond: met een jaarintro per molen (het paard in de rosmolen van 1846 tot Molen B in 2026), maar nog met het vallende korreltje als spel in elke molen. Dit is de stand vóór de minigames per molen.
+
+korrelval-v8-minigames.html is het spel zoals het op 27 oktober 2026 online stond: met vier minigames (1846 Rondje om de spil, 1867 Vuur onder de ketel, 1920 Zeefwacht, 1976 Licht en zwaar) en het valspel in 2008 en 2026. De gebruiker vond de minigames te raar en saai; daarna kwam het ontdekken in de jaarintro's in de plaats.
