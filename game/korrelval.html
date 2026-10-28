@@ -5599,7 +5599,7 @@ const JXFALL = 0.3; // s: de korrel valt voorop
 function jxDive(g, J, E) {
   let src = IN.jdv;
   if (!src) {
-    E.noGrain = true; jxDrawYear(g, J, E, IN.i, J.shots[IN.i].dur); E.noGrain = false; // het eindbeeld zonder korrel
+    E.noGrain = true; jxDrawYear(g, J, E, IN.i, J.shots[IN.i].dur); // het eindbeeld zonder korrel (noGrain blijft true: geen korrel meer in de jaarintro's)
     g.setTransform(1, 0, 0, 1, 0, 0); g.globalAlpha = 1; g.globalCompositeOperation = 'source-over';
     src = IN.jdv = ixCanvas(iCv.width, iCv.height); src.getContext('2d').drawImage(iCv, 0, 0);
     const p = jxDiveAt(J, E); iCv.style.transformOrigin = `${p[0]}px ${p[1]}px`;
@@ -5699,7 +5699,7 @@ function jxEnv(J) {
     gulls: (g, birds, o) => jxGulls(E, g, birds, o),
     dust: (g, pts, o) => jxDust(E, g, pts, o),
     rays: (g, o) => jxRays(E, g, o),
-    noGrain: false, // true tijdens het ene frame waarin het raamwerk het eindbeeld voor de duik bewaart: teken dan geen korrel (env.grain doet dat al)
+    noGrain: true, // altijd true sinds het ontdekken: de korrel (het valspel) hoort niet meer in de jaarintro's; env.grain tekent hem alleen nog met altijd (de duik in de testhaak)
     grain: (g, x, y, sc, st, altijd) => { if (E.noGrain && !altijd) return; g.save(); g.setTransform(E.dpr, 0, 0, E.dpr, 0, 0); g.translate(x, y); if (sc) g.scale(sc, sc); drawGrain(0, 0, g, st || { joy: false, blink: false }); g.restore(); },
     grainLand: g => jxGrainLand(J, E, g),
     title: (g, t, o) => jxTitle(E, g, t, o),
