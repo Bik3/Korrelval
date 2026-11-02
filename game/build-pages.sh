@@ -18,9 +18,9 @@ head = '''<!doctype html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Korrelval: vlieg door 180 jaar meelfabriek Royal Koopmans, van de rosmolen in Holwerd tot Molen B in Leeuwarden, en tik aan wat oplicht. Fan-made browserspel.">
-<meta property="og:title" content="Korrelval">
-<meta property="og:description" content="Vlieg door 180 jaar meelfabriek en ontdek hoe het toen ging. Speelbaar op telefoon en laptop.">
+<meta name="description" content="Molenvlucht: vlieg door 180 jaar meelfabriek Royal Koopmans, van de rosmolen in Holwerd tot Molen B in Leeuwarden, en tik aan wat oplicht. Aan het eind de minigame Korrelval. Fan-made browserspel.">
+<meta property="og:title" content="Molenvlucht">
+<meta property="og:description" content="Vlieg door 180 jaar meelfabriek en ontdek hoe het toen ging. Aan het eind val je zelf als korrel door de molen. Speelbaar op telefoon en laptop.">
 <meta property="og:url" content="https://bik3.github.io/Korrelval/">
 <meta name="twitter:card" content="summary">
 <meta name="theme-color" content="#1D1E1F">

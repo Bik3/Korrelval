@@ -1,9 +1,9 @@
 // =====================================================================================================
-// Eindtest Korrelval met de ontdekstand: het hele pad van een nieuwe speler, en de randen.
+// Eindtest Molenvlucht (ontdekken in de jaarintro's, met de minigame Korrelval aan het eind): het hele pad van een nieuwe speler, en de randen.
 //   A  400x800 touch (licht), lege opslag: titel > It giet oan! > hoofdintro (Verder, Terug in de tijd) > jaarintro 1846 shot 1 en 2 met
 //      ontdekken (tik op het ding, zoom, zin, Nieuw in je Molenboek, Terug, tik ernaast, knop in het paneel, Verder terwijl een ding open
 //      staat) > verhaal 1846 > Volgende molen: 1867 > Overslaan > verhaal > Menu > Kies een molen (alle jaren) > 2026 > slot >
-//      Molenboek (pagina's per jaar, Bekijk de jaarintro, ook daar ontdekken, Terug naar het Molenboek) > Nachtploeg (game-over, Nog een korrel?)
+//      Molenboek (pagina's per jaar, Bekijk de jaarintro, ook daar ontdekken, Terug naar het Molenboek) > Korrelval (kaart vooraf, It giet oan!, game-over, Nog een korrel?)
 //   B  herladen: het ontdekte blijft (vinkjes, geen gloed, teller)
 //   C  360x640 touch: titel past, paneel past, de dingen staan boven het paneel, tikvlak minstens 44 px
 //   D  1280x800 toetsenbord: Enter, Esc, Tab, pijltjes langs de knoppen, Enter opent, Esc gaat terug, voorlezen (aria-live)
@@ -23,6 +23,8 @@ const checks = [];
 const check = (ok, wat, detail) => { checks.push({ ok: !!ok, wat }); console.log(`${ok ? 'GOED' : 'FOUT'}  ${wat}${detail !== undefined ? '  (' + (typeof detail === 'string' ? detail : JSON.stringify(detail)) + ')' : ''}`); };
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 check(/^\s*<title>/.test(html) && !/<(!doctype|html|head|body)\b/i.test(html), 'bestand begint met <title>, geen doctype/html/head/body');
+check(/^\s*<title>Molenvlucht<\/title>/.test(html) && /<h1 class="logo"[^>]*>Molen<wbr><span>vlucht<\/span><\/h1>/.test(html), 'het spel heet Molenvlucht: <title> en het logo');
+check(!/achtploeg/i.test(html), 'nergens meer Nachtploeg (de minigame heet Korrelval)');
 
 async function maak(browser, opt) {
   const ctx = await browser.newContext({ viewport: opt.vp, hasTouch: !!opt.touch, isMobile: !!opt.touch, deviceScaleFactor: opt.dpr || 1, colorScheme: opt.scheme || 'light', reducedMotion: opt.reduced ? 'reduce' : 'no-preference' });
@@ -47,7 +49,7 @@ async function maak(browser, opt) {
   // het valspel, de introband of de weegbon mag in de tijdlijn nooit komen: elke 150 ms kijken
   const verboden = new Set(); let tijd = true;
   const wacht = setInterval(async () => { if (!tijd) return; try { const s = await scr(); if (s === 'play' || s === 'level' || s === 'over' || s === 'pause') verboden.add(s); } catch (e) { /* pagina laadt */ } }, 150);
-  return { ctx, page, extern, fouten, tap, box, tapSel, st, jaar, ox, scr, tot, shot, geenX, paneel, verboden, nachtploeg: () => { tijd = false; }, stop: () => clearInterval(wacht) };
+  return { ctx, page, extern, fouten, tap, box, tapSel, st, jaar, ox, scr, tot, shot, geenX, paneel, verboden, korrelval: () => { tijd = false; }, stop: () => clearInterval(wacht) };
 }
 // wacht tot de ontdekstand aan staat (de camera staat stil)
 const stand = T => T.tot(async () => (await T.ox()).on, 9000);
@@ -61,7 +63,7 @@ const stand = T => T.tot(async () => (await T.ox()).on, 9000);
   check(await A.scr() === 'title', 'A titelscherm');
   const lead = await page.textContent('.lead');
   check(/180 jaar molengeschiedenis/.test(lead) && !/tarwekorrel/.test(lead) && !/!/.test(lead), 'titel: de lead gaat over de vlucht door 180 jaar', lead);
-  check(await A.box('#bPick') && !/open na molen/.test(await page.textContent('#bNight')), 'titel: Kies een molen staat er, de Nachtploeg is open');
+  check(await A.box('#bPick') && !/open na molen/.test(await page.textContent('#bNight')), 'titel: Kies een molen staat er, Korrelval staat open');
   const titelPast = await page.evaluate(() => { const c = document.querySelector('#scrTitle .card'); return c.scrollHeight <= c.clientHeight + 1; });
   check(titelPast && await A.geenX(), 'titel past zonder scrollen, geen horizontaal scrollen');
   await A.shot('A01-titel');
@@ -154,8 +156,8 @@ const stand = T => T.tot(async () => (await T.ox()).on, 9000);
   await sleep(300); await A.tapSel('#bIntroSkipTop'); await sleep(600);
   check((await page.textContent('#bStory')) === 'Verder', 'na 2026: de knop op het verhaal heet Verder');
   await sleep(400); await A.tapSel('#bStory'); await sleep(500);
-  const slot = await page.evaluate(() => ({ s: window.__korrelval.state().screen, note: document.getElementById('doneNote').textContent, knoppen: ['bDoneBook', 'bDoneNight', 'bDoneMenu'].map(i => !!document.getElementById(i).offsetWidth), bon: !!document.querySelector('#scrDone .bon') }));
-  check(slot.s === 'done' && /^Je ontdekte 3 van 28 dingen\.$/.test(slot.note) && slot.knoppen.every(Boolean) && !slot.bon, 'slotkaart: Je ontdekte 3 van 28 dingen, met Molenboek, Nachtploeg en Menu (geen weegbon)', slot);
+  const slot = await page.evaluate(() => ({ s: window.__korrelval.state().screen, note: document.getElementById('doneNote').textContent, knoppen: ['bDoneBook', 'bDoneNight', 'bDoneMenu'].map(i => !!document.getElementById(i).offsetWidth), bon: !!document.querySelector('#scrDone .bon'), kv: document.getElementById('bDoneNight').textContent, regel: document.querySelector('#scrDone .kv-regel').textContent }));
+  check(slot.s === 'done' && /^Je ontdekte 3 van 28 dingen\.$/.test(slot.note) && slot.knoppen.every(Boolean) && !slot.bon && slot.kv === 'Speel Korrelval' && /Nu ben jij de korrel\./.test(slot.regel), 'slotkaart: Je ontdekte 3 van 28 dingen, met Speel Korrelval (en de regel ervoor), Molenboek en Menu (geen weegbon)', slot);
   const slotPast = await page.evaluate(() => { const c = document.querySelector('#scrDone .card'); return c.scrollHeight <= c.clientHeight + 1; });
   check(slotPast, 'slotkaart past zonder scrollen', slotPast);
   await A.shot('A07-slot');
@@ -178,17 +180,18 @@ const stand = T => T.tot(async () => (await T.ox()).on, 9000);
   check(await A.scr() === 'boek', 'terug in het Molenboek');
   await sleep(450); await A.tapSel('#bBookBack'); await sleep(400);
   check(await A.scr() === 'done', 'Terug uit het Molenboek: weer de slotkaart');
-  // Nachtploeg
-  A.nachtploeg();
+  // Korrelval (de minigame)
+  A.korrelval();
   await A.tapSel('#bDoneNight'); await sleep(400);
-  check(await A.scr() === 'night', 'Nachtploeg op de slotkaart: het dienstbriefje');
+  const kaart = await page.evaluate(() => ({ s: window.__korrelval.state().screen, kop: document.querySelector('#scrNight h2').textContent, knop: document.getElementById('bNbDaily').textContent, tekst: document.querySelector('#scrNight .story-text').textContent }));
+  check(kaart.s === 'night' && kaart.kop === 'Korrelval' && kaart.knop === 'It giet oan!' && /^Nu ben jij de korrel\./.test(kaart.tekst), 'Speel Korrelval op de slotkaart: de kaart vooraf (Korrelval, Nu ben jij de korrel, It giet oan!)', kaart);
   await A.tapSel('#bNbDaily'); await sleep(600);
-  check(await A.scr() === 'play', 'de Nachtploeg start');
+  check(await A.scr() === 'play' && (await A.st()).lives === 3, 'Korrelval start, met drie korrels', (await A.st()).lives);
   await A.tap(200, 500); await page.evaluate(() => { window.__kvFast = 4; });
   const over = await A.tot(async () => (await A.scr()) === 'over', 40000);
-  check(over, 'Nachtploeg: game-over (valspel werkt nog)');
+  check(over, 'Korrelval: game-over (valspel werkt nog)');
   await page.evaluate(() => { window.__kvFast = 1; });
-  await A.shot('A09-nachtploeg-over');
+  await A.shot('A09-korrelval-over');
   await sleep(400); await A.tapSel('#bAgain'); await sleep(500);
   check(await A.scr() === 'play', 'Nog een korrel? start opnieuw');
   await page.keyboard.press('Escape'); await sleep(300); await A.tapSel('#bPMenu'); await sleep(400);
