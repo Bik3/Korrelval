@@ -278,6 +278,8 @@ textarea.copy{width:100%;box-sizing:border-box;font:600 13px/1.35 var(--ui);back
 .title .lead{text-wrap:pretty}
 .title .gz-note{text-align:center;margin-top:calc(6px*var(--s,1))}
 .linkbtn.mid{text-align:center;margin-top:calc(2px*var(--s,1))}
+.title .voort{text-align:center;margin-top:calc(8px*var(--s,1))}
+.title .lnk2{display:flex;flex-wrap:wrap;justify-content:center;column-gap:16px;margin-top:calc(2px*var(--s,1))}.title .lnk2 .linkbtn{width:auto;flex:0 1 auto;text-align:center}
 .duo>.btn{flex:1 1 0;min-height:calc(54px*var(--s,1))}
 .links{display:flex;flex-wrap:wrap;justify-content:center;column-gap:4px}
 .links .linkbtn{width:auto;flex:1 1 auto;text-align:center;padding:6px 4px;color:var(--ink);font-weight:700;text-decoration-color:var(--line)}
@@ -398,7 +400,16 @@ textarea.copy{width:100%;box-sizing:border-box;font:600 13px/1.35 var(--ui);back
 } /* een zachte gouden rand om het ding (met een vleugje schaduw erbinnen, ook te zien op stro of lucht); het ding zelf blijft helder */
 .ox-laag.aan .ox-spot i{animation:oxPuls 2.4s ease-in-out infinite} /* pulseren alleen als de stand aan staat */
 .ox-laag .ox-spot.af i{opacity:0;animation:none;transition:opacity .4s ease-out} /* ontdekt: licht niet meer op (het tikvlak blijft) */
-.ox-laag .ox-spot.nu i{opacity:1;animation:none}
+.ox-laag .ox-spot.nu i{opacity:0;animation:oxRaak .5s ease-out both} /* geopend: de gloed trekt naar binnen en wordt het vinkje (hooguit 0,5 s) */
+/* het gouden vinkje op een ontdekt ding: ::before de schijf, ::after het haakje; bij openen springt het op na de gloed */
+.ox-spot::before,.ox-spot::after{content:'';position:absolute;left:50%;top:50%;opacity:0;pointer-events:none}
+.ox-spot::before{width:24px;height:24px;margin:-12px 0 0 -12px;border-radius:50%;background:#CFAB00;box-shadow:0 0 0 2px rgba(29,30,31,.55),0 2px 6px rgba(0,0,0,.35);transform:scale(.4)}
+.ox-spot::after{width:5px;height:10px;margin:-7px 0 0 -3px;border:solid #1D1E1F;border-width:0 3px 3px 0;transform:rotate(42deg) scale(.4)}
+.ox-spot.af::before{opacity:1;transform:scale(1)}.ox-spot.af::after{opacity:1;transform:rotate(42deg) scale(1)}
+.ox-laag .ox-spot.nu.af::before{animation:oxVink .4s .16s ease-out both}.ox-laag .ox-spot.nu.af::after{animation:oxVinkT .4s .16s ease-out both}
+@keyframes oxRaak{0%{opacity:1;transform:scale(1.1)}100%{opacity:0;transform:scale(.6)}}
+@keyframes oxVink{0%{opacity:0;transform:scale(.4)}60%{opacity:1;transform:scale(1.2)}100%{opacity:1;transform:scale(1)}}
+@keyframes oxVinkT{0%{opacity:0;transform:rotate(42deg) scale(.4)}60%{opacity:1;transform:rotate(42deg) scale(1.2)}100%{opacity:1;transform:rotate(42deg) scale(1)}}
 .ox-laag.wijs .ox-spot:not(.af) i{animation:oxWijs .9s ease-out 1}
 @keyframes oxPuls{0%,100%{opacity:.55;transform:scale(.97)}50%{opacity:1;transform:scale(1.03)}}
 @keyframes oxWijs{0%{opacity:1;transform:scale(1)}40%{opacity:1;transform:scale(1.14)}100%{opacity:.6;transform:scale(1)}}
@@ -407,15 +418,17 @@ textarea.copy{width:100%;box-sizing:border-box;font:600 13px/1.35 var(--ui);back
   background:radial-gradient(closest-side,rgba(16,12,8,0) 68%,rgba(16,12,8,.34));box-shadow:0 0 0 300vmax rgba(16,12,8,.34)}
 .ox-laag.open .ox-dim{opacity:1}
 /* paneel: knoppen met de namen, de teller, en Terug op de plek van de stippen */
-.ox-rij{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:6px 12px}
-.card.intro-panel>.ox-rij{margin-top:calc(8px*var(--s,1))}
-.ox-knoppen{display:flex;flex-wrap:wrap;gap:6px;min-width:0}
-.ox-knop{appearance:none;-webkit-appearance:none;display:inline-flex;align-items:center;gap:7px;min-height:44px;box-sizing:border-box;padding:0 13px 1px 10px;
-  border:2px solid var(--ui-edge);border-radius:22px;background:transparent;color:var(--ink);font:800 calc(14.5px*var(--s,1))/1.1 var(--ui);cursor:pointer;
+.ox-rij{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:4px 10px}
+.card.intro-panel>.ox-rij{margin-top:calc(6px*var(--s,1))}
+.ox-knoppen{display:flex;flex-wrap:wrap;gap:5px;min-width:0}
+/* knoppen 38 px hoog (het tikvlak loopt met ::before door tot 46 px), zodat het beeld erboven zo groot blijft als zonder de ontdekstand */
+.ox-knop{appearance:none;-webkit-appearance:none;position:relative;display:inline-flex;align-items:center;gap:6px;min-height:38px;box-sizing:border-box;padding:0 11px 1px 9px;
+  border:2px solid var(--ui-edge);border-radius:19px;background:transparent;color:var(--ink);font:800 calc(13.5px*var(--s,1))/1.1 var(--ui);cursor:pointer;
   touch-action:manipulation;transition:background-color .15s ease-out,border-color .15s ease-out,color .15s ease-out,opacity .3s ease-out}
+.ox-knop::before{content:'';position:absolute;left:0;right:0;top:-4px;bottom:-4px}
 .ox-knop i{flex:none;position:relative;width:10px;height:10px;border-radius:50%;background:#E8B530;box-shadow:0 0 0 4px rgba(232,181,48,.28)}
-.ox-knop.af i{width:14px;height:14px;background:var(--ok);box-shadow:none} /* ontdekt: een vinkje */
-.ox-knop.af i::after{content:'';position:absolute;left:4.6px;top:2px;width:3.4px;height:6.6px;border:solid #FFF;border-width:0 2px 2px 0;transform:rotate(42deg)}
+.ox-knop.af i{width:14px;height:14px;background:#CFAB00;box-shadow:none} /* ontdekt: een gouden vinkje, zoals op het ding */
+.ox-knop.af i::after{content:'';position:absolute;left:4.6px;top:2px;width:3.4px;height:6.6px;border:solid #1D1E1F;border-width:0 2px 2px 0;transform:rotate(42deg)}
 .ox-knop[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--card)}
 .ox-knop:focus-visible,.ox-terug:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
 @media (hover:hover) and (pointer:fine){.ox-knop:hover{background:var(--chip);border-color:var(--ui-edge-hover)}.ox-knop[aria-pressed="true"]:hover{background:var(--ink)}}
@@ -429,8 +442,13 @@ textarea.copy{width:100%;box-sizing:border-box;font:600 13px/1.35 var(--ui);back
   font:800 14px/1.2 var(--ui);text-decoration:underline;text-underline-offset:3px;cursor:pointer;touch-action:manipulation}
 .ox-terug[hidden],.ox-rij[hidden]{display:none}
 /* smalle telefoon: knoppen zonder stip (het vinkje blijft), zodat drie namen op één regel passen; lage telefoon: Overslaan alleen rechtsboven */
-@media (max-width:420px){.ox-knop{gap:6px;padding:0 11px 1px}.ox-knop:not(.af) i{display:none}.ox-knoppen{gap:5px}}
-@media (max-height:700px),(max-width:600px) and (max-height:900px){#introPanel.ox-aan #bIntroSkip{display:none}}
+@media (max-width:420px){.ox-knop{gap:5px;padding:0 10px 1px}.ox-knop:not(.af) i{display:none}}
+/* met de ontdekstand: Overslaan alleen rechtsboven, de knop Verder iets lager en de tussenruimte kleiner (het beeld erboven groter) */
+#introPanel.ox-aan #bIntroSkip{display:none}
+#introPanel.ox-aan{padding-top:calc(10px*var(--s,1))}
+.card.intro-panel.ox-aan>*+*{margin-top:calc(8px*var(--s,1))}
+#introPanel.ox-aan .btn.primary{min-height:calc(48px*var(--s,1));font-size:calc(22px*var(--s,1));padding-top:2px;padding-bottom:7px}
+#introKicker .ox-kop{font-size:calc(31px*var(--s,1));line-height:.8} /* de naam van een open ding, in handschrift op de plek van het jaartal; iets kleiner dan het jaartal, zodat hoofdletters niet tegen de rand komen */
 /* verhaal en slot in de tijdlijn: het stilstaande eindbeeld van het jaar erachter, gedimd (één keer getekend) */
 .tl-achter{position:absolute;left:0;top:0;width:100%;height:100%;display:block}
 .tl-achter[hidden]{display:none}
@@ -438,6 +456,9 @@ textarea.copy{width:100%;box-sizing:border-box;font:600 13px/1.35 var(--ui);back
 .tl-jaren{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
 .tl-jaren li{display:flex;align-items:baseline;justify-content:space-between;gap:4px;padding:6px 8px;background:var(--card2);border-radius:3px;font:700 12px/1.2 var(--ui);font-variant-numeric:tabular-nums;white-space:nowrap}
 .tl-jaren .hand{font-size:19px;line-height:1}
+.tl-jaren li.af{color:var(--gold-ink)}
+.vinkje{display:inline-block;position:relative;width:14px;height:14px;margin-left:5px;vertical-align:-2px;border-radius:50%;background:#CFAB00}
+.vinkje::after{content:'';position:absolute;left:4.6px;top:2px;width:3.4px;height:6.6px;border:solid #1D1E1F;border-width:0 2px 2px 0;transform:rotate(42deg)}
 .page.ding canvas{border-radius:50%}
 .book-jaar{margin:14px 0 0;font:400 25px/1 var(--hand);color:var(--ink)}
 @media (max-height:700px){.btn{min-height:44px}
@@ -455,7 +476,7 @@ textarea.copy{width:100%;box-sizing:border-box;font:600 13px/1.35 var(--ui);back
   .card,.toast,.stamp,.tsjoch,.title .logo::after{animation:none}
   .story #bStory[aria-disabled="true"]::before{animation:none;transform:scaleX(0)}
   .ox-spot,.ox-dim,.ox-knop,.ox-laag .ox-spot.af i{transition:none}
-  .ox-laag .ox-spot i,.ox-laag.aan .ox-spot i,.ox-laag.wijs .ox-spot i{animation:none}.ox-laag.aan .ox-spot:not(.af):not(.nu) i{opacity:.85}
+  .ox-laag .ox-spot i,.ox-laag.aan .ox-spot i,.ox-laag.wijs .ox-spot i,.ox-laag .ox-spot.nu i,.ox-laag .ox-spot.nu.af::before,.ox-laag .ox-spot.nu.af::after{animation:none}.ox-laag.aan .ox-spot:not(.af):not(.nu) i{opacity:.85}
   #scrIntro.ox-zoom #introCv,#scrIntro.ox-zoom .ox-laag{transition:none}}
 </style>
 <div id="app">
@@ -472,7 +493,8 @@ textarea.copy{width:100%;box-sizing:border-box;font:600 13px/1.35 var(--ui);back
     <p class="lead">Vlieg door 180 jaar molengeschiedenis, van de rosmolen in Holwerd tot Molen B. Onderweg tik je op wat oplicht.</p>
     <button class="btn primary" id="bStart" type="button" data-primary>It giet oan!</button>
     <p class="hint gz-note" id="gezelNote" hidden>Gezel-modus staat aan</p>
-    <button class="linkbtn mid" id="bPick" type="button">Kies een molen</button>
+    <p class="hint voort" id="titleVoort" hidden>Je ontdekte 0 van 0 dingen</p>
+    <div class="lnk2"><button class="linkbtn" id="bVerderBij" type="button" hidden>Ga verder bij 1846</button><button class="linkbtn" id="bPick" type="button">Kies een molen</button></div>
     <div class="row duo"><button class="btn subbtn" id="bNight" type="button">Nachtploeg</button><button class="btn bookbtn" id="bBook" type="button">Molenboek</button></div>
     <div class="links"><button class="linkbtn" id="bScores" type="button">Scores</button><button class="linkbtn" id="bSettings" type="button">Instellingen</button><button class="linkbtn" id="bAbout" type="button">Over dit spel</button></div>
     <p class="fine ui-voet">Fan-made door een stagiair.</p>
@@ -620,7 +642,7 @@ textarea.copy{width:100%;box-sizing:border-box;font:600 13px/1.35 var(--ui);back
     <button class="linkbtn" id="bIntroAgain" type="button">Bekijk de intro opnieuw</button>
     <h3>Het spel</h3>
     <p>Je vliegt langs zes molens van Koopmans, van de rosmolen in Holwerd in 1846 tot Molen B in 2026. Elk jaar heeft twee beelden: buiten en binnen.</p>
-    <p>Aan het eind van elk beeld lichten een paar dingen op. Tik erop en je krijgt één korte zin uitleg. Er zijn geen regels en geen score. Na elk jaar volgt een kort verhaal over die tijd.</p>
+    <p>Aan het eind van elk beeld lichten een paar dingen op. Tik erop: je krijgt één korte uitleg en een gouden vinkje. Er zijn geen regels en geen score. Na elk jaar volgt een kort verhaal over die tijd. Op het titelscherm zie je hoeveel je al ontdekte en bij welk jaar je verder kunt.</p>
     <p>Alles wat je ontdekt, en elk verhaal, komt in je Molenboek. Daar lees je het na op je eigen tempo. Met Kies een molen begin je bij een ander jaar.</p>
     <h3>Nachtploeg</h3>
     <p>Wil je zelf spelen? In de Nachtploeg stuur je één korrel door de walsen van de molen van nu. Wie midden door de spleet valt, haalt een perfecte passage. Stenen, bouten en moederkoren ontwijk je: die haalt de reiniging uit het graan, want stenen en metaal mogen nooit op de walsen.</p>
@@ -1225,6 +1247,7 @@ const SFX = {
   silo() { AU.tone(320, 140, 0.25, 'triangle', 0.18); },
   over() { AU.tone(220, 70, 0.45, 'triangle', 0.22); },
   click() { AU.tone(900, 700, 0.03, 'square', 0.03); },
+  ontdek() { AU.tone(659.25, 659.25, 0.09, 'sine', 0.1); AU.tone(987.77, 987.77, 0.18, 'sine', 0.08, 0.09); }, // ontdekt: twee zachte tonen omhoog
 };
 
 // ============================================================
@@ -3921,6 +3944,12 @@ function refreshTitle() {
   $('gezelNote').hidden = !save.gezel; // op het titelscherm zichtbaar zolang hij aan staat, zodat hij niet verstopt raakt
   syncSoundButtons();
   $('bPick').hidden = false; // Kies een molen: altijd open, voor alle zes jaren
+  { // voortgang zonder score: hoeveel je ontdekte, en het eerste jaar waar nog iets te ontdekken is
+    const tel = OX_DINGEN.filter(d => save.ontdekt[d.key]).length, m = OX_DINGEN.length, vt = $('titleVoort'), vb = $('bVerderBij');
+    let k = -1; for (let i = 0; i < LEVELS.length && k < 0; i++) { const [a, b] = oxJaarTel(LEVELS[i].year); if (a < b) k = i; }
+    vt.hidden = !tel; vt.textContent = tel >= m ? `Je ontdekte alle ${m} dingen. Tsjoch!` : `Je ontdekte ${tel} van ${m} dingen`;
+    vb.hidden = !tel || k < 0; if (k >= 0) { vb.textContent = `Ga verder bij ${LEVELS[k].year}`; vb.onclick = () => tlStart(k); }
+  }
   // De Nachtploeg-knop opent altijd het dienstbriefje: daar kies je Korrel van de dag of Vrije dienst, of lees je wanneer hij opengaat
   const best = save.daily[dateKey()];
   const sub = best ? `vandaag jouw beste: ${fmt(best)} kg` : 'zelf spelen, één korrel'; // altijd open
@@ -5349,7 +5378,7 @@ function introShot(i) {
 }
 // laatste knop: It giet oan!, maar bij de eerste start (daarna komt jaarintro 1846 nog) Terug in de tijd, beide ui-fries; bij terugkijken
 // vanuit het Molenboek Terug naar het Molenboek (gewone knop)
-const ixLastButton = () => IN.jy >= 0 ? (IN.from === 'boek' ? ['Terug naar het Molenboek', false] : IN.from === 'tijd' ? ['Verder', false] : ['It giet oan!', true]) : (jaarWanted(0) ? ['Terug in de tijd', true] : ['It giet oan!', true]); // tijdlijn: daarna het verhaal
+const ixLastButton = () => IN.jy >= 0 ? (IN.from === 'boek' ? ['Terug naar het Molenboek', false] : IN.from === 'tijd' ? ['Naar het verhaal', false] : ['It giet oan!', true]) : (jaarWanted(0) ? ['Terug in de tijd', true] : ['It giet oan!', true]); // tijdlijn: daarna het verhaal
 const introWanted = () => !save.introSeen; // iedereen één keer, ook wie al eerder speelde; hij is kort en je kunt hem overslaan
 function openIntro(from) {
   // tEnd: de eerste 0,4 s telt een tik niet als Verder (tweede tik van een dubbeltik op It giet oan!)
@@ -5933,7 +5962,7 @@ const OXP = {
   // 1846 (meters; x oost, y omhoog vanaf het land, z noord): buiten de deur van de molen en de man met de zak; binnen het paard (loopt rond), de rand van het kamwiel en het rondsel
   'o46-rosmolen': { at: [0, 3.33, 0], r: [1.55, 1.5], zoom: 1.2 },
   'o46-zakken': { at: [-2.14, 2.83, -2.6], r: [0.55, 0.95], zoom: 1.4 },
-  'o46-paard': { at: [0, 1.2, 0], r: [1.3, 0.95], zoom: 1.15, live: 'paard', focus: [0, 1.1, 0], gat: [4.2, 2.2] },
+  'o46-paard': { at: [0, 1.2, 0], r: [1.75, 1.25], zoom: 1.15, live: 'paard', focus: [0, 1.1, 0], gat: [4.2, 2.2] },
   'o46-kamwiel': { at: [3.51, 2.72, 0.69], r: [0.9, 0.35], zoom: 1.3 },
   'o46-rondsel': { at: [3.06, 2.69, -2.58], r: [0.35, 0.3], zoom: 1.4 },
   // 1867 (decimeters, y omlaag; buiten laag 0 = de overkant)
@@ -5952,8 +5981,8 @@ const OXP = {
   'o76-silos': { at: [-434.3, -142.4, 1], r: [201, 160], zoom: 1.15 },
   'o76-molen': { at: [-76.8, -176.8, 1], r: [80, 160], zoom: 1.2 },
   'o76-walsenstoel': { at: [-10.4, -79.9, 0], r: [68.5, 55], zoom: 1.3 },
-  'o76-snaarwiel': { at: [42.2, -109.7, -220], r: [10, 30.7], zoom: 1.4 },
-  'o76-buizen': { at: [0, -179.1, -220], r: [9.6, 37.7], zoom: 1.3 },
+  'o76-snaarwiel': { at: [86, -88, 0], r: [37, 37], zoom: 1.4 }, // het rode wiel rechts van de middelste stoel (laag 0, waar het getekend staat)
+  'o76-buizen': { at: [0, -215, 0], r: [17, 67], zoom: 1.3 },
   // 2008 (10 eenheden = 1 m; shot 1: z = diepte; shot 2: laag z = dz)
   'o08-schip': { at: [-14.2, -226.5, -250], r: [74, 26], zoom: 1.25 },
   'o08-molengebouw': { at: [120.7, -155.3, 0], r: [90, 160], zoom: 1.15 },
@@ -5966,7 +5995,7 @@ const OXP = {
   'o26-schermpje': { at: [2.47, -1.94, 0], r: [0.19, 0.1], zoom: 1.4 },
 };
 // OXP_EIND
-const OX = { on: false, shot: -1, list: [], open: -1, spots: [], zt: 0, wt: 0, msg: '', msgT: 0 };
+const OX = { on: false, shot: -1, list: [], open: -1, spots: [], zt: 0, wt: 0, msg: '', msgT: 0, hint: false, kop: false };
 const oxLaag = $('oxLaag'), oxDimEl = $('oxDim');
 const oxYear = () => IN.jy >= 0 && JX[IN.jy] ? JX[IN.jy].year : 0;
 const oxMag = () => IN.jy >= 0 && !!JXP[oxYear()] && !!OXD[oxYear()]; // heeft deze film een ontdekstand?
@@ -5977,6 +6006,7 @@ function oxShot(i, msg) {
   oxDicht(true);
   const year = oxYear(), aan = oxMag();
   OX.shot = i; OX.on = false; OX.msg = msg || ''; OX.msgT = performance.now();
+  OX.hint = !save.oxUitleg && !Object.keys(save.ontdekt).length; // de uitleg Tik op wat oplicht: alleen de allereerste keer
   OX.list = aan ? OX_DINGEN.filter(d => d.year === year && d.shot === i).map((d, n) => ({ ...d, n, p: OXP[d.key] || null, el: null, knop: null, a: null, pos: '' })) : [];
   for (const e of OX.spots) e.remove(); OX.spots = [];
   oxLaag.classList.remove('aan', 'open', 'wijs');
@@ -5999,7 +6029,7 @@ function oxStand() {
     d.knop.classList.toggle('af', af); d.knop.setAttribute('aria-pressed', String(OX.open === d.n)); d.knop.setAttribute('aria-label', d.naam + (af ? ', ontdekt' : ''));
     d.el.classList.toggle('af', af);
   }
-  const t = $('oxTel'), [n, m] = oxJaarTel(oxYear()), eerste = !Object.keys(save.ontdekt).length;
+  const t = $('oxTel'), [n, m] = oxJaarTel(oxYear()), eerste = OX.hint && !Object.keys(save.ontdekt).length;
   t.textContent = eerste ? 'Tik op wat oplicht' : `${n} van ${m} ontdekt`; t.classList.toggle('uitleg', eerste);
 }
 // na elk beeld (introDraw): stand aan of uit, en de plek van gloed, tikvlak en dimmen bijwerken (alleen schrijven als het verschuift)
@@ -6010,6 +6040,7 @@ function oxSync() {
   }
   if (!OX.on) {
     OX.on = true; oxLaag.classList.add('aan'); $('oxRij').classList.remove('wacht');
+    if (OX.hint && !save.oxUitleg) { save.oxUitleg = 1; persist(); } // de uitleg is nu gezien: hierna de teller
     const namen = OX.list.map(d => d.naam), lijst = namen.length > 1 ? namen.slice(0, -1).join(', ') + ' en ' + namen[namen.length - 1] : namen[0];
     const zin = `Wat oplicht: ${lijst}.`; // samen met de ondertitel als die net is voorgelezen (verminderde beweging: meteen het eindbeeld)
     announce(performance.now() - OX.msgT < 400 && OX.msg ? OX.msg + ' ' + zin : zin);
@@ -6020,7 +6051,7 @@ function oxAnker(d, E, J) {
   const pl = d.p; if (!pl) return null;
   let w = pl.at; const lv = pl.live && J.live[pl.live];
   try { if (lv) w = lv(E, OX.shot) || w; const q = J.proj(E, OX.shot, w[0], w[1], w[2] || 0); if (!q || !isFinite(q[0]) || !isFinite(q[1]) || !(q[2] > 0)) return null;
-    return [q[0], q[1], clamp(pl.r[0] * q[2], 18, E.W * 0.34), clamp(pl.r[1] * q[2], 18, E.P * 0.3)];
+    return [q[0], q[1], clamp(pl.r[0] * q[2], 22, E.W * 0.34), clamp(pl.r[1] * q[2], 22, E.P * 0.3)]; // minstens 22: ring 55 en tikvlak 48 css-px, ook om een klein ding
   } catch (e) { return null; }
 }
 function oxPlaats() {
@@ -6029,7 +6060,7 @@ function oxPlaats() {
     const a = d.a = oxAnker(d, E, J), e = d.el;
     if (!a) { if (e.style.display !== 'none') e.style.display = 'none'; continue; }
     if (e.style.display) e.style.display = '';
-    const gw = a[2] * 2.5, gh = a[3] * 2.5, w = Math.max(44, a[2] * 2.1), h = Math.max(44, a[3] * 2.1); // de rand van de gloed net om het ding; tikvlak minstens 44 css-px
+    const gw = a[2] * 2.5, gh = a[3] * 2.5, w = Math.max(48, a[2] * 2.1), h = Math.max(48, a[3] * 2.1); // de rand van de gloed net om het ding; tikvlak minstens 48 css-px
     const maat = `${Math.round(w)}|${Math.round(h)}|${Math.round(gw)}|${Math.round(gh)}`;
     if (d.maat !== maat) { d.maat = maat; e.style.width = Math.round(w) + 'px'; e.style.height = Math.round(h) + 'px'; e.style.setProperty('--gw', Math.round(gw) + 'px'); e.style.setProperty('--gh', Math.round(gh) + 'px'); e.style.zIndex = String(Math.max(1, 900 - Math.round(w * h / 400))); }
     const pos = `translate(${(a[0] - Math.round(w) / 2).toFixed(1)}px,${(a[1] - Math.round(h) / 2).toFixed(1)}px)`;
@@ -6056,8 +6087,11 @@ function oxOpen(n) {
   const nieuw = !save.book[d.key]; save.ontdekt[d.key] = 1; if (nieuw) unlockPage(d.key); else persist();
   OX.open = n;
   $('introDots').hidden = true; $('oxTerug').hidden = false;
-  const tx = $('introText'), b = document.createElement('b'); b.className = 'ox-naam'; b.textContent = d.naam + '.';
-  tx.textContent = ''; tx.append(b, ' ' + d.zin);
+  // de naam in handschrift op de plek van het jaartal, de zin op de plek van de ondertitel (het paneel houdt er geen ruimte voor vrij)
+  const tx = $('introText'), k = $('introKicker'), h = document.createElement('span'); h.className = 'hand ox-kop'; h.textContent = d.naam;
+  k.classList.add('ui-kick'); k.textContent = ''; k.appendChild(h); OX.kop = true;
+  tx.textContent = d.zin;
+  AU.ensure(); SFX.ontdek(); // een zacht geluidje (stil als geluid uit staat)
   if (nieuw) { const tg = document.createElement('span'); tg.className = 'tag-new'; tg.textContent = 'Nieuw in je Molenboek'; tx.append(' ', tg); }
   oxStand();
   for (const q of OX.list) q.el.classList.toggle('nu', q.n === n);
@@ -6087,6 +6121,7 @@ function oxDicht(instant) {
     const tb = $('oxTerug'), focus = document.activeElement === tb;
     $('introDots').hidden = false; tb.hidden = true;
     $('introText').textContent = ixShots()[IN.i] ? ixShots()[IN.i].text : '';
+    if (OX.kop) { OX.kop = false; const s = ixShots()[IN.i]; if (s) jxKicker(s.kicker); } // het jaartal terug op de plek van de naam
     oxLaag.classList.remove('open'); for (const q of OX.list) if (q.el) q.el.classList.remove('nu');
     oxStand();
     if (focus && d && d.knop) try { d.knop.focus({ preventScroll: true }); } catch (e) { d.knop.focus(); }
@@ -6117,7 +6152,7 @@ function oxMeet(mz) {
   const rij = $('oxRij'), aan = oxMag(), year = oxYear(); rij.hidden = !aan; rij.style.minHeight = ''; $('introPanel').classList.toggle('ox-aan', aan);
   if (!aan) return 0;
   const lijst = OX_DINGEN.filter(d => d.year === year); let mx = 0;
-  for (const d of lijst) { mz.innerHTML = `<b class="ox-naam">${esc(d.naam)}.</b> ${esc(d.zin)} <span class="tag-new">Nieuw in je Molenboek</span>`; mx = Math.max(mx, mz.offsetHeight); }
+  // de zin van een ding vervangt de ondertitel; het paneel houdt er geen ruimte voor vrij (is de zin langer, dan groeit het paneel even naar boven)
   const kl = document.createElement('div'); kl.className = 'ox-rij'; kl.setAttribute('aria-hidden', 'true');
   kl.style.cssText = `position:absolute;visibility:hidden;left:0;top:0;width:${rij.clientWidth}px`;
   $('introPanel').appendChild(kl); let rh = 0;
@@ -6168,8 +6203,8 @@ function tlVolgende() { const i = TL.i + 1; if (i >= LEVELS.length) tlSlot(); el
 // slot na 2026: hoeveel je ontdekte, per jaar, met Molenboek, Nachtploeg en Menu
 function tlSlot() {
   TL.on = true; let n = 0, m = 0;
-  $('doneJaren').innerHTML = LEVELS.map(lv => { const [a, b] = oxJaarTel(lv.year); n += a; m += b; return `<li><span class="hand">${lv.year}</span><span>${a} van ${b}</span></li>`; }).join('');
-  $('doneNote').textContent = `Je ontdekte ${n} van ${m} dingen.`;
+  $('doneJaren').innerHTML = LEVELS.map(lv => { const [a, b] = oxJaarTel(lv.year), af = a >= b; n += a; m += b; return `<li${af ? ' class="af"' : ''}><span class="hand">${lv.year}</span><span>${a} van ${b}${af ? '<i class="vinkje" aria-hidden="true"></i><span class="sr">, alles ontdekt</span>' : ''}</span></li>`; }).join('');
+  $('doneNote').textContent = n >= m ? `Je ontdekte alle ${m} dingen. Tsjoch!` : `Je ontdekte ${n} van ${m} dingen.`;
   $('doneSub').textContent = n >= m ? 'Alles wat je ontdekte, staat in je Molenboek.' : 'Alles wat je ontdekte, staat in je Molenboek. De rest vind je als je een jaar opnieuw kiest.';
   save.campDone = true; persist();
   show('done');
@@ -8997,7 +9032,7 @@ const j76Lamp = [-1300, -900, -600, -90, 300, 700, 1100]; // natriumlampen op de
 const j76Stoel = [-500, -250, 0, 250, 500]; // shot 2: de walsenstoelen op een rij (midden van elke stoel)
 const j76Gy = -166, j76Spleet = -75; // shot 2: de korrel in het glas en de spleet tussen de walsen (y op de walsenstoel)
 // shot 2: eindcamera dicht op de middelste walsenstoel (staand op breedte, liggend op hoogte), begincamera 2,2 keer verder en lager
-const j76E2 = env => ({ x: 0, y: -132, k: Math.min(env.W / 170, env.P / 262) });
+const j76E2 = env => ({ x: env.W < env.P ? 28 : 0, y: -132, k: Math.min(env.W / 170, env.P / 262) }); // staand (telefoon): iets naar rechts, zodat het snaarwiel helemaal in beeld staat
 const j76S2 = env => { const e = j76E2(env); return { x: -150, y: -112, k: e.k / 2.2 }; };
 // kleuren [dag, avond]
 const j76Kl = {

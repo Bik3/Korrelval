@@ -90,14 +90,14 @@ const stand = T => T.tot(async () => (await T.ox()).on, 9000);
   // tik op het ding zelf
   const d0 = o.list[0]; await A.tap(d0.box[0] + d0.box[2] / 2, d0.box[1] + d0.box[3] / 2); await sleep(700);
   o = await A.ox();
-  const tekst = await page.textContent('#introText'), sr = await page.textContent('#sr');
+  const tekst = await page.textContent('#introText'), sr = await page.textContent('#sr'), kop = (await page.textContent('#introKicker')).trim();
   check(o.open === 0 && /scale\(/.test(o.zoom), 'tik op het ding: het gaat open en de camera zoomt naar het ding', { open: o.open, zoom: o.zoom });
   const zoomK = +(/scale\(([\d.]+)\)/.exec(o.zoom) || [0, 0])[1];
   check(zoomK > 1 && zoomK <= 1.4, 'zoom hooguit 1,4x', zoomK);
-  check(tekst.startsWith(d0.naam + '.') && /Nieuw in je Molenboek/.test(tekst), 'paneel: naam, één zin en Nieuw in je Molenboek', tekst);
+  check(kop === d0.naam && !tekst.startsWith(d0.naam) && /Nieuw in je Molenboek/.test(tekst), 'paneel: de naam in handschrift op de plek van het jaartal, één zin en Nieuw in je Molenboek', { kop, tekst });
   check(sr.includes(d0.naam) && sr.length > 20, 'de zin wordt voorgelezen (aria-live)', sr.slice(0, 80));
   check(await A.box('#oxTerug') && await page.evaluate(() => document.getElementById('oxLaag').classList.contains('open')), 'Terug staat er en de rest is gedimd');
-  const p2 = await A.paneel(); check(p2.past && p2.top === p1.top, 'het paneel blijft even hoog als een ding open is', { voor: p1.top, na: p2.top });
+  const p2 = await A.paneel(); check(p2.past && p2.top <= p1.top + 2, 'het paneel past nog en zakt niet als een ding open is (het mag naar boven groeien: de zin vervangt de ondertitel)', { voor: p1.top, na: p2.top });
   await A.shot('A03-1846-s1-open');
   await A.tapSel('#oxTerug'); await sleep(750);
   o = await A.ox();
@@ -113,7 +113,7 @@ const stand = T => T.tot(async () => (await T.ox()).on, 9000);
   check(jv.shot === 0, 'een tik naast de dingen gaat niet verder (Verder is de knop)', jv.shot);
   // shot 2
   await A.tapSel('#bIntroNext'); await sleep(400); jv = await A.jaar();
-  check(jv.shot === 1 && (await page.textContent('#bIntroNext')).trim() === 'Verder', 'Verder gaat naar shot 2; de laatste knop heet Verder (geen It giet oan!, geen duik)', { shot: jv.shot, knop: await page.textContent('#bIntroNext') });
+  check(jv.shot === 1 && (await page.textContent('#bIntroNext')).trim() === 'Naar het verhaal', 'Verder gaat naar shot 2; de laatste knop heet Naar het verhaal (geen It giet oan!, geen duik)', { shot: jv.shot, knop: await page.textContent('#bIntroNext') });
   check(await stand(A), 'shot 2: de ontdekstand gaat aan');
   o = await A.ox();
   check(o.list.length === 3 && o.list.every(d => d.box && d.box[2] >= 44 && d.box[3] >= 44 && d.a[1] > 0 && d.a[1] < picH), 'shot 2: drie dingen in beeld, tikvlak minstens 44', o.list.map(d => [d.id, d.a]));
@@ -218,7 +218,7 @@ const stand = T => T.tot(async () => (await T.ox()).on, 9000);
     await stand(C); o = await C.ox(); const pc = await C.paneel(), ph = (await C.jaar()).picH;
     check(pc.past && o.list.every(d => d.box && d.box[2] >= 44 && d.box[3] >= 44 && d.a[1] > 4 && d.a[1] < ph - 4 && d.a[0] > 0 && d.a[0] < 360), `C shot ${sh + 1}: paneel past, de dingen staan boven het paneel, tikvlak 44+`, { P: ph, plek: o.list.map(d => d.a) });
     await C.tapSel('#oxKnoppen .ox-knop:nth-child(1)'); await sleep(700);
-    const po = await C.paneel(); check(po.past && po.top === pc.top, `C shot ${sh + 1}: met een ding open past het paneel nog`, { voor: pc.top, na: po.top });
+    const po = await C.paneel(); check(po.past && po.top <= pc.top + 2, `C shot ${sh + 1}: met een ding open past het paneel nog (en zakt niet)`, { voor: pc.top, na: po.top });
     await C.shot(`C0${sh + 1}-360-open`);
     await C.tapSel('#oxTerug'); await sleep(650);
   }
