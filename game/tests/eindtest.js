@@ -2,7 +2,7 @@
 // Eindtest Molenvlucht (ontdekken in de jaarintro's, met de minigame Korrelval aan het eind): het hele pad van een nieuwe speler, en de randen.
 //   A  400x800 touch (licht), lege opslag: titel > It giet oan! > hoofdintro (Verder, Terug in de tijd) > jaarintro 1846 shot 1 en 2 met
 //      ontdekken (tik op het ding, zoom, zin, Nieuw in je Molenboek, Terug, tik ernaast, knop in het paneel, Verder terwijl een ding open
-//      staat) > verhaal 1846 > Volgende molen: 1867 > Overslaan > verhaal > Menu > Kies een molen (alle jaren) > 2026 > slot >
+//      staat) > verhaal 1846 > Volgende molen: 1867 > tijdsprong (tik slaat over) > Overslaan > verhaal > Menu > Kies een molen (alle jaren) > 2026 > slot >
 //      Molenboek (pagina's per jaar, Bekijk de jaarintro, ook daar ontdekken, Terug naar het Molenboek) > Korrelval (kaart vooraf, It giet oan!, game-over, Nog een korrel?)
 //   B  herladen: het ontdekte blijft (vinkjes, geen gloed, teller)
 //   C  360x640 touch: titel past, paneel past, de dingen staan boven het paneel, tikvlak minstens 44 px
@@ -138,8 +138,13 @@ const stand = T => T.tot(async () => (await T.ox()).on, 9000);
   await A.shot('A06-verhaal-1846');
   const bewaard = await page.evaluate(() => { try { return Object.keys(JSON.parse(localStorage.getItem('korrelval-b-v2')).ontdekt); } catch (e) { return null; } });
   check(bewaard && bewaard.length >= 3, 'het ontdekte staat in de opslag', bewaard);
-  await sleep(500); await A.tapSel('#bStory'); await sleep(500);
+  // tijdsprong (ronde 3): na het verhaal een lijn met zes stippen, het jaartal telt in handschrift van 1846 naar 1867, de stip verspringt; een tik slaat over
+  await sleep(500); await A.tapSel('#bStory'); await sleep(420);
+  const sp1 = await page.evaluate(() => window.__korrelval.sprong()); await A.shot('A06b-tijdsprong');
+  await A.tap(200, 300); await sleep(200);
   jv = await A.jaar();
+  check(sp1.open && sp1.van === '1846' && sp1.naar === '1867' && sp1.stippen === 6 && sp1.jaren.join() === '1846,1867,1920,1976,2008,2026' && sp1.hand && +sp1.jaar > 1846 && +sp1.jaar < 1867 && sp1.stip > 0 && sp1.stip < 1 && sp1.t < 1.5 && jv.open && jv.year === 1867,
+    'tijdsprong: zes stippen, het jaartal (handschrift) telt van 1846 naar 1867, de stip verspringt; een tik slaat over', { ...sp1, na: jv.year });
   check(jv.open && jv.year === 1867 && jv.from === 'tijd', 'Volgende molen: de jaarintro van 1867 (elke keer, niet alleen de eerste keer)', { year: jv.year, from: jv.from });
   await sleep(300); await A.tapSel('#bIntroSkipTop'); await sleep(600);
   check(await A.scr() === 'story' && (await page.textContent('#bStory')) === 'Volgende molen: 1920', 'Overslaan: het verhaal van 1867, dan Volgende molen: 1920');

@@ -356,9 +356,9 @@ textarea.copy{width:100%;box-sizing:border-box;font:600 13px/1.35 var(--ui);back
 .rotate[hidden]{display:none}
 /* Intro: de vlucht van buiten de maaltoren in. Het beeld (canvas) vult het hele scherm; onderaan een ondertitelpaneel
    in de vorm van een kaart, rechtsboven altijd een klein Overslaan. */
-#scrIntro{display:block;padding:0;pointer-events:auto;background:#1b1816;touch-action:none}
-#introCv{position:absolute;left:0;top:0;width:100%;height:100%;display:block;cursor:pointer}
-#introCv.achter{cursor:default} /* achter het menu: geen tik op het beeld */
+#scrIntro{display:block;padding:0;pointer-events:auto;background:none;touch-action:none} /* het beeld (#introCv) staat eronder in #app */
+#introCv{position:absolute;left:0;top:0;width:100%;height:100%;display:block;cursor:pointer;background:#1b1816}
+#introCv.achter{cursor:default;background:none} /* achter het menu: geen tik op het beeld */
 .intro-panel{position:absolute;left:0;right:0;bottom:0;margin:0 auto;max-width:560px;border-radius:3px 3px 0 0;
   padding:calc(13px*var(--s,1)) 16px max(calc(8px*var(--s,1)),env(safe-area-inset-bottom,0px));animation-name:uiFade} /* alleen vervagen: introLayout meet zijn bovenkant */
 .card.intro-panel>*+*{margin-top:calc(10px*var(--s,1))}
@@ -386,7 +386,7 @@ textarea.copy{width:100%;box-sizing:border-box;font:600 13px/1.35 var(--ui);back
    De laag ligt precies over het canvas en zoomt mee (zelfde transform). Pulseren en zoomen doet de compositor: alleen opacity en transform. */
 .ox-laag{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;overflow:visible}
 .ox-laag.open{pointer-events:auto;cursor:pointer} /* een ding staat open: een tik ernaast is Terug */
-#scrIntro.ox-zoom #introCv,#scrIntro.ox-zoom .ox-laag{transform-origin:0 0;transition:transform .6s cubic-bezier(.16,.84,.44,1)}
+#introCv.ox-zoom,#scrIntro.ox-zoom .ox-laag{transform-origin:0 0;transition:transform .6s cubic-bezier(.16,.84,.44,1)}
 .ox-spot{position:absolute;left:0;top:0;pointer-events:auto;cursor:pointer;border-radius:50%;opacity:0;transition:opacity .4s ease-out;-webkit-tap-highlight-color:transparent;will-change:transform} /* eigen laag: een ding dat beweegt (het paard) kost alleen samenstellen */
 .ox-laag.aan .ox-spot{opacity:1}
 .ox-laag.open .ox-spot{pointer-events:none}
@@ -429,7 +429,7 @@ textarea.copy{width:100%;box-sizing:border-box;font:600 13px/1.35 var(--ui);back
 .ox-knop:focus-visible,.ox-terug:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
 @media (hover:hover) and (pointer:fine){.ox-knop:hover{background:var(--chip);border-color:var(--ui-edge-hover)}.ox-knop[aria-pressed="true"]:hover{background:var(--ink)}}
 .ox-rij.wacht .ox-knop{opacity:.6}
-.ox-tel{margin:0;font:700 calc(13px*var(--s,1))/1.3 var(--ui);color:var(--muted);white-space:nowrap}
+.ox-tel{margin:0 0 0 auto;font:700 calc(13px*var(--s,1))/1.3 var(--ui);color:var(--muted);white-space:nowrap}
 .ox-tel.uitleg{color:var(--gold-ink)}
 .ox-naam{font-weight:800}
 .intro-text .tag-new{vertical-align:1px}
@@ -457,6 +457,31 @@ textarea.copy{width:100%;box-sizing:border-box;font:600 13px/1.35 var(--ui);back
 .vinkje::after{content:'';position:absolute;left:4.6px;top:2px;width:3.4px;height:6.6px;border:solid #1D1E1F;border-width:0 2px 2px 0;transform:rotate(42deg)}
 .page.ding canvas{border-radius:50%}
 .book-jaar{margin:14px 0 0;font:400 25px/1 var(--hand);color:var(--ink)}
+.sprong{pointer-events:auto;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;
+  background:radial-gradient(ellipse 62% 30% at 50% 50%,rgba(16,12,8,.6),rgba(16,12,8,.25) 70%,rgba(16,12,8,0))} /* rustig vlak achter jaartal en lijn */
+/* tijdsprong tussen de jaren (tijdlijn): een lijn met zes oranje stippen met gloed, zoals de tijdlijn op de site van Koopmans; het jaartal
+   in handschrift rolt van het oude naar het nieuwe jaar. Per frame alleen transforms. */
+.sp{display:flex;flex-direction:column;align-items:center;color:#F3EED2;animation:spIn .3s cubic-bezier(.16,.84,.44,1) both}
+@keyframes spIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.sp-jaar{display:flex;margin:0 0 6px;font-size:76px;line-height:1.3;height:1.3em;color:#F3EED2;
+  -webkit-mask-image:linear-gradient(transparent,#000 24%,#000 76%,transparent);mask-image:linear-gradient(transparent,#000 24%,#000 76%,transparent)}
+.sp-c{display:block;width:.52em;height:1.3em;overflow:hidden;text-align:center}
+.sp-r{display:block;will-change:transform}
+.sp-r>span{display:block;height:1.3em}
+.sp-lijn,.sp-jaren{position:relative;width:min(300px,calc(100vw - 88px))}
+.sp-lijn{height:18px}
+.sp-lijn::before,.sp-af{content:"";position:absolute;left:0;right:0;top:8px;height:2px;border-radius:1px;background:rgba(243,238,210,.32)}
+.sp-af{background:#E78A01;transform-origin:0 50%;transform:scaleX(0);will-change:transform}
+.sp-stip{position:absolute;top:4px;width:10px;height:10px;margin-left:-5px;border-radius:50%;box-sizing:border-box;border:2px solid rgba(243,238,210,.55);background:#2B241C;transition:background-color .2s ease-out,border-color .2s ease-out}
+.sp-stip.af{border-color:#E78A01;background:#E78A01}
+.sp-nu{position:absolute;left:0;top:0;width:18px;height:18px;margin-left:-9px;will-change:transform}
+.sp-nu i{display:block;width:18px;height:18px;border-radius:50%;background:#E78A01;box-shadow:0 0 0 7px rgba(231,138,1,.2),0 0 18px 6px rgba(231,138,1,.32)}
+.sp-nu.aan i{animation:spPlop .36s cubic-bezier(.16,.84,.44,1)}
+@keyframes spPlop{45%{transform:scale(1.3)}to{transform:none}}
+.sp-jaren{list-style:none;margin:10px 0 0;padding:0;height:16px;font:700 12px/16px var(--ui);letter-spacing:.02em;color:rgba(243,238,210,.62)}
+.sp-jaren li{position:absolute;top:0;transform:translateX(-50%);transition:color .2s ease-out}
+.sp-jaren li.nu{color:#F29A1C}
+@media (min-width:900px) and (min-height:600px){.sp-jaar{font-size:100px}.sp-lijn,.sp-jaren{width:440px}.sp-jaren{font-size:13px}} /* groot scherm: de tijdlijn iets ruimer */
 @media (max-height:700px){.btn{min-height:44px}
   /* weegbon op kleine telefoons: de zakkenregel (staat ook op het jaarverslag) wijkt voor de langste reeks */
   #lvBon tr.opt{display:none}.bon td{padding-top:calc(4px*var(--s,1));padding-bottom:calc(4px*var(--s,1))}
@@ -473,7 +498,8 @@ textarea.copy{width:100%;box-sizing:border-box;font:600 13px/1.35 var(--ui);back
   .story #bStory[aria-disabled="true"]::before{animation:none;transform:scaleX(0)}
   .ox-spot,.ox-dim,.ox-knop,.ox-laag .ox-spot.af i{transition:none}
   .ox-laag .ox-spot i,.ox-laag.aan .ox-spot i,.ox-laag.wijs .ox-spot i,.ox-laag .ox-spot.nu i,.ox-laag .ox-spot.nu.af::before,.ox-laag .ox-spot.nu.af::after{animation:none}.ox-laag.aan .ox-spot:not(.af):not(.nu) i{opacity:.85}
-  #scrIntro.ox-zoom #introCv,#scrIntro.ox-zoom .ox-laag{transition:none}}
+  #introCv.ox-zoom,#scrIntro.ox-zoom .ox-laag{transition:none}
+  .sp,.sp-nu.aan i{animation:none}.sp-stip,.sp-jaren li{transition:none}}
 </style>
 <div id="app">
 <canvas id="lb" aria-hidden="true"></canvas>
@@ -557,6 +583,9 @@ textarea.copy{width:100%;box-sizing:border-box;font:600 13px/1.35 var(--ui);back
   </div>
 </section>
 
+<section id="scrSprong" class="screen sprong" aria-label="Tijdsprong" hidden>
+  <div class="sp" aria-hidden="true"><p class="sp-jaar hand" id="spJaar"></p><div class="sp-lijn" id="spLijn"><b class="sp-af" id="spAf"></b><b class="sp-nu" id="spNu"><i></i></b></div><ol class="sp-jaren" id="spJaren"></ol></div>
+</section>
 <section id="scrNight" class="screen" aria-label="Korrelval" hidden>
   <div class="card story brief">
     <p class="kicker">Minigame</p>
@@ -792,7 +821,7 @@ const NIGHT = { year: 2026, short: 'Korrelval', title: 'Korrelval', style: 'digi
   pal: { wall: '#0b0c0e', wall2: '#15171a', line: '#6FD3E0', slab: '#26282b', edge: '#E78A01', pipe: '#1c1e21', plate: '#3c4044' },
   mix: { wals: 5, plan: 3, haz: 3 }, haz: ['steen', 'bout', 'moeder'], picks: { nedertarwe: 3, water: 2, magneet: 1, kroon: 1, kiem: 1 }, ribs: 6, plan: { A: 36, f: 0.9, holes: 2 }, white: 0.92,
   // het dienstbriefje vertelt al wat Korrelval is; de introband zegt alleen hoe hij opbouwt (CONFIG.night.zones)
-  intro: `Eerst alleen walsen en stenen. Na tien verdiepingen komt er meer bij, na twintig alles. Na ${CONFIG.night.floors} verdiepingen wacht de silo.`, supply: null,
+  intro: `Eerst alleen walsen en stenen, daarna steeds meer. Na ${CONFIG.night.floors} verdiepingen wacht de silo.`, supply: null,
   zones: ['Slotermeer', 'Fluessen', 'Tjeukemeer', 'Princenhof', 'Bonkevaart'] }; // HUD: zone per tien verdiepingen, Prémax-mixen
 // Opbouw van Korrelval (CONFIG.night.zones): zone-index bij verdieping n, en NIGHT met de mix van die zone
 const nightZone = n => Math.min(Math.floor(Math.max(0, n) / CONFIG.night.zoneLen), CONFIG.night.zones.length - 1);
@@ -3563,6 +3592,17 @@ function drawLabels(cam) {
   }
   ctx.globalAlpha = 1;
 }
+// De jaarteller (introband en tijdsprong): cijfer i (0 tot 3) rolt van from naar to; e is de voortgang van dat cijfer (0 tot 1, telE).
+// Geeft de rolstand v: cijfer floor(v) % 10, en v - floor(v) is het stuk naar het volgende. De laatste twee cijfers draaien een extra
+// rondje; terug in de tijd (van 2026 naar 1846) rollen ze achteruit. v blijft tussen 0 en 30 (drie keer 0 tot 9).
+function telRol(from, to, i, e) {
+  const back = +to < +from, a0 = +from[i], b0 = +to[i], d = ((back ? a0 - b0 : b0 - a0) + 10) % 10 + (i >= 2 && from !== to ? 10 : 0);
+  return back ? a0 + 20 - d * e : a0 + d * e;
+}
+const telE = (u, i) => ease((u - i * 0.07) / 0.8); // u van 0 tot 1: de cijfers na elkaar, het laatste net iets later
+// Dezelfde teller, maar echt tellend (tijdsprong): bij jaar Y (mag een breuk zijn) de rolstand van cijfer i, als een telwerk. Het laatste
+// cijfer loopt mee met Y, een hoger cijfer rolt pas door als alles eronder van 9 naar 0 gaat. Zo staat er nooit een jaar buiten van-naar.
+function telJaar(Y, i) { const p = 10 ** (3 - i), b = Math.floor(Y / p); return b + clamp(Y - b * p - (p - 1), 0, 1); }
 // Introband: doorrollende jaartal-teller plus tijdperk-titel boven de korrel. Wacht de band op een tik ('wait'), dan staat
 // onder de korrel op de stilstaande schacht een tweede paneel: Nieuw in deze molen, in molen 1 ook Zo speel je, en onderin de startvraag.
 // Beide panelen in de stijl van de kaarten: warm antraciet met afgeronde hoeken, een zachte schaduw en een gouden bovenrand.
@@ -3573,10 +3613,8 @@ function drawIntro(lv) {
   gxPanel(22, top, W - 44, bandH);
   const from = String(run.prevYear), to = String(lv.year), bw = 28, bh = 36, gap = 5, x0 = 200 - (4 * bw + 3 * gap) / 2 + 14, y0 = 91;
   ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.font = `800 26px ${F_UI}`;
-  const back = +to < +from; // na de intro: van 2026 terug naar 1846, de cijfers rollen achteruit
   for (let i = 0; i < 4; i++) {
-    const a0 = +from[i], b0 = +to[i], d = ((back ? a0 - b0 : b0 - a0) + 10) % 10 + (i >= 2 && from !== to ? 10 : 0), e = reduced.matches ? 1 : ease((t / 1.2 - i * 0.07) / 0.8);
-    const v = back ? a0 + 20 - d * e : a0 + d * e, x = x0 + i * (bw + gap);
+    const v = telRol(from, to, i, reduced.matches ? 1 : telE(t / 1.2, i)), x = x0 + i * (bw + gap);
     gxRR(ctx, x, y0, bw, bh, 4); ctx.fillStyle = '#0c0c0d'; ctx.fill();
     ctx.save(); ctx.clip();
     const fr = v - Math.floor(v), dg = Math.floor(v) % 10;
@@ -3691,15 +3729,15 @@ function drawDebug(cam) {
 // ============================================================
 // 11. Schermen (DOM-overlays, één state machine)
 // ============================================================
-const SCR = { title: $('scrTitle'), pause: $('scrPause'), story: $('scrStory'), night: $('scrNight'), level: $('scrLevel'), over: $('scrOver'), done: $('scrDone'), scores: $('scrScores'), about: $('scrAbout'), boek: $('scrBoek'), pick: $('scrPick'), settings: $('scrSettings'), intro: $('scrIntro') };
+const SCR = { title: $('scrTitle'), pause: $('scrPause'), story: $('scrStory'), night: $('scrNight'), level: $('scrLevel'), over: $('scrOver'), done: $('scrDone'), scores: $('scrScores'), about: $('scrAbout'), boek: $('scrBoek'), pick: $('scrPick'), settings: $('scrSettings'), intro: $('scrIntro'), sprong: $('scrSprong') };
 function show(name) {
   S.screen = name; still = false; // het veld één keer opnieuw tekenen (gedimd of niet) voor dit scherm
   clearTimeout(toastT); $('toast').hidden = true; // een oude toast mag geen knop van het nieuwe scherm afdekken
   for (const k in SCR) SCR[k].hidden = k !== name;
-  $('tlAchter').hidden = !(TL.on && (name === 'story' || name === 'done')); // tijdlijn: het eindbeeld van het jaar achter verhaal en slot
+  $('tlAchter').hidden = !(TL.on && (name === 'story' || name === 'done' || name === 'sprong')); // tijdlijn: het eindbeeld van het jaar achter verhaal, tijdsprong en slot
   $('btnPause').hidden = name !== 'play';
   cv.toggleAttribute('aria-hidden', name === 'intro'); // de intro ligt eroverheen
-  const achter = run && run.mode === 'demo' && !['play', 'intro', 'story', 'done'].includes(name); // menu: de akker uit de hoofdintro achter de kaarten (titelAchter)
+  const achter = run && run.mode === 'demo' && !['play', 'intro', 'story', 'done', 'sprong'].includes(name); // menu: de akker uit de hoofdintro achter de kaarten (titelAchter)
   iCv.hidden = !(name === 'intro' || achter); iCv.classList.toggle('achter', achter);
   keys.left = keys.right = false;
   AU.rumble(name === 'play');
@@ -3815,7 +3853,9 @@ function startCampaign(lvl, fromYear) { run = newRun('camp', lvl || 0, Math.rand
 // quick: Nog een korrel? in Korrelval, zonder introband
 function startNight(daily, quick) {
   if (!save.night) return;
-  tlUit(); unlockPage('night'); // de pagina van Korrelval gaat open zodra je hem speelt
+  const slot = nightSlot = nightFrom === 'done'; // gekomen via Speel Korrelval op de slotkaart: Tijdlijn brengt je daar terug (toMenu)
+  tlUit(slot); unlockPage('night'); // de pagina van Korrelval gaat open zodra je hem speelt
+  for (const id of ['bLMenu', 'bOMenu']) { const b = $(id); b.textContent = slot ? 'Tijdlijn' : 'Menu'; if (slot) b.setAttribute('aria-label', 'Terug naar de tijdlijn'); else b.removeAttribute('aria-label'); }
   const seed = daily ? hashStr('korrelval-' + dateKey()) : Math.random() * 4294967296;
   const prev = quick && run && run.mode === 'night' ? run.seen : null;
   run = newRun('night', 0, seed, daily); run.prevYear = 1846; run.lives = CONFIG.nightLives;
@@ -3945,7 +3985,7 @@ function shiftLetter(i, d) {
 function pause() { if (S.screen !== 'play') return; const lv = lvlCfg(); $('pauseInfo').textContent = run.mode === 'night' ? `Korrelval · verdieping ${run.passed}` : `${lv.year} · ${lv.title}`; show('pause'); }
 // korte adempauze na Verder; een wachtende introband blijft gewoon wachten (de wereld stond toch al stil)
 function resume() { if (S.screen === 'pause') { if (Wd.intro !== 'wait') G.inv = Math.max(G.inv, 0.6); show('play'); } }
-function toMenu() { startDemo(); }
+function toMenu() { if (nightSlot && run && run.mode === 'night' && (S.screen === 'level' || S.screen === 'over')) { tlSlot(); return; } startDemo(); } // na Korrelval vanaf de slotkaart: terug naar de slotkaart
 // Het label noemt de stand (Geluid: aan of uit); geen aria-pressed erbij, want 'Geluid uit, niet ingedrukt' is een dubbele ontkenning
 function syncSoundButtons() { for (const id of ['bSound', 'bPSound']) { const b = $(id); b.textContent = save.sound ? 'Geluid: aan' : 'Geluid: uit'; b.classList.toggle('on', save.sound); } }
 function refreshTitle() {
@@ -3984,21 +4024,38 @@ function toTitle() { show('title'); refreshTitle(); }
 // Kaart die op een tik wacht: wat Korrelval is en hoe je stuurt, met It giet oan! onderaan (korrel van de dag: dezelfde molen voor iedereen
 // die dag) en een kleine link voor Vrije dienst (elke keer een andere molen). Komt via de knop Korrelval op het titelscherm en Speel
 // Korrelval op de slotkaart.
-let nightFrom = 'title';
+let nightFrom = 'title', nightSlot = false;
 function openNightBrief() {
   if (S.screen !== 'night') nightFrom = S.screen;
   if (!save.nightBrief) { save.nightBrief = true; persist(); }
   drawBriefArt(); show('night');
 }
 function closeNightBrief() { if (S.screen !== 'night') return; show(nightFrom); if (nightFrom === 'title') refreshTitle(); }
-// Plaatje op het briefje: de molen 's nachts, met verlichte ramen onder een maansikkel (eigen donker tegeltje, ook in het lichte thema)
-// Zelfde tekening als het tijdperkplaatje van Korrelval (gxVIG.night), iets groter zodat hij het hele tegeltje vult.
+// Plaatje op het briefje: Molen B. Het eindbeeld van shot 2 van de jaarintro van 2026 (de walsenstoel met de walsen, waar je straks
+// tussendoor valt), klein getekend met dezelfde tekening (jxEnv, build en draw van dat jaar) en bewaard per thema en maat. Lukt dat niet,
+// dan het tijdperkplaatje van 2026 (gxVIG.digi: Molen B met de kraan), iets groter zodat het het hele tegeltje vult.
+let nbFoto = null; // { key, cv }
+function briefFoto(w, h, k) {
+  const i = LEVELS.findIndex(l => l.year === 2026), J = JX[i]; if (!J || J.err) return null;
+  const dark = introDark(), key = `${dark}|${w}|${h}|${k}`; if (nbFoto && nbFoto.key === key) return nbFoto.cv;
+  const Z = 2.4, sh = J.shots.length - 1, dur = J.shots[sh].dur, E = jxEnv(J); // Z: de film tekent voor een groter beeld, daarna verkleind
+  Object.assign(E, { i, W: w * Z, H: h * Z, P: h * Z, hv: h * Z, dpr: k / Z, dark, lite: false, calm: true, base: dark ? ICOL.dark : ICOL.light, vorm: 'brief', key: 'brief|' + key, A: 0, t: dur, u: 1, shot: sh, dur, dive: 0 });
+  let cv = null;
+  try {
+    if (J.build) J.build(E); jxWork(E, Infinity);
+    cv = ixCanvas(Math.round(w * k), Math.round(h * k)); const g = cv.getContext('2d');
+    g.save(); g.setTransform(E.dpr, 0, 0, E.dpr, 0, 0); J.draw(g, E, sh, dur); g.restore();
+  } catch (e) { cv = null; } finally { jxFreeAll(E); }
+  if (cv) nbFoto = { key, cv };
+  return cv;
+}
 function drawBriefArt() {
   const c = $('nbArt'), k = Math.max(2, V.dpr), w = 104, h = 58;
   if (c.width !== Math.round(w * k)) { c.width = Math.round(w * k); c.height = Math.round(h * k); }
-  const g = c.getContext('2d');
-  g.setTransform(k, 0, 0, k, 0, 0); g.clearRect(0, 0, w, h);
-  g.save(); g.translate(-6, 0); g.scale(1.16, 1.16); g.lineCap = 'round'; g.lineJoin = 'round'; gxVIG.night(g, 0, NIGHT); g.restore();
+  const g = c.getContext('2d'), foto = briefFoto(w, h, k);
+  g.setTransform(1, 0, 0, 1, 0, 0); g.clearRect(0, 0, c.width, c.height);
+  if (foto) { g.drawImage(foto, 0, 0); return; }
+  g.setTransform(k, 0, 0, k, 0, 0); g.save(); g.translate(-6, 0); g.scale(1.16, 1.16); g.lineCap = 'round'; g.lineJoin = 'round'; gxVIG.digi(g, 0, LEVELS[LEVELS.length - 1]); g.restore();
 }
 // ---------- Molenboek ----------
 // Knoppen op titel, pauze, weegbon en game-over: met het aantal nieuwe pagina's eronder
@@ -5276,6 +5333,7 @@ function introDraw() {
   const cut = IN.hv < IN.h - 1; // onder het paneel niets tekenen (zie introLayout)
   if (cut) { ig.save(); ig.setTransform(1, 0, 0, 1, 0, 0); ig.beginPath(); ig.rect(0, 0, iCv.width, Math.ceil(IN.hv * IN.d)); ig.clip(); }
   if (IN.jy >= 0) jxPaint(ig); else ixPaint(ig); // jaarintro: zie 11c
+  if (IN.jy >= 0 && OX.til) oxTil(ig); // ontdekken: het ding komt even naar voren (11d)
   if (cut) ig.restore();
   if (IN.jy >= 0) oxSync(); // ontdekstand (11d): gloed en tikvlakken op de plek van de dingen
 }
@@ -5493,7 +5551,8 @@ try { new MutationObserver(introTheme).observe(document.documentElement, { attri
 $('bIntroNext').onclick = introNext;
 $('bIntroSkip').onclick = $('bIntroSkipTop').onclick = introSkip;
 $('bIntroAgain').onclick = () => openIntro('again');
-iCv.addEventListener('click', () => { if (S.screen !== 'intro') return; if (OX.on) oxWijs(); else introNext(); }); // tik op het beeld = Verder; in de ontdekstand wijst hij de dingen aan
+// tik op het beeld = Verder; in de ontdekstand wijst hij de dingen aan. Het beeld (#introCv) ligt onder #scrIntro: de tik komt op #scrIntro zelf
+$('scrIntro').addEventListener('click', e => { if (S.screen !== 'intro' || e.target !== e.currentTarget) return; if (OX.on) oxWijs(); else introNext(); });
 
 // ============================================================
 // 11c. Jaarintro's: per molen van de tijdlijn een korte film van twee shots (1846, 1867, 1920, 1976, 2008, 2026)
@@ -6012,7 +6071,7 @@ const oxActief = () => S.screen === 'intro' && IN.jy >= 0 && IN.dive < 0 && OX.l
 function oxShot(i, msg) {
   oxDicht(true);
   const year = oxYear(), aan = oxMag();
-  OX.shot = i; OX.on = false; OX.msg = msg || ''; OX.msgT = performance.now();
+  OX.shot = i; OX.on = false; OX.til = null; OX.msg = msg || ''; OX.msgT = performance.now();
   OX.hint = !save.oxUitleg && !Object.keys(save.ontdekt).length; // de uitleg Tik op wat oplicht: alleen de allereerste keer
   OX.list = aan ? OX_DINGEN.filter(d => d.year === year && d.shot === i).map((d, n) => ({ ...d, n, p: OXP[d.key] || null, el: null, knop: null, a: null, pos: '' })) : [];
   for (const e of OX.spots) e.remove(); OX.spots = [];
@@ -6092,7 +6151,7 @@ function oxOpen(n) {
   if (IN.t < L[IN.i].dur) { ixSnap(); IN.t = L[IN.i].dur; IN.tEnd = performance.now(); introDraw(); introLoop(); }
   if (!OX.on) oxSync(); if (!OX.on) return;
   const nieuw = !save.book[d.key]; save.ontdekt[d.key] = 1; if (nieuw) unlockPage(d.key); else persist();
-  OX.open = n;
+  OX.open = n; OX.til = reduced.matches ? null : { n, t0: performance.now() }; // optillen (oxTil)
   $('introDots').hidden = true; $('oxTerug').hidden = false;
   // de naam in handschrift op de plek van het jaartal, de zin op de plek van de ondertitel (het paneel houdt er geen ruimte voor vrij)
   const tx = $('introText'), k = $('introKicker'), h = document.createElement('span'); h.className = 'hand ox-kop'; h.textContent = d.naam;
@@ -6116,10 +6175,48 @@ function oxZoom(d) {
   if (z <= 1.001 || !f) { oxTf(''); return; }
   const W = IN.w, hv = Math.min(IN.hv, IN.h), cx = W / 2, cy = IN.picH * 0.48;
   const tx = clamp(lerp(f[0], cx, 0.55) - f[0] * z, W * (1 - z), 0), ty = clamp(lerp(f[1], cy, 0.55) - f[1] * z, hv * (1 - z), 0);
-  clearTimeout(OX.zt); $('scrIntro').classList.add('ox-zoom');
+  clearTimeout(OX.zt); oxZoomKlas(true);
   oxTf(`translate(${tx.toFixed(1)}px,${ty.toFixed(1)}px) scale(${z.toFixed(3)})`);
 }
 function oxTf(v) { iCv.style.transform = v; oxLaag.style.transform = v; }
+// Optillen: bij een tik komt het ding zelf even naar voren. Het stukje beeld om het ding (het kader uit OXP, zoals de gloed) wordt van
+// het net getekende beeld gekopieerd en 1,06x vanuit zijn midden teruggetekend, iets hoger, met een zachte schaduw eronder; 0,4 s,
+// ease-out omhoog en zacht terug. Elk frame een verse kopie, dus wat beweegt (paard, rook, riemen, kraan) loopt door. Geen filter of blur:
+// de rand loopt zacht weg met een masker en de schaduw is een vooraf getekend plaatje. Bij verminderde beweging niet (oxOpen).
+const OX_TIL = { dur: 0.4, op: 0.4, s: 0.06, kader: 1.2 };
+let oxTilC = null;
+function oxTilSprites() {
+  if (oxTilC) return oxTilC;
+  const rond = stops => { const c = ixCanvas(128, 128), g = c.getContext('2d'), gr = g.createRadialGradient(64, 64, 0, 64, 64, 64); for (const [o, col] of stops) gr.addColorStop(o, col); g.fillStyle = gr; g.fillRect(0, 0, 128, 128); return c; };
+  const cv = ixCanvas(8, 8);
+  return (oxTilC = { cv, g: cv.getContext('2d'), mask: rond([[0, '#fff'], [0.8, '#fff'], [1, 'rgba(255,255,255,0)']]), shade: rond([[0, 'rgba(26,16,6,.5)'], [0.66, 'rgba(26,16,6,.42)'], [1, 'rgba(26,16,6,0)']]) });
+}
+function oxTil(g) {
+  const T = OX.til, d = OX.list[T.n], u = (performance.now() - T.t0) / (OX_TIL.dur * 1000);
+  if ((u >= 1 && window.__kvTil === undefined) || !d) { OX.til = null; return; }
+  if (!d.a) return; // nog geen plek (eerste frame)
+  const vast = window.__kvTil, k = vast !== undefined ? +vast : u < OX_TIL.op ? ease(u / OX_TIL.op) : 1 - ixEase((u - OX_TIL.op) / (1 - OX_TIL.op)); // __kvTil: alleen voor de zelftest (vasthouden)
+  if (k < 0.004) return;
+  const C = oxTilSprites(), D = IN.d, a = d.a, f = OX_TIL.kader, H = Math.min(IN.hv, IN.h);
+  const ex0 = a[0] - a[2] * f, ey0 = a[1] - a[3] * f, ew = a[2] * f * 2, eh = a[3] * f * 2; // het kader om het ding (css-px)
+  const sx = Math.max(0, Math.floor(ex0 * D)), sy = Math.max(0, Math.floor(ey0 * D));
+  const sw = Math.min(iCv.width, Math.ceil((ex0 + ew) * D)) - sx, sh = Math.min(Math.ceil(H * D), Math.ceil((ey0 + eh) * D)) - sy;
+  if (sw < 8 || sh < 8) return;
+  try {
+    if (C.cv.width < sw || C.cv.height < sh) { C.cv.width = Math.max(C.cv.width, sw); C.cv.height = Math.max(C.cv.height, sh); }
+    const q = C.g; q.setTransform(1, 0, 0, 1, 0, 0); q.globalAlpha = 1;
+    q.globalCompositeOperation = 'copy'; q.drawImage(iCv, sx, sy, sw, sh, 0, 0, sw, sh);
+    q.globalCompositeOperation = 'destination-in'; q.drawImage(C.mask, ex0 * D - sx, ey0 * D - sy, ew * D, eh * D);
+    q.globalCompositeOperation = 'source-over';
+    const s = 1 + OX_TIL.s * k, cx = a[0] * D, cy = a[1] * D, up = eh * D * 0.018 * k;
+    g.save(); g.setTransform(1, 0, 0, 1, 0, 0); g.globalCompositeOperation = 'source-over';
+    g.globalAlpha = 0.6 * k; g.drawImage(C.shade, cx - ew * D * 0.57, cy - eh * D * 0.57 + eh * D * 0.07 * k, ew * D * 1.14, eh * D * 1.14); // de schaduw: iets groter en lager, rond de onderrand te zien
+    g.globalAlpha = 1; g.drawImage(C.cv, 0, 0, sw, sh, cx + (sx - cx) * s, cy + (sy - cy) * s - up, sw * s, sh * s);
+    g.restore();
+  } catch (e) { OX.til = null; }
+}
+// de overgang van de zoom: op het paneel (#scrIntro) en op het beeld zelf (dat staat in #app, niet in #scrIntro)
+function oxZoomKlas(aan) { $('scrIntro').classList.toggle('ox-zoom', aan); iCv.classList.toggle('ox-zoom', aan); }
 // Terug: uitzoomen (instant: meteen, zonder overgang; bij Verder, een nieuw shot of het einde)
 function oxDicht(instant) {
   const d = OX.list[OX.open];
@@ -6134,8 +6231,8 @@ function oxDicht(instant) {
     if (focus && d && d.knop) try { d.knop.focus({ preventScroll: true }); } catch (e) { d.knop.focus(); }
   }
   clearTimeout(OX.zt);
-  if (instant) { $('scrIntro').classList.remove('ox-zoom'); if (oxLaag.style.transform) oxTf(''); }
-  else if (oxLaag.style.transform) { oxTf(''); OX.zt = setTimeout(() => { if (OX.open < 0) $('scrIntro').classList.remove('ox-zoom'); }, 650); }
+  if (instant) { oxZoomKlas(false); if (oxLaag.style.transform) oxTf(''); }
+  else if (oxLaag.style.transform) { oxTf(''); OX.zt = setTimeout(() => { if (OX.open < 0) oxZoomKlas(false); }, 650); }
 }
 // een tik naast de dingen (niets open): de gloed licht één keer op, zodat je ziet waar je kunt tikken (Verder is de knop)
 function oxWijs() {
@@ -6150,7 +6247,7 @@ function oxPijl(e) {
 }
 // introStop: alles weg
 function oxWeg() {
-  oxDicht(true); OX.on = false; OX.list = []; for (const e of OX.spots) e.remove(); OX.spots = [];
+  oxDicht(true); OX.on = false; OX.til = null; OX.list = []; for (const e of OX.spots) e.remove(); OX.spots = [];
   oxLaag.classList.remove('aan', 'open', 'wijs'); $('oxRij').hidden = true; $('oxKnoppen').textContent = '';
 }
 // meten (ixMeasureIn): de zinnen van de dingen tellen mee voor de hoogte van de ondertitel, en de rij met knoppen krijgt de hoogte van
@@ -6179,7 +6276,7 @@ function oxState() {
 }
 // ---------- de tijdlijn ----------
 const TL = { on: false, i: 0 };
-function tlUit() { TL.on = false; const c = $('tlAchter'); c.hidden = true; c.width = c.height = 0; }
+function tlUit(houd) { TL.on = false; const c = $('tlAchter'); c.hidden = true; if (!houd) c.width = c.height = 0; } // houd: het beeld blijft bewaard (Korrelval vanaf de slotkaart)
 function tlStart(i) { TL.on = true; TL.i = i; if (!openJaar(i, 'tijd')) tlVerhaal(i); } // geen jaarintro (gebied laadde niet): meteen het verhaal
 // het eindbeeld van de jaarintro bewaren als achtergrond van het verhaal (gedimd; onder het paneel van de telefoon tekende de speler niets)
 function tlSnap() {
@@ -6206,7 +6303,70 @@ function tlVerhaal(i) {
   show('story'); syncStoryBtn(); drawStoryArt(0);
   if (!laatste) jxPrewarm(i + 1, 900); // de volgende jaarintro alvast klaarzetten terwijl je leest
 }
-function tlVolgende() { const i = TL.i + 1; if (i >= LEVELS.length) tlSlot(); else tlStart(i); }
+function tlVolgende() { const i = TL.i + 1; if (i >= LEVELS.length) tlSlot(); else tlSprong(TL.i, i); }
+// De tijdsprong tussen de jaren: na het verhaal, voor de volgende jaarintro, circa 1,5 s over het gedimde eindbeeld van het jaar. Een lijn
+// met zes oranje stippen (de jaren van de tijdlijn), het jaartal in handschrift rolt van het oude naar het nieuwe jaar (de jaarteller van
+// de introband: telRol) en de stip verspringt mee. Tik of toets slaat over. Verminderde beweging: alleen het eindbeeld, kort.
+// Geen regels, geen score, geen timer om op te letten. Per frame alleen transforms (de compositor tekent).
+const SPRONG = { dur: 1.5, tel0: 0.22, tel: 0.9, kort: 0.75, open: 0.35 };
+const SP = { raf: 0, tm: 0, vt: 0, t0: 0, i0: 0, i1: 0, van: '', naar: '', w: 0, rollen: [], stippen: [], jaren: [], p: 0, u: 0, tekst: '', bouw: false, aan: -1 };
+function spBouw() {
+  if (SP.bouw) return; SP.bouw = true;
+  const cijfers = Array.from({ length: 30 }, (x, j) => `<span>${j % 10}</span>`).join('');
+  $('spJaar').innerHTML = Array.from({ length: 4 }, () => `<span class="sp-c"><span class="sp-r">${cijfers}</span></span>`).join('');
+  SP.rollen = [...$('spJaar').querySelectorAll('.sp-r')];
+  const n = LEVELS.length, pc = j => (j / (n - 1) * 100).toFixed(3) + '%';
+  const lijn = $('spLijn'); SP.stippen = LEVELS.map((lv, j) => { const e = document.createElement('i'); e.className = 'sp-stip'; e.style.left = pc(j); lijn.insertBefore(e, $('spAf').nextSibling); return e; });
+  $('spJaren').innerHTML = LEVELS.map((lv, j) => `<li style="left:${pc(j)}">${lv.year}</li>`).join('');
+  SP.jaren = [...$('spJaren').children];
+  SCR.sprong.addEventListener('click', () => { if (performance.now() - SP.t0 > 150) tlSprongKlaar(); }); // tik: overslaan
+}
+function tlSprong(i0, i1) {
+  TL.on = true; spBouw();
+  Object.assign(SP, { i0, i1, van: String(LEVELS[i0].year), naar: String(LEVELS[i1].year), t0: performance.now(), aan: -1 });
+  cancelAnimationFrame(SP.raf); clearTimeout(SP.tm);
+  show('sprong');
+  SP.w = $('spLijn').clientWidth; $('spNu').classList.remove('aan');
+  const sp = SCR.sprong.firstElementChild; sp.style.animation = 'none'; void sp.offsetWidth; sp.style.animation = ''; // opnieuw invloeien
+  announce(`Van ${SP.van} naar ${SP.naar}.`);
+  if (reduced.matches) { spTeken(1); SP.tm = setTimeout(tlSprongKlaar, SPRONG.kort * 1000); return; }
+  spTeken(0);
+  const f = () => {
+    SP.raf = 0; if (S.screen !== 'sprong') return;
+    const t = (performance.now() - SP.t0) / 1000;
+    if (t >= SPRONG.dur) { tlSprongKlaar(); return; }
+    spTeken(clamp((t - SPRONG.tel0) / SPRONG.tel, 0, 1)); SP.raf = requestAnimationFrame(f);
+  };
+  SP.raf = requestAnimationFrame(f);
+}
+function spTeken(u) {
+  let tekst;
+  const e = u >= 1 ? 1 : ixEase(u), Y = lerp(+SP.van, +SP.naar, e); // zacht op gang, snel door de jaren, zacht aankomen
+  SP.rollen.forEach((r, i) => {
+    const v = (telJaar(Y, i) % 10 + 10) % 10, tf = `translateY(${(-v / 30 * 100).toFixed(3)}%)`; // 0 tot 10: de eerste rij cijfers en de 0 erna
+    if (r.style.transform !== tf) r.style.transform = tf;
+  });
+  tekst = String(Math.floor(Y + 1e-6));
+  const n = LEVELS.length - 1, p = lerp(SP.i0, SP.i1, e), nu = Math.round(p);
+  $('spNu').style.transform = `translateX(${(SP.w * p / n).toFixed(1)}px)`;
+  $('spAf').style.transform = `scaleX(${(p / n).toFixed(4)})`;
+  if (SP.aan !== nu) { SP.aan = nu; SP.stippen.forEach((e, j) => e.classList.toggle('af', j <= nu)); SP.jaren.forEach((e, j) => e.classList.toggle('nu', j === nu)); }
+  if (u >= 1 && !$('spNu').classList.contains('aan')) $('spNu').classList.add('aan'); // aangekomen: de stip springt even op
+  SP.p = p; SP.u = u; SP.tekst = tekst;
+}
+// einde (of overgeslagen): de jaarintro van het nieuwe jaar, die zacht opengaat uit het donker
+function tlSprongKlaar() {
+  if (S.screen !== 'sprong') return;
+  cancelAnimationFrame(SP.raf); SP.raf = 0; clearTimeout(SP.tm);
+  const veil = $('introVeil'), zacht = !reduced.matches;
+  if (zacht) { clearTimeout(SP.vt); veil.hidden = false; veil.style.transition = 'none'; veil.style.opacity = '.75'; }
+  tlStart(SP.i1);
+  if (zacht) { void veil.offsetWidth; veil.style.transition = `opacity ${SPRONG.open}s cubic-bezier(.16,.84,.44,1)`; veil.style.opacity = '0'; SP.vt = setTimeout(() => { veil.hidden = true; }, SPRONG.open * 1000 + 50); }
+}
+function spState() {
+  return { open: S.screen === 'sprong', van: SP.van, naar: SP.naar, jaar: SP.tekst, stip: +SP.p.toFixed(2), u: +SP.u.toFixed(2), stippen: SP.stippen.length,
+    af: SP.stippen.filter(e => e.classList.contains('af')).length, jaren: SP.jaren.map(e => e.textContent), hand: getComputedStyle($('spJaar')).fontFamily.includes('Belle'), t: +((performance.now() - SP.t0) / 1000).toFixed(2) };
+}
 // slot na 2026: hoeveel je ontdekte, per jaar, met Molenboek, Korrelval en Menu
 function tlSlot() {
   TL.on = true; let n = 0, m = 0;
@@ -11145,6 +11305,7 @@ const SCROLL_KEYS = new Set([' ', 'ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 
 addEventListener('keydown', e => {
   AU.ensure(); lastKey = true; acted = true; idleT0 = performance.now();
   const k = e.key;
+  if (S.screen === 'sprong') { if (!/^(Shift|Control|Alt|AltGraph|Meta|Tab|CapsLock|Fn)$/.test(k)) { e.preventDefault(); if (!e.repeat) tlSprongKlaar(); } return; } // tijdsprong: een toets slaat over
   if ((S.screen === 'play' || S.screen === 'intro') && SCROLL_KEYS.has(k) && !(k === ' ' && e.target && e.target.tagName === 'BUTTON')) e.preventDefault(); // spatie blijft voor de knop zelf
   // verhaalkaart: het indrukken telt (spatie klikt pas bij loslaten); een ingehouden toets (repeat) is geen nieuwe indruk
   if (S.screen === 'story' && (k === ' ' || k === 'Enter')) { if (e.repeat) storyArm = false; else armStory(); }
@@ -11243,7 +11404,7 @@ addEventListener('pointermove', e => { if (e.pointerType === 'mouse') idleT0 = p
 function frame(ts) {
   const fast = window.__kvFast || 1; // alleen voor de zelftest
   const raw = last ? ts - last : 0, dt = Math.min(raw / 1000, CONFIG.dtMax) * fast; last = ts;
-  if (run.mode === 'demo' && !['play', 'intro', 'story', 'done'].includes(S.screen)) { // menu: de akker uit de hoofdintro, het speelveld blijft weg
+  if (run.mode === 'demo' && !['play', 'intro', 'story', 'done', 'sprong'].includes(S.screen)) { // menu: de akker uit de hoofdintro, het speelveld blijft weg
     const ds = S.screen === 'title' && !titelStil() ? demoSpeed(dt) : 0; // alleen achter het titelscherm beweegt hij, en na CONFIG.demo.idle s niet meer
     if (!offscreen && (ds > 0 || !still)) { if (ds > 0) frameSample(raw); still = titelAchter(dt * ds) && ds === 0; }
     Wd.pcam = Wd.camY; G.px = G.x; acc = 0;
@@ -11309,7 +11470,7 @@ window.__korrelval = { introAt: (i, t) => { IN.hold = i !== null; if (IN.hold) {
   // (jaarAt(i, 'duik', p): de duik op p van 0 tot 1; jaarAt(null): loslaten), jaarState() geeft de toestand
   jaar: (i, from) => openJaar(i, from || 'test'), jaarAt: (i, s, t) => jxTestAt(i, s, t), jaarState: () => jxState(),
   // ontdekken (11d): ontdek() geeft de stand (dingen, plek in css-px, open, zoom), ontdekOpen(n) opent ding n van dit shot (-1: Terug), tijdlijn(i) begint bij jaar i
-  ontdek: () => oxState(), ontdekOpen: n => (n < 0 ? oxDicht() : oxOpen(n)), tijdlijn: i => tlStart(i || 0),
+  ontdek: () => oxState(), ontdekOpen: n => (n < 0 ? oxDicht() : oxOpen(n)), tijdlijn: i => tlStart(i || 0), sprong: () => spState(), // tijdsprong tussen de jaren
   achter: () => ({ klaar: !!TA.key, warm: ixWarmed, uit: TA.uit, stil: titelStil(), t: +TA.t.toFixed(1) }), // de akker achter het menu (titelAchter)
   ontdekProj: (shot, x, y, z) => { const J = JXP[oxYear()]; try { return J && IN.env ? J.proj(IN.env, shot, x, y, z || 0) : null; } catch (e) { return null; } }, // alleen voor de plekken (check/plek.js)
   state: () => ({ screen: S.screen, mode: run.mode, lvl: run.lvl, score: run.score, lives: run.lives, streak: run.streak, bestStreak: run.bestStreak, x: G.x, passed: run.passed, total: run.total, perfects: run.perfects, hits: lvS.hits, t: Wd.t, intro: Wd.intro, camY: Wd.camY, nFloors: Wd.floors.length + Wd.sched.length + Wd.haz.length, gezel: run.gezel, inv: G.inv,
