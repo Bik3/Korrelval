@@ -3,7 +3,7 @@
 //   A  400x800 touch (licht), lege opslag: titel > It giet oan! > hoofdintro (Verder, Terug in de tijd) > jaarintro 1846 shot 1 en 2 met
 //      ontdekken (tik op het ding, zoom, zin, Nieuw in je Molenboek, Terug, tik ernaast, knop in het paneel, Verder terwijl een ding open
 //      staat) > verhaal 1846 > Volgende molen: 1867 > tijdsprong (tik slaat over) > Overslaan > verhaal > Menu > Kies een molen (alle jaren) > 2026 > slot >
-//      Molenboek (pagina's per jaar, Bekijk de jaarintro, ook daar ontdekken, Terug naar het Molenboek) > Korrelval (kaart vooraf, It giet oan!, game-over, Nog een korrel?)
+//      Molenboek (plakboek per jaar: plaatjes, lege kaders, Ga naar <jaar>, ook daar ontdekken, Terug naar het Molenboek) > Korrelval (kaart vooraf, It giet oan!, game-over, Nog een korrel?)
 //   B  herladen: het ontdekte blijft (vinkjes, geen gloed, teller)
 //   C  360x640 touch: titel past, paneel past, de dingen staan boven het paneel, tikvlak minstens 44 px
 //   D  1280x800 toetsenbord: Enter, Esc, Tab, pijltjes langs de knoppen, Enter opent, Esc gaat terug, voorlezen (aria-live)
@@ -168,9 +168,20 @@ const stand = T => T.tot(async () => (await T.ox()).on, 9000);
   await A.shot('A07-slot');
   // Molenboek
   await A.tapSel('#bDoneBook'); await sleep(500);
-  const boek = await page.evaluate(() => ({ s: window.__korrelval.state().screen, nieuw: document.getElementById('bookNew').textContent, dingen: document.querySelectorAll('.page.ding').length, kijk: [...document.querySelectorAll('.jx-kijk')].map(b => b.dataset.jaar), acts: [...document.querySelectorAll('#bookThings .act, #bookMachines .act')].map(p => p.textContent.split(':')[0]) }));
-  check(boek.s === 'boek' && boek.dingen >= 3 && /Rosmolen/.test(boek.nieuw), 'Molenboek: de ontdekte dingen staan erin, bij hun jaar', { dingen: boek.dingen });
-  check(boek.kijk.includes('0'), 'Molenboek: Bekijk de jaarintro bij 1846', boek.kijk);
+  const boek = await page.evaluate(() => ({ s: window.__korrelval.state().screen, jaar46: (document.querySelector('.pb-jaar[data-jaar="0"]') || { textContent: '' }).textContent, dingen: document.querySelectorAll('.pb-kaart.vol').length, kijk: [...document.querySelectorAll('.jx-kijk')].map(b => b.dataset.jaar), acts: [...document.querySelectorAll('#bookThings .act, #bookMachines .act')].map(p => p.textContent.split(':')[0]) }));
+  check(boek.s === 'boek' && boek.dingen >= 3 && /1846.*3 van 5.*Rosmolen/.test(boek.jaar46), 'Molenboek: de ontdekte dingen staan erin, bij hun jaar (1846, 3 van 5)', { dingen: boek.dingen });
+  check(boek.kijk.includes('0'), 'Molenboek: Ga naar 1846 op het blad van 1846', boek.kijk);
+  // ronde 4: het plakboek. Elk ontdekt ding heeft een plaatje (uitsnede van het eindbeeld van zijn shot), de rest is een leeg kader met ? en het jaartal
+  await A.tot(() => page.evaluate(() => !document.querySelector('#scrBoek canvas[data-wacht]')), 12000);
+  const plak = await page.evaluate(() => {
+    const c = document.querySelector('.pb-kaart.vol[data-ding="o46-rosmolen"] canvas'); let kleuren = 0, wacht = true;
+    if (c) { wacht = c.hasAttribute('data-wacht'); const d = c.getContext('2d').getImageData(0, 0, c.width, c.height).data, set = new Set(); for (let i = 0; i < d.length; i += 4 * 97) set.add((d[i] >> 3) << 10 | (d[i + 1] >> 3) << 5 | d[i + 2] >> 3); kleuren = set.size; }
+    const leeg = [...document.querySelectorAll('.pb-kaart.leeg')], l67 = document.querySelector('.pb-jaar[data-jaar="1"] .pb-kaart.leeg'), ga = document.querySelector('.pb-ga[data-jaar="1"]');
+    return { wacht, kleuren, vol: document.querySelectorAll('.pb-kaart.vol').length, leeg: leeg.length, tekst67: l67 ? l67.textContent : '', ga: ga ? ga.textContent : '', kop67: document.querySelector('.pb-jaar[data-jaar="1"] .pb-kop').textContent,
+      past: document.documentElement.scrollWidth <= document.documentElement.clientWidth + 1 };
+  });
+  check(!plak.wacht && plak.kleuren >= 12, 'Molenboek: het ontdekte ding heeft een plaatje (uitsnede van het eindbeeld, geen leeg vlak)', { kleuren: plak.kleuren });
+  check(plak.vol + plak.leeg === 28 && plak.leeg > 0 && /\?/.test(plak.tekst67) && /1867/.test(plak.tekst67) && /1867.*\d van 5/.test(plak.kop67) && plak.ga === 'Ga naar 1867' && plak.past, 'Molenboek: wat nog niet ontdekt is, staat er als leeg kader met ? en het jaartal; per jaar een kopje met n van 5 en Ga naar 1867', { vol: plak.vol, leeg: plak.leeg, kop: plak.kop67, ga: plak.ga });
   await A.shot('A08-molenboek');
   await page.evaluate(() => { const b = document.querySelector('.jx-kijk[data-jaar="0"]'); b.scrollIntoView({ block: 'center' }); }); await sleep(200);
   await A.tapSel('.jx-kijk[data-jaar="0"]'); await sleep(500); jv = await A.jaar();
@@ -183,6 +194,13 @@ const stand = T => T.tot(async () => (await T.ox()).on, 9000);
   const kb = (await page.textContent('#bIntroNext')).trim(); check(kb === 'Terug naar het Molenboek', 'laatste knop bij terugkijken: Terug naar het Molenboek', kb);
   await A.tapSel('#bIntroNext'); await sleep(700);
   check(await A.scr() === 'boek', 'terug in het Molenboek');
+  const na = await page.evaluate(() => ({ tel: document.querySelector('.pb-jaar[data-jaar="0"] .pb-tel').textContent, vol: document.querySelectorAll('.pb-jaar[data-jaar="0"] .pb-kaart.vol').length }));
+  check(/^4 van 5/.test(na.tel) && na.vol === 4, 'terug in het Molenboek: het nieuwe ding is ingeplakt (4 van 5)', na);
+  await page.evaluate(() => document.querySelector('.pb-ga[data-jaar="1"]').scrollIntoView({ block: 'center' })); await sleep(450);
+  await A.tapSel('.pb-ga[data-jaar="1"]'); await sleep(600); jv = await A.jaar();
+  check(jv.open && jv.year === 1867, 'Ga naar 1867 start dat jaar', { year: jv.year, from: jv.from });
+  await A.tapSel('#bIntroSkipTop'); await sleep(700);
+  check(await A.scr() === 'boek', 'en terug in het Molenboek');
   await sleep(450); await A.tapSel('#bBookBack'); await sleep(400);
   check(await A.scr() === 'done', 'Terug uit het Molenboek: weer de slotkaart');
   // Korrelval (de minigame)
@@ -219,7 +237,7 @@ const stand = T => T.tot(async () => (await T.ox()).on, 9000);
   await C.page.goto('file://' + wrapped); await sleep(1200);
   const tp = await C.page.evaluate(() => { const c = document.querySelector('#scrTitle .card'); return c.scrollHeight <= c.clientHeight + 1; });
   check(tp && await C.geenX(), 'C 360x640: titel past');
-  await C.tapSel('#bStart'); await sleep(450); await C.tapSel('#bIntroSkip'); await sleep(900);
+  await C.tapSel('#bStart'); await sleep(450); await C.tapSel('#bIntroSkipTop'); await sleep(900);
   jv = await C.jaar(); check(jv.open && jv.year === 1846, 'C Overslaan in de hoofdintro: 1846', jv.year);
   for (const sh of [0, 1]) {
     if (sh) { await C.tapSel('#bIntroNext'); await sleep(450); }
@@ -271,7 +289,7 @@ const stand = T => T.tot(async () => (await T.ox()).on, 9000);
   // ============================== E: verminderde beweging ==============================
   const E = await maak(browser, { vp: { width: 400, height: 800 }, touch: true, reduced: true, scheme: 'dark' });
   await E.page.goto('file://' + wrapped); await sleep(1200);
-  await E.tapSel('#bStart'); await sleep(450); await E.tapSel('#bIntroSkip'); await sleep(900);
+  await E.tapSel('#bStart'); await sleep(450); await E.tapSel('#bIntroSkipTop'); await sleep(900);
   o = await E.ox(); jv = await E.jaar();
   check(jv.open && o.on, 'E verminderde beweging: meteen het eindbeeld met de ontdekstand', { on: o.on });
   const anim = await E.page.evaluate(() => getComputedStyle(document.querySelector('.ox-spot i')).animationName);
