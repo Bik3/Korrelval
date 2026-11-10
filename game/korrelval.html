@@ -109,7 +109,7 @@ h2{font:800 calc(26px*var(--s,1))/1.1 var(--ui);margin:0;letter-spacing:-.01em}
   transition:background-color .15s ease-out,border-color .15s ease-out,color .15s ease-out,box-shadow .12s ease-out,transform .12s ease-out}
 @media (hover:hover) and (pointer:fine){.btn:hover{background:var(--chip);border-color:var(--ui-edge-hover)}} /* hover alleen met een muis: op touch blijft hij na een tik hangen */
 .btn:active{transform:translateY(1px)}
-.btn.primary{display:flex;width:100%;min-height:calc(54px*var(--s,1));font-size:calc(24.3px*var(--s,1));letter-spacing:.045em;padding-top:3px;padding-bottom:9px;background:var(--accent);border-color:var(--accent);color:var(--accent-ink);
+.btn.primary{display:flex;width:100%;min-height:max(44px,calc(54px*var(--s,1)));font-size:calc(24.3px*var(--s,1));letter-spacing:.045em;padding-top:3px;padding-bottom:9px;background:var(--accent);border-color:var(--accent);color:var(--accent-ink);
   box-shadow:0 3px 0 var(--accent-edge);margin-bottom:3px}
 @media (hover:hover) and (pointer:fine){.btn.primary:hover{background:var(--accent-hover);border-color:var(--accent-hover)}}
 .btn.primary:active{background:var(--accent-press);border-color:var(--accent-press);transform:translateY(2px);box-shadow:0 1px 0 var(--accent-edge)}
@@ -161,15 +161,18 @@ h2{font:800 calc(26px*var(--s,1))/1.1 var(--ui);margin:0;letter-spacing:-.01em}
 .bon td:last-child{text-align:right;font-weight:800;padding-left:10px;white-space:nowrap}
 .bon tr.big td{font-size:17px}
 .bon tr.big td:last-child{color:var(--accent-text)}
-#lvBon tr.big td{border-top:1.5px solid var(--ink);border-bottom-style:solid} /* weegbon: een streep boven het totaal */
-#lvBon tr:has(+ tr.big) td{border-bottom:0}
-.uit{font:600 13px/1.4 var(--ui);color:var(--muted);margin:0}
-.uit b{color:var(--ink)}
+/* Weegbon en game-over van Korrelval (ronde 5): alleen de kilo's, groot; daaronder hooguit drie regels (.bon-regels), dan de knoppen */
+.bon.kg tr.big td{padding:calc(6px*var(--s,1)) 0;font-size:calc(17px*var(--s,1))}
+.bon.kg tr.big td:last-child{font-size:calc(36px*var(--s,1));line-height:1;letter-spacing:-.01em}
+.bon-regels{list-style:none;padding:0;margin-bottom:0;font:600 calc(14.5px*var(--s,1))/1.4 var(--ui);color:var(--ink)}
+.bon-regels li+li{margin-top:calc(4px*var(--s,1))}
+.bon-regels b{font-weight:800}
+
 .meel{display:inline-block;width:1em;height:1em;border-radius:50%;border:1px solid var(--muted);box-sizing:border-box;vertical-align:-.16em;margin-right:4px;
   box-shadow:inset 0 -2px 3px rgba(0,0,0,.2)} /* kleur van jouw meel (UIT.col); de schaduw maakt er een bolletje meel van, ook als het wit is */
 .badges{display:flex;flex-wrap:wrap;gap:6px}
 .badge{display:inline-flex;align-items:center;gap:6px;padding:3px 9px 3px 3px;background:var(--chip);color:var(--ink);border:0;margin:0;border-radius:20px;font:800 12px/1 var(--ui)}
-button.badge{appearance:none;-webkit-appearance:none;touch-action:manipulation}
+button.badge{appearance:none;-webkit-appearance:none;touch-action:manipulation;min-height:40px;padding-left:8px;padding-right:12px}
 button.badge:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
 .badge.txt{padding-left:9px}
 .badge canvas{width:24px;height:24px}
@@ -181,8 +184,6 @@ button.badge:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
 .badge.tap{cursor:pointer}
 .fact{background:var(--card2);padding:calc(10px*var(--s,1)) 12px;font:600 calc(14px*var(--s,1))/1.4 var(--ui);border-left:4px solid var(--accent);margin:0}
 .fact b{display:block;font:800 12px/1.2 var(--ui);letter-spacing:.1em;text-transform:uppercase;color:var(--gold-ink);margin-bottom:3px}
-/* Game-over in molen 1 zonder één sleepbeweging: één regel uitleg, in de stijl van Te moeilijk? */
-.tip{background:var(--gold-soft);padding:calc(8px*var(--s,1)) 12px;border-left:4px solid var(--gold);font:800 calc(14px*var(--s,1))/1.35 var(--ui)} /* marge: .card>*+* */
 /* Te moeilijk?: zelfde vorm als Wist je dat?, maar met goud als accent */
 .easy{background:var(--gold-soft);padding:calc(10px*var(--s,1)) 12px;border-left:4px solid var(--gold)}
 .easy b{display:block;font:800 12px/1.2 var(--ui);letter-spacing:.1em;text-transform:uppercase;color:var(--gold-ink);margin-bottom:3px}
@@ -191,13 +192,12 @@ button.badge:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
 .easy,.picker{--ui-edge:var(--ui-edge-hover)} /* op goud en grijs vlak: de donkerdere rand, zodat hij ook daar minstens 3:1 haalt */
 #bookAllAsk:focus{outline:none}
 .easy .btn.pick{background:var(--ink);border-color:var(--ink);color:var(--card)}
-#scrOver.tight1 #overBon tr:not(.big){display:none}
-#scrOver.tight2 #overBadges{display:none}
+#scrOver.tight1 #overRegels{display:none}
 .picker{display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--card2);padding:8px 10px}
 .picker p{margin:0;font:800 13px/1.3 var(--ui)}
 .slots{display:flex;gap:6px}
 .slot{display:flex;flex-direction:column;align-items:center}
-.slot .btn{min-height:40px;width:44px;padding:0;border-width:1.5px}
+.slot .btn{min-height:40px;width:44px;padding:0;border-width:1.5px;border-color:transparent;color:var(--muted)} /* rustig: alleen de pijltjes, de rand komt bij hover en focus */
 .slot .btn svg{width:14px;height:14px}
 .slot span{font:800 22px/1.15 var(--ui);width:44px;text-align:center}
 .slot.sel span{color:var(--accent-text);text-decoration:underline;text-underline-offset:4px}
@@ -269,6 +269,7 @@ textarea.copy{width:100%;box-sizing:border-box;font:600 13px/1.35 var(--ui);back
   padding:calc(7px*var(--s,1)) 16px;border:0;background:var(--ui-voet);color:var(--ui-voet-ink);font:700 12px/1.3 var(--ui)} /* donker: gedempt, zie --ui-voet */
 .title .ui-voet::before{content:'';flex:none;width:13px;height:16px;background:var(--ui-voet-aar);-webkit-mask:var(--ui-aar) 50% 50%/contain no-repeat;mask:var(--ui-aar) 50% 50%/contain no-repeat}
 .btn.wide{display:flex;width:100%}
+#scrSettings .sect>*+*{margin-top:10px}
 /* Korrelval nog dicht: knoppen zien er dicht uit, maar een tik opent het briefje. Alleen tekst en rand gedimd, niet de hele knop,
    zodat de focusring vol blijft. */
 .btn[aria-disabled="true"]{color:var(--muted);color:color-mix(in srgb,var(--ink) 42%,var(--card));border-color:currentColor;border-style:dashed}
@@ -301,8 +302,6 @@ textarea.copy{width:100%;box-sizing:border-box;font:600 13px/1.35 var(--ui);back
 .linkbtn:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
 .linkbtn[hidden]{display:none}
 .boek .linkbtn{margin-top:calc(4px*var(--s,1));min-height:40px;padding:4px 0}
-.boek .newsect{border-top:2px solid var(--accent)}
-.boek .newsect .sect-h{color:var(--accent-text)}
 .closedsum{display:flex;align-items:center;gap:12px;margin:0;padding:8px 0;font:600 italic 13px/1.3 var(--ui);color:var(--muted)}
 .closedsum canvas{width:36px;height:36px;opacity:.45;flex:none}
 .closedsum.moved{padding-left:48px;border-bottom:1px dashed var(--line)}
@@ -414,7 +413,6 @@ textarea.copy{width:100%;box-sizing:border-box;font:600 13px/1.35 var(--ui);back
 .ox-rij.wacht .ox-knop{opacity:.6}
 .ox-tel{margin:0 0 0 auto;font:700 calc(13px*var(--s,1))/1.3 var(--ui);color:var(--muted);white-space:nowrap}
 .ox-tel.uitleg{color:var(--gold-ink)}
-.ox-naam{font-weight:800}
 .intro-text .tag-new{vertical-align:1px}
 #introPanel .intro-head{position:relative}
 .ox-terug{appearance:none;-webkit-appearance:none;position:absolute;right:-8px;top:50%;transform:translateY(-50%);min-height:44px;margin:0;padding:0 8px;border:0;background:none;color:var(--accent-text);
@@ -431,14 +429,13 @@ textarea.copy{width:100%;box-sizing:border-box;font:600 13px/1.35 var(--ui);back
 .tl-achter{position:absolute;left:0;top:0;width:100%;height:100%;display:block}
 .tl-achter[hidden]{display:none}
 #bStoryMenu{text-align:center;margin-top:calc(4px*var(--s,1))}
-.tl-jaren{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.tl-jaren{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px} /* twee kolommen: met het vinkje past 5 van 5 anders niet (360 breed) */
 .tl-jaren li{display:flex;align-items:baseline;justify-content:space-between;gap:4px;padding:6px 8px;background:var(--card2);border-radius:3px;font:700 12px/1.2 var(--ui);font-variant-numeric:tabular-nums;white-space:nowrap}
 .tl-jaren .hand{font-size:19px;line-height:1}
 .tl-jaren li.af{color:var(--gold-ink)}
 .vinkje{display:inline-block;position:relative;width:14px;height:14px;margin-left:5px;vertical-align:-2px;border-radius:50%;background:#CFAB00}
 .vinkje::after{content:'';position:absolute;left:4.6px;top:2px;width:3.4px;height:6.6px;border:solid #1D1E1F;border-width:0 2px 2px 0;transform:rotate(42deg)}
 .page.ding canvas{border-radius:50%}
-.book-jaar{margin:14px 0 0;font:400 25px/1 var(--hand);color:var(--ink)}
 .sprong{pointer-events:auto;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;
   background:radial-gradient(ellipse 62% 30% at 50% 50%,rgba(16,12,8,.6),rgba(16,12,8,.25) 70%,rgba(16,12,8,0))} /* rustig vlak achter jaartal en lijn */
 /* tijdsprong tussen de jaren (tijdlijn): een lijn met zes oranje stippen met gloed, zoals de tijdlijn op de site van Koopmans; het jaartal
@@ -533,8 +530,7 @@ button.pb-kaart{cursor:pointer}
 }
 @media (prefers-reduced-motion:reduce){.pb-foto,.pb-foto canvas,.pb-lees::after{transition:none}.pb-uitleg{animation:none}}
 @media (max-height:700px){.btn{min-height:44px}
-  /* weegbon op kleine telefoons: de zakkenregel (staat ook op het jaarverslag) wijkt voor de langste reeks */
-  #lvBon tr.opt{display:none}.bon td{padding-top:calc(4px*var(--s,1));padding-bottom:calc(4px*var(--s,1))}
+  .bon td{padding-top:calc(4px*var(--s,1));padding-bottom:calc(4px*var(--s,1))}
   .bon{--z:8px;padding-top:7px;padding-bottom:7px} /* bon iets platter, met kleinere kartels */
   /* jaarverslag: iets minder witruimte tussen de blokken die marge hebben (.muted, .uit en .fact hebben er geen),
      zodat bon en kernwaarden op een kleine telefoon zonder scrollen passen */
@@ -565,7 +561,7 @@ button.pb-kaart{cursor:pointer}
     <h1 class="logo" id="logo">Molen<wbr><span>vlucht</span></h1>
     <p class="lead">Vlieg door 180 jaar molengeschiedenis, van de rosmolen in Holwerd tot Molen B. Onderweg tik je op wat oplicht.</p>
     <button class="btn primary" id="bStart" type="button" data-primary>It giet oan!</button>
-    <p class="hint gz-note" id="gezelNote" hidden>Gezel-modus staat aan</p>
+    <p class="hint gz-note" id="gezelNote" hidden>Korrelval: Gezel-modus staat aan</p>
     <p class="hint voort" id="titleVoort" hidden>Je ontdekte 0 van 0 dingen</p>
     <div class="lnk2"><button class="linkbtn" id="bVerderBij" type="button" hidden>Ga verder bij 1846</button><button class="linkbtn" id="bPick" type="button">Kies een molen</button></div>
     <div class="row duo"><button class="btn subbtn" id="bNight" type="button">Korrelval</button><button class="btn bookbtn" id="bBook" type="button">Molenboek</button></div>
@@ -600,10 +596,12 @@ button.pb-kaart{cursor:pointer}
 <section id="scrSettings" class="screen" aria-label="Instellingen" hidden>
   <div class="card">
     <h2>Instellingen</h2>
-    <button class="btn wide" id="bGezel" type="button" aria-pressed="false">Gezel-modus (makkelijk)</button>
     <button class="btn wide" id="bSound" type="button">Geluid: uit</button>
-    <p class="hint" id="ctlHint">Sturen met de pijltjes, A/D of de muis. P: pauze, M: geluid, Esc: menu.</p>
-    <p class="hint" id="ctlHintTouch" hidden>Sturen: sleep met je duim over het scherm, de korrel volgt je.</p>
+    <p class="hint">Sfeergeluid bij elk jaar en de geluiden van Korrelval.</p>
+    <div class="sect"><p class="sect-h">Alleen voor Korrelval</p>
+      <button class="btn wide" id="bGezel" type="button" aria-pressed="false">Gezel-modus (makkelijk)</button>
+      <p class="hint" id="ctlHint">Sturen met de pijltjes, A/D of de muis. P: pauze, M: geluid, Esc: menu.</p>
+      <p class="hint" id="ctlHintTouch" hidden>Sturen: sleep met je duim over het scherm, de korrel volgt je.</p></div>
     <button class="btn primary" id="bSettingsBack" type="button" data-primary>Terug</button>
   </div>
 </section>
@@ -647,16 +645,14 @@ button.pb-kaart{cursor:pointer}
   </div>
 </section>
 
-<section id="scrLevel" class="screen" aria-label="Molen klaar" hidden>
+<section id="scrLevel" class="screen" aria-label="Weegbon van Korrelval" hidden>
   <div class="card">
     <p class="kicker">Weegbon</p>
-    <h2 id="lvTitle"><span class="tsjoch">Tsjoch!</span> Order geladen</h2>
+    <h2 id="lvTitle"><span class="tsjoch">Tsjoch!</span> In de silo</h2>
     <p class="hand era" id="lvEra"></p>
-    <div class="ui-bon"><table class="bon" id="lvBon"></table></div>
-    <p class="uit" id="lvUit"></p>
-    <div class="badges" id="lvBadges"></div>
-    <p class="fact"><b>Wist je dat?</b><span id="lvFact"></span></p>
-    <button class="btn primary" id="bNext" type="button" data-primary>Volgende molen</button>
+    <div class="ui-bon"><table class="bon kg" id="lvBon"></table></div>
+    <ul class="bon-regels" id="lvRegels"></ul>
+    <button class="btn primary" id="bNext" type="button" data-primary>Nog een keer</button>
     <div class="row"><button class="btn bookbtn" id="bLBook" type="button">Molenboek</button><button class="btn" id="bLMenu" type="button">Menu</button></div>
   </div>
 </section>
@@ -665,18 +661,15 @@ button.pb-kaart{cursor:pointer}
   <div class="card">
     <div class="over-head"><h2 class="stamp">Partij afgekeurd</h2><span class="hand">Oant moarn</span></div>
     <p class="muted" id="overSub"></p>
-    <div class="ui-bon"><table class="bon" id="overBon"></table></div>
-    <p class="uit" id="overUit"></p>
-    <div class="badges" id="overBadges"></div>
+    <div class="ui-bon"><table class="bon kg" id="overBon"></table></div>
+    <ul class="bon-regels" id="overRegels"></ul>
     <div class="picker" id="picker" hidden>
-      <p>Top 5!<br><span class="muted">Jouw letters</span></p>
+      <p>In je top 5<br><span class="muted">Jouw letters</span></p>
       <div class="slots" id="slots"></div>
     </div>
     <div class="easy" id="easyBox" hidden><b>Te moeilijk?</b><p>Probeer de Gezel-modus (makkelijk): ruimere spleten en een tragere val. Je kunt hem bij Instellingen weer uitzetten.</p><button class="btn" id="bEasy" type="button">Probeer de Gezel-modus</button></div>
-    <p class="tip" id="overTip" hidden>Tip: sleep met je duim over het scherm, de korrel volgt je.</p>
     <button class="btn primary" id="bAgain" type="button" data-primary>Nog een korrel?</button>
     <div class="row"><button class="btn bookbtn" id="bOBook" type="button">Molenboek</button><button class="btn" id="bOMenu" type="button">Menu</button></div>
-    <p class="fact" id="overFactBox" hidden><b>Wist je dat?</b><span id="overFact"></span></p>
   </div>
 </section>
 
@@ -697,11 +690,11 @@ button.pb-kaart{cursor:pointer}
 <section id="scrScores" class="screen" aria-label="Scores" hidden>
   <div class="card">
     <h2>Scores</h2>
-    <div class="sect"><p class="sect-h">Korrelval top 5 <small id="dailyNote"></small></p><ol class="toplist" id="topList"></ol></div>
     <div class="sect"><p class="sect-h">Tijdlijn</p><p class="muted" id="campNote"></p></div>
-    <div class="sect"><p class="sect-h">Badges</p><div class="badges" id="allBadges"></div></div>
-    <div class="sect"><p class="sect-h">Uitmalingen gezien <small>witter = minder uitmaling</small></p><div class="badges" id="allLabels"></div></div>
-    <p class="fine">Scores blijven op dit apparaat.</p>
+    <div class="sect"><p class="sect-h">Korrelval top 5 <small id="dailyNote"></small></p><ol class="toplist" id="topList"></ol></div>
+    <div class="sect"><p class="sect-h">Badges uit Korrelval <small>tik voor uitleg</small></p><div class="badges" id="allBadges"></div></div>
+    <div class="sect"><p class="sect-h">Jouw meel in Korrelval <small>vaker midden door = witter</small></p><div class="badges" id="allLabels"></div></div>
+    <p class="fine">De tijdlijn heeft geen score. Alles blijft op dit apparaat.</p>
     <button class="btn primary" id="bScoresBack" type="button" data-primary>Terug</button>
   </div>
 </section>
@@ -716,11 +709,12 @@ button.pb-kaart{cursor:pointer}
     <h3>Het spel</h3>
     <p>Je vliegt langs zes molens van Koopmans, van de rosmolen in Holwerd in 1846 tot Molen B in 2026. Elk jaar heeft twee beelden: buiten en binnen.</p>
     <p>Aan het eind van elk beeld lichten een paar dingen op. Tik erop: je krijgt één korte uitleg en een gouden vinkje. Er zijn geen regels en geen score. Na elk jaar volgt een kort verhaal over die tijd. Op het titelscherm zie je hoeveel je al ontdekte en bij welk jaar je verder kunt.</p>
-    <p>Alles wat je ontdekt, en elk verhaal, komt in je Molenboek. Daar lees je het na op je eigen tempo. Met Kies een molen begin je bij een ander jaar.</p>
+    <p>Alles wat je ontdekt, en elk verhaal, komt in je Molenboek. Daar lees je het na op je eigen tempo. Met Kies een molen begin je bij een ander jaar. Je voortgang blijft bewaard in deze browser.</p>
     <h3>Korrelval</h3>
     <p>Korrelval is de minigame aan het eind van het verhaal (en via de knop op het titelscherm). Nu ben jij de korrel: je valt door Molen B en stuurt door de spleet tussen de walsen. Wie midden door de spleet valt, haalt een perfecte passage. Stenen, bouten en moederkoren ontwijk je: die haalt de reiniging uit het graan, want stenen en metaal mogen nooit op de walsen.</p>
     <p>Elke verdieping levert bloem op, en een perfecte passage levert extra op. Bonussen die je onderweg pakt, leveren ook bloem op. Na 75 verdiepingen land je in de silo en krijg je je weegbon. De zones van tien verdiepingen heten naar Prémax-mixen met Friese waternamen: Slotermeer, Fluessen, Tjeukemeer, Princenhof en Bonkevaart. Vandaag valt iedereen door dezelfde molen, dus je kunt je weegbon met collega's vergelijken.</p>
-    <h3>Uitmaling</h3>
+    <p>Te moeilijk? Zet bij Instellingen de Gezel-modus aan: ruimere spleten en een tragere val. Die modus geldt alleen voor Korrelval.</p>
+    <h3>Uitmaling in Korrelval</h3>
     <p>Uitmaling is het deel van de korrel dat in het meel eindigt: short patent circa 45%, long patent circa 65%, straight grade 75-76%, volkoren 100%. Witter = minder uitmaling. In Korrelval bepaalt je precisie het meel: hoe vaker je midden door de spleet valt, hoe witter het meel en hoe lager de uitmaling. Volkoren is niet slechter, alleen anders: de hele korrel, zemel en al.</p>
     <h3>Cijfers</h3>
     <p>Krantencijfers zijn afgerond en staan er met circa bij. Eén ton bloem is goed voor circa 1.800 broden.</p>
@@ -886,21 +880,6 @@ const STEPS = ['Lossen', 'Reinigen', 'Conditioneren', 'Walsen', 'Zeven', 'Silo']
 const STEP_ICO = ['ship', 'magnet', 'drop', 'rolls', 'sieve', 'silo'];
 const STEP_AT = [0, 0.1, 0.28, 0.45, 0.68, 0.985];
 // Wist-je-dat: [level (6 = Korrelval, -1 = algemeen), tekst]; max 120 tekens, krantencijfers met circa.
-// Tien kaartjes (brief: 8-10), per run zonder herhaling (pickFact). Geen kaartje herhaalt een introregel van zijn eigen molen.
-// Molen 1: het kaartje over de uitmaling (die regel staat er net boven op de eerste weegbon). Het kaartje over de boekweitmolen in
-// Holwerd herhaalde de introband, het verhaal en de weegbon zelf, dus dat is een algemeen kaartje (Korrelval, of als er geen eigen meer is).
-const FACTS = [
-  [-1, 'Koopmans begon in 1846 met een door paarden aangedreven boekweitmolen in Holwerd.'],
-  [1, 'De stoommeelfabriek in Leeuwarden was van Hein Blok Wybrandi. Uilke Koopmans noemde hem later Friso.'],
-  [1, 'Na 1881 spreidde zoon Jan Koopmans het risico met veevoer van gerst en maïs.'],
-  [2, "In 1920 werd het bedrijf een N.V. De broers Uco, Daan en Jo namen het over."],
-  [3, 'Het oudste deel van de loskade aan het Nieuwe Kanaal stamde uit 1927. In 2024 werd de kade vervangen.'],
-  [0, 'Uit 1.000 kilo tarwe komt 720 tot 760 kilo witte bloem; de rest is zemel, gries en kiem.'],
-  [4, 'In 1993 nam Koopmans paneermeelmaker LaCo Crumbs over.'],
-  [5, 'Molen B vervangt de molen uit 1967. De molen uit 1965 aan De Merodestraat wordt roggemolen.'],
-  [6, 'In februari 2024 voer het eerste Nedertarwe-schip op HVO100 naar Leeuwarden.'],
-  [6, 'KIEM (2016) staat voor Koopmans, Innovatie, Expertise en Molenaarschap.'],
-];
 // Verhaalpauze halverwege elke molen van de tijdlijn (lvl 0..5); gecontroleerde teksten, letterlijk overnemen.
 const STORIES = [
   { lvl: 0, jaar: "1846", kop: "Een molen vlak voor de bruiloft",
@@ -923,12 +902,12 @@ const STORIES = [
     slot: "Elke korrel telt, ook die van jou." },
 ];
 const BADGES = [
-  { id: 'vak', name: 'Vakmanschap', ico: 'aar', desc: '75% of meer perfecte passages in een molen' },
-  { id: 'betr', name: 'Betrouwbaar', ico: 'check', desc: 'een molen zonder botsing' },
-  { id: 'ond', name: 'Ondernemend', ico: 'up', desc: 'alle bonussen van een molen' },
-  { id: 'pas', name: 'Gepassioneerd', ico: 'heart', desc: `de hele molen door: ${CONFIG.night.floors} verdiepingen in Korrelval` },
-  { id: 'mens', name: 'Menselijk', ico: 'people', desc: 'de hele tijdlijn vanaf 1846 uitgespeeld als Gezel' },
-  { id: 'elk', name: 'Elke korrel telt', ico: 'grain', desc: 'alle Nedertarwe-korrels van een molen' },
+  { id: 'vak', name: 'Vakmanschap', ico: 'aar', desc: 'driekwart of meer midden door de spleet' },
+  { id: 'betr', name: 'Betrouwbaar', ico: 'check', desc: 'een potje zonder botsing' },
+  { id: 'ond', name: 'Ondernemend', ico: 'up', desc: 'alle bonussen van een potje' },
+  { id: 'pas', name: 'Gepassioneerd', ico: 'heart', desc: `de hele molen door: ${CONFIG.night.floors} verdiepingen` },
+  { id: 'mens', name: 'Menselijk', ico: 'people', desc: 'de silo gehaald als Gezel' },
+  { id: 'elk', name: 'Elke korrel telt', ico: 'grain', desc: 'alle Nedertarwe-korrels van een potje' },
 ];
 // Precisie (perfecte passages / totaal) bepaalt het meel: zuiverder = witter = lagere uitmaling.
 // col: kleur van dat meel, voor het meelwolkje in de silo en het kleurvlakje naast het label op de weegbon (short patent het witst).
@@ -1081,9 +1060,9 @@ const lerp = (a, b, t) => a + (b - a) * t;
 const ease = t => 1 - Math.pow(1 - clamp(t, 0, 1), 3);
 function mulberry32(a) { return function () { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
 function hashStr(s) { let h = 2166136261; for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; }
-const NF = (() => { try { return new Intl.NumberFormat('nl-NL', { maximumFractionDigits: 0 }); } catch (e) { return null; } })();
-const fmt = n => { n = Math.round(n); return NF ? NF.format(n) : String(n).replace(/\B(?=(\d{3})+(?!\d))/g, '.'); };
-const fmt1 = n => String(Math.round(n * 10) / 10).replace('.', ',');
+// De getalopmaak pas maken als hij nodig is (ronde 5): bij het laden kostte Intl.NumberFormat op een trage telefoon circa 60 ms.
+let NF; const nfNl = () => { if (NF === undefined) { try { NF = new Intl.NumberFormat('nl-NL', { maximumFractionDigits: 0 }); } catch (e) { NF = null; } } return NF; };
+const fmt = n => { n = Math.round(n); const f = nfNl(); return f ? f.format(n) : String(n).replace(/\B(?=(\d{3})+(?!\d))/g, '.'); };
 const hitR = () => CONFIG.grain.r * CONFIG.grain.hit;
 function mixHex(a, b, t) { const pa = parseInt(a.slice(1), 16), pb = parseInt(b.slice(1), 16); return `rgb(${Math.round(lerp(pa >> 16, pb >> 16, t))},${Math.round(lerp(pa >> 8 & 255, pb >> 8 & 255, t))},${Math.round(lerp(pa & 255, pb & 255, t))})`; }
 const reduced = (() => { try { return matchMedia('(prefers-reduced-motion: reduce)'); } catch (e) { return { matches: false }; } })();
@@ -1392,7 +1371,7 @@ function newRun(mode, lvl, seed, daily) {
     // streak: verdiepingen op rij zonder botsing (niet in beeld); bestStreak: langste reeks, alleen op weegbon, jaarverslag en game-over
     score: 0, lives: CONFIG.lives, streak: 0, bestStreak: 0, perfects: 0, total: 0, passed: 0,
     // seen: soorten (steen, boekweit, ...) die deze run al een label kregen
-    badges: new Set(), seen: new Set(), facts: new Set(), gezel: mode !== 'demo' && save.gezel, cp: null, newRows: [],
+    badges: new Set(), seen: new Set(), gezel: mode !== 'demo' && save.gezel, cp: null, newRows: [],
     storySeen: new Set(), // molens waarvan het verhaal deze run al getoond is (ook na Nog een korrel? niet opnieuw)
     steered: false, // al eens echt gestuurd (slepen, toetsen of muis); blijft staan na Nog een korrel?, dus het duimpje komt in deze run niet terug
     // gezelFrom: molen vanaf waar Gezel aan stond (Menselijk vraagt Gezel vanaf 1846); deathsInLevel: game-overs op rij in deze molen
@@ -2151,11 +2130,6 @@ function gxBeam(g, x0, y0, x1, y1, w0, w1, rgb, a) {
   for (const s of [1, 0.7, 0.42]) { g.beginPath(); g.moveTo(x0 - w0 * s / 2, y0); g.lineTo(x0 + w0 * s / 2, y0); g.lineTo(x1 + w1 * s / 2, y1); g.lineTo(x1 - w1 * s / 2, y1); g.closePath(); g.fill(); }
 }
 // zonnestraal door een spleet tussen de planken: een schuin vlak van de spleet (x, y0 tot y0 + h) naar rechtsonder
-function gxRay(g, x, y0, h, dx, dy, rgb, a) {
-  const gr = g.createLinearGradient(x, y0 + h / 2, x + dx, y0 + h / 2 + dy); gr.addColorStop(0, gxRgba(rgb, a)); gr.addColorStop(0.6, gxRgba(rgb, a * 0.35)); gr.addColorStop(1, gxRgba(rgb, 0));
-  g.fillStyle = gr;
-  for (const s of [1, 0.66, 0.33]) { const m = h * (1 - s) / 2; g.beginPath(); g.moveTo(x, y0 + m); g.lineTo(x + dx, y0 + dy + m - 10 * s); g.lineTo(x + dx, y0 + dy + h - m + 10 * s); g.lineTo(x, y0 + h - m); g.closePath(); g.fill(); }
-}
 // stofjes: in de lichtplekken M = [x, y, rx, ry, warm] van de achterwand, een vaste set per tijdperk
 function gxMotesIn(M, rnd, n) {
   const out = []; if (!M.length) return out;
@@ -2179,107 +2153,7 @@ const gxEra = (style, pal) => pal === NIGHT.pal ? 'night' : style;
 // kleur van de wand over alles (diepte), daarna pas het licht en de lichtplekken voor de stofjes.
 function gxHaze(g, w, P, col, a) { g.globalAlpha = a; g.fillStyle = col; g.fillRect(0, 0, w, P); g.globalAlpha = 1; }
 const gxBG = {
-  // 1846, rosmolen in Holwerd: planken met daglicht ertussen, zachte balken met stro, schoren en de houten spil van de rosmolen
-  hout(g, rnd, pal, M, w, P) {
-    const seams = []; let x = -3;
-    while (x < w) {
-      const pw = 22 + Math.floor(rnd() * 14), t = rnd();
-      g.fillStyle = mixHex('#3b2816', '#523822', t); g.fillRect(x, 0, pw, P);
-      g.strokeStyle = 'rgba(20,12,4,.28)'; g.lineWidth = 1; g.beginPath(); // nerf: golft met een heel aantal golven per periode, dus naadloos
-      for (let i = 0; i < 3; i++) { const nx = x + 4 + rnd() * (pw - 8), ph = rnd() * TAU, n = 2 + Math.floor(rnd() * 4); g.moveTo(nx, 0); for (let y = 16; y <= P; y += 16) g.lineTo(nx + Math.sin(y / P * TAU * n + ph) * 1.8, y); }
-      g.stroke();
-      g.fillStyle = 'rgba(255,228,184,.045)'; g.fillRect(x + 1.6, 0, 2, P);
-      g.fillStyle = 'rgba(10,6,2,.6)'; g.fillRect(x, 0, 1.6, P);
-      if (rnd() < 0.75) { const ky = rnd() * P, kx = x + 6 + rnd() * (pw - 12); gxWrap(P, ky - 10, 20, yy => { g.fillStyle = 'rgba(20,12,4,.38)'; g.beginPath(); g.ellipse(kx, yy + 10, 2.4, 5, 0, 0, TAU); g.fill(); g.strokeStyle = 'rgba(20,12,4,.2)'; g.beginPath(); g.ellipse(kx, yy + 10, 4.4, 8.5, 0, 0, TAU); g.stroke(); }); }
-      seams.push(x); x += pw;
-    }
-    for (const [x0, y0, x1, y1] of [[6, 330, 70, 600], [294, 650, 230, 920]]) { // schoren
-      g.strokeStyle = 'rgba(30,20,10,.75)'; g.lineWidth = 12; g.lineCap = 'butt'; g.beginPath(); g.moveTo(x0, y0); g.lineTo(x1, y1); g.stroke();
-      g.strokeStyle = 'rgba(214,180,128,.08)'; g.lineWidth = 1.5; g.beginPath(); g.moveTo(x0 - 5, y0); g.lineTo(x1 - 5, y1); g.stroke();
-    }
-    for (let s = 0; s < 3; s++) gxWrap(P, 300 + s * 320, 30, yy => { // balken: dun en bijna in de tint van de planken
-      g.fillStyle = 'rgba(28,18,8,.5)'; g.fillRect(0, yy, w, 12);
-      g.fillStyle = 'rgba(214,180,128,.09)'; g.fillRect(0, yy, w, 1.5);
-      const sg = g.createLinearGradient(0, yy + 12, 0, yy + 28); sg.addColorStop(0, 'rgba(0,0,0,.18)'); sg.addColorStop(1, 'rgba(0,0,0,0)'); g.fillStyle = sg; g.fillRect(0, yy + 12, w, 16);
-      g.fillStyle = 'rgba(16,9,3,.4)'; for (let px = 16 + s * 9; px < w; px += 48) { g.beginPath(); g.arc(px, yy + 6, 1.8, 0, TAU); g.fill(); }
-      g.strokeStyle = 'rgba(222,190,122,.3)'; g.lineWidth = 0.8; g.beginPath(); // stro op de balk
-      for (let i = 0; i < 12; i++) { const sx = rnd() * w, l = 3 + rnd() * 7; g.moveTo(sx, yy + 1); g.quadraticCurveTo(sx + (rnd() - 0.5) * 8, yy - l * 0.4, sx + (rnd() - 0.5) * 12, yy - l); }
-      g.stroke();
-    });
-    const sx = 222, sw = 24; // de houten spil van de rosmolen, met ijzeren banden
-    const spg = g.createLinearGradient(sx - sw / 2, 0, sx + sw / 2, 0); spg.addColorStop(0, '#24170b'); spg.addColorStop(0.32, '#56391f'); spg.addColorStop(0.55, '#442e19'); spg.addColorStop(1, '#1f1409');
-    g.fillStyle = spg; g.fillRect(sx - sw / 2, 0, sw, P);
-    g.strokeStyle = 'rgba(20,12,4,.32)'; g.lineWidth = 1; g.beginPath(); for (const o of [-5, 3, 8]) { g.moveTo(sx + o, 0); g.lineTo(sx + o, P); } g.stroke();
-    for (let y = 70; y < P; y += 160) { g.fillStyle = '#1a1a1a'; g.fillRect(sx - sw / 2 - 1.5, y, sw + 3, 6); g.fillStyle = 'rgba(210,210,210,.13)'; g.fillRect(sx - sw / 2 - 1.5, y, sw + 3, 1.2); }
-    gxHaze(g, w, P, '#2c1d0f', 0.3);
-    // daglicht: een spleet tussen de planken langs de linkerwand en een klein luik, met schuine zonnestralen naar rechtsonder.
-    // Lichtbronnen alleen langs de wanden en zacht: niets helders in de valbaan dat op het spoortje van de korrel of een pick-up lijkt.
-    const lx0 = seams.find(x => x > 12) || 22, light = [[lx0, 60, 150], [lx0, 420, 120], [lx0, 760, 130]];
-    for (const [lx, y0, h] of light) gxWrap(P, y0 - 10, h + 300, yy => {
-      gxRay(g, lx, yy, h, 190, 230, '255,214,150', 0.07);
-      g.fillStyle = 'rgba(255,226,170,.3)'; g.fillRect(lx - 0.2, yy, 1.3, h); gxGlow(g, lx, yy + h / 2, 18, '255,214,150', 0.1);
-    });
-    for (const [lx, y0, h] of light) for (let i = 0; i < 3; i++) M.push([lx + 50 + i * 40, (y0 + h / 2 + 60 + i * 55) % P, 34, 46]);
-    gxWrap(P, 640, 260, yy => {
-      const lx = 8, ly = yy + 6; g.fillStyle = 'rgba(24,15,7,.9)'; g.fillRect(lx - 3, ly - 3, 30, 28); // luik tegen de linkerwand
-      const lg = g.createLinearGradient(lx, ly, lx, ly + 22); lg.addColorStop(0, 'rgba(240,226,190,.4)'); lg.addColorStop(1, 'rgba(214,196,150,.32)'); g.fillStyle = lg; g.fillRect(lx, ly, 24, 22);
-      g.fillStyle = '#1c1209'; g.fillRect(lx + 11, ly, 2, 22); g.fillRect(lx, ly + 10, 24, 2);
-      gxGlow(g, lx + 12, ly + 11, 40, '255,220,160', 0.1);
-      gxBeam(g, lx + 12, ly + 22, lx + 96, ly + 250, 24, 120, '255,214,150', 0.045);
-    });
-    M.push([140, 800, 40, 60], [170, 860, 40, 50]);
-  },
-  // 1867, Stoommeelfabriek Friso: baksteen, rondboogramen, gietijzeren kolommen, een stoombuis, drijfriemen en gaslampen
-  steen(g, rnd, pal, M, w, P) {
-    g.fillStyle = '#211009'; g.fillRect(0, 0, w, P);
-    const bc = ['#46200f', '#4c2313', '#512616', '#43200f', '#562a18'];
-    for (let r = 0, y = 0; y < P; r++, y += 12) for (let x = (r % 2) ? -16 : 0; x < w; x += 32) {
-      g.fillStyle = bc[Math.floor(rnd() * bc.length)]; g.fillRect(x + 1, y + 1, 30, 10);
-      if (rnd() < 0.3) { g.fillStyle = 'rgba(255,214,180,.03)'; g.fillRect(x + 1, y + 1, 30, 2); }
-    }
-    const win = (x, yy, ww, hh) => { // rondboograam met gietijzeren roeden, avondlucht achter het glas
-      const r = ww / 2, top = yy;
-      g.fillStyle = '#2a120a'; g.beginPath(); g.moveTo(x - 7, top + r + 2); g.arc(x + r, top + r + 2, r + 7, Math.PI, 0); g.lineTo(x + ww + 7, top + hh + 3); g.lineTo(x - 7, top + hh + 3); g.closePath(); g.fill();
-      const gg = g.createLinearGradient(0, top, 0, top + hh); gg.addColorStop(0, '#1d2a3b'); gg.addColorStop(0.7, '#2a3646'); gg.addColorStop(1, '#3b3a3c');
-      g.fillStyle = gg; g.beginPath(); g.moveTo(x, top + r + 2); g.arc(x + r, top + r + 2, r, Math.PI, 0); g.lineTo(x + ww, top + hh); g.lineTo(x, top + hh); g.closePath(); g.fill();
-      g.fillStyle = 'rgba(255,255,255,.05)'; g.beginPath(); g.moveTo(x + 4, top + hh); g.lineTo(x + ww * 0.45, top + r * 0.6); g.lineTo(x + ww * 0.62, top + r * 0.6); g.lineTo(x + 16, top + hh); g.closePath(); g.fill();
-      g.strokeStyle = '#121212'; g.lineWidth = 2; g.beginPath();
-      for (let i = 1; i < 3; i++) { g.moveTo(x + ww * i / 3, top + 3); g.lineTo(x + ww * i / 3, top + hh); }
-      for (let y2 = top + r + 2; y2 < top + hh - 4; y2 += 22) { g.moveTo(x, y2); g.lineTo(x + ww, y2); }
-      g.stroke(); g.fillStyle = '#4d463f'; g.fillRect(x - 8, top + hh, ww + 16, 4);
-    };
-    gxWrap(P, 70, 180, yy => win(46, yy, 54, 150)); gxWrap(P, 560, 180, yy => win(196, yy, 54, 150));
-    for (let s = 0; s < 3; s++) gxWrap(P, 300 + s * 320, 24, yy => { // ijzeren ligger: dun
-      g.fillStyle = 'rgba(18,20,22,.55)'; g.fillRect(0, yy, w, 8); g.fillStyle = 'rgba(190,190,180,.08)'; g.fillRect(0, yy, w, 1.2);
-      const sg = g.createLinearGradient(0, yy + 8, 0, yy + 22); sg.addColorStop(0, 'rgba(0,0,0,.2)'); sg.addColorStop(1, 'rgba(0,0,0,0)'); g.fillStyle = sg; g.fillRect(0, yy + 8, w, 14);
-    });
-    for (const cx of [18, 282]) { // gietijzeren kolommen met een kapiteel onder elke ligger
-      g.fillStyle = '#1b1e21'; g.fillRect(cx - 5, 0, 10, P); g.fillStyle = 'rgba(180,190,190,.12)'; g.fillRect(cx - 3, 0, 2, P);
-      for (let s = 0; s < 3; s++) gxWrap(P, 288 + s * 320, 14, yy => { g.fillStyle = '#1b1e21'; g.beginPath(); g.moveTo(cx - 5, yy + 12); g.lineTo(cx - 11, yy); g.lineTo(cx + 11, yy); g.lineTo(cx + 5, yy + 12); g.closePath(); g.fill(); });
-    }
-    // stoombuis langs de wand (verticaal), met flenzen en een afsluiter
-    g.fillStyle = '#4f4a43'; g.fillRect(258, 0, 10, P); g.fillStyle = 'rgba(255,255,255,.08)'; g.fillRect(260, 0, 2, P); g.fillStyle = 'rgba(0,0,0,.3)'; g.fillRect(265, 0, 3, P);
-    for (let y = 40; y < P; y += 160) { g.fillStyle = '#38332e'; g.fillRect(255, y, 16, 5); }
-    gxWrap(P, 500, 30, yy => { g.strokeStyle = '#2f2a26'; g.lineWidth = 2.2; g.beginPath(); g.arc(263, yy + 12, 10, 0, TAU); for (let i = 0; i < 4; i++) { const a = i / 4 * Math.PI; g.moveTo(263 + Math.cos(a) * 10, yy + 12 + Math.sin(a) * 10); g.lineTo(263 - Math.cos(a) * 10, yy + 12 - Math.sin(a) * 10); } g.stroke(); });
-    gxWrap(P, 620, 300, yy => { // drijfwerk: een dunne as met een riemschijf en een schuine drijfriem
-      g.fillStyle = 'rgba(16,18,20,.6)'; g.fillRect(0, yy + 14, w, 3);
-      g.strokeStyle = 'rgba(40,26,16,.6)'; g.lineWidth = 2.2; g.beginPath(); g.moveTo(98, yy + 15); g.lineTo(70, yy + 240); g.moveTo(118, yy + 15); g.lineTo(84, yy + 240); g.stroke();
-      g.fillStyle = 'rgba(30,32,35,.7)'; g.fillRect(96, yy + 8, 24, 14); g.fillStyle = 'rgba(190,190,180,.1)'; g.fillRect(96, yy + 8, 24, 1.2);
-    });
-    gxHaze(g, w, P, '#2a130c', 0.32);
-    // gaslampen aan een arm van de gietijzeren kolom langs de wand: warm, gedempt licht (de gouden korrel blijft het helderst)
-    for (const [lx, ly, sd] of [[38, 196, 1], [262, 470, -1], [38, 800, 1]]) gxWrap(P, ly - 90, 180, yy => {
-      const cx = sd > 0 ? 18 : 282;
-      gxGlow(g, lx, yy + 6, 80, '255,180,84', 0.13); gxGlow(g, lx, yy + 6, 24, '255,226,160', 0.2);
-      g.strokeStyle = '#141414'; g.lineWidth = 2.2; g.beginPath(); g.moveTo(cx, yy - 12); g.lineTo(lx, yy - 12); g.lineTo(lx, yy - 6); g.stroke();
-      g.fillStyle = '#141414'; g.fillRect(cx - 2, yy - 16, 4, 9);
-      g.fillStyle = '#1d1d1d'; g.beginPath(); g.moveTo(lx - 6, yy - 6); g.lineTo(lx + 6, yy - 6); g.lineTo(lx + 3, yy - 9); g.lineTo(lx - 3, yy - 9); g.closePath(); g.fill();
-      g.fillStyle = 'rgba(255,236,190,.45)'; g.beginPath(); g.moveTo(lx - 5, yy - 6); g.lineTo(lx + 5, yy - 6); g.lineTo(lx + 4, yy + 8); g.lineTo(lx - 4, yy + 8); g.closePath(); g.fill();
-      g.fillStyle = 'rgba(255,246,216,.7)'; g.beginPath(); g.ellipse(lx, yy + 2, 1.8, 3.2, 0, 0, TAU); g.fill();
-      g.fillStyle = '#1d1d1d'; g.fillRect(lx - 5, yy + 8, 10, 2);
-      M.push([lx, yy + 40, 56, 52]);
-    });
-  },
+  // ronde 5: de wanden van 1846, 1867, 1976 en 2008 zijn weg (alleen het valspel in de tijdlijn tekende ze); gxBgDraw valt terug op digi
   // 1920, de N.V.: groene tegels, gepleisterde bovenwand, meelpijpen schuin langs de wand en de eerste gloeilampen
   tegel(g, rnd, pal, M, w, P) {
     for (let s = 0; s < 3; s++) {
@@ -2310,65 +2184,6 @@ const gxBG = {
       g.fillStyle = 'rgba(233,227,207,.55)'; g.fillRect(lx - 13, ys + 57, 26, 2);
       g.fillStyle = 'rgba(255,240,194,.6)'; g.beginPath(); g.ellipse(lx, ys + 62, 3.6, 4.4, 0, 0, TAU); g.fill();
       M.push([lx, ys + 130, 40, 60]);
-    }
-  },
-  // 1976, Koninklijk: bruine wandpanelen, een zachte band in jaren-70-kleuren, TL-buizen, pneumatische buizen en metaal
-  hout2(g, rnd, pal, M, w, P) {
-    for (let x = 0; x < w; x += 25) { g.fillStyle = mixHex('#2a190c', '#342011', rnd()); g.fillRect(x, 0, 25, P); g.fillStyle = 'rgba(0,0,0,.38)'; g.fillRect(x, 0, 1.6, P); g.fillStyle = 'rgba(255,220,170,.035)'; g.fillRect(x + 2.4, 0, 1.4, P); }
-    for (let s = 0; s < 3; s++) {
-      const ys = s * 320, by = ys + 200;
-      g.globalAlpha = 0.26; g.fillStyle = '#A85A1C'; g.fillRect(0, by, w, 6); g.fillStyle = '#B0862A'; g.fillRect(0, by + 8, w, 6); g.fillStyle = '#6E3D1C'; g.fillRect(0, by + 16, w, 6); g.globalAlpha = 1;
-      g.fillStyle = 'rgba(34,30,27,.75)'; g.fillRect(0, ys, w, 9); g.fillStyle = 'rgba(207,171,0,.12)'; g.fillRect(0, ys + 8, w, 1);
-      const sg = g.createLinearGradient(0, ys + 9, 0, ys + 26); sg.addColorStop(0, 'rgba(0,0,0,.22)'); sg.addColorStop(1, 'rgba(0,0,0,0)'); g.fillStyle = sg; g.fillRect(0, ys + 9, w, 17);
-      g.strokeStyle = 'rgba(150,110,52,.28)'; g.lineWidth = 1.5; g.beginPath(); g.moveTo(0, ys + 286); g.lineTo(w, ys + 286); for (let px = 12; px < w; px += 38) { g.moveTo(px, ys + 286); g.lineTo(px, ys + 318); } g.stroke(); // leuning
-    }
-    const pipe = (x0) => { g.fillStyle = '#5f666b'; g.fillRect(x0 - 3.5, 0, 7, P); g.fillStyle = 'rgba(230,236,240,.35)'; g.fillRect(x0 - 2, 0, 1.3, P); g.fillStyle = 'rgba(0,0,0,.35)'; g.fillRect(x0 + 2, 0, 1.5, P); };
-    for (const px of [238, 247, 256, 265, 274]) pipe(px); // pneumatisch transport: een bundel verticale buizen met klemmen
-    for (let y = 40; y < P; y += 160) { g.fillStyle = '#25282b'; g.fillRect(232, y, 48, 4); g.fillStyle = 'rgba(255,255,255,.1)'; g.fillRect(232, y, 48, 1); }
-    pipe(30); pipe(40);
-    for (let s = 0; s < 3; s++) { // korte aftakkingen met een bocht de zijwand in
-      const ys = s * 320 + 90; g.lineCap = 'butt';
-      g.strokeStyle = '#5f666b'; g.lineWidth = 7; g.beginPath(); g.moveTo(247, ys); g.arcTo(247, ys + 22, 270, ys + 22, 18); g.lineTo(306, ys + 22); g.stroke();
-      g.fillStyle = '#25282b'; g.fillRect(26, ys + 120, 18, 4);
-    }
-    gxHaze(g, w, P, '#2a190d', 0.3);
-    // TL-buizen rechtop tegen de zijwand (om en om, nooit twee op dezelfde hoogte): koel, gedempt licht dat niet op een vloer of plaat lijkt
-    for (const [lx, s] of [[14, 0], [288, 1], [14, 2]]) {
-      const ys = s * 320 + 70, sd = lx < 150 ? 1 : -1;
-      g.save(); g.translate(lx, ys + 32); g.scale(1, 2.4); gxGlow(g, 0, 0, 30, '214,236,255', 0.1); g.restore();
-      gxGlow(g, lx + sd * 10, ys + 32, 70, '214,236,255', 0.035);
-      g.fillStyle = '#3e3d3a'; g.fillRect(lx - 3.5, ys - 2, 7, 68); g.fillStyle = 'rgba(236,246,242,.4)'; g.fillRect(lx - 1.2, ys, 2.4, 64);
-      M.push([lx + sd * 34, ys + 32, 26, 50, false]);
-    }
-  },
-  // 2008, de nieuwe molen: staal en glas, koel daglicht; RVS-pijpen langs de gevel
-  staal(g, rnd, pal, M, w, P) {
-    for (let s = 0; s < 3; s++) for (let c = 0; c < 3; c++) {
-      const x = c * 100, y = s * 320, gg = g.createLinearGradient(x, y, x + 60, y + 320);
-      gg.addColorStop(0, '#29435a'); gg.addColorStop(0.55, '#1f384d'); gg.addColorStop(1, '#182c3e'); g.fillStyle = gg; g.fillRect(x, y, 100, 320);
-      g.fillStyle = 'rgba(214,236,255,.045)'; g.beginPath(); g.moveTo(x + 8, y); g.lineTo(x + 46, y); g.lineTo(x + 100, y + 110); g.lineTo(x + 100, y + 190); g.closePath(); g.fill();
-      g.fillStyle = 'rgba(214,236,255,.025)'; g.beginPath(); g.moveTo(x, y + 150); g.lineTo(x + 30, y + 150); g.lineTo(x + 100, y + 290); g.lineTo(x + 100, y + 320); g.lineTo(x + 84, y + 320); g.lineTo(x, y + 180); g.closePath(); g.fill();
-    }
-    g.fillStyle = '#1a2735'; for (const x of [0, 100, 200, 300]) g.fillRect(x - 4, 0, 8, P); // stijlen van de gevel
-    g.fillStyle = 'rgba(159,179,200,.2)'; for (const x of [0, 100, 200, 300]) g.fillRect(x - 4, 0, 1.5, P);
-    for (let s = 0; s < 3; s++) {
-      const ys = s * 320, bx = [100, 0, 200][s];
-      g.strokeStyle = 'rgba(26,39,53,.85)'; g.lineWidth = 3.5; g.beginPath(); g.moveTo(bx + 4, ys + 16); g.lineTo(bx + 96, ys + 304); g.moveTo(bx + 96, ys + 16); g.lineTo(bx + 4, ys + 304); g.stroke(); // X-schoren
-      g.fillStyle = 'rgba(22,33,45,.8)'; g.fillRect(0, ys, w, 9); g.fillStyle = 'rgba(159,179,200,.16)'; g.fillRect(0, ys, w, 1.2);
-      const sg = g.createLinearGradient(0, ys + 9, 0, ys + 26); sg.addColorStop(0, 'rgba(0,0,0,.2)'); sg.addColorStop(1, 'rgba(0,0,0,0)'); g.fillStyle = sg; g.fillRect(0, ys + 9, w, 17);
-    }
-    for (const [px, dx] of [[34, 0], [262, 0], [228, 0]]) { // RVS-pijpen langs de gevel
-      g.strokeStyle = 'rgba(120,136,150,.55)'; g.lineWidth = 8; g.lineCap = 'butt'; g.beginPath(); g.moveTo(px, 0); g.lineTo(px + dx, P); g.stroke();
-      g.strokeStyle = 'rgba(230,240,248,.18)'; g.lineWidth = 1.4; g.beginPath(); g.moveTo(px - 2.5, 0); g.lineTo(px + dx - 2.5, P); g.stroke();
-    }
-    gxHaze(g, w, P, '#121c27', 0.34);
-    // ledlijnen rechtop langs de wand (om en om, nooit twee op dezelfde hoogte): koel licht, gedempt, nooit midden in de valbaan
-    for (const [lx, s] of [[16, 0], [284, 1], [16, 2]]) {
-      const ys = s * 320 + 60, sd = lx < 150 ? 1 : -1;
-      g.save(); g.translate(lx, ys + 40); g.scale(1, 2.6); gxGlow(g, 0, 0, 30, '220,238,255', 0.1); g.restore();
-      gxGlow(g, lx + sd * 12, ys + 40, 80, '220,238,255', 0.035);
-      g.fillStyle = 'rgba(26,39,53,.9)'; g.fillRect(lx - 3, ys - 2, 6, 84); g.fillStyle = 'rgba(233,244,255,.4)'; g.fillRect(lx - 1, ys, 2, 80);
-      M.push([lx + sd * 36, ys + 40, 26, 56, false]);
     }
   },
   // 2026, Molen B: donkere panelen, kabelgoten, RVS-buizen, schermpjes met zacht licht en ledjes. Rustig, niets beweegt.
@@ -2473,36 +2288,11 @@ function gxEvict(pre, era) { for (const q in tiles) if (q.startsWith(pre)) { con
 
 // ---------- zijwanden (dichtbij): schuiven 1:1 met de verdiepingen mee; de vloeren verdwijnen erin ----------
 const gxSIDE = {
-  hout(g, rnd, w, P) { // dikke houten stijl met ijzeren banden
-    g.fillStyle = '#24170b'; g.fillRect(0, 0, w, P);
-    const pg = g.createLinearGradient(6, 0, 44, 0); pg.addColorStop(0, '#3a2714'); pg.addColorStop(0.45, '#56391f'); pg.addColorStop(1, '#2e1e0e');
-    g.fillStyle = pg; g.fillRect(6, 0, 38, P);
-    g.strokeStyle = 'rgba(16,9,3,.35)'; g.lineWidth = 1; g.beginPath(); for (const o of [13, 22, 31, 38]) { g.moveTo(o, 0); for (let y = 16; y <= P; y += 16) g.lineTo(o + Math.sin(y / P * TAU * 2 + o) * 1.4, y); } g.stroke();
-    for (const y of [36, 196]) { g.fillStyle = '#161616'; g.fillRect(4, y, 42, 9); g.fillStyle = 'rgba(210,210,210,.16)'; g.fillRect(4, y, 42, 1.5); g.fillStyle = 'rgba(0,0,0,.55)'; for (const bx of [11, 25, 39]) { g.beginPath(); g.arc(bx, y + 4.5, 1.6, 0, TAU); g.fill(); } }
-    g.fillStyle = 'rgba(14,8,2,.55)'; for (const y of [120, 280]) { g.beginPath(); g.arc(25, y, 3, 0, TAU); g.fill(); }
-  },
-  steen(g, rnd, w, P) { // bakstenen pijler met een gietijzeren regenpijp en flenzen
-    g.fillStyle = '#1c0d07'; g.fillRect(0, 0, w, P);
-    const bc = ['#3b190c', '#43200f', '#3e1b0d'];
-    for (let r = 0, y = 0; y < P; r++, y += 10) for (let x = r % 2 ? -12 : 0; x < w; x += 24) { g.fillStyle = bc[Math.floor(rnd() * 3)]; g.fillRect(x + 1, y + 1, 22, 8); }
-    gxPipe(g, 25, P, '#2a2e32', [80, 240]);
-  },
+  // ronde 5: de pijlers van 1846, 1867, 1976 en 2008 zijn weg (alleen het valspel in de tijdlijn tekende ze); een onbekende stijl valt terug op digi
   tegel(g, rnd, w, P) { // groen betegelde pijler met een leiding en lasdozen
     g.fillStyle = '#0f1a13'; g.fillRect(0, 0, w, P);
     for (let r = 0, y = 0; y < P; r++, y += 12) for (let x = r % 2 ? -10 : 0; x < w; x += 20) { g.fillStyle = mixHex('#1a3022', '#21392a', rnd()); g.fillRect(x + 1, y + 1, 18, 10); g.fillStyle = 'rgba(214,255,226,.05)'; g.fillRect(x + 2, y + 1.5, 15, 1.4); }
     gxPipe(g, 25, P, '#26342b', [80, 240]);
-  },
-  hout2(g, rnd, w, P) { // bruine kolom met een aluminium transportbuis en klemmen
-    g.fillStyle = '#1c1008'; g.fillRect(0, 0, w, P);
-    const pg = g.createLinearGradient(4, 0, 46, 0); pg.addColorStop(0, '#2c1a0c'); pg.addColorStop(0.5, '#3f2612'); pg.addColorStop(1, '#24150a'); g.fillStyle = pg; g.fillRect(4, 0, 42, P);
-    g.globalAlpha = 0.45; g.fillStyle = '#A85A1C'; g.fillRect(4, 196, 42, 8); g.fillStyle = '#B0862A'; g.fillRect(4, 206, 42, 8); g.fillStyle = '#6E3D1C'; g.fillRect(4, 216, 42, 8); g.globalAlpha = 1;
-    gxPipe(g, 25, P, '#6c7378', [60, 220], true);
-  },
-  staal(g, rnd, w, P) { // stalen H-kolom met boutplaten
-    g.fillStyle = '#0e161f'; g.fillRect(0, 0, w, P);
-    g.fillStyle = '#1f2f3f'; g.fillRect(6, 0, 38, P); g.fillStyle = '#2a3f53'; g.fillRect(6, 0, 6, P); g.fillRect(38, 0, 6, P);
-    g.fillStyle = 'rgba(159,179,200,.35)'; g.fillRect(6, 0, 1.5, P); g.fillRect(38, 0, 1.5, P);
-    for (const y of [60, 220]) { g.fillStyle = '#2f465b'; g.fillRect(4, y, 42, 26); g.fillStyle = 'rgba(159,179,200,.3)'; g.fillRect(4, y, 42, 1.5); g.fillStyle = 'rgba(200,215,230,.45)'; for (const [bx, by] of [[10, 6], [40, 6], [10, 20], [40, 20]]) g.fillRect(bx - 1.5, y + by - 1.5, 3, 3); }
   },
   digi(g, rnd, w, P) { gxSideDigi(g, w, P, false); },
   night(g, rnd, w, P) { gxSideDigi(g, w, P, true); },
@@ -3827,27 +3617,6 @@ function introSay() {
 function toast(msg, dur) { const t = $('toast'); t.textContent = msg; t.hidden = false; clearTimeout(toastT); toastT = setTimeout(() => { t.hidden = true; }, dur || 2600); }
 function grant(ids) { for (const id of ids) { run.badges.add(id); save.badges[id] = 1; } persist(); }
 function uitLabel(pct) { return UIT.find(u => pct >= u.min) || UIT[UIT.length - 1]; }
-function uitHTML(perf, total) {
-  if (!total) return 'Nog geen passages gemeten.';
-  const pct = Math.round(perf / total * 100), u = uitLabel(pct); save.labels[u.id] = 1; persist();
-  // kleurvlakje: dezelfde kleur als het meelwolkje in de silo (UIT.col). Geen style-attribuut (een CSP zonder 'unsafe-inline'
-  // blokkeert dat): de kleur staat in data-col en fillUit() zet hem via CSSOM.
-  return `Precisie <b>${pct}%</b>: ${perf} van ${total} perfect. Jouw meel: <span class="meel" data-col="${u.col}" aria-hidden="true"></span><b>${u.name}</b>, uitmaling ${u.note}. Witter = minder uitmaling.`;
-}
-function fillUit(el, html) { el.innerHTML = html; for (const m of el.querySelectorAll('.meel[data-col]')) m.style.background = m.dataset.col; }
-// Wist-je-dat zonder herhaling binnen een run; bij voorkeur een kaartje van deze molen (6 = Korrelval; -1 = een willekeurig kaartje)
-function pickFact(lvl) {
-  let free = FACTS.map((_, i) => i).filter(i => !run.facts.has(i));
-  if (!free.length) { run.facts.clear(); free = FACTS.map((_, i) => i); }
-  const own = lvl < 0 ? [] : free.filter(i => FACTS[i][0] === lvl), pool = own.length ? own : free;
-  const i = pool[Math.floor(Math.random() * pool.length)]; run.facts.add(i); return FACTS[i][1];
-}
-function bonRows(kg) {
-  return `<tr class="big"><td>Bloem</td><td>${fmt(kg)} kg</td></tr><tr><td>Zakken van 25 kg</td><td>${fmt(Math.floor(kg / CONFIG.bag))}</td></tr>` +
-    (kg >= CONFIG.cell ? `<tr><td>Bulkcellen van 2 ton</td><td>${fmt1(kg / CONFIG.cell)}</td></tr>` : '') + `<tr><td>Goed voor</td><td>circa ${fmt(Math.round(kg / 1000 * CONFIG.bread / 10) * 10)} broden</td></tr>`;
-}
-// De langste reeks verschijnt alleen na de molen: weegbon, jaarverslag en game-over
-const streakRow = n => `<tr><td>Langste reeks zonder botsing</td><td>${n}</td></tr>`;
 // Weegbon: het totaal telt in circa 0,7 s op, als een weegschaal die uitslaat; bij verminderde beweging staat er meteen het eindgetal.
 // Het tellende getal is aria-hidden: de schermlezer leest het eindgetal uit een onzichtbare kopie (.sr).
 function uiTel(td, from, to, unit) {
@@ -3874,17 +3643,6 @@ function badgeEl(b, earned, iconOnly) {
   if (!iconOnly) s.appendChild(document.createTextNode(b.name));
   return s;
 }
-function fillBadges(el, ids) {
-  el.innerHTML = '';
-  for (const id of ids) el.appendChild(badgeEl(BADGES.find(q => q.id === id), true, false));
-  el.hidden = !ids.length;
-}
-// Hele kernwaardenrij: verdiend in goud met naam, de rest grijs als icoon (tik voor uitleg)
-function fillBadgesAll(el, got) {
-  el.innerHTML = '';
-  for (const b of BADGES) el.appendChild(badgeEl(b, got.has(b.id), !got.has(b.id)));
-  el.hidden = false;
-}
 async function copyText(text, box, okMsg, keep) { // keep: tekstveld blijft staan (linkveld bij Over dit spel)
   let ok = false;
   try { if (navigator.clipboard && window.isSecureContext) { await navigator.clipboard.writeText(text); ok = true; } } catch (e) { ok = false; }
@@ -3900,8 +3658,7 @@ async function copyText(text, box, okMsg, keep) { // keep: tekstveld blijft staa
 function startDemo() {
   tlUit();
   run = newRun('demo', 0, 20261846); resetWorld(); idleT0 = performance.now(); demoV = 1;
-  gxPrewarm(NIGHT); // Korrelval (Molen B) alvast klaarzetten in rustige tijd
-  show('title'); refreshTitle();
+  show('title'); refreshTitle(); // Korrelval (Molen B) wordt pas klaargezet op zijn kaart vooraf (openNightBrief, ronde 5): zo staat de titel er sneller
 }
 // fromYear: jaar waar de teller van de introband vandaan rolt (2026 na de intro: terug in de tijd)
 function startCampaign(lvl, fromYear) { run = newRun('camp', lvl || 0, Math.random() * 4294967296); run.prevYear = fromYear || (lvl ? LEVELS[lvl - 1].year : 1800); startLevel(true); }
@@ -3946,13 +3703,15 @@ function tryGezel() {
 }
 function levelComplete() {
   const lv = lvlCfg(), pct = lvS.total ? lvS.perf / lvS.total : 0;
-  const lifeB = run.lives * CONFIG.pts.life, uitB = Math.round(pct * CONFIG.pts.uit), kgLevel = run.score - lvS.kg0;
+  const lifeB = run.lives * CONFIG.pts.life, uitB = Math.round(pct * CONFIG.pts.uit);
   run.score += lifeB + uitB; run.deathsInLevel = 0;
   const earned = [];
   if (lvS.hits === 0) earned.push('betr');
   if (lvS.total && pct >= 0.75) earned.push('vak');
   if (lvS.picks > 0 && lvS.got >= lvS.picks) earned.push('ond');
   if (lvS.ned > 0 && lvS.nedGot >= lvS.ned) earned.push('elk');
+  if (run.mode === 'night' && run.gezel) earned.push('mens'); // de silo gehaald als Gezel
+  const nieuw = earned.filter(id => !save.badges[id]); // voor het eerst verdiend: één regel op de weegbon (de rest staat bij Scores)
   grant(earned);
   const last = run.lvl >= LEVELS.length - 1, night = run.mode === 'night';
   if (!night) { save.maxLvl = Math.max(save.maxLvl, last ? run.lvl : run.lvl + 1); save.best = Math.max(save.best, run.score); } // ook bewaren als je na de weegbon naar het menu gaat
@@ -3960,18 +3719,23 @@ function levelComplete() {
   persist();
   $('lvTitle').innerHTML = `<span class="tsjoch">Tsjoch!</span> ${lvS.silo && lvS.silo.goal ? 'Order geladen' : 'In de silo'}`; // Fries: proost
   $('lvEra').textContent = night ? `Korrelval, ${run.daily ? dayLabel() : 'vrije dienst'}` : `${lv.year} · ${lv.title}`; // kort, zodat het handschrift op één regel past
-  $('lvBon').innerHTML = `<tr><td>Deze molen</td><td>+${fmt(kgLevel)} kg</td></tr>` +
-    (lvS.silo ? `<tr><td>Silo ${esc(lvS.silo.name)} (${lvS.silo.goal ? 'bulkwagen' : 'zakgoed'})</td><td>+${lvS.silo.pts}</td></tr>` : '') +
-    `<tr><td>Korrels over: ${run.lives}</td><td>+${lifeB}</td></tr><tr><td>Precisiebonus</td><td>+${uitB}</td></tr>` +
-    `<tr class="big"><td>Totaal</td><td>${fmt(run.score)} kg</td></tr><tr class="opt"><td>Zakken van 25 kg</td><td>${fmt(Math.floor(run.score / CONFIG.bag))}</td></tr>` +
-    streakRow(lvS.best);
+  // de kilo's groot (ze tellen op), daaronder hooguit drie regels: broden, precisie en jouw meel (bonKort); bonussen zitten in het totaal
+  const u = uitLabel(Math.round(pct * 100)); if (lvS.total) { save.labels[u.id] = 1; persist(); }
+  const bd = nieuw.length ? BADGES.find(q => q.id === nieuw[0]) : null;
+  bonKort($('lvBon'), $('lvRegels'), run.score, [bonBrood(run.score),
+    lvS.total ? `${bonMidden(lvS.perf, lvS.total)} Dat geeft <span class="meel" data-col="${u.col}" aria-hidden="true"></span><b>${u.name}</b>.` : '',
+    bd ? `Badge verdiend: <b>${bd.name}</b> (${bd.desc}).` : 'Hoe vaker midden door, hoe witter het meel.']);
   uiTel($('lvBon').querySelector('tr.big td:last-child'), lvS.kg0, run.score, ' kg'); // het totaal telt op
-  fillUit($('lvUit'), uitHTML(lvS.perf, lvS.total));
-  fillBadges($('lvBadges'), earned);
-  $('lvFact').textContent = pickFact(night ? 6 : run.lvl); $('lvFact').parentElement.hidden = night && !!pickerEntry; // geen ruimte voor het kaartje en de letterkiezer samen op een kleine telefoon
-  $('bNext').textContent = night ? 'Nog een keer' : last ? 'Naar het jaarverslag' : `Volgende molen: ${LEVELS[run.lvl + 1].year}`;
-  if (!night) { gxPrewarm(run.lvl + 1); jxPrewarm(run.lvl + 1); } // de volgende molen en zijn jaarintro klaarzetten terwijl de weegbon er staat (11c)
+  $('bNext').textContent = night ? 'Nog een keer' : last ? 'Naar het slot' : `Volgende molen: ${LEVELS[run.lvl + 1].year}`;
   show('level'); SFX.fanfare();
+}
+// Weegbon en game-over (ronde 5): één grote regel met de kilo's en daaronder hooguit drie korte regels. Geen bonusregels, kaartjes of badges.
+const bonBrood = kg => kg > 0 ? `Goed voor circa <b>${fmt(Math.max(10, Math.round(kg / 1000 * CONFIG.bread / 10) * 10))} broden</b>.` : '';
+const bonMidden = (perf, total) => total ? `<b>${perf} van ${total}</b> keer midden door de spleet.` : '';
+function bonKort(tbl, ul, kg, regels) {
+  tbl.innerHTML = `<tr class="big"><td>Bloem</td><td>${fmt(kg)} kg</td></tr>`;
+  ul.innerHTML = regels.filter(Boolean).slice(0, 3).map(r => `<li>${r}</li>`).join(''); ul.hidden = !ul.children.length;
+  for (const m of ul.querySelectorAll('.meel[data-col]')) m.style.background = m.dataset.col; // geen style-attribuut (CSP): de kleur via CSSOM
 }
 function nextLevel() {
   if (run.mode === 'night') return startNight(run.daily, true); // Nog een keer: een nieuw potje Korrelval, zonder introband
@@ -3991,33 +3755,25 @@ function nightScore(before) {
 }
 function gameOver() {
   const night = run.mode === 'night', lv = lvlCfg();
-  $('overSub').textContent = night ? `Korrelval · ${nightSub()} · ${fl(run.passed)}` : `${lv.year} · ${lv.title}: probeer deze molen nog eens`;
-  $('overBon').innerHTML = bonRows(run.score) + streakRow(run.bestStreak);
-  fillUit($('overUit'), uitHTML(run.perfects, run.total));
-  fillBadgesAll($('overBadges'), run.badges);
+  $('overSub').textContent = night ? `Korrelval · ${nightSub()}` : `${lv.year} · ${lv.title}`;
+  bonKort($('overBon'), $('overRegels'), run.score, [`Je haalde <b>${run.passed} van de ${night ? CONFIG.night.floors : lv.floors || run.passed}</b> verdiepingen.`, bonBrood(run.score), bonMidden(run.perfects, run.total)]);
   $('picker').hidden = true;
-  if (night) {
-    nightScore($('easyBox'));
-    $('overFact').textContent = pickFact(Math.random() < 0.6 ? 6 : -1); // meestal een Korrelval-kaartje, soms een ander
-  } else save.best = Math.max(save.best, run.score);
+  if (night) nightScore($('easyBox')); else save.best = Math.max(save.best, run.score);
   // Te moeilijk?: na 3, 6, 9 ... game-overs op rij (molen: in deze molen; Korrelval: partijen onder 15 verdiepingen)
   let fails;
   if (night) fails = nightFails = run.passed < 15 ? nightFails + 1 : 0;
   else fails = ++run.deathsInLevel;
   const easy = !run.gezel && fails >= 3 && fails % 3 === 0;
   $('easyBox').hidden = !easy; SCR.over.classList.toggle('easy-on', easy);
-  $('overFactBox').hidden = !night || easy; // geen ruimte voor beide kaartjes op een kleine telefoon
-  // na het spelen, op de kaart: wie in molen 1 op een touchscherm nooit sleepte, krijgt één regel uitleg
-  $('overTip').hidden = !(run.mode === 'camp' && run.lvl === 0 && hintTouch && !run.steered);
   persist();
   show('over'); fitOver();
 }
-// Met het Te moeilijk?-kader moet de kaart zonder scrollen passen: eerst de bon inkorten tot de regel Bloem, dan de badgerij weg.
+// Met het Te moeilijk?-kader moet de kaart zonder scrollen passen: dan wijken de drie regels onder de kilo's.
 function fitOver() {
   const sec = SCR.over, c = sec.querySelector('.card');
-  sec.classList.remove('tight1', 'tight2');
+  sec.classList.remove('tight1');
   if (sec.hidden || !sec.classList.contains('easy-on')) return;
-  for (const k of ['tight1', 'tight2']) if (c.scrollHeight > c.clientHeight + 1) sec.classList.add(k);
+  if (c.scrollHeight > c.clientHeight + 1) sec.classList.add('tight1');
 }
 function buildPicker() {
   const el = $('slots'); el.innerHTML = ''; pickerSlot = 0;
@@ -4084,6 +3840,7 @@ function openNightBrief() {
   if (S.screen !== 'night') nightFrom = S.screen;
   if (!save.nightBrief) { save.nightBrief = true; persist(); }
   drawBriefArt(); show('night');
+  gxPrewarm(NIGHT); // Molen B alvast klaarzetten terwijl je de kaart leest
 }
 function closeNightBrief() { if (S.screen !== 'night') return; show(nightFrom); if (nightFrom === 'title') refreshTitle(); }
 // Plaatje op het briefje: Molen B. Het eindbeeld van shot 2 van de jaarintro van 2026 (de walsenstoel met de walsen, waar je straks
@@ -4180,7 +3937,7 @@ function closedSum(n, one, many, moved) {
 // Het plaatje is een uitsnede van het eindbeeld van het shot rond het ding: pbMaak tekent dat eindbeeld één keer klein op een hulpcanvas
 // (zoals briefFoto), snijdt er de kaders van alle dingen van dat shot uit en bewaart die per thema voor deze sessie (PB.foto). Dat gebeurt
 // in rustige tijd, één shot per keer (pbPlan): bij het verhaal en het slot alvast, en anders zodra het boek opengaat.
-const PB = { W: 720, H: 450, w: 320, h: 240, foto: {}, rij: [], tm: 0, mis: {}, ms: [] };
+const PB = { W: 720, H: 450, w: 320, h: 240, foto: {}, rij: [], tm: 0, mis: {}, ms: [], kader: {} };
 const pbSleutel = key => (introDark() ? 'd|' : 'l|') + key;
 function pbMaak(i, sh) {
   const J = JX[i], P = J && JXP[J.year]; if (!J || J.err || !P || !J.shots[sh]) return false;
@@ -4196,8 +3953,10 @@ function pbMaak(i, sh) {
         const p = OXP[ding.key]; if (!p) continue;
         let w = p.at; const lv = p.live && P.live[p.live]; if (lv) w = lv(E, sh) || w;
         const q = P.proj(E, sh, w[0], w[1], w[2] || 0); if (!q || !isFinite(q[0]) || !isFinite(q[1]) || !(q[2] > 0)) continue;
-        const bw = Math.min(Math.max(p.r[0] * q[2] * 3.1, p.r[1] * q[2] * 3.1 * 4 / 3, W * 0.2), W, H * 4 / 3), bh = bw * 3 / 4;
-        uit.push([ding.key, clamp(q[0] - bw / 2, 0, W - bw), clamp(q[1] - bh / 2, 0, H - bh), bw, bh]);
+        // pb [dx, dy, f]: het kader per ding bijstellen (ronde 5): f keer zo breed, en dx en dy kaders opzij en omlaag
+        const pb = p.pb || [0, 0, 1];
+        const bw = Math.min(Math.max(p.r[0] * q[2] * 3.1, p.r[1] * q[2] * 3.1 * 4 / 3, W * 0.2) * pb[2], W, H * 4 / 3), bh = bw * 3 / 4;
+        uit.push([ding.key, clamp(q[0] + pb[0] * bw - bw / 2, 0, W - bw), clamp(q[1] + pb[1] * bh - bh / 2, 0, H - bh), bw, bh]);
       }
       return uit;
     };
@@ -4213,7 +3972,7 @@ function pbMaak(i, sh) {
     for (const [key, x0, y0, bw, bh] of lijst) {
       const c = ixCanvas(PB.w, PB.h), cg = c.getContext('2d'); cg.imageSmoothingQuality = 'high';
       cg.drawImage(cv, x0 * d, y0 * d, bw * d, bh * d, 0, 0, PB.w, PB.h);
-      PB.foto[pbSleutel(key)] = c;
+      PB.foto[pbSleutel(key)] = c; PB.kader[key] = [x0, y0, bw, bh].map(Math.round);
     }
     if (lijst.length < dingen.length) throw new Error('plek'); // een ding zonder plek: dit shot niet opnieuw proberen (PB.mis)
     ok = true;
@@ -4251,7 +4010,7 @@ function pbKaart(d, open, fresh, n) {
   }
   const af = !!save.ontdekt[d.key], b = document.createElement('button'); b.type = 'button'; b.className = 'pb-kaart vol' + (af ? ' af' : '');
   b.dataset.ding = d.key; b.style.setProperty('--r', r + 'deg'); b.setAttribute('aria-expanded', 'false');
-  b.innerHTML = `<span class="pb-foto"><canvas width="${PB.w}" height="${PB.h}" aria-hidden="true"></canvas>${af ? '<i class="vinkje" aria-hidden="true"></i>' : ''}${fresh ? '<span class="tag-new">nieuw</span>' : ''}</span>` +
+  b.innerHTML = `<span class="pb-foto"><canvas width="${PB.w}" height="${PB.h}" aria-hidden="true"></canvas>${af ? '<i class="vinkje" aria-hidden="true"></i>' : ''}${fresh ? '<span class="tag-new">nieuw</span><span class="sr">: </span>' : ''}</span>` +
     `<span class="pb-naam hand">${esc(d.naam)}</span>${af ? '<span class="sr">, ontdekt</span>' : ''}`;
   b.onclick = () => pbUitleg(b, d);
   pbTeken(b.querySelector('canvas'), d);
@@ -4274,7 +4033,7 @@ function pbVerhaal(st, open, fresh) {
   if (!open) { d.innerHTML = `<p class="pb-dicht">Het verhaal van ${lv.year} komt na de twee beelden van dat jaar.</p>`; return d; }
   const id = 'pbTekst' + st.lvl, k = Math.max(2, Math.min(3, window.devicePixelRatio || 1));
   d.innerHTML = `<button class="pb-lees" type="button" aria-expanded="false" aria-controls="${id}"><canvas width="${Math.round(104 * k)}" height="${Math.round(58 * k)}" aria-hidden="true"></canvas>` +
-    `<span><small>Verhaal ${esc(st.jaar)}${fresh ? '<span class="tag-new">nieuw</span>' : ''}</small><b>${esc(st.kop)}</b></span></button><p class="pb-tekst" id="${id}" hidden>${esc(st.tekst)}</p>`;
+    `<span><small>Verhaal ${esc(st.jaar)}${fresh ? ' <span class="tag-new">nieuw</span>' : ''}</small><span class="sr">: </span><b>${esc(st.kop)}</b></span></button><p class="pb-tekst" id="${id}" hidden>${esc(st.tekst)}</p>`;
   const g = d.querySelector('canvas').getContext('2d'); g.setTransform(k, 0, 0, k, 0, 0); drawEraVignette(lv, 6, 6, 1.2, g);
   const b = d.querySelector('button'), p = d.querySelector('.pb-tekst');
   b.onclick = () => { const op = p.hidden; p.hidden = !op; b.setAttribute('aria-expanded', String(op)); if (op) try { p.scrollIntoView({ block: 'nearest', behavior: reduced.matches ? 'auto' : 'smooth' }); } catch (e) { /* oudere browsers */ } };
@@ -4340,18 +4099,17 @@ function showScores() {
     : '<li class="empty"><b>Nog leeg.</b><i>Speel Korrelval</i></li>';
   const best = save.daily[dateKey()]; $('dailyNote').textContent = best ? `Korrel van de dag: ${fmt(best)} kg` : '';
   const tel = OX_DINGEN.filter(d => save.ontdekt[d.key]).length;
-  $('campNote').textContent = `Ontdekt: ${tel} van ${OX_DINGEN.length} dingen. Wat je ontdekte, staat in je Molenboek.`; // geen score in de tijdlijn
+  $('campNote').textContent = `Je ontdekte ${tel} van ${OX_DINGEN.length} dingen. Ze staan in je Molenboek.`; // geen score in de tijdlijn
   const ab = $('allBadges'); ab.innerHTML = '';
-  for (const b of BADGES) if (b.id === 'pas' || save.badges[b.id]) ab.appendChild(badgeEl(b, !!save.badges[b.id], false)); // alleen wat in Korrelval te halen is (of al gehaald)
-  $('allLabels').innerHTML = UIT.map(u => `<span class="badge txt${save.labels[u.id] ? '' : ' off'}">${u.name} <small>${u.note}</small></span>`).join('')
-    + (UIT.every(u => save.labels[u.id]) ? '<span class="badge txt">Alle vier gezien</span>' : '');
+  for (const b of BADGES) ab.appendChild(badgeEl(b, !!save.badges[b.id], false)); // alle zes zijn in Korrelval te halen; wat je nog niet hebt, is grijs
+  $('allLabels').innerHTML = UIT.map(u => `<span class="badge txt${save.labels[u.id] ? '' : ' off'}">${u.name}<span class="sr">${save.labels[u.id] ? ', gehaald' : ', nog niet gehaald'}</span></span>`).join('');
   show('scores');
 }
 
 $('bStart').onclick = () => { if (introWanted()) openIntro('start'); else tlStart(0); }; // de hoofdintro alleen bij de allereerste start, dan de tijdlijn vanaf 1846
 $('bNight').onclick = openNightBrief;
 $('bPick').onclick = openPick;
-$('bSettings').onclick = () => { show('settings'); if (acted && lastKey) $('bGezel').focus(); }; // toetsenbord: op de eerste keuze
+$('bSettings').onclick = () => { show('settings'); if (acted && lastKey) $('bSound').focus(); }; // toetsenbord: op de eerste keuze
 $('bPickBack').onclick = $('bSettingsBack').onclick = toTitle;
 $('bNbDaily').onclick = () => startNight(true);
 $('bNbFree').onclick = () => startNight(false);
@@ -5559,7 +5317,8 @@ function ixMeasure(hidden) {
 }
 function ixMeasureIn() {
   const w = app.clientWidth || innerWidth, h = app.clientHeight || innerHeight, d = V.dpr;
-  iCv.width = Math.max(1, Math.round(w * d)); iCv.height = Math.max(1, Math.round(h * d));
+  // alleen bij een ander formaat: een toewijzing wist het canvas, en dan verdween de akker achter Kies een molen zodra jxPrewarm het paneel mat
+  const cw = Math.max(1, Math.round(w * d)), ch = Math.max(1, Math.round(h * d)); if (iCv.width !== cw || iCv.height !== ch) { iCv.width = cw; iCv.height = ch; }
   Object.assign(IN, { w, h, d });
   // ondertitel even hoog voor alle drie de shots, zodat het beeld niet verspringt; meten op een onzichtbare kopie (niet in de live-regio)
   const p = $('introText'), mz = p.cloneNode(false); mz.removeAttribute('id'); mz.setAttribute('aria-hidden', 'true');
@@ -6253,23 +6012,24 @@ function jxPlek(year, proj, live) { if (typeof proj === 'function') JXP[year] = 
 // Per ding (jaar-id): at [x, y, z] het midden in de wereld van het jaar; r [rx, ry] de halve maat van de gloed (wereldeenheden);
 // zoom (1 tot 1,4); focus [x, y, z]: waar de camera naartoe zoomt als het ding beweegt; gat [rx, ry]: dan blijft dit stuk om het brandpunt
 // licht (het dimmen schuift niet elk frame mee); live: de naam van het bewegende anker in jxPlek.
+// pb [dx, dy, f]: alleen voor het plaatje in het Molenboek (pbMaak): het kader f keer zo breed, en dx en dy kaders opzij en omlaag.
 // OXP_BEGIN
 const OXP = {
   // 1846 (meters; x oost, y omhoog vanaf het land, z noord): buiten de deur van de molen en de man met de zak; binnen het paard (loopt rond), de rand van het kamwiel en het rondsel
   'o46-rosmolen': { at: [0, 3.33, 0], r: [1.55, 1.5], zoom: 1.2 },
   'o46-zakken': { at: [-2.14, 2.83, -2.6], r: [0.55, 0.95], zoom: 1.4 },
   'o46-paard': { at: [0, 1.2, 0], r: [1.75, 1.25], zoom: 1.15, live: 'paard', focus: [0, 1.1, 0], gat: [4.2, 2.2] },
-  'o46-kamwiel': { at: [3.51, 2.72, 0.69], r: [0.9, 0.35], zoom: 1.3 },
-  'o46-rondsel': { at: [3.06, 2.69, -2.58], r: [0.35, 0.3], zoom: 1.4 },
+  'o46-kamwiel': { at: [3.51, 2.72, 0.69], r: [0.9, 0.35], zoom: 1.3, pb: [0.75, 0.2, 1.6] },
+  'o46-rondsel': { at: [3.06, 2.69, -2.58], r: [0.35, 0.3], zoom: 1.4, pb: [0, 0, 1.25] },
   // 1867 (decimeters, y omlaag; buiten laag 0 = de overkant)
   'o67-schoorsteen': { at: [206.8, -151.6, 0], r: [13, 94], zoom: 1.2 },
-  'o67-tjalk': { at: [123.3, -0.8, 0], r: [83, 17.3], zoom: 1.3 },
+  'o67-tjalk': { at: [123.3, -0.8, 0], r: [83, 17.3], zoom: 1.3, pb: [0, -0.22, 1] },
   'o67-stenen': { at: [22, -17.3, 0], r: [6.6, 3.4], zoom: 1.4 },
   'o67-riem': { at: [10.5, -22, 0], r: [2.6, 9.5], zoom: 1.35 },
   'o67-graanbak': { at: [22, -27.5, 0], r: [5.2, 3.5], zoom: 1.4 },
   // 1920 (decimeters, y omlaag, laag 0 = de gevel of de walsenvloer)
   'o20-pakhuis': { at: [279.5, -139.6, 0], r: [53, 124], zoom: 1.15 },
-  'o20-zeilschip': { at: [149.5, 55.3, 0], r: [155, 32], zoom: 1.25 },
+  'o20-zeilschip': { at: [149.5, 55.3, 0], r: [155, 32], zoom: 1.25, pb: [0, 0.25, 0.75] },
   'o20-plansichter': { at: [0, -62, 0], r: [18, 12.8], zoom: 1.25 },
   'o20-walsenstoel': { at: [0, -2, 0], r: [9.8, 12.8], zoom: 1.35 },
   'o20-riemschijf': { at: [-14.6, 0.4, 0], r: [4.9, 7.4], zoom: 1.4 },
@@ -7761,7 +7521,7 @@ const j67T = Math.PI * 2, j67A0 = 0.72; // ontwerpverhouding van het staande bee
 // camera [x, y, h]: midden en zichtbare hoogte (staand past de breedte, liggend de hoogte: zelfde midden, meer omgeving opzij)
 const j67Cam = (env, c) => ({ x: c[0], y: c[1], k: Math.min(env.W / (c[2] * j67A0), env.P / c[2]) });
 const j67Buiten = [[-344, -70, 470], [140, -90, 400]]; // shot 1 liggend: bij de brug, eind bij de fabriek (hooguit 1,3 keer inzoomen)
-const j67BuitenSt = [[-306, -80, 395], [155, -128, 300]]; // staand: eind dichterbij op laaddeur, plank en tjalk, de schoorsteen bovenin smal
+const j67BuitenSt = [[-306, -80, 395], [155, -120, 300]]; // staand: eind dichterbij op laaddeur, plank en tjalk, de schoorsteen bovenin smal
 // shot 2: één boog met de kracht mee: vuur en vliegwiel, riem 1 omhoog, langs de drijfas, riem 2 omlaag naar de stenen
 const j67Binnen = [[-16, -28, 78, 0], [-12, -31, 74, 0.18], [6, -36, 68, 0.45], [25, -35, 58, 0.72], [22, -26.2, 40, 1]];
 const j67Eind = env => j67Cam(env, j67Binnen[j67Binnen.length - 1]);
@@ -11544,7 +11304,7 @@ addEventListener('keydown', e => {
   if ((S.screen === 'play' || S.screen === 'intro') && SCROLL_KEYS.has(k) && !(k === ' ' && e.target && e.target.tagName === 'BUTTON')) e.preventDefault(); // spatie blijft voor de knop zelf
   // verhaalkaart: het indrukken telt (spatie klikt pas bij loslaten); een ingehouden toets (repeat) is geen nieuwe indruk
   if (S.screen === 'story' && (k === ' ' || k === 'Enter')) { if (e.repeat) storyArm = false; else armStory(); }
-  if (S.screen === 'over' && pickerEntry && (k === 'ArrowUp' || k === 'ArrowDown' || k === 'ArrowLeft' || k === 'ArrowRight')) {
+  if ((S.screen === 'over' || S.screen === 'level') && pickerEntry && (k === 'ArrowUp' || k === 'ArrowDown' || k === 'ArrowLeft' || k === 'ArrowRight')) { // de letters: ook op de weegbon
     e.preventDefault();
     if (k === 'ArrowLeft' || k === 'ArrowRight') { pickerSlot = (pickerSlot + (k === 'ArrowRight' ? 1 : 2)) % 3; [...$('slots').children].forEach((s, j) => s.classList.toggle('sel', j === pickerSlot)); }
     else shiftLetter(pickerSlot, k === 'ArrowUp' ? -1 : 1);
@@ -11626,6 +11386,7 @@ function titelAchter(dt) { // geeft true als het beeld af is (klaar en ingevloei
     return TA.a >= 1;
   } catch (e) { TA.uit = true; vlak(); return true; } // dan alleen het vlak; de intro zelf bouwt zijn caches bij het openen opnieuw op
 }
+const tlDekt = () => { const c = $('tlAchter'); return !c.hidden && c.width > 1 && c.height > 1; }; // het eindbeeld van het jaar dekt het hele veld af
 let last = 0, acc = 0, looping = null, offscreen = false, idleT0 = 0, demoV = 1; // looping: null = nog niet gestart (lettertypen), false = gestopt (uit beeld)
 // Beweging achter het titelscherm: na CONFIG.demo.idle s zonder invoer valt hij rustig stil (demoV naar 0); een tik, toets of muisbeweging
 // zet hem weer aan. Bij verminderde beweging staat hij stil.
@@ -11654,7 +11415,7 @@ function frame(ts) {
     render(clamp(acc / CONFIG.step, 0, 1)); still = false;
   } else {
     Wd.pcam = Wd.camY; G.px = G.x; acc = 0;
-    if (!still) { if (S.screen !== 'intro') render(1); still = true; } // achter de intro ligt het veld verborgen
+    if (!still) { if (S.screen !== 'intro' && !tlDekt()) render(1); still = true; } // achter de intro en achter het eindbeeld van het jaar (verhaal, tijdsprong, slot) ligt het veld verborgen
   }
   if (S.screen === 'story') { syncStoryBtn(); if (!reduced.matches) drawStoryArt((ts - storyT0) / 1000); } // knop na 0,6 s actief; paardje loopt rond, stoom stijgt op
   if (offscreen && still) { looping = false; return; } // uit beeld: geen frames meer tot het spel weer in beeld komt (loop())
@@ -11705,7 +11466,7 @@ window.__korrelval = { introAt: (i, t) => { IN.hold = i !== null; if (IN.hold) {
   // (jaarAt(i, 'duik', p): de duik op p van 0 tot 1; jaarAt(null): loslaten), jaarState() geeft de toestand
   jaar: (i, from) => openJaar(i, from || 'test'), jaarAt: (i, s, t) => jxTestAt(i, s, t), jaarState: () => jxState(),
   // ontdekken (11d): ontdek() geeft de stand (dingen, plek in css-px, open, zoom), ontdekOpen(n) opent ding n van dit shot (-1: Terug), tijdlijn(i) begint bij jaar i
-  plakboek: () => ({ fotos: Object.keys(PB.foto).length, rij: PB.rij.length, ms: PB.ms.slice(), mis: Object.keys(PB.mis) }), // ronde 4: de plaatjes van het Molenboek
+  plakboek: () => ({ fotos: Object.keys(PB.foto).length, rij: PB.rij.length, ms: PB.ms.slice(), mis: Object.keys(PB.mis), kader: PB.kader }), // ronde 4: de plaatjes van het Molenboek
   geluid: (naam, sec) => sfeerMeet(naam, sec || 10), sfeer: () => !!IN.sfeer, // ronde 4: sfeergeluid meten (piek, RMS, gelijkstroom)
   ontdek: () => oxState(), ontdekOpen: n => (n < 0 ? oxDicht() : oxOpen(n)), tijdlijn: i => tlStart(i || 0), sprong: () => spState(), // tijdsprong tussen de jaren
   achter: () => ({ klaar: !!TA.key, warm: ixWarmed, uit: TA.uit, stil: titelStil(), t: +TA.t.toFixed(1) }), // de akker achter het menu (titelAchter)

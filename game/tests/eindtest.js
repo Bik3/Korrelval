@@ -8,6 +8,7 @@
 //   C  360x640 touch: titel past, paneel past, de dingen staan boven het paneel, tikvlak minstens 44 px
 //   D  1280x800 toetsenbord: Enter, Esc, Tab, pijltjes langs de knoppen, Enter opent, Esc gaat terug, voorlezen (aria-live)
 //   E  verminderde beweging: geen zoom en geen pulseren, wel gloed en dimmen
+//   F  ronde 5, 360x640 met alles ontdekt: slotkaart, Kies een molen, plakboek-kaders, Scores, Instellingen, weegbon of game-over van Korrelval
 // Overal: geen console-fouten, geen request naar buiten, nooit het valspel, de introband of de weegbon in de tijdlijn.
 // Gebruik: NODE_PATH="$(npm root -g)" node eindtest.js <korrelval.html> <uitmap>
 // =====================================================================================================
@@ -300,6 +301,44 @@ const stand = T => T.tot(async () => (await T.ox()).on, 9000);
   await E.shot('E01-reduced-open');
   check(!E.fouten.length && !E.extern.length, 'E geen fouten, niets van buiten', E.fouten.slice(0, 3));
   E.stop(); await E.ctx.close();
+
+  // ============================== F: ronde 5 (elk scherm nagelopen) ==============================
+  // 360x640 touch, alles ontdekt: de slotkaart knipt niets af, de akker blijft achter Kies een molen staan, Scores en Instellingen zeggen
+  // wat alleen voor Korrelval geldt, de kaders van het plakboek liggen in beeld, en de weegbon of game-over van Korrelval is rustig
+  // (de kilo's groot, hooguit drie regels, geen kaartjes of badges).
+  const F = await maak(browser, { vp: { width: 360, height: 640 }, touch: true, dpr: 2 });
+  const fp = F.page, sleutels = [...html.matchAll(/\{ id: "(o\d\d-[a-z]+)", naam:/g)].map(m => m[1]);
+  await fp.goto('file://' + wrapped); await sleep(600);
+  await fp.evaluate(ks => { const o = {}, b = {}; for (const k of ks) { o[k] = 1; b[k] = 1; } localStorage.setItem('korrelval-b-v2', JSON.stringify({ introSeen: true, ontdekt: o, book: b, oxUitleg: 1 })); }, sleutels);
+  await fp.reload(); await sleep(1200);
+  check(sleutels.length === 28 && /alle 28 dingen/.test(await fp.textContent('#titleVoort')), 'F titel: Je ontdekte alle 28 dingen', await fp.textContent('#titleVoort'));
+  await F.tapSel('#bPick'); await sleep(1600); // jxPrewarm meet na 0,4 s het paneel: de akker moet blijven staan
+  const akker = await fp.evaluate(() => { const c = document.getElementById('introCv'); if (c.hidden) return 'weg'; const d = c.getContext('2d').getImageData(Math.floor(c.width / 2), 8, 1, 1).data; return d[3]; });
+  check(akker === 255, 'F Kies een molen: de akker blijft erachter staan (het canvas is niet gewist)', akker);
+  await F.tapSel('#lvlChips .btn:nth-child(6)'); await sleep(500); await F.tapSel('#bIntroSkipTop'); await sleep(700); await F.tapSel('#bStory'); await sleep(600);
+  const slot5 = await fp.evaluate(() => { const c = document.querySelector('#scrDone .card'), r = c.getBoundingClientRect(); return { s: window.__korrelval.state().screen, past: c.scrollHeight <= c.clientHeight + 1, binnen: [...document.querySelectorAll('#doneJaren li')].every(li => { const q = li.getBoundingClientRect(); return q.left >= r.left && q.right <= r.right + 0.5 && li.scrollWidth <= li.clientWidth + 1; }), n: document.querySelectorAll('#doneJaren li.af').length }; });
+  check(slot5.s === 'done' && slot5.past && slot5.binnen && slot5.n === 6, 'F slotkaart (360 breed, alles ontdekt): zes jaren met vinkje, niets afgeknipt, geen scrollen', slot5);
+  await F.tapSel('#bDoneBook'); await sleep(500); await F.tot(() => fp.evaluate(() => !document.querySelector('#scrBoek canvas[data-wacht]')), 40000);
+  const kaders = (await fp.evaluate(() => window.__korrelval.plakboek())).kader || {};
+  const kOk = sleutels.every(k => { const q = kaders[k]; return q && q[0] >= 0 && q[1] >= 0 && q[0] + q[2] <= 721 && q[1] + q[3] <= 451 && q[2] >= 143; });
+  check(kOk && kaders['o46-kamwiel'][2] >= 300, 'F plakboek: 28 kaders binnen het beeld; het kamwiel heeft een breed kader (het wiel, niet de wand)', kaders['o46-kamwiel']);
+  await F.tapSel('#bBookBack'); await sleep(400); await F.tapSel('#bDoneMenu'); await sleep(500);
+  await F.tapSel('#bScores'); await sleep(400);
+  const sc5 = await fp.evaluate(() => ({ t: document.querySelector('#scrScores .card').textContent, badges: document.querySelectorAll('#allBadges .badge').length, past: document.querySelector('#scrScores .card').scrollHeight <= document.querySelector('#scrScores .card').clientHeight + 1 }));
+  check(/Badges uit Korrelval/.test(sc5.t) && /Jouw meel in Korrelval/.test(sc5.t) && /De tijdlijn heeft geen score/.test(sc5.t) && /Je ontdekte 28 van 28 dingen/.test(sc5.t) && sc5.badges === 6 && sc5.past && !/Uitmalingen gezien/.test(sc5.t), 'F Scores: tijdlijn zonder score; top 5, badges en meel horen bij Korrelval', { badges: sc5.badges, past: sc5.past });
+  await F.tapSel('#bScoresBack'); await sleep(300); await F.tapSel('#bSettings'); await sleep(400);
+  const in5 = await fp.evaluate(() => { const s = document.getElementById('bGezel').closest('.sect'); return { kop: s ? s.querySelector('.sect-h').textContent : '', geluid: !document.getElementById('bSound').closest('.sect') }; });
+  check(in5.kop === 'Alleen voor Korrelval' && in5.geluid, 'F Instellingen: Gezel-modus staat onder Alleen voor Korrelval, Geluid erboven', in5);
+  await F.tapSel('#bSettingsBack'); await sleep(300);
+  F.korrelval(); await F.tapSel('#bNight'); await sleep(500); await F.tapSel('#bNbDaily'); await sleep(600); await F.tap(180, 400);
+  await fp.evaluate(() => { window.__kvAuto = 1; window.__kvFast = 4; });
+  await F.tot(async () => ['level', 'over'].includes(await F.scr()), 90000); await fp.evaluate(() => { window.__kvAuto = 0; window.__kvFast = 1; }); await sleep(1300);
+  const eind5 = await fp.evaluate(() => { const s = window.__korrelval.state().screen, sec = document.getElementById(s === 'level' ? 'scrLevel' : 'scrOver'), c = sec.querySelector('.card'), kg = sec.querySelector('.bon.kg tr.big td:last-child'), ul = sec.querySelector('.bon-regels');
+    return { s, kg: kg ? kg.textContent.trim() : '', px: kg ? parseFloat(getComputedStyle(kg).fontSize) : 0, rijen: sec.querySelectorAll('.bon tr').length, regels: ul ? ul.children.length : -1, extra: sec.querySelectorAll('.fact, .badges, .uit').length, past: c.scrollHeight <= c.clientHeight + 1, knop: !!sec.querySelector('[data-primary]').offsetWidth }; });
+  check(/^(level|over)$/.test(eind5.s) && /kg/.test(eind5.kg) && eind5.px >= 28 && eind5.rijen === 1 && eind5.regels >= 1 && eind5.regels <= 3 && eind5.extra === 0 && eind5.past && eind5.knop, 'F Korrelval, weegbon of game-over: de kilo\'s groot, hooguit drie regels, dan de knoppen (360x640 zonder scrollen)', eind5);
+  await F.shot('F01-korrelval-eind');
+  check(!F.fouten.length && !F.extern.length, 'F geen fouten, niets van buiten', F.fouten.slice(0, 3));
+  F.stop(); await F.ctx.close();
 
   await browser.close();
   const fout = checks.filter(c => !c.ok).length;
