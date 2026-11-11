@@ -365,17 +365,26 @@ textarea.copy{width:100%;box-sizing:border-box;font:600 13px/1.35 var(--ui);back
 .intro-skip:focus-visible::before{outline:3px solid #CFAB00;outline-offset:0;box-shadow:0 0 0 6px #1D1E1F} /* goud met een donkere band: zichtbaar op lucht en wolk */
 .veil{position:absolute;inset:0;z-index:4;background:#0b0c0d;pointer-events:none}
 /* ===== Ontdekken (11d): aantekeningen, tikvlak en dimmen boven het beeld van de jaarintro, knoppen in het paneel =====
-   De laag ligt precies over het canvas en zoomt mee (zelfde transform). Pulseren en zoomen doet de compositor: alleen opacity en transform. */
+   De laag ligt precies over het canvas. Pulseren doet de compositor: alleen opacity en transform. Tijdens een close-up is de laag leeg. */
 .ox-laag{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;overflow:visible}
 .ox-laag.open{pointer-events:auto;cursor:pointer} /* een ding staat open: een tik ernaast is Terug */
-#introCv.ox-zoom,#scrIntro.ox-zoom .ox-laag{transform-origin:0 0;transition:transform .6s cubic-bezier(.16,.84,.44,1)}
+/* Close-up (ronde 7): de vlucht naar een ding is een CSS-transform op het beeld (de compositor vliegt, 0,7 s zacht in en uit); bij
+   aankomst tekent het canvas het beeld opnieuw op die plek en schaal (scherp) en vervalt de transform. #oxWis is het beeld van net
+   ervoor, dat in 0,28 s wegvloeit (van opgeschaald naar scherp, en terug). Tijdens de close-up staan er geen aantekeningen in beeld. */
+#introCv{transform-origin:0 0}
+#introCv.ox-vlucht{transition:transform .7s cubic-bezier(.45,0,.25,1);will-change:transform}
+.ox-wis{position:absolute;left:0;top:0;width:100%;height:100%;display:block;pointer-events:none;transform-origin:0 0}
+.ox-wis[hidden]{display:none}
+#oxLaag.cu .ox-spot,#oxLaag.cu .ox-lijn,#oxLaag.cu .ox-kaart{opacity:0;pointer-events:none;transition-duration:.18s}
+#introKicker .ox-vink{flex:none;width:18px;height:18px;margin:0 0 0 2px;opacity:0;transform:scale(.4)}
+#introKicker .ox-vink::after{left:6px;top:2.6px;width:4.4px;height:8.6px;border-width:0 2.4px 2.4px 0}
+#introKicker .ox-vink.aan{animation:oxVink .4s ease-out both}
 /* Aantekeningen (ronde 6), zoals in een schetsboek: op elk ding een kleine oranje stip die rustig ademt, een potloodlijntje en een
    naamkaartje in handschrift. .ox-spot is het onzichtbare tikvlak om het ding met de stip (<i>) in het midden; .ox-lijn het lijntje
    (svg); .ox-kaart het kaartje. Ademen en verschijnen: alleen opacity en transform. */
 .ox-spot{position:absolute;left:0;top:0;pointer-events:auto;cursor:pointer;border-radius:50%;opacity:0;transition:opacity .3s ease-out;-webkit-tap-highlight-color:transparent;will-change:transform} /* eigen laag: een ding dat beweegt (het paard) kost alleen samenstellen */
 .ox-laag.aan .ox-spot{opacity:1}
 .ox-laag.open .ox-spot,.ox-laag.open .ox-kaart{pointer-events:none}
-.ox-laag.open .ox-spot:not(.nu),.ox-laag.open .ox-lijn:not(.nu),.ox-laag.open .ox-kaart:not(.nu){opacity:0}
 .ox-spot i{position:absolute;left:50%;top:50%;width:14px;height:14px;margin:-7px 0 0 -7px;border-radius:50%;background:#E78A01;
   box-shadow:0 0 0 1.5px rgba(243,238,210,.95),0 1px 4px 1px rgba(29,30,31,.4),0 0 0 8px rgba(231,138,1,.25)} /* de stip van de tijdlijn: oranje met een zachte gloed; het crème randje houdt hem leesbaar op baksteen en hout */
 .ox-laag.aan .ox-spot i{animation:oxStip .3s ease-out calc(var(--i,0)*.15s) backwards,oxAdem 1.6s ease-in-out calc(var(--i,0)*.15s + .3s) infinite alternate} /* één voor één, daarna rustig ademen */
@@ -415,10 +424,6 @@ textarea.copy{width:100%;box-sizing:border-box;font:600 13px/1.35 var(--ui);back
 @media (min-width:900px){.ox-kaart b{font-size:25px;padding:8px 13px 4px}}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .ox-kaart b{background:#ECE5C8}}
 :root[data-theme="dark"] .ox-kaart b{background:#ECE5C8}
-/* dimmen: een ovaal gat (het ding) met een zachte binnenrand, daaromheen een vlak van 34 procent */
-.ox-dim{position:absolute;left:0;top:0;border-radius:50%;opacity:0;transition:opacity .35s ease-out;pointer-events:none;
-  background:radial-gradient(closest-side,rgba(16,12,8,0) 68%,rgba(16,12,8,.34));box-shadow:0 0 0 300vmax rgba(16,12,8,.34)}
-.ox-laag.open .ox-dim{opacity:1}
 /* paneel: knoppen met de namen, de teller, en Terug op de plek van de stippen */
 .ox-rij{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:4px 10px}
 .card.intro-panel>.ox-rij{margin-top:calc(6px*var(--s,1))}
@@ -469,6 +474,60 @@ textarea.copy{width:100%;box-sizing:border-box;font:600 13px/1.35 var(--ui);back
 .vinkje{display:inline-block;position:relative;width:14px;height:14px;margin-left:5px;vertical-align:-2px;border-radius:50%;background:#CFAB00}
 .vinkje::after{content:'';position:absolute;left:4.6px;top:2px;width:3.4px;height:6.6px;border:solid #1D1E1F;border-width:0 2px 2px 0;transform:rotate(42deg)}
 .page.ding canvas{border-radius:50%}
+/* De kaart (ronde 7): bij de twee verhuizingen staat in de tijdsprong een getekende kaart (svg) in plaats van de lijn met stippen; dezelfde
+   kaarten staan in het Molenboek. Crème papier, blauwgrijs water, potloodlijnen, namen in handschrift, de oranje stip met gloed. */
+.sp-kaart{width:min(300px,calc(100vw - 56px));margin:0 0 2px;padding:5px;box-sizing:border-box;background:#F3EED2;border-radius:2px 3px 2px 3px;box-shadow:0 2px 4px rgba(16,12,8,.45),0 12px 30px rgba(16,12,8,.4);transform:rotate(-1.2deg)}
+.sp-kaart[hidden],.sp-regel[hidden]{display:none}
+.sp-regel{max-width:min(330px,calc(100vw - 44px));margin:4px 0 0;text-align:center;font:700 15px/1.4 var(--ui);color:#F3EED2;text-wrap:balance;text-shadow:0 1px 8px rgba(16,12,8,.6)}
+.sprong.kaart .sp-lijn,.sprong.kaart .sp-jaren{display:none}
+.sprong.kaart .sp-jaar{font-size:64px;margin:0}
+.sprong.kaart{background:radial-gradient(ellipse 80% 52% at 50% 50%,rgba(16,12,8,.62),rgba(16,12,8,.3) 70%,rgba(16,12,8,0))}
+.krt{display:block;width:100%;height:auto}
+.krt-papier{fill:#F3EED2}.krt-water{fill:#A9BEC6}.krt-stad{fill:#E9DFBB}
+.krt-vaart{fill:none;stroke:#A9BEC6;stroke-linecap:round}
+.krt-pen,.krt-dijk,.krt-golf,.krt-veld{fill:none;stroke:rgba(29,30,31,.6);stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round}
+.krt-dijk{stroke:rgba(29,30,31,.42);stroke-dasharray:5 3}.krt-golf{stroke:rgba(62,90,102,.55)}.krt-veld{stroke:rgba(29,30,31,.2)}
+.krt text{font-family:var(--hand);font-size:18px;fill:#1D1E1F}
+.krt .krt-zee{fill:#41606D}.krt .krt-klein{font-size:14px}
+.krt-plek{fill:#F3EED2;stroke:#1D1E1F;stroke-width:1.5}
+.krt-route{fill:none;stroke:#1D1E1F;stroke-width:2.5;stroke-linecap:round;stroke-dasharray:.1 6.5}
+.krt-gloed{fill:rgba(231,138,1,.28)}.krt-stip{fill:#E78A01;stroke:#F3EED2;stroke-width:1.5}
+.sp-kaart.aan .krt-gloed{animation:krtPlop .5s cubic-bezier(.16,.84,.44,1)}
+@keyframes krtPlop{0%{transform:scale(1)}40%{transform:scale(1.7)}100%{transform:scale(1)}}
+@media (min-width:900px) and (min-height:600px){.sp-kaart{width:420px;padding:7px}.sprong.kaart .sp-jaar{font-size:84px}.sp-regel{max-width:460px;font-size:17px}}
+@media (max-height:520px){.sp-kaart{width:min(230px,38vh)}.sprong.kaart .sp-jaar{font-size:44px}}
+.pb-plekken{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:20px 16px;padding:8px 3px 2px}
+.pb-plek{margin:0;min-width:0}
+.pb-plek-kaart{position:relative;padding:5px;background:var(--pb-papier);border-radius:2px;box-shadow:var(--pb-schaduw);transform:rotate(var(--r,-.8deg))}
+.pb-plek-kaart::before{content:'';position:absolute;left:50%;top:-7px;width:46px;height:14px;margin-left:-23px;background:var(--pb-band);transform:rotate(-2deg);z-index:1}
+.pb-plek.leeg .pb-plek-kaart{background:none;box-shadow:none;border:2px dashed var(--line);padding:3px}.pb-plek.leeg .pb-plek-kaart::before{content:none}
+.pb-plek.leeg .pb-gat{aspect-ratio:3/2}
+.pb-plek figcaption{padding:8px 2px 0}
+.pb-plek figcaption b{display:block;font-size:calc(23px*var(--s,1));line-height:1.05;font-weight:400}
+.pb-plek figcaption span:not(.sr){display:block;margin-top:4px;font:600 calc(13.5px*var(--s,1))/1.45 var(--ui);color:var(--muted)}
+.pb-plek.leeg figcaption b{color:var(--muted);text-align:center}
+/* De slotfilm (ronde 7): het beeld is #introCv; hierboven alleen het jaartal dat doortelt (de rollen van de tijdsprong), de lijn met zes
+   stippen, de stippen van wat je ontdekte en de slotregel. Per frame alleen transforms. */
+#scrFilm{display:block;padding:0;pointer-events:auto;background:none;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.sf-onder{position:absolute;left:0;right:0;bottom:0;box-sizing:border-box;padding:64px 20px calc(22px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;align-items:center;color:#F3EED2;pointer-events:none;
+  background:linear-gradient(rgba(16,12,8,0),rgba(16,12,8,.5) 40%,rgba(16,12,8,.8))}
+.sf-onder::before{content:'';position:absolute;inset:0;background:linear-gradient(rgba(16,12,8,0),rgba(16,12,8,.5) 45%,rgba(16,12,8,.62));opacity:0;transition:opacity .6s ease-out} /* bij de slotregel wordt het vlak erachter donkerder */
+#scrFilm.sf-eind .sf-onder::before{opacity:1}
+.sf-onder>*{position:relative}
+.sf-kop{position:relative;display:flex;justify-content:center;align-items:center;width:100%;min-height:104px}
+.sf-onder .sp-jaar{margin:0;font-size:84px;text-shadow:0 2px 16px rgba(16,12,8,.5);transition:opacity .45s ease-out}
+.sf-slot{position:absolute;left:0;right:0;top:50%;margin:0;transform:translateY(-46%);text-align:center;opacity:0;transition:opacity .6s ease-out .15s;text-shadow:0 2px 14px rgba(16,12,8,.6)}
+.sf-slot span{display:block;font-size:min(44px,11.5vw);line-height:1.15;white-space:nowrap}.sf-slot .sf-sub{font-size:min(29px,7.1vw);color:#F2C27A;margin-top:2px}
+#scrFilm.sf-eind .sp-jaar{opacity:0}#scrFilm.sf-eind .sf-slot{opacity:1}
+.sf-onder .sp-lijn{margin-top:4px}
+.sf-stippen{position:absolute;inset:0;pointer-events:none}
+.sf-stip{position:absolute;width:14px;height:14px;margin:-7px 0 0 -7px;border-radius:50%;background:#E78A01;opacity:0;transform:scale(.3);transition:opacity .3s ease-out,transform .3s ease-out;
+  box-shadow:0 0 0 1.5px rgba(243,238,210,.95),0 0 0 8px rgba(231,138,1,.26),0 0 22px 9px rgba(231,138,1,.42)}
+.sf-stippen.aan .sf-stip{opacity:1;transform:scale(1);transition:opacity .25s ease-out calc(var(--i,0)*.14s),transform .4s cubic-bezier(.2,1.6,.4,1) calc(var(--i,0)*.14s)}
+@media (min-width:900px) and (min-height:600px){.sf-onder{padding-top:90px}.sf-onder .sp-jaar{font-size:112px}.sf-kop{min-height:150px}.sf-slot span{font-size:70px}.sf-slot .sf-sub{font-size:42px}}
+@media (max-height:520px){.sf-onder{padding-top:30px}.sf-onder .sp-jaar{font-size:60px}.sf-kop{min-height:74px}.sf-slot span{font-size:32px}.sf-slot .sf-sub{font-size:22px}}
+.pb-film{text-align:center}.pb-film .muted{margin:0 0 8px}
+#bDoneFilm{display:block;margin-left:auto;margin-right:auto}
 .sprong{pointer-events:auto;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;
   background:radial-gradient(ellipse 62% 30% at 50% 50%,rgba(16,12,8,.6),rgba(16,12,8,.25) 70%,rgba(16,12,8,0))} /* rustig vlak achter jaartal en lijn */
 /* tijdsprong tussen de jaren (tijdlijn): een lijn met zes oranje stippen met gloed, zoals de tijdlijn op de site van Koopmans; het jaartal
@@ -580,15 +639,17 @@ button.pb-kaart{cursor:pointer}
 @media (prefers-reduced-motion:reduce){.btn:active,.btn.primary:active{transform:none}
   .card,.toast,.stamp,.tsjoch,.title .logo::after{animation:none}
   .story #bStory[aria-disabled="true"]::before{animation:none;transform:scaleX(0)}
-  .ox-spot,.ox-dim,.ox-knop,.ox-lijn,.ox-kaart,.ox-kaart b,.ox-kaart b::after{transition:none}#bIntroNext.veer{animation:none}
+  .ox-spot,.ox-knop,.ox-lijn,.ox-kaart,.ox-kaart b,.ox-kaart b::after{transition:none}#bIntroNext.veer{animation:none}
   .ox-laag .ox-spot i,.ox-laag.aan .ox-spot i,.ox-laag .ox-spot.nu i,.ox-laag .ox-spot.nu.af::before,.ox-laag .ox-spot.nu.af::after,.ox-laag.aan .ox-lijn path,.ox-laag.aan .ox-kaart b{animation:none}
-  #introCv.ox-zoom,#scrIntro.ox-zoom .ox-laag{transition:none}
-  .sp,.sp-nu.aan i{animation:none}.sp-stip,.sp-jaren li{transition:none}}
+  #introCv.ox-vlucht{transition:none}#introKicker .ox-vink.aan{animation:none;opacity:1;transform:none}
+  .sp,.sp-nu.aan i{animation:none}.sp-stip,.sp-jaren li{transition:none}
+  .sf-stip,.sf-stippen.aan .sf-stip{transition:opacity .2s linear;transform:none}.sp-kaart.aan .krt-gloed{animation:none}}
 </style>
 <div id="app">
 <canvas id="lb" aria-hidden="true"></canvas>
 <canvas id="cv" role="img" aria-label="Speelveld: een tarwekorrel valt door de meelfabriek"></canvas>
 <canvas id="introCv" aria-hidden="true" hidden></canvas><!-- de hoofdintro en de jaarintro's; achter het menu de akker uit de hoofdintro (titelAchter) -->
+<canvas id="oxWis" class="ox-wis" aria-hidden="true" hidden></canvas>
 <canvas id="tlAchter" class="tl-achter" aria-hidden="true" hidden></canvas>
 <button id="btnPause" class="hudbtn" type="button" aria-label="Pauze" hidden><svg viewBox="0 0 10 10" aria-hidden="true"><rect x="1.5" y="1" width="2.4" height="8" fill="currentColor"/><rect x="6.1" y="1" width="2.4" height="8" fill="currentColor"/></svg></button>
 
@@ -609,7 +670,7 @@ button.pb-kaart{cursor:pointer}
 </section>
 
 <section id="scrIntro" class="screen" aria-label="Intro" hidden>
-  <div class="ox-laag" id="oxLaag" aria-hidden="true"><div class="ox-dim" id="oxDim"></div></div>
+  <div class="ox-laag" id="oxLaag" aria-hidden="true"></div>
   <div class="card intro-panel" id="introPanel">
     <div id="introSay">
       <div class="intro-head"><h2 class="kicker" id="introKicker"></h2><p class="intro-dots" id="introDots"><span class="sr" id="introStep"></span><i></i><i></i><i></i></p><button class="ox-terug" id="oxTerug" type="button" hidden>Terug</button></div>
@@ -669,7 +730,15 @@ button.pb-kaart{cursor:pointer}
 </section>
 
 <section id="scrSprong" class="screen sprong" aria-label="Tijdsprong" hidden>
-  <div class="sp" aria-hidden="true"><p class="sp-jaar hand" id="spJaar"></p><div class="sp-lijn" id="spLijn"><b class="sp-af" id="spAf"></b><b class="sp-nu" id="spNu"><i></i></b></div><ol class="sp-jaren" id="spJaren"></ol></div>
+  <div class="sp" aria-hidden="true"><div class="sp-kaart" id="spKaart" hidden></div><p class="sp-jaar hand" id="spJaar"></p><div class="sp-lijn" id="spLijn"><b class="sp-af" id="spAf"></b><b class="sp-nu" id="spNu"><i></i></b></div><ol class="sp-jaren" id="spJaren"></ol><p class="sp-regel" id="spRegel" hidden></p></div>
+</section>
+<section id="scrFilm" class="screen" aria-label="De film: 180 jaar in één vlucht" hidden>
+  <div class="sf-stippen" id="sfStippen" aria-hidden="true"></div>
+  <div class="sf-onder" aria-hidden="true">
+    <div class="sf-kop"><p class="sp-jaar hand" id="sfJaar"></p><p class="sf-slot" id="sfSlot"><span class="hand">180 jaar malen.</span><span class="hand sf-sub">Van één paard tot Molen B.</span></p></div>
+    <div class="sp-lijn" id="sfLijn"><b class="sp-af" id="sfAf"></b></div><ol class="sp-jaren" id="sfJaren"></ol>
+  </div>
+  <button class="intro-skip" id="bFilmSkip" type="button" aria-label="De film overslaan" data-primary>Overslaan</button>
 </section>
 <section id="scrNight" class="screen" aria-label="Korrelval" hidden>
   <div class="card story brief">
@@ -722,6 +791,7 @@ button.pb-kaart{cursor:pointer}
     <p class="muted kv-regel">Je hebt de molens gezien. Nu ben jij de korrel.</p>
     <button class="btn primary" id="bDoneNight" type="button" data-primary>Speel Korrelval</button>
     <div class="row"><button class="btn bookbtn" id="bDoneBook" type="button">Molenboek</button><button class="btn" id="bDoneMenu" type="button">Menu</button></div>
+    <button class="linkbtn" id="bDoneFilm" type="button">Bekijk de film opnieuw</button>
   </div>
 </section>
 
@@ -775,6 +845,8 @@ button.pb-kaart{cursor:pointer}
     <p class="muted">Wat je in de jaren ontdekt, komt in dit plakboek. Tik op een plaatje voor de uitleg.</p>
     <p class="pb-totaal" id="bookCntSt"></p>
     <div id="bookStories"></div>
+    <div class="sect pb-plek-blad"><p class="sect-h">De plekken <small>Twee keer verhuisd</small></p><div class="pb-plekken" id="bookPlekken"></div></div>
+    <div class="sect pb-film" id="bookFilm" hidden><p class="sect-h">De film</p><p class="muted">180 jaar in één vlucht, van de rosmolen tot Molen B.</p><button class="btn" id="bBookFilm" type="button">Bekijk de film opnieuw</button></div>
     <div class="sect pb-rest"><p class="sect-h">Uit Korrelval <small id="bookCntIt"></small></p>
       <h3>Dingen in de schacht</h3><div id="bookThings"></div>
       <h3>Zo werkt de molen</h3><div id="bookMachines"></div></div>
@@ -1197,6 +1269,7 @@ function layout() {
   if (land) pause();
   if (S.screen === 'over') fitOver();
   if (S.screen === 'intro') introLayout();
+  if (S.screen === 'film') SF.vorm = ''; // de slotfilm bouwt het jaar opnieuw op de nieuwe maat (sfFrame)
 }
 // Letterbox één keer op een eigen canvas onder het speelveld; #cv tekent alleen nog het veld zelf.
 // Merkkader: warme achtergrond (licht of donker thema) met een korenaarpatroon op lage dekking, een zachte schaduw rond het veld, en op
@@ -3626,7 +3699,7 @@ function drawDebug(cam) {
 // ============================================================
 // 11. Schermen (DOM-overlays, één state machine)
 // ============================================================
-const SCR = { title: $('scrTitle'), pause: $('scrPause'), story: $('scrStory'), night: $('scrNight'), level: $('scrLevel'), over: $('scrOver'), done: $('scrDone'), scores: $('scrScores'), about: $('scrAbout'), boek: $('scrBoek'), pick: $('scrPick'), settings: $('scrSettings'), intro: $('scrIntro'), sprong: $('scrSprong') };
+const SCR = { title: $('scrTitle'), pause: $('scrPause'), story: $('scrStory'), night: $('scrNight'), level: $('scrLevel'), over: $('scrOver'), done: $('scrDone'), scores: $('scrScores'), about: $('scrAbout'), boek: $('scrBoek'), pick: $('scrPick'), settings: $('scrSettings'), intro: $('scrIntro'), sprong: $('scrSprong'), film: $('scrFilm') };
 function show(name) {
   S.screen = name; still = false; // het veld één keer opnieuw tekenen (gedimd of niet) voor dit scherm
   clearTimeout(toastT); $('toast').hidden = true; // een oude toast mag geen knop van het nieuwe scherm afdekken
@@ -3634,8 +3707,8 @@ function show(name) {
   $('tlAchter').hidden = !(TL.on && ['story', 'done', 'sprong', 'boek', 'night'].includes(name)); // tijdlijn: het eindbeeld van het jaar achter verhaal, tijdsprong en slot
   $('btnPause').hidden = name !== 'play';
   cv.toggleAttribute('aria-hidden', name === 'intro'); // de intro ligt eroverheen
-  const achter = run && run.mode === 'demo' && !['play', 'intro', 'story', 'done', 'sprong'].includes(name); // menu: de akker uit de hoofdintro achter de kaarten (titelAchter)
-  iCv.hidden = !(name === 'intro' || achter); iCv.classList.toggle('achter', achter);
+  const achter = run && run.mode === 'demo' && !['play', 'intro', 'story', 'done', 'sprong', 'film'].includes(name); // menu: de akker uit de hoofdintro achter de kaarten (titelAchter)
+  iCv.hidden = !(name === 'intro' || name === 'film' || achter); // de slotfilm tekent ook op het canvas van de intro's iCv.classList.toggle('achter', achter);
   keys.left = keys.right = false;
   AU.rumble(name === 'play');
   if (name === 'play') { if (document.activeElement && document.activeElement.blur) document.activeElement.blur(); return; }
@@ -4049,7 +4122,7 @@ function pbVraag(d) {
   if (i < 0 || PB.mis[id] || PB.rij.some(r => r.id === id)) return;
   PB.rij.push({ id, i, sh: d.shot });
 }
-const pbRustig = () => !document.hidden && !['intro', 'play', 'sprong'].includes(S.screen);
+const pbRustig = () => !document.hidden && !['intro', 'play', 'sprong', 'film'].includes(S.screen);
 function pbPlan(ms) { if (PB.tm || !PB.rij.length || !pbRustig()) return; PB.tm = setTimeout(pbStap, ms || 400); }
 function pbStap() {
   PB.tm = 0; if (!PB.rij.length || !pbRustig()) return; // straks verder: show() plant opnieuw op een rustig scherm
@@ -4145,6 +4218,8 @@ function renderBook() {
   fill($('bookMachines'), BOOK_MACHINES, bookPage, 'pagina', "pagina's");
   const items = [...BOOK_THINGS, ...BOOK_MACHINES], nIt = items.filter(it => isOpen(it.id)).length;
   $('bookCntIt').textContent = `${nIt} van ${items.length} open`;
+  kaartBlad(); // het blad De plekken: de kaarten van de twee verhuizingen (ronde 7)
+  $('bookFilm').hidden = !save.filmSeen || bookFrom === 'pause' || !sfKan(); // de slotfilm: pas als je hem een keer zag; niet midden in een potje Korrelval
   $('bBookAll').hidden = BOOK_IDS.every(isOpen);
   $('bookAllAsk').hidden = true;
   pbPlan(250);
@@ -4208,6 +4283,8 @@ $('shareUrl').onfocus = e => e.target.select(); // één tik selecteert de hele 
 $('bShare').onclick = () => copyText(SHARE_URL, $('shareUrl'), 'Link gekopieerd.', true);
 $('bDoneNight').onclick = openNightBrief; // Speel Korrelval: eerst de kaart vooraf
 $('bDoneBook').onclick = openBook;
+$('bDoneFilm').onclick = () => { if (S.screen === 'done') sfStart('done'); }; // de slotfilm nog eens (ronde 7)
+$('bBookFilm').onclick = () => { if (S.screen === 'boek') sfStart('boek'); };
 $('bStoryMenu').onclick = toMenu;
 document.querySelectorAll('canvas[data-ico]').forEach(c => { const g = c.getContext('2d'); icon(g, c.dataset.ico, c.width / 2, c.height / 2, c.width * 0.9, '#CFAB00'); });
 
@@ -5310,11 +5387,12 @@ function iStill(key, paint) {
 }
 function introDraw() {
   if (S.screen !== 'intro' || (IN.jy < 0 && !IN.geo)) return;
-  const cut = IN.hv < IN.h - 1; // onder het paneel niets tekenen (zie introLayout)
+  if (OX.cu) oxCuTik(); // close-up (11d): aankomst en einde van de vlucht
+  const cut = IN.hv < IN.h - 1 && !(OX.cu && OX.cu.fase !== 'aan' && OX.cu.t1 === undefined); // onder het paneel niets tekenen (zie introLayout); tijdens de vlucht van een close-up wel, want dan schuift dat stuk in beeld
   if (cut) { ig.save(); ig.setTransform(1, 0, 0, 1, 0, 0); ig.beginPath(); ig.rect(0, 0, iCv.width, Math.ceil(IN.hv * IN.d)); ig.clip(); }
   if (IN.jy >= 0) jxPaint(ig); else ixPaint(ig); // jaarintro: zie 11c
-  if (IN.jy >= 0 && OX.til) oxTil(ig); // ontdekken: het ding komt even naar voren (11d)
   if (cut) ig.restore();
+  if (OX.cu && OX.cu.wis) { OX.cu.wis = false; oxWisWeg(); } // net aangekomen: het opgeschaalde beeld vloeit weg over het scherpe
   if (IN.jy >= 0) oxSync(); // ontdekstand (11d): gloed en tikvlakken op de plek van de dingen
 }
 function ixPaint(g) {
@@ -5614,7 +5692,7 @@ function introWind(on, quiet) { // quiet: zonder meeuw (weer in beeld gescrold)
     }
   } catch (e) { IN.wind = null; }
 }
-function introTheme() { if (S.screen === 'intro' && (IN.geo || IN.jy >= 0)) { if (IN.jy >= 0) jxCaches(); else introCaches(); if (!IN.raf) introDraw(); } }
+function introTheme() { if (S.screen === 'film') SF.vorm = ''; if (S.screen === 'intro' && (IN.geo || IN.jy >= 0)) { if (IN.jy >= 0) jxCaches(); else introCaches(); if (!IN.raf) introDraw(); } }
 try { matchMedia('(prefers-color-scheme: dark)').addEventListener('change', introTheme); } catch (e) { /* oudere browsers */ }
 try { new MutationObserver(introTheme).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] }); } catch (e) { /* idem */ }
 $('bIntroNext').onclick = introNext;
@@ -5749,12 +5827,29 @@ function jxDropPre() { const P = IN.jpre; IN.jpre = null; if (P) { clearTimeout(
 function jxPaint(g) {
   const J = JX[IN.jy], E = IN.env; if (!J || !E) return;
   if (reduced.matches && E.jobs.length) jxWork(E, Infinity); // verminderde beweging: geen lus die bijtekent, dus meteen scherp
-  const sh = IN.i, dur = J.shots[sh].dur, T = clamp(IN.t, 0, dur);
+  const sh = IN.i, dur = J.shots[sh].dur, cuT = IN.dive < 0 && OX.cu && OX.cu.t1 !== undefined ? OX.cu : null, T = cuT ? oxCuT(cuT, dur) : clamp(IN.t, 0, dur); // cuT: een close-up die terugvliegt in het shot
   Object.assign(E, { A: IN.amb, t: T, u: T / dur, shot: sh, dur, lite: IN.lite, dive: IN.dive >= 0 ? clamp(IN.dive / JXDIVE, 0, 1) : 0 });
   g.setTransform(1, 0, 0, 1, 0, 0); g.globalAlpha = 1; g.globalCompositeOperation = 'source-over';
+  const cu = IN.dive < 0 && !cuT ? OX.cu : null; if (cu) E.hv = E.H; // close-up en de vlucht erheen: het hele beeld, ook wat onder het paneel ligt
   if (E.dive > 0 && J.dive !== 'eigen') jxDive(g, J, E);
+  else if (cu && cu.fase === 'aan') jxDrawZoom(g, J, E, sh, T, cu);
   else jxDrawYear(g, J, E, sh, T);
+  if (cu) E.hv = IN.hv;
   ixXfade(g);
+}
+// Close-up (ronde 7): hetzelfde beeld, z keer zo groot en verschoven, opnieuw getekend (dus scherp). Het jaar merkt er niets van: het
+// rekent alles in css-px en zet zijn transformaties met env.dpr. Voor dit ene frame is env.dpr z keer zo groot en krijgt elke
+// setTransform op het beeld de verschuiving erbij (jxOff): het echte canvas is dan een venster op een denkbeeldig canvas van z keer de
+// maat. env.zx zegt dat het zo is (z, de echte resolutie d, de verschuiving in apparaat-px, en een sleutel voor bewaarde beelden).
+// Wat het jaar vooraf tekende (env.canvas) wordt opgeschaald; env.still tekent het eindbeeld één keer opnieuw op deze schaal, en de lucht
+// wordt in stapjes op een hogere resolutie bijgetekend (jxSkyZoom).
+const jxST = CanvasRenderingContext2D.prototype.setTransform;
+function jxOff(q, ox, oy) { q.setTransform = function (a, b, c, d, e, f) { jxST.call(this, a, b, c, d, e + ox, f + oy); }; }
+function jxDrawZoom(g, J, E, sh, T, c) {
+  const d0 = E.dpr, ox = Math.round(c.tx * d0), oy = Math.round(c.ty * d0);
+  E.dpr = d0 * c.z; E.zx = { z: c.z, d: d0, ox, oy, key: c.z.toFixed(4) + '|' + ox + '|' + oy };
+  jxOff(g, ox, oy);
+  try { jxDrawYear(g, J, E, sh, T); } finally { delete g.setTransform; E.dpr = d0; E.zx = null; }
 }
 // draw van het jaar, met vangnet. miterLimit 7,77 is een merkteken: staat hij na de restore niet weer op 10, dan deed het jaar save()
 // zonder restore() (of liep het vast na een save). Dan de stapel rechtzetten, anders groeit hij elk frame en blijft knippen of een
@@ -5848,10 +5943,11 @@ function jxFree() {
 }
 function jxFreeAll(E) {
   for (const c of E.made) if (c.cv) c.cv.width = c.cv.height = 0;
-  for (const k of E.skies) if (k._cv) k._cv.width = k._cv.height = 0;
+  jxSkyZoomDrop(E); for (const k of E.skies) if (k._cv) k._cv.width = k._cv.height = 0;
   E.made = []; E.skies = []; E.jobs = []; jxKeepDrop(E);
 }
-function jxKeepDrop(E) { if (E.keep) { E.keep.cv.width = E.keep.cv.height = 0; E.keep = null; } }
+function jxKeepDrop(E) { if (E.keep) { E.keep.cv.width = E.keep.cv.height = 0; E.keep = null; } jxKeepZDrop(E); }
+function jxKeepZDrop(E) { if (E && E.keepZ) { for (const k in E.keepZ) E.keepZ[k].cv.width = E.keepZ[k].cv.height = 0; E.keepZ = null; } } // het bewaarde beeld van een close-up
 // ---------- hulpjes voor de jaren (via env, zie het commentaarblok boven de gebieden en jaar/raamwerk.md) ----------
 function jxEnv(J) {
   const E = {
@@ -5866,7 +5962,7 @@ function jxEnv(J) {
     view: (g, cam, dz) => { const s = E.scale(cam, dz); if (!(s > 0)) return 0; g.setTransform(s * E.dpr, 0, 0, s * E.dpr, (E.W / 2 - cam.x * s) * E.dpr, (E.P / 2 - cam.y * s) * E.dpr); return s; },
     toScreen: (cam, x, y, dz) => { const s = E.scale(cam, dz); return [E.W / 2 + (x - cam.x) * s, E.P / 2 + (y - cam.y) * s]; },
     canvas: (w, h) => { const cv = ixCanvas(Math.ceil(w * E.dpr), Math.ceil(h * E.dpr)), g = cv.getContext('2d'); g.setTransform(E.dpr, 0, 0, E.dpr, 0, 0); const c = { cv, g, w, h }; E.made.push(c); return c; },
-    still: (g, key, paint) => jxStill(E, g, key, paint),
+    still: (g, key, paint, slot) => jxStill(E, g, key, paint, slot),
     sky: o => jxSky(E, o), drawSky: (g, sky, y, drift) => jxSkyDraw(E, g, sky, y, drift), cloud: iCloud,
     haze: (dist, near, span, max) => clamp((dist - (near === undefined ? 1500 : near)) / (span || 5200), 0, max === undefined ? 0.3 : max), mixC: ixMixC,
     water: (g, y0, y1, o) => jxWater(E, g, y0, y1, o),
@@ -5926,14 +6022,16 @@ function jxTitle(E, g, t, o) {
   g.restore();
 }
 // bewaard beeld (het hele canvas): paint(q) één keer per key, formaat en thema, daarna een kopie
-function jxStill(E, g, key, paint) {
-  const cw = E.cvW || iCv.width, ch = E.cvH || iCv.height, k = key + '|' + cw + 'x' + ch; let s = E.keep; // cvW, cvH: een hulpcanvas (briefFoto, pbMaak)
+function jxStill(E, g, key, paint, slot) { // slot: alleen bij een close-up, voor een tweede bewaard beeld naast het eerste (1846, 1976)
+  const Z = E.zx, cw = E.cvW || iCv.width, ch = E.cvH || iCv.height, k = key + '|' + cw + 'x' + ch + (Z ? '|' + Z.key : ''), M = Z ? E.keepZ || (E.keepZ = {}) : E; slot = Z ? slot || 'a' : 'keep'; let s = M[slot]; // cvW, cvH: een hulpcanvas (briefFoto, pbMaak); keepZ: het beeld van een close-up (jxDrawZoom)
   if (!s || s.key !== k) {
     const cv = (s && s.cv) || ixCanvas(cw, ch); if (cv.width !== cw || cv.height !== ch) { cv.width = cw; cv.height = ch; }
-    const q = cv.getContext('2d'); q.setTransform(1, 0, 0, 1, 0, 0); q.globalAlpha = 1; q.globalCompositeOperation = 'source-over'; q.clearRect(0, 0, cv.width, cv.height);
-    q.save(); q.setTransform(E.dpr, 0, 0, E.dpr, 0, 0); paint(q); q.restore(); ixFlush(cv); E.keep = s = { key: k, cv };
+    const q = cv.getContext('2d'), hv = E.hv; q.setTransform(1, 0, 0, 1, 0, 0); q.globalAlpha = 1; q.globalCompositeOperation = 'source-over'; q.clearRect(0, 0, cv.width, cv.height);
+    q.save(); if (Z) jxOff(q, Z.ox, Z.oy); E.hv = E.H; E.inStill = true; // het hele beeld, ook onder het paneel: bij een close-up schuift dat stuk in beeld
+    try { q.setTransform(E.dpr, 0, 0, E.dpr, 0, 0); paint(q); } finally { E.hv = hv; E.inStill = false; if (Z) delete q.setTransform; }
+    q.restore(); ixFlush(cv); M[slot] = s = { key: k, cv };
   }
-  g.save(); g.setTransform(1, 0, 0, 1, 0, 0); g.globalAlpha = 1; g.drawImage(s.cv, 0, 0); g.restore();
+  g.save(); jxST.call(g, 1, 0, 0, 1, 0, 0); g.globalAlpha = 1; g.drawImage(s.cv, 0, 0); g.restore();
 }
 // Lucht als één plaatje (ixSkyPaint, zoals de hoofdintro). o: up (css-px van de bovenkant tot de horizon; standaard 0,86 P + 40),
 // below (css-px onder de horizon), night (standaard env.dark), c (kleuren, aangevuld met die van de hoofdintro), en verder alles van ixSkyPaint.
@@ -5975,13 +6073,25 @@ function jxSkyShrink(L, d) {
   const f = d / L._d, cv = ixCanvas(Math.max(1, Math.round(cv0.width * f)), Math.max(1, Math.round(cv0.height * f)));
   cv.getContext('2d').drawImage(cv0, 0, 0, cv.width, cv.height); jxSkySet(L, { cv, d });
 }
+function* jxSkyZoom(E, L, dz, key) {
+  const r = jxSkyCanvas(L, dz, true);
+  while (!r.gen.next().done) { yield; if (!OX.cu || L._zwant !== key || !E.skies.includes(L)) { r.cv.width = r.cv.height = 0; return; } } // de close-up is al weg, of er is een andere schaal gevraagd
+  if (L._zcv) L._zcv.width = L._zcv.height = 0; L._zcv = r.cv; L._zd = dz; if (L._inStill) jxKeepZDrop(E);
+}
+function jxSkyZoomDrop(E) { if (E) for (const k of E.skies) { if (k._zcv) { k._zcv.width = k._zcv.height = 0; k._zcv = null; } k._zwant = ''; k._inStill = false; } }
 // y: css-px waar de horizon van het plaatje komt; drift: css-px dat de wolken naar links zijn gedreven (0 tot 72, bijvoorbeeld env.A * 2)
 function jxSkyDraw(E, g, sky, y, drift) {
   if (!sky || !sky[JXSKY]) return;
   if (!sky._cv) jxSkyNow(sky, Math.min(1, sky.want)); // nog niet getekend: eerst grof, het raamwerk tekent hem scherp bij (jxSkyRefine)
   if (!sky._cv.width) return;
   if (sky._d > E.dpr) jxSkyShrink(sky, E.dpr); // gemaakt op een hogere resolutie: eerst verkleinen (één keer)
-  const cv = sky._cv, d = E.dpr, f = sky._d / d, top = Math.round((y - sky.up) * d), sx = Math.round(clamp(72 - (drift || 0), 0, 72) * sky._d), cw = iCv.width, ch = iCv.height, ih = cv.height / f;
+  if (E.zx && !sky.touched) { // close-up (ronde 7): de lucht nog eens op een hogere resolutie (hooguit 4 megapixel), in stapjes (env.jobs); tot die er is het gewone plaatje opgeschaald
+    const dz = Math.min(E.dpr, Math.sqrt(4e6 / ((sky.o.w + 72) * (sky.up + sky.below)))), key = dz.toFixed(2);
+    if (dz > sky._d * 1.15 && sky._zwant !== key) { sky._zwant = key; E.jobs.push(jxSkyZoom(E, sky, dz, key)); }
+    if (E.inStill) sky._inStill = true; // deze lucht staat in een bewaard beeld: dat moet opnieuw als de scherpe lucht er is
+  }
+  const zc = E.zx && sky._zcv && sky._zcv.width ? sky._zcv : null, sd = zc ? sky._zd : sky._d;
+  const cv = zc || sky._cv, d = E.dpr, f = sd / d, top = Math.round((y - sky.up) * d), sx = Math.round(clamp(72 - (drift || 0), 0, 72) * sd), cw = E.zx ? Math.ceil(E.W * d) : iCv.width, ch = E.zx ? Math.ceil(E.H * d) : iCv.height, ih = cv.height / f; // close-up (env.zx): het denkbeeldige canvas
   g.save(); g.setTransform(1, 0, 0, 1, 0, 0);
   if (top > 0) { g.fillStyle = sky.c.sky[0]; g.fillRect(0, 0, cw, top + 1); }
   const hh = Math.min(ih, ch - top), sw = Math.min(cw * f, cv.width - sx); // na een maatwissel kan de lucht even te smal zijn: dan iets uitrekken
@@ -6062,7 +6172,7 @@ function jxState() {
     kicker: $('introKicker').textContent, picH: IN.picH, lite: IN.lite, fade: +Math.min(IN.xfT, IX_XF).toFixed(3), errors: JX.filter(f => f && f.err).map(f => f.year),
     knop: $('bIntroNext').textContent, dpr: IN.d, skies: IN.env ? IN.env.skies.map(k => k._d) : [], jobs: IN.env ? IN.env.jobs.length : 0,
     pre: IN.jpre ? { jaar: IN.jpre.i, gebouwd: !!IN.jpre.env, klaar: IN.jpre.ready } : null, voorgebouwd: !!(IN.env && IN.env.pre), slowSeen: !!IN.slowSeen,
-    wind: !!IN.wind, teller: run && run.mode === 'camp' ? run.prevYear : null };
+    wind: !!IN.wind, teller: run && run.mode === 'camp' ? run.prevYear : null, teken: +(IN.jdraw < 99 ? IN.jdraw : 0).toFixed(2) }; // teken: ms tekenen van het laatste frame (meten)
 }
 // ============================================================
 // 11d. Ontdekken in de jaarintro's, en de tijdlijn zonder valspel
@@ -6070,61 +6180,66 @@ function jxState() {
 // Tijdlijn per jaar: jaarintro shot 1 (ontdekken), shot 2 (ontdekken), het verhaal (STORIES-kaart) met Volgende molen: <jaar>, dan de
 // jaarintro van het volgende jaar; na 2026 de slotkaart (Je ontdekte N van M dingen). Geen valspel, geen duik, geen introband, geen score.
 // Ontdekstand: aan het eind van de camerabeweging blijft het beeld staan en krijgen 2 of 3 dingen een aantekening (een oranje stip die
-// ademt, een potloodlijntje en een naamkaartje; ronde 6, eerder een gouden ring). Een tik op het ding, zijn kaartje of zijn knop in het paneel: de camera zoomt zacht naar het ding (0,6 s, ease-out, hooguit 1,4x), de
-// rest dimt iets, het paneel toont de naam en één zin, en de Molenboek-pagina gaat open. Terug (knop, Esc, tik ernaast) zoomt weer uit.
+// ademt, een potloodlijntje en een naamkaartje; ronde 6, eerder een gouden ring). Een tik op het ding, zijn kaartje of zijn knop in het paneel: de camera vliegt naar het ding
+// (close-up, ronde 7: 0,7 s, 1,5x tot 3,2x, daar opnieuw getekend; zie oxCuStart), het paneel toont de naam en één zin, en de Molenboek-pagina
+// gaat open. Terug (knop, Esc, tik op het beeld) vliegt weer uit.
 // Verder kan altijd. Ook bij terugkijken uit het Molenboek.
 // Plek: elk ding staat in de wereld van zijn jaar (OXP: punt en maat in wereldeenheden). jxPlek (in het gebied van het jaar) rekent dat
 // om met de camera van het eindbeeld van dat shot, dus de plek klopt op elk formaat. Een ding dat beweegt (het paard): de stip loopt per frame mee.
-// Tekenen: stip, lijntje, kaartje, tikvlak en dimmen zijn DOM-elementen in #oxLaag boven het canvas. Pulseren, dimmen en zoomen (CSS-transform op canvas
-// en laag samen) doet de compositor; het canvas tekent niets extra, dus het budget van de jaarintro blijft gelijk.
+// Tekenen: stip, lijntje, kaartje en tikvlak zijn DOM-elementen in #oxLaag boven het canvas. Pulseren en de vlucht van de close-up (CSS-transform
+// op het canvas) doet de compositor. In de close-up tekent het jaar hetzelfde beeld op een andere schaal (jxDrawZoom): niet meer werk per frame.
 const JXP = {}; // per jaartal: { proj(env, shot, x, y, z) -> [x, y, k] (css-px, en css-px per wereldeenheid), live: { naam: (env, shot) -> [x, y, z] } }
 function jxPlek(year, proj, live) { if (typeof proj === 'function') JXP[year] = { proj, live: live || {} }; else console.error('jaarintro ' + year + ': ongeldige plek'); }
 // Per ding (jaar-id): at [x, y, z] het midden in de wereld van het jaar (daar staat de stip); r [rx, ry] de halve maat van het ding (wereldeenheden);
-// zoom (1 tot 1,4); focus [x, y, z]: waar de camera naartoe zoomt als het ding beweegt; gat [rx, ry]: dan blijft dit stuk om het brandpunt
-// licht (het dimmen schuift niet elk frame mee); live: de naam van het bewegende anker in jxPlek.
+// focus [x, y, z]: het vaste midden van een ding dat beweegt (de baan van het paard); gat [rx, ry]: de halve maat van die baan (voor het
+// naamkaartje); live: de naam van het bewegende anker in jxPlek.
+// cu (ronde 7): de close-up (oxCuDoel). r [rx, ry]: de halve maat van het kader dat circa 62% van het beeld vult (op een telefoon telt
+// de breedte, op een breed scherm de hoogte; zonder cu.r: r); at [x, y, z]: het midden als dat niet at of focus is; c [dx, dy]: het
+// midden zoveel halve maten opzij en omlaag; f: een andere vulling; z0, z1: andere grenzen dan 1,5 en 3,2;
+// t: geen zoom maar de camera vliegt terug naar dit moment (s) van het shot, waar het ding groot in beeld is (de plansichter van 1920).
 // k [kant, afstand, opzij]: de plek van het naamkaartje (zie oxKaarten); zonder k: rechts van het ding.
 // vlug: het ding beweegt in het eindbeeld en gaat bij de tik even harder (oxVlug); pbT: het plaatje in het Molenboek komt van dit moment (s) in het shot.
 // pb [dx, dy, f]: alleen voor het plaatje in het Molenboek (pbMaak): het kader f keer zo breed, en dx en dy kaders opzij en omlaag.
 // OXP_BEGIN
 const OXP = {
   // 1846 (meters; x oost, y omhoog vanaf het land, z noord): buiten de deur van de molen en de man met de zak; binnen het paard (loopt rond), de rand van het kamwiel en het rondsel
-  'o46-rosmolen': { at: [0, 3.33, 0], r: [1.55, 1.5], zoom: 1.2, vlug: 1.6 },
-  'o46-zakken': { at: [-2.14, 2.83, -2.6], r: [0.55, 0.95], zoom: 1.4, k: ['o', 1, 0.45] },
-  'o46-paard': { at: [0, 1.2, 0], r: [1.75, 1.25], zoom: 1.15, vlug: 2.2, k: ['o', 1, 0], live: 'paard', focus: [0, 1.1, 0], gat: [4.2, 2.2] },
-  'o46-kamwiel': { at: [3.51, 2.72, 0.69], r: [0.9, 0.35], zoom: 1.3, vlug: 2.2, k: ['b', 1, 0], pb: [0.75, 0.2, 1.6] },
-  'o46-rondsel': { at: [3.06, 2.69, -2.58], r: [0.35, 0.3], zoom: 1.4, vlug: 2.2, pb: [0, 0, 1.25] },
+  'o46-rosmolen': { at: [0, 3.33, 0], r: [1.55, 1.5], vlug: 1.6, cu: { r: [1.1, 1.4] } },
+  'o46-zakken': { at: [-2.14, 2.83, -2.6], r: [0.55, 0.95], k: ['o', 1, 0.45], cu: { r: [0.75, 1.15] } },
+  'o46-paard': { at: [0, 1.2, 0], r: [1.75, 1.25], vlug: 2.2, k: ['o', 1, 0], live: 'paard', focus: [0, 1.1, 0], gat: [4.2, 2.2], cu: { r: [1.45, 0.95] } },
+  'o46-kamwiel': { at: [3.51, 2.72, 0.69], r: [0.9, 0.35], vlug: 2.2, k: ['b', 1, 0], pb: [0.75, 0.2, 1.6], cu: { r: [1.4, 0.9], c: [0, 0.35] } },
+  'o46-rondsel': { at: [3.06, 2.69, -2.58], r: [0.35, 0.3], vlug: 2.2, pb: [0, 0, 1.25], cu: { r: [1.5, 1] } },
   // 1867 (decimeters, y omlaag; buiten laag 0 = de overkant)
-  'o67-schoorsteen': { at: [206.8, -151.6, 0], r: [13, 94], zoom: 1.2, vlug: 3, k: ['r', 1, -0.9] },
-  'o67-tjalk': { at: [123.3, -0.8, 0], r: [83, 17.3], zoom: 1.3, pb: [0, -0.22, 1] },
-  'o67-stenen': { at: [22, -17.3, 0], r: [6.6, 3.4], zoom: 1.4, vlug: 2 },
-  'o67-riem': { at: [10.5, -22, 0], r: [2.6, 9.5], zoom: 1.35, vlug: 2.5 },
-  'o67-graanbak': { at: [22, -27.5, 0], r: [5.2, 3.5], zoom: 1.4, vlug: 2 },
+  'o67-schoorsteen': { at: [206.8, -151.6, 0], r: [13, 94], vlug: 3, k: ['r', 1, -0.9], cu: { at: [206.8, -195, 0], r: [37, 65] } },
+  'o67-tjalk': { at: [123.3, -0.8, 0], r: [83, 17.3], pb: [0, -0.22, 1], cu: { r: [40, 52] } },
+  'o67-stenen': { at: [22, -17.3, 0], r: [6.6, 3.4], vlug: 2, cu: { r: [5.25, 5.2] } },
+  'o67-riem': { at: [10.5, -22, 0], r: [2.6, 9.5], vlug: 2.5, cu: { r: [5, 6.2] } },
+  'o67-graanbak': { at: [22, -27.5, 0], r: [5.2, 3.5], vlug: 2, cu: { r: [5, 5.4] } },
   // 1920 (decimeters, y omlaag, laag 0 = de gevel of de walsenvloer)
-  'o20-pakhuis': { at: [279.5, -139.6, 0], r: [53, 124], zoom: 1.15 },
-  'o20-zeilschip': { at: [149.5, 55.3, 0], r: [155, 32], zoom: 1.25, pb: [0, 0.25, 0.75] },
-  'o20-plansichter': { at: [0, -62, 0], r: [18, 12.8], zoom: 1.25, pbT: 0.2, vlug: 2.5, pb: [0, -0.24, 1.12] }, // pbT en pb: in het Molenboek de hele zeefkast, uit het begin van het shot
-  'o20-walsenstoel': { at: [0, -2, 0], r: [9.8, 12.8], zoom: 1.35, vlug: 2 },
-  'o20-riemschijf': { at: [-14.6, 0.4, 0], r: [4.9, 7.4], zoom: 1.4, vlug: 2.5, k: ['o', 1, -0.3] },
+  'o20-pakhuis': { at: [279.5, -139.6, 0], r: [53, 124], cu: { r: [64, 73] } },
+  'o20-zeilschip': { at: [149.5, 55.3, 0], r: [155, 32], pb: [0, 0.25, 0.75], cu: { r: [68, 59] } },
+  'o20-plansichter': { at: [0, -62, 0], r: [18, 12.8], pbT: 0.2, vlug: 2.5, pb: [0, -0.24, 1.12], cu: { t: 0.2 } }, // pbT en pb: in het Molenboek de hele zeefkast, uit het begin van het shot
+  'o20-walsenstoel': { at: [0, -2, 0], r: [9.8, 12.8], vlug: 2 },
+  'o20-riemschijf': { at: [-14.6, 0.4, 0], r: [4.9, 7.4], vlug: 2.5, k: ['o', 1, -0.3], cu: { r: [8.2, 11.5] } },
   // 1976 (shot 1: gevel-eenheden, z = schaal van de laag; shot 2: laag z = dz)
-  'o76-silos': { at: [-434.3, -142.4, 1], r: [201, 160], zoom: 1.15, k: ['b', 1, -0.2] },
-  'o76-molen': { at: [-76.8, -176.8, 1], r: [80, 160], zoom: 1.2, k: ['b', 1, 0.2] },
-  'o76-walsenstoel': { at: [-10.4, -79.9, 0], r: [68.5, 55], zoom: 1.3, vlug: 2 },
-  'o76-snaarwiel': { at: [86, -88, 0], r: [37, 37], zoom: 1.4, vlug: 2.5 }, // het rode wiel rechts van de middelste stoel (laag 0, waar het getekend staat)
-  'o76-buizen': { at: [0, -215, 0], r: [17, 67], zoom: 1.3 },
+  'o76-silos': { at: [-434.3, -142.4, 1], r: [201, 160], k: ['b', 1, -0.2], cu: { r: [106, 140] } },
+  'o76-molen': { at: [-76.8, -176.8, 1], r: [80, 160], k: ['b', 1, 0.2] },
+  'o76-walsenstoel': { at: [-10.4, -79.9, 0], r: [68.5, 55], vlug: 2 },
+  'o76-snaarwiel': { at: [86, -88, 0], r: [37, 37], vlug: 2.5 }, // het rode wiel rechts van de middelste stoel (laag 0, waar het getekend staat)
+  'o76-buizen': { at: [0, -215, 0], r: [17, 67] },
   // 2008 (10 eenheden = 1 m; shot 1: z = diepte; shot 2: laag z = dz)
-  'o08-schip': { at: [-14.2, -226.5, -250], r: [74, 26], zoom: 1.25 },
-  'o08-molengebouw': { at: [120.7, -155.3, 0], r: [90, 160], zoom: 1.15, k: ['b', 1, 0] },
-  'o08-walsenstoel': { at: [120, -56.9, 0], r: [27.8, 14.2], zoom: 1.35, vlug: 2 },
-  'o08-riem': { at: [98, -29.9, 0], r: [4.4, 13.4], zoom: 1.4, vlug: 2.5 },
+  'o08-schip': { at: [-14.2, -226.5, -250], r: [74, 26], cu: { at: [14, -26, -95], r: [62, 60] } }, // de close-up: de kuil met de zuigbuis, waar het graan naartoe glijdt
+  'o08-molengebouw': { at: [120.7, -155.3, 0], r: [90, 160], k: ['b', 1, 0], cu: { c: [0, -0.4] } }, // iets omhoog: de dakrand en de lucht met de meeuwen in beeld
+  'o08-walsenstoel': { at: [120, -56.9, 0], r: [27.8, 14.2], vlug: 2 },
+  'o08-riem': { at: [98, -29.9, 0], r: [4.4, 13.4], vlug: 2.5 },
   // 2026 (meters, y omlaag)
-  'o26-walsenstoel': { at: [0, -48.53, 0], r: [0.3, 0.45], zoom: 1.4 },
-  'o26-dakopening': { at: [0, -47.73, 0], r: [0.74, 0.33], zoom: 1.35 },
-  'o26-walsen': { at: [3, -0.95, 0], r: [0.57, 0.29], zoom: 1.35, vlug: 2.5 },
-  'o26-schermpje': { at: [2.47, -1.94, 0], r: [0.19, 0.1], zoom: 1.4, vlug: 2.5 },
+  'o26-walsenstoel': { at: [0, -48.53, 0], r: [0.3, 0.45] },
+  'o26-dakopening': { at: [0, -47.73, 0], r: [0.74, 0.33] },
+  'o26-walsen': { at: [3, -0.95, 0], r: [0.57, 0.29], vlug: 2.5, cu: { r: [0.57, 0.365] } },
+  'o26-schermpje': { at: [2.47, -1.94, 0], r: [0.19, 0.1], vlug: 2.5 },
 };
 // OXP_EIND
 const OX = { on: false, shot: -1, list: [], open: -1, spots: [], zt: 0, wt: 0, msg: '', msgT: 0, hint: false, kop: false };
-const oxLaag = $('oxLaag'), oxDimEl = $('oxDim');
+const oxLaag = $('oxLaag'), oxWisCv = $('oxWis');
 const oxYear = () => IN.jy >= 0 && JX[IN.jy] ? JX[IN.jy].year : 0;
 const oxMag = () => IN.jy >= 0 && !!JXP[oxYear()] && !!OXD[oxYear()]; // heeft deze film een ontdekstand?
 function oxJaarTel(year) { let n = 0, m = 0; for (const d of OX_DINGEN) if (d.year === year) { m++; if (save.ontdekt[d.key]) n++; } return [n, m]; }
@@ -6133,11 +6248,11 @@ const oxActief = () => S.screen === 'intro' && IN.jy >= 0 && IN.dive < 0 && OX.l
 function oxShot(i, msg) {
   oxDicht(true);
   const year = oxYear(), aan = oxMag();
-  OX.shot = i; OX.on = false; OX.til = null; OX.vlug = null; clearInterval(OX.wenk); OX.msg = msg || ''; OX.msgT = performance.now();
+  OX.shot = i; OX.on = false; OX.vlug = null; clearInterval(OX.wenk); OX.msg = msg || ''; OX.msgT = performance.now();
   OX.hint = !save.oxUitleg && !Object.keys(save.ontdekt).length; // de uitleg Tik op een kaartje: alleen de allereerste keer
   OX.list = aan ? OX_DINGEN.filter(d => d.year === year && d.shot === i).map((d, n) => ({ ...d, n, p: OXP[d.key] || null, el: null, knop: null, a: null, pos: '' })) : [];
   for (const e of OX.spots) e.remove(); OX.spots = [];
-  oxLaag.classList.remove('aan', 'open', 'wijs');
+  oxLaag.classList.remove('aan', 'open', 'wijs', 'cu');
   OX.kVorm = '';
   for (const d of OX.list) { // per ding: het tikvlak met de stip, het potloodlijntje (svg) en het naamkaartje; in deze volgorde (de hover in de css rekent erop)
     const e = document.createElement('div'); e.className = 'ox-spot'; e.appendChild(document.createElement('i'));
@@ -6196,7 +6311,7 @@ function oxAnker(d, E, J) {
   } catch (e) { return null; }
 }
 function oxPlaats() {
-  const E = IN.env, J = JXP[oxYear()]; if (!E || !J) return;
+  const E = IN.env, J = JXP[oxYear()]; if (!E || !J || OX.cu) return; // close-up: geen aantekeningen in beeld
   for (const d of OX.list) {
     const a = d.a = oxAnker(d, E, J), e = d.el;
     if (!a) { if (e.style.display !== 'none') e.style.display = 'none'; continue; }
@@ -6208,15 +6323,6 @@ function oxPlaats() {
     if (d.pos !== pos) { d.pos = pos; e.style.transform = pos; }
   }
   oxKaarten(E, J); for (const d of OX.list) oxLijn(d);
-  const d = OX.list[OX.open];
-  if (d && d.a) {
-    let g = d.a; // het gat in het dimmen: om het ding, of (bewegend ding) een vast gat om het brandpunt
-    if (d.p.gat && d.p.focus) { try { const q = J.proj(E, OX.shot, ...d.p.focus); if (q && isFinite(q[0]) && q[2] > 0) g = [q[0], q[1], d.p.gat[0] * q[2] / 2.8, d.p.gat[1] * q[2] / 2.8]; } catch (e) { /* om het ding */ } }
-    const rw = Math.round(g[2] * 2.8), rh = Math.round(g[3] * 2.8), pos = `translate(${(g[0] - rw / 2).toFixed(1)}px,${(g[1] - rh / 2).toFixed(1)}px)`, maat = rw + '|' + rh;
-    if (OX.dimMaat !== maat) { OX.dimMaat = maat; oxDimEl.style.width = rw + 'px'; oxDimEl.style.height = rh + 'px'; }
-    if (OX.dimPos !== pos) { OX.dimPos = pos; oxDimEl.style.transform = pos; }
-    const vorm = [IN.w, IN.h, IN.picH, IN.hv].join('|'); if (OX.zoomVorm !== vorm) oxZoom(d); // ander formaat: de zoom opnieuw uitrekenen
-  }
 }
 // De plek van de naamkaartjes. Per ding ligt in OXP vast aan welke kant het kaartje hoort (k: [kant, afstand, opzij]; kant 'l', 'r',
 // 'b' boven of 'o' onder; afstand als factor op de gewone afstand; opzij in kaartmaten langs de rand). Die plek wordt gekozen als hij
@@ -6276,45 +6382,117 @@ function oxOpen(n) {
   if (IN.t < L[IN.i].dur) { ixSnap(); IN.t = L[IN.i].dur; IN.tEnd = performance.now(); introDraw(); introLoop(); }
   if (!OX.on) oxSync(); if (!OX.on) return;
   const nieuw = !save.book[d.key]; save.ontdekt[d.key] = 1; if (nieuw) unlockPage(d.key); else persist();
-  OX.open = n; OX.til = reduced.matches ? null : { n, t0: performance.now() }; // optillen (oxTil)
-  OX.vlug = d.p && d.p.vlug && !reduced.matches ? { t0: performance.now(), f: d.p.vlug } : null; // en het ding zelf reageert (oxVlug)
+  OX.open = n; OX.vlug = null; // het ding zelf reageert als de camera aankomt (oxCuAan, oxVlug)
   $('introDots').hidden = true; $('oxTerug').hidden = false;
   // de naam in handschrift op de plek van het jaartal, de zin op de plek van de ondertitel (het paneel houdt er geen ruimte voor vrij)
   const tx = $('introText'), k = $('introKicker'), h = document.createElement('span'); h.className = 'hand ox-kop'; h.textContent = d.naam;
-  k.classList.add('ui-kick'); k.textContent = ''; k.appendChild(h); OX.kop = true;
+  const vk = document.createElement('i'); vk.className = 'vinkje ox-vink'; vk.setAttribute('aria-hidden', 'true'); // het vinkje verschijnt als de camera aankomt
+  k.classList.add('ui-kick'); k.textContent = ''; k.append(h, vk); OX.kop = true;
   tx.textContent = d.zin;
   AU.ensure(); SFX.ontdek(); // een zacht geluidje (stil als geluid uit staat)
   if (nieuw) { const tg = document.createElement('span'); tg.className = 'tag-new'; tg.textContent = 'Nieuw in je Molenboek'; tx.append(' ', tg); }
   oxStand();
-  for (const q of OX.list) for (const e of [q.el, q.lijn, q.kaart]) e.classList.toggle('nu', q.n === n);
-  oxLaag.classList.add('open'); OX.dimPos = OX.dimMaat = '';
-  oxPlaats(); oxZoom(d);
+  for (const q of OX.list) for (const e of [q.el, q.lijn, q.kaart]) e.classList.remove('nu');
+  oxLaag.classList.add('open');
+  oxCuStart(d);
   announce(`${d.naam}. ${d.zin}${nieuw ? ' Nieuw in je Molenboek.' : ''}`);
 }
-// zacht naar het ding toe: het ding schuift een eind naar het midden van het beeld en wordt groter (CSS-transform, 0,6 s ease-out).
-// Het beeld blijft het scherm vullen: geen rand boven of opzij, en onderaan niet het stuk onder het paneel (daar tekent de speler niets).
-function oxZoom(d) {
-  OX.zoomVorm = [IN.w, IN.h, IN.picH, IN.hv].join('|');
-  const z = reduced.matches ? 1 : clamp(d.p && d.p.zoom || 1.3, 1, 1.4);
-  let f = d.a;
-  if (d.p && d.p.focus && IN.env) { try { const q = JXP[oxYear()].proj(IN.env, OX.shot, ...d.p.focus); if (q && isFinite(q[0]) && isFinite(q[1])) f = q; } catch (e) { /* het ding zelf */ } }
-  if (z <= 1.001 || !f) { oxTf(''); return; }
-  const W = IN.w, hv = Math.min(IN.hv, IN.h), cx = W / 2, cy = IN.picH * 0.48;
-  const tx = clamp(lerp(f[0], cx, 0.55) - f[0] * z, W * (1 - z), 0), ty = clamp(lerp(f[1], cy, 0.55) - f[1] * z, hv * (1 - z), 0);
-  let x = tx, y = ty; const k = d.kr;
-  if (k) { // het kaartje van het open ding blijft in beeld (binnen wat het beeld kan schuiven zonder rand)
-    x = clamp(Math.min(Math.max(x, 10 - k[0] * z), W - 10 - (k[0] + k[2]) * z), W * (1 - z), 0);
-    y = clamp(Math.min(Math.max(y, 10 - k[1] * z), IN.picH - 10 - (k[1] + k[3]) * z), hv * (1 - z), 0);
-  }
-  clearTimeout(OX.zt); oxZoomKlas(true);
-  oxTf(`translate(${x.toFixed(1)}px,${y.toFixed(1)}px) scale(${z.toFixed(3)})`);
+// Close-up (ronde 7): een tik op een ding is een echte camerabeweging. De camera vliegt in 0,7 s (zacht in en uit) naar het ding, tot het
+// ruim de helft van het beeld boven het paneel vult; daar wordt het beeld opnieuw getekend (scherp, jxDrawZoom) en leeft het door: het
+// paard loopt, de riem draait, de rook trekt op. Terug vliegt weer uit.
+// - De vlucht zelf is een CSS-transform op het canvas (de compositor vliegt, het canvas tekent intussen gewoon het hele beeld door); het
+//   beeld is dan even opgeschaald. Bij aankomst vervalt de transform en tekent het jaar het beeld op die plek en schaal; het opgeschaalde
+//   beeld van net ervoor (#oxWis) vloeit er in 0,28 s overheen weg. Terug: het scherpe beeld vliegt mee uit en vloeit weg.
+// - Plek en schaal per ding (oxCuDoel): het ding vult circa 62% van het beeld boven het paneel (de kleinste van breed en hoog), tussen
+//   1,5x en 3,2x; in OXP kan cu dat per ding bijstellen. Het venster blijft binnen het beeld, dus een ding aan de rand staat niet
+//   helemaal in het midden. Trage telefoon (lite): hooguit 2x.
+// - Verminderde beweging: geen vlucht; het beeld vloeit in 0,28 s over naar de close-up en terug.
+// - OX.cu: { n, z, tx, ty (css-px: scherm = z * beeld + t), fase 'in' (vlucht erheen), 'aan' (scherp), 'uit' (vlucht terug), t0 }.
+const OX_CU = { dur: 0.7, wis: 0.28, vul: 0.62, zmin: 1.5, zmax: 3.2, zlite: 2 };
+const oxCuTf = c => `translate(${c.tx.toFixed(2)}px,${c.ty.toFixed(2)}px) scale(${c.z.toFixed(4)})`;
+const oxCuVorm = () => [IN.w, IN.h, IN.picH, IN.hv, IN.lite].join('|');
+function oxCuDoel(d) {
+  const E = IN.env, J = JXP[oxYear()], p = d.p; if (!E || !J || !p) return null;
+  const cu = p.cu || {}, w = cu.at || p.focus || p.at; let q = null;
+  if (cu.t !== undefined) return { z: 1, tx: 0, ty: 0, t1: cu.t }; // de camera vliegt terug in het shot
+  try { q = J.proj(E, OX.shot, w[0], w[1], w[2] || 0); } catch (e) { q = null; }
+  if (!q || !isFinite(q[0]) || !isFinite(q[1]) || !(q[2] > 0)) return null;
+  const W = IN.w, H = IN.h, P = IN.picH, hv = Math.min(IN.hv, H), r = cu.r || p.r, c = cu.c || [0, 0];
+  let z = clamp((cu.f || OX_CU.vul) * Math.min(W / (2 * r[0] * q[2]), P / (2 * r[1] * q[2])), cu.z0 || OX_CU.zmin, cu.z1 || OX_CU.zmax);
+  if (IN.lite) z = Math.min(z, OX_CU.zlite);
+  const fx = q[0] + c[0] * r[0] * q[2], fy = q[1] + c[1] * r[1] * q[2];
+  const tx = clamp(W / 2 - z * fx, W * (1 - z), 0), ty = clamp(P * 0.5 - z * fy, hv - z * H, 0);
+  return { z, tx, ty, mx: z * fx + tx, my: z * fy + ty, vul: z * Math.max(2 * p.r[0] * q[2] / W, 2 * p.r[1] * q[2] / P) }; // mx, my: waar het midden van het ding komt; vul: hoeveel van het beeld het ding zelf vult (zelftest)
 }
-function oxTf(v) { iCv.style.transform = v; oxLaag.style.transform = v; }
-// Optillen: bij een tik komt het ding zelf even naar voren. Het stukje beeld om het ding (het kader uit OXP, zoals de gloed) wordt van
-// het net getekende beeld gekopieerd en 1,06x vanuit zijn midden teruggetekend, iets hoger, met een zachte schaduw eronder; 0,4 s,
-// ease-out omhoog en zacht terug. Elk frame een verse kopie, dus wat beweegt (paard, rook, riemen, kraan) loopt door. Geen filter of blur:
-// de rand loopt zacht weg met een masker en de schaduw is een vooraf getekend plaatje. Bij verminderde beweging niet (oxOpen).
-const OX_TIL = { dur: 0.4, op: 0.4, s: 0.06, kader: 1.2 };
+// de vlucht begint (oxOpen); van het ene ding naar het andere (knop in het paneel) vliegt de camera rechtstreeks door
+function oxCuStart(d) {
+  const doel = oxCuDoel(d); let oud = OX.cu;
+  if (!doel) { if (oxCuStop()) introDraw(); oxCuAan(); return; } // geen plek: alleen de zin
+  const c = { ...doel, n: d.n, t0: performance.now(), fase: 'in', vorm: oxCuVorm(), wis: false };
+  oxLaag.classList.add('cu');
+  if (reduced.matches) { oxWisToon(null); c.fase = 'aan'; OX.cu = c; jxKeepZDrop(IN.env); introDraw(); if (IN.env && IN.env.jobs.length) { jxWork(IN.env, Infinity); introDraw(); } oxWisWeg(); oxCuAan(); return; } // (geen lus: de scherpe lucht meteen)
+  if (oud && (c.t1 !== undefined || oud.t1 !== undefined)) { oxCuStop(); oxLaag.classList.add('cu'); oud = null; } // van of naar een close-up in de tijd: niet rechtstreeks door
+  if (c.t1 !== undefined) { OX.cu = c; return; } // in de tijd: het jaar tekent de vlucht zelf (oxCuT)
+  if (oud && oud.fase === 'aan') { // stond scherp op een ander ding: eerst het gewone beeld op die plek, dan door
+    OX.cu = { ...oud, fase: 'in', t0: performance.now(), wis: false }; introDraw(); iCv.classList.remove('ox-vlucht'); iCv.style.transform = oxCuTf(oud); void iCv.offsetWidth;
+  } else if (!oud) { OX.cu = c; introDraw(); iCv.style.transform = 'translate(0px,0px) scale(1)'; void iCv.offsetWidth; } // eerst het hele beeld, ook onder het paneel
+  OX.cu = c; iCv.classList.add('ox-vlucht'); iCv.style.transform = oxCuTf(c);
+}
+// elk frame (introDraw): aankomst, einde van de terugvlucht, of een ander formaat
+function oxCuTik() {
+  const c = OX.cu, t = (performance.now() - c.t0) / 1000;
+  if (c.t1 !== undefined) { if (c.fase === 'in' && t >= OX_CU.dur) { c.fase = 'aan'; oxCuAan(); } else if (c.fase === 'uit' && t >= OX_CU.dur) oxCuEind(); return; }
+  if (c.fase === 'in' && t >= OX_CU.dur) {
+    c.fase = 'aan'; oxWisToon(c); iCv.classList.remove('ox-vlucht'); iCv.style.transform = ''; c.wis = true; oxCuAan();
+  } else if (c.fase === 'uit' && t >= OX_CU.dur) oxCuEind();
+  else if (c.fase === 'aan' && c.vorm !== oxCuVorm()) { const d = OX.list[c.n], doel = d && oxCuDoel(d); if (doel) Object.assign(c, doel, { vorm: oxCuVorm() }); else oxCuEind(); }
+}
+// de camera is er: het vinkje naast de naam, en het ding reageert (vlug)
+function oxCuAan() {
+  const v = $('introKicker').querySelector('.ox-vink'); if (v) v.classList.add('aan');
+  const d = OX.list[OX.open]; OX.vlug = d && d.p && d.p.vlug && !reduced.matches ? { t0: performance.now(), f: d.p.vlug } : null;
+}
+// Terug (oxDicht): het gewone beeld komt op de plek van de close-up te staan en vliegt uit; het scherpe beeld vliegt mee en vloeit weg
+function oxCuTerug() {
+  const c = OX.cu; if (!c) return;
+  if (reduced.matches) { oxWisToon(null); oxCuEind(); introDraw(); oxWisWeg(); return; }
+  const nul = 'translate(0px,0px) scale(1)';
+  if (c.t1 !== undefined) { if (c.fase !== 'uit') { const u = clamp((performance.now() - c.t0) / 1000 / OX_CU.dur, 0, 1); c.t0 = performance.now() - (c.fase === 'in' ? (1 - u) * OX_CU.dur * 1000 : 0); c.fase = 'uit'; } return; } // halverwege omkeren: vanaf waar de camera is
+  if (c.fase === 'aan') {
+    oxWisToon(null); c.fase = 'uit'; c.t0 = performance.now(); c.wis = false; introDraw();
+    iCv.classList.remove('ox-vlucht'); iCv.style.transform = oxCuTf(c); void iCv.offsetWidth;
+    iCv.classList.add('ox-vlucht'); iCv.style.transform = nul;
+    oxWisWeg(`translate(${(-c.tx / c.z).toFixed(2)}px,${(-c.ty / c.z).toFixed(2)}px) scale(${(1 / c.z).toFixed(4)})`);
+  } else { c.fase = 'uit'; c.t0 = performance.now(); iCv.style.transform = nul; }
+}
+// het moment in het shot voor een close-up in de tijd (jxPaint): van het eindbeeld naar t1 en terug, zacht in en uit
+function oxCuT(c, dur) {
+  const u = clamp((performance.now() - c.t0) / 1000 / OX_CU.dur, 0, 1), e = reduced.matches ? 1 : eio(u);
+  return c.fase === 'aan' ? c.t1 : c.fase === 'in' ? lerp(dur, c.t1, e) : lerp(c.t1, dur, e);
+}
+function oxCuEind() {
+  OX.cu = null; iCv.classList.remove('ox-vlucht'); iCv.style.transform = ''; oxLaag.classList.remove('cu'); jxKeepZDrop(IN.env); jxSkyZoomDrop(IN.env);
+  const d = OX.na; OX.na = null; if (d && d.el && OX.list.includes(d)) for (const e of [d.el, d.lijn, d.kaart]) e.classList.add('nu'); // terug: de stip van dit ding springt open en wordt het vinkje
+}
+function oxCuStop() { if (!OX.cu) return false; oxCuEind(); oxWisUit(); return true; } // meteen weg (Verder, een nieuw shot, het einde)
+// #oxWis: het beeld van net ervoor, boven het canvas. c: opgeschaald zoals de vlucht eindigde (aankomst); null: zoals het er staat
+function oxWisToon(c) {
+  const cv = oxWisCv;
+  try {
+    if (cv.width !== iCv.width || cv.height !== iCv.height) { cv.width = iCv.width; cv.height = iCv.height; }
+    const q = cv.getContext('2d'), d = IN.d; q.setTransform(1, 0, 0, 1, 0, 0); q.globalAlpha = 1; q.globalCompositeOperation = 'copy';
+    if (c) q.drawImage(iCv, 0, 0, iCv.width, iCv.height, c.tx * d, c.ty * d, iCv.width * c.z, iCv.height * c.z);
+    else { const hp = Math.min(iCv.height, Math.ceil(Math.min(IN.hv, IN.h) * d)); q.drawImage(iCv, 0, 0, iCv.width, hp, 0, 0, iCv.width, hp); } // alleen wat te zien was: onder het paneel staat in een close-up nog het beeld van de vlucht
+    q.globalCompositeOperation = 'source-over';
+    clearTimeout(OX.wisT); cv.style.transition = 'none'; cv.style.transform = ''; cv.style.opacity = '1'; cv.hidden = false;
+  } catch (e) { oxWisUit(); }
+}
+function oxWisWeg(tf) { // vloeit weg; tf: en vliegt intussen mee terug
+  const cv = oxWisCv; if (cv.hidden) return; void cv.offsetWidth;
+  cv.style.transition = `opacity ${OX_CU.wis}s ease-out` + (tf ? `,transform ${OX_CU.dur}s cubic-bezier(.45,0,.25,1)` : ''); cv.style.opacity = '0'; if (tf) cv.style.transform = tf;
+  clearTimeout(OX.wisT); OX.wisT = setTimeout(oxWisUit, OX_CU.wis * 1000 + 80);
+}
+function oxWisUit() { clearTimeout(OX.wisT); const cv = oxWisCv; cv.hidden = true; cv.style.transition = 'none'; cv.style.transform = ''; cv.style.opacity = ''; cv.width = cv.height = 0; }
 // Eigen reactie (ronde 6): een ding met vlug in OXP gaat bij de tik even harder. De klok van het eindbeeld (IN.amb, waar alles wat beweegt
 // aan hangt) loopt 0,9 s sneller, zacht op gang en zacht terug, hooguit 1 + vlug keer zo snel: het paard stapt door en de hele molen
 // draait mee, de riemen lopen vlugger, de plansichter schudt harder, de rook trekt sneller op. Geen nieuw tekenwerk; niet bij
@@ -6324,40 +6502,7 @@ function oxVlug(dt) {
   if (u >= 1) { OX.vlug = null; return 0; }
   return dt * v.f * Math.sin(Math.PI * clamp(u, 0, 1));
 }
-let oxTilC = null;
-function oxTilSprites() {
-  if (oxTilC) return oxTilC;
-  const rond = stops => { const c = ixCanvas(128, 128), g = c.getContext('2d'), gr = g.createRadialGradient(64, 64, 0, 64, 64, 64); for (const [o, col] of stops) gr.addColorStop(o, col); g.fillStyle = gr; g.fillRect(0, 0, 128, 128); return c; };
-  const cv = ixCanvas(8, 8);
-  return (oxTilC = { cv, g: cv.getContext('2d'), mask: rond([[0, '#fff'], [0.8, '#fff'], [1, 'rgba(255,255,255,0)']]), shade: rond([[0, 'rgba(26,16,6,.5)'], [0.66, 'rgba(26,16,6,.42)'], [1, 'rgba(26,16,6,0)']]) });
-}
-function oxTil(g) {
-  const T = OX.til, d = OX.list[T.n], u = (performance.now() - T.t0) / (OX_TIL.dur * 1000);
-  if ((u >= 1 && window.__kvTil === undefined) || !d) { OX.til = null; return; }
-  if (!d.a) return; // nog geen plek (eerste frame)
-  const vast = window.__kvTil, k = vast !== undefined ? +vast : u < OX_TIL.op ? ease(u / OX_TIL.op) : 1 - ixEase((u - OX_TIL.op) / (1 - OX_TIL.op)); // __kvTil: alleen voor de zelftest (vasthouden)
-  if (k < 0.004) return;
-  const C = oxTilSprites(), D = IN.d, a = d.a, f = OX_TIL.kader, H = Math.min(IN.hv, IN.h);
-  const ex0 = a[0] - a[2] * f, ey0 = a[1] - a[3] * f, ew = a[2] * f * 2, eh = a[3] * f * 2; // het kader om het ding (css-px)
-  const sx = Math.max(0, Math.floor(ex0 * D)), sy = Math.max(0, Math.floor(ey0 * D));
-  const sw = Math.min(iCv.width, Math.ceil((ex0 + ew) * D)) - sx, sh = Math.min(Math.ceil(H * D), Math.ceil((ey0 + eh) * D)) - sy;
-  if (sw < 8 || sh < 8) return;
-  try {
-    if (C.cv.width < sw || C.cv.height < sh) { C.cv.width = Math.max(C.cv.width, sw); C.cv.height = Math.max(C.cv.height, sh); }
-    const q = C.g; q.setTransform(1, 0, 0, 1, 0, 0); q.globalAlpha = 1;
-    q.globalCompositeOperation = 'copy'; q.drawImage(iCv, sx, sy, sw, sh, 0, 0, sw, sh);
-    q.globalCompositeOperation = 'destination-in'; q.drawImage(C.mask, ex0 * D - sx, ey0 * D - sy, ew * D, eh * D);
-    q.globalCompositeOperation = 'source-over';
-    const s = 1 + OX_TIL.s * k, cx = a[0] * D, cy = a[1] * D, up = eh * D * 0.018 * k;
-    g.save(); g.setTransform(1, 0, 0, 1, 0, 0); g.globalCompositeOperation = 'source-over';
-    g.globalAlpha = 0.6 * k; g.drawImage(C.shade, cx - ew * D * 0.57, cy - eh * D * 0.57 + eh * D * 0.07 * k, ew * D * 1.14, eh * D * 1.14); // de schaduw: iets groter en lager, rond de onderrand te zien
-    g.globalAlpha = 1; g.drawImage(C.cv, 0, 0, sw, sh, cx + (sx - cx) * s, cy + (sy - cy) * s - up, sw * s, sh * s);
-    g.restore();
-  } catch (e) { OX.til = null; }
-}
-// de overgang van de zoom: op het paneel (#scrIntro) en op het beeld zelf (dat staat in #app, niet in #scrIntro)
-function oxZoomKlas(aan) { $('scrIntro').classList.toggle('ox-zoom', aan); iCv.classList.toggle('ox-zoom', aan); }
-// Terug: uitzoomen (instant: meteen, zonder overgang; bij Verder, een nieuw shot of het einde)
+// Terug: de camera vliegt weer uit (instant: meteen, zonder overgang; bij Verder, een nieuw shot of het einde)
 function oxDicht(instant) {
   const d = OX.list[OX.open];
   if (OX.open >= 0) {
@@ -6367,12 +6512,12 @@ function oxDicht(instant) {
     $('introText').textContent = ixShots()[IN.i] ? ixShots()[IN.i].text : '';
     if (OX.kop) { OX.kop = false; const s = ixShots()[IN.i]; if (s) jxKicker(s.kicker); } // het jaartal terug op de plek van de naam
     oxLaag.classList.remove('open'); for (const q of OX.list) if (q.el) for (const e of [q.el, q.lijn, q.kaart]) e.classList.remove('nu');
+    OX.na = instant ? null : d || null; // na de terugvlucht springt het vinkje op dit ding op (oxCuEind)
     oxStand();
     if (focus && d && d.knop) try { d.knop.focus({ preventScroll: true }); } catch (e) { d.knop.focus(); }
   }
-  clearTimeout(OX.zt);
-  if (instant) { oxZoomKlas(false); if (oxLaag.style.transform) oxTf(''); }
-  else if (oxLaag.style.transform) { oxTf(''); OX.zt = setTimeout(() => { if (OX.open < 0) oxZoomKlas(false); }, 650); }
+  if (instant) { if (oxCuStop() && S.screen === 'intro' && IN.env) introDraw(); } // meteen het gewone beeld (het blijft achter het verhaal staan)
+  else oxCuTerug(d);
 }
 // een tik naast de dingen (niets open): de kaartjes veren even op, zodat je ziet waar je kunt tikken (Verder is de knop)
 function oxWijs() {
@@ -6386,8 +6531,8 @@ function oxPijl(e) {
 }
 // introStop: alles weg
 function oxWeg() {
-  oxDicht(true); OX.on = false; OX.til = null; OX.vlug = null; clearInterval(OX.wenk); OX.list = []; for (const e of OX.spots) e.remove(); OX.spots = [];
-  oxLaag.classList.remove('aan', 'open', 'wijs'); $('oxRij').hidden = true; $('oxKnoppen').textContent = '';
+  oxDicht(true); OX.on = false; OX.vlug = null; clearInterval(OX.wenk); OX.list = []; for (const e of OX.spots) e.remove(); OX.spots = [];
+  oxLaag.classList.remove('aan', 'open', 'wijs', 'cu'); $('oxRij').hidden = true; $('oxKnoppen').textContent = '';
 }
 // meten (ixMeasureIn): de zinnen van de dingen tellen mee voor de hoogte van de ondertitel, en de rij met knoppen krijgt de hoogte van
 // het hoogste shot. Zo blijft het beeld boven het paneel (P) de hele film even groot, ook als een ding opengaat.
@@ -6410,7 +6555,7 @@ oxLaag.addEventListener('click', () => { if (OX.open >= 0) oxDicht(); }); // een
 try { document.fonts.addEventListener('loadingdone', () => { OX.kVorm = ''; }); } catch (e) { /* oudere browsers */ } // het handschrift kwam net binnen: de kaartjes opnieuw meten en plaatsen
 $('oxTerug').onclick = () => oxDicht();
 function oxState() {
-  return { on: OX.on, shot: OX.shot, open: OX.open, zoom: iCv.style.transform || '', tel: $('oxTel').textContent, amb: +IN.amb.toFixed(3),
+  return { on: OX.on, shot: OX.shot, open: OX.open, zoom: iCv.style.transform || '', cu: OX.cu ? { n: OX.cu.n, fase: OX.cu.fase, z: +OX.cu.z.toFixed(3), tx: Math.round(OX.cu.tx), ty: Math.round(OX.cu.ty), t1: OX.cu.t1, midden: OX.cu.mx !== undefined ? [Math.round(OX.cu.mx), Math.round(OX.cu.my)] : null, vul: OX.cu.vul !== undefined ? +OX.cu.vul.toFixed(2) : null, scherp: !!(IN.env && IN.env.keepZ && Object.keys(IN.env.keepZ).length) } : null, tel: $('oxTel').textContent, amb: +IN.amb.toFixed(3),
     list: OX.list.map(d => ({ id: d.key, naam: d.naam, af: !!save.ontdekt[d.key], a: d.a ? d.a.map(v => Math.round(v)) : null, box: d.el ? (r => [r.left, r.top, r.width, r.height].map(Math.round))(d.el.getBoundingClientRect()) : null,
       kaart: d.kaart && d.kr ? (r => [r.left, r.top, r.width, r.height].map(Math.round))(d.kaart.getBoundingClientRect()) : null })),
     ontdekt: Object.keys(save.ontdekt).sort(), totaal: OX_DINGEN.length };
@@ -6445,12 +6590,14 @@ function tlVerhaal(i) {
   show('story'); syncStoryBtn(); drawStoryArt(0);
   if (!laatste) jxPrewarm(i + 1, 900); // de volgende jaarintro alvast klaarzetten terwijl je leest
 }
-function tlVolgende() { const i = TL.i + 1; if (i >= LEVELS.length) tlSlot(); else tlSprong(TL.i, i); }
+function tlVolgende() { const i = TL.i + 1; if (i >= LEVELS.length) sfStart('slot'); else tlSprong(TL.i, i); } // na 2026: eerst de slotfilm (ronde 7), dan de slotkaart
 // De tijdsprong tussen de jaren: na het verhaal, voor de volgende jaarintro, circa 1,5 s over het gedimde eindbeeld van het jaar. Een lijn
 // met zes oranje stippen (de jaren van de tijdlijn), het jaartal in handschrift rolt van het oude naar het nieuwe jaar (de jaarteller van
 // de introband: telRol) en de stip verspringt mee. Tik of toets slaat over. Verminderde beweging: alleen het eindbeeld, kort.
 // Geen regels, geen score, geen timer om op te letten. Per frame alleen transforms (de compositor tekent).
-const SPRONG = { dur: 1.5, tel0: 0.22, tel: 0.9, kort: 0.75, open: 0.35 };
+// Ronde 7: bij de twee verhuizingen (1846 naar 1867, 1920 naar 1976) staat er een getekende kaart in plaats van de lijn (KAARTEN, circa 3,8 s):
+// de oranje stip reist over de gestippelde lijn mee met het jaartal, eronder één regel. Bij de andere sprongen blijft de lijn met stippen.
+const SPRONG = { dur: 1.5, tel0: 0.22, tel: 0.9, kort: 0.75, open: 0.35, kdur: 3.8, ktel0: 0.6, ktel: 2.0, kkort: 2.8 }; // k...: met de kaart van een verhuizing (ronde 7)
 const SP = { raf: 0, tm: 0, vt: 0, t0: 0, i0: 0, i1: 0, van: '', naar: '', w: 0, rollen: [], stippen: [], jaren: [], p: 0, u: 0, tekst: '', bouw: false, aan: -1 };
 function spBouw() {
   if (SP.bouw) return; SP.bouw = true;
@@ -6465,19 +6612,24 @@ function spBouw() {
 }
 function tlSprong(i0, i1) {
   TL.on = true; spBouw();
-  Object.assign(SP, { i0, i1, van: String(LEVELS[i0].year), naar: String(LEVELS[i1].year), t0: performance.now(), aan: -1 });
+  const K = kaartVoor(i0, i1); // een verhuizing: de kaart in plaats van de lijn met stippen
+  Object.assign(SP, { i0, i1, van: String(LEVELS[i0].year), naar: String(LEVELS[i1].year), t0: performance.now(), aan: -1, kaart: K, pad: null, stip: null, len: 0, tf: '' });
   cancelAnimationFrame(SP.raf); clearTimeout(SP.tm);
+  SCR.sprong.classList.toggle('kaart', !!K); $('spKaart').hidden = $('spRegel').hidden = !K; $('spKaart').classList.remove('aan');
+  if (K) { $('spKaart').innerHTML = kaartSvg(K, false); $('spRegel').textContent = K.regel; SP.pad = $('spKaart').querySelector('.krt-route'); SP.stip = $('spKaart').querySelector('.krt-nu'); }
+  else $('spKaart').textContent = '';
+  const dur = K ? SPRONG.kdur : SPRONG.dur, tel0 = K ? SPRONG.ktel0 : SPRONG.tel0, tel = K ? SPRONG.ktel : SPRONG.tel;
   show('sprong');
   SP.w = $('spLijn').clientWidth; $('spNu').classList.remove('aan');
   const sp = SCR.sprong.firstElementChild; sp.style.animation = 'none'; void sp.offsetWidth; sp.style.animation = ''; // opnieuw invloeien
-  announce(`Van ${SP.van} naar ${SP.naar}.`);
-  if (reduced.matches) { spTeken(1); SP.tm = setTimeout(tlSprongKlaar, SPRONG.kort * 1000); return; }
+  announce(`Van ${SP.van} naar ${SP.naar}.` + (K ? ` ${K.kop}. ${K.regel}` : ''));
+  if (reduced.matches) { spTeken(1); SP.tm = setTimeout(tlSprongKlaar, (K ? SPRONG.kkort : SPRONG.kort) * 1000); return; }
   spTeken(0);
   const f = () => {
     SP.raf = 0; if (S.screen !== 'sprong') return;
     const t = (performance.now() - SP.t0) / 1000;
-    if (t >= SPRONG.dur) { tlSprongKlaar(); return; }
-    spTeken(clamp((t - SPRONG.tel0) / SPRONG.tel, 0, 1)); SP.raf = requestAnimationFrame(f);
+    if (t >= dur) { tlSprongKlaar(); return; }
+    spTeken(clamp((t - tel0) / tel, 0, 1)); SP.raf = requestAnimationFrame(f);
   };
   SP.raf = requestAnimationFrame(f);
 }
@@ -6494,6 +6646,12 @@ function spTeken(u) {
   $('spAf').style.transform = `scaleX(${(p / n).toFixed(4)})`;
   if (SP.aan !== nu) { SP.aan = nu; SP.stippen.forEach((e, j) => e.classList.toggle('af', j <= nu)); SP.jaren.forEach((e, j) => e.classList.toggle('nu', j === nu)); }
   if (u >= 1 && !$('spNu').classList.contains('aan')) $('spNu').classList.add('aan'); // aangekomen: de stip springt even op
+  if (SP.kaart && SP.stip) { // de kaart: de stip reist over de gestippelde lijn mee met het jaartal
+    let x = lerp(SP.kaart.a[0], SP.kaart.b[0], e), y = lerp(SP.kaart.a[1], SP.kaart.b[1], e);
+    if (SP.pad) try { if (!SP.len) SP.len = SP.pad.getTotalLength(); const q = SP.pad.getPointAtLength(SP.len * e); x = q.x; y = q.y; } catch (er) { SP.pad = null; } // lukt het meten niet: in een rechte lijn
+    const tf = `translate(${x.toFixed(1)} ${y.toFixed(1)})`; if (SP.tf !== tf) { SP.tf = tf; SP.stip.setAttribute('transform', tf); }
+    if (u >= 1 && !$('spKaart').classList.contains('aan')) $('spKaart').classList.add('aan');
+  }
   SP.p = p; SP.u = u; SP.tekst = tekst;
 }
 // einde (of overgeslagen): de jaarintro van het nieuwe jaar, die zacht opengaat uit het donker
@@ -6506,7 +6664,7 @@ function tlSprongKlaar() {
   if (zacht) { void veil.offsetWidth; veil.style.transition = `opacity ${SPRONG.open}s cubic-bezier(.16,.84,.44,1)`; veil.style.opacity = '0'; SP.vt = setTimeout(() => { veil.hidden = true; }, SPRONG.open * 1000 + 50); }
 }
 function spState() {
-  return { open: S.screen === 'sprong', van: SP.van, naar: SP.naar, jaar: SP.tekst, stip: +SP.p.toFixed(2), u: +SP.u.toFixed(2), stippen: SP.stippen.length,
+  return { open: S.screen === 'sprong', kaart: SP.kaart && S.screen === 'sprong' ? SP.kaart.kop : '', regel: SP.kaart && !$('spRegel').hidden ? $('spRegel').textContent : '', kaartStip: SP.kaart && SP.tf ? SP.tf : '', van: SP.van, naar: SP.naar, jaar: SP.tekst, stip: +SP.p.toFixed(2), u: +SP.u.toFixed(2), stippen: SP.stippen.length,
     af: SP.stippen.filter(e => e.classList.contains('af')).length, jaren: SP.jaren.map(e => e.textContent), hand: getComputedStyle($('spJaar')).fontFamily.includes('Belle'), t: +((performance.now() - SP.t0) / 1000).toFixed(2) };
 }
 // slot na 2026: hoeveel je ontdekte, per jaar, met Molenboek, Korrelval en Menu
@@ -6520,7 +6678,202 @@ function tlSlot() {
   $('doneSub').textContent = n >= m ? 'Alles wat je ontdekte, staat in je Molenboek.' : 'Tik op een jaar om de rest te vinden. Wat je ontdekte, staat in je Molenboek.';
   save.campDone = true; persist();
   for (const d of OX_DINGEN) if (save.book[d.key]) pbVraag(d);
+  $('bDoneFilm').hidden = !sfKan();
   show('done');
+}
+// ---------- De kaart (ronde 7): waar het gebeurde ----------
+// Het bedrijf verhuisde twee keer. Bij die twee tijdsprongen staat er een getekende kaart in plaats van de lijn met stippen: crème papier,
+// blauwgrijs water, potloodlijnen, plaatsnamen in handschrift. De oranje stip reist in circa 3 s over een gestippelde lijn van de oude
+// naar de nieuwe plek terwijl het jaartal doortelt; eronder één regel. Dezelfde kaarten staan in het Molenboek (blad De plekken).
+// De ligging is schematisch (geen schaal). Teksten en namen komen uit het onderzoek:
+// - Holwerd naar Leeuwarden: onderzoek/koopmans-site.md (tijdlijn 1867: grote schepen konden Holwerd niet bereiken, daarom de verhuizing
+//   naar Leeuwarden) en onderzoek-royal-koopmans.md (1867: overname van de stoommeelfabriek in Leeuwarden); spelmateriaal.json (Holwerd,
+//   terpdorp aan de Waddenkust). De regel is dezelfde zin als in het verhaal van 1867.
+// - Vliet naar Nieuwe Kanaal: de reden staat niet in het onderzoek, dus alleen wat zeker is: koopmans-site.md (historische locaties
+//   Holwerd en Noordvliet/Vliet; de fabriek aan het Nieuwe Kanaal, De Merodestraat 3) en onderzoek-royal-koopmans.md (1927: het oudste
+//   deel van de loskade aan het Nieuwe Kanaal).
+// svg: viewBox 300 x 200. a en b: de oude en de nieuwe plek; route: het pad van de stip (.krt-route).
+const KAARTEN = [
+  { van: 0, naar: 1, kop: 'Van Holwerd naar Leeuwarden', regel: 'In Holwerd konden grote schepen niet komen, in Leeuwarden wel.', label: 'Kaart: Holwerd ligt aan de Waddenzee, Leeuwarden meer landinwaarts. Een gestippelde lijn loopt van Holwerd naar Leeuwarden.',
+    a: [229, 59], b: [97, 151], route: 'M229 59C214 92 152 116 97 151',
+    svg: '<path class="krt-water" d="M0 0H300V29C272 31 252 37 226 41C196 46 176 56 148 62C116 69 92 71 62 81C38 89 18 94 0 102Z"/>' +
+      '<path class="krt-pen" d="M300 29C272 31 252 37 226 41C196 46 176 56 148 62C116 69 92 71 62 81C38 89 18 94 0 102"/>' +
+      '<path class="krt-dijk" d="M300 36C273 38 254 44 228 48C198 53 178 63 150 69C118 76 94 78 64 88C40 96 20 101 0 109"/>' +
+      '<path class="krt-golf" d="M34 38q5-4 10 0t10 0M118 20q5-4 10 0t10 0M196 14q5-4 10 0t10 0M70 60q5-4 10 0t10 0M150 40q5-4 10 0t10 0M16 72q5-4 10 0t10 0"/>' +
+      '<path class="krt-veld" d="M150 150l7-2M176 128l7-2M210 150l7-2M250 110l7-2M262 150l7-2M40 132l7-2M56 172l7-2M228 178l7-2M134 96l7-2M186 176l7-2"/>' +
+      '<text class="krt-zee" x="22" y="56" transform="rotate(-15 22 56)">Waddenzee</text>' +
+      '<circle class="krt-plek" cx="229" cy="59" r="4.6"/><text x="294" y="84" text-anchor="end">Holwerd</text>' +
+      '<path class="krt-pen" d="M88 143h18v16h-18zM92 143v-6h6v6M101 143v-9h4v9"/><text x="112" y="172">Leeuwarden</text>' +
+      '<path class="krt-pen" d="M272 186v-22M268 170l4-7 4 7"/><text class="krt-klein" x="266" y="158">N</text>' },
+  { van: 2, naar: 3, kop: 'Van het Vliet naar het Nieuwe Kanaal', regel: 'In 1976 staat de fabriek aan het Nieuwe Kanaal. Het oudste deel van de loskade daar stamde uit 1927.', label: 'Kaart van Leeuwarden: het Vliet en het Nieuwe Kanaal lopen allebei van de binnenstad naar het oosten. Een gestippelde lijn loopt van het Noordvliet naar De Merodestraat aan het Nieuwe Kanaal.',
+    a: [186, 65], b: [236, 143], route: 'M186 65C214 82 244 108 236 143',
+    svg: '<path class="krt-stad" d="M34 62C46 47 92 44 110 58C124 70 126 112 117 130C106 148 54 151 38 136C24 122 24 80 34 62Z"/>' +
+      '<path class="krt-vaart" style="stroke-width:6" d="M34 62C46 47 92 44 110 58C124 70 126 112 117 130C106 148 54 151 38 136C24 122 24 80 34 62Z"/>' +
+      '<path class="krt-vaart" style="stroke-width:5" d="M121 84C162 80 214 72 300 60"/>' +
+      '<path class="krt-vaart" style="stroke-width:10" d="M116 134C162 140 222 148 300 156"/>' +
+      '<path class="krt-pen" d="M121 80.6C162 76.6 214 68.6 300 56.6M121 87.4C162 83.4 214 75.4 300 63.4M117 128C162 134 222 142 300 150M115 140C162 146 222 154 300 162"/>' +
+      '<path class="krt-veld" d="M50 70l42-5M44 88l64-3M42 120l64 6M62 60l4 80M88 56l5 88"/>' +
+      '<text class="krt-klein" x="72" y="106" text-anchor="middle" style="font-size:16px">Leeuwarden</text>' +
+      '<circle class="krt-plek" cx="186" cy="65" r="4.6"/><text x="182" y="47" text-anchor="middle">Noordvliet</text><text class="krt-zee krt-klein" x="258" y="86" transform="rotate(-8 258 86)">Vliet</text>' +
+      '<text class="krt-zee krt-klein" x="126" y="124" transform="rotate(7 126 124)" style="font-size:15px">Nieuwe Kanaal</text><text x="296" y="184" text-anchor="end">De Merodestraat</text>' +
+      '<path class="krt-pen" d="M284 38v-24M280 21l4-7 4 7"/><text class="krt-klein" x="266" y="28">N</text>' },
+];
+const kaartVoor = (i0, i1) => KAARTEN.find(k => k.van === i0 && k.naar === i1) || null;
+// de kaart als svg; eind: de stip staat al op de nieuwe plek (Molenboek, verminderde beweging)
+function kaartSvg(K, eind) {
+  const p = eind ? K.b : K.a;
+  return `<svg class="krt" viewBox="0 0 300 200" role="img" aria-label="${esc(K.label)}"><rect class="krt-papier" width="300" height="200"/>${K.svg}` +
+    `<path class="krt-route" d="${K.route}"/><circle class="krt-plek krt-doel" cx="${K.b[0]}" cy="${K.b[1]}" r="4.6"/>` +
+    `<g class="krt-nu" transform="translate(${p[0]} ${p[1]})"><circle class="krt-gloed" r="13"/><circle class="krt-stip" r="6.5"/></g></svg>`;
+}
+// een kaart telt als gezien zodra je het jaar erna hebt bereikt (of het verhaal ervan in het boek staat)
+const kaartOpen = K => jaarReached(K.naar) || !!save.book['st' + K.naar];
+function kaartBlad() {
+  const box = $('bookPlekken'); box.textContent = '';
+  KAARTEN.forEach((K, n) => {
+    const f = document.createElement('figure'), y = LEVELS[K.naar].year; f.className = 'pb-plek' + (kaartOpen(K) ? '' : ' leeg'); f.style.setProperty('--r', [-0.8, 0.9][n % 2] + 'deg');
+    f.innerHTML = kaartOpen(K) ? `<div class="pb-plek-kaart">${kaartSvg(K, true)}</div><figcaption><b class="hand">${esc(K.kop)}</b><span>${esc(K.regel)}</span></figcaption>`
+      : `<div class="pb-plek-kaart" aria-hidden="true"><span class="pb-gat">?</span></div><figcaption><b class="hand" aria-hidden="true">${y}</b><span class="sr">Nog te ontdekken: een kaart bij ${y}</span></figcaption>`;
+    box.appendChild(f);
+  });
+}
+// ---------- De slotfilm (ronde 7): 180 jaar in één vlucht ----------
+// Na het verhaal van 2026 en voor de slotkaart: de zes jaren achter elkaar als één doorgaande beweging, circa 20 s. Per jaar 2,9 s: het
+// laatste stuk van de camerabeweging van shot 1 (buiten) tot het eindbeeld, dan vloeit het beeld in 0,6 s over naar het volgende jaar, dat
+// dan al beweegt. Onderaan telt het jaartal in handschrift door (de rollen van de tijdsprong) boven de lijn met zes stippen. De dingen
+// die je buiten ontdekte lichten kort op als oranje stippen (zonder kaartjes). Het eindigt op de fabriek van nu met de regel
+// 180 jaar malen. Van één paard tot Molen B., en gaat dan naar de slotkaart. Overslaan: tik, toets of de knop.
+// Verminderde beweging: zes stilstaande eindbeelden die overvloeien, het jaartal verspringt.
+// Geheugen: er leeft één jaar tegelijk, plus het volgende dat klaarstaat. Het volgende jaar wordt gebouwd zodra de camera van dit jaar
+// stilstaat (dan valt een hapering niet op); wat voorbij is, wordt meteen vrijgegeven (sfVrij).
+// Het tekent op het canvas van de intro's (#introCv) met dezelfde jaren (JX[i].draw), elk met een eigen env (sfEnv, zoals pbMaak).
+const SFILM = { seg: 2.9, move: 2.5, xf: 0.6, slot: 3.1, tel: 0.8, beeld: 0.8 }; // beeld: het jaar componeert in dit deel van de hoogte (de rest ligt achter jaartal en lijn)
+const SF = { on: false, raf: 0, last: 0, t: 0, i: -1, E: null, En: null, xf: null, xfAan: false, van: 'slot', vorm: '', rollen: [], punten: [], bouw: false, t0: 0, frames: 0, ms: [], w: 1, h: 1, d: 1, P: 1, dark: false, jaar: '', boekTop: 0, piek: 0, gebouwd: 0, vrij: 0, stip: 0, slot: false };
+const sfKan = () => LEVELS.every((l, i) => JX[i] && !JX[i].err);
+const sfLite = () => IN.lite || !!save.slowIntro;
+function sfBouw() {
+  if (SF.bouw) return; SF.bouw = true;
+  const cijfers = Array.from({ length: 30 }, (x, j) => `<span>${j % 10}</span>`).join(''), n = LEVELS.length, pc = j => (j / (n - 1) * 100).toFixed(3) + '%';
+  $('sfJaar').innerHTML = Array.from({ length: 4 }, () => `<span class="sp-c"><span class="sp-r">${cijfers}</span></span>`).join('');
+  SF.rollen = [...$('sfJaar').querySelectorAll('.sp-r')];
+  SF.punten = LEVELS.map((lv, j) => { const e = document.createElement('i'); e.className = 'sp-stip'; e.style.left = pc(j); $('sfLijn').appendChild(e); return e; });
+  $('sfJaren').innerHTML = LEVELS.map((lv, j) => `<li style="left:${pc(j)}">${lv.year}</li>`).join('');
+  SCR.film.addEventListener('click', () => { if (performance.now() - SF.t0 > 600) sfKlaar(true); }); // tik: overslaan (niet de tweede tik van een dubbeltik op Verder)
+  $('bFilmSkip').onclick = e => { e.stopPropagation(); sfKlaar(true); };
+}
+// van: 'slot' (na het verhaal van 2026, daarna de slotkaart), 'done' (Bekijk de film opnieuw op de slotkaart) of 'boek' (in het Molenboek)
+function sfStart(van) {
+  if (SF.on) return;
+  if (!sfKan()) { if (van === 'slot') tlSlot(); return; } // een jaar laadde niet: geen film
+  sfBouw();
+  if (van === 'boek') SF.boekTop = bookCard().scrollTop;
+  Object.assign(SF, { on: true, van, t: 0, i: -1, last: 0, t0: performance.now(), frames: 0, ms: [], vorm: '', xfAan: false, piek: 0, gebouwd: 0, vrij: 0, stip: 0, slot: false, jaar: '', nu: -2, klaar: '', cap0: dprCap });
+  if (V.dpr > 1 && (IN.slowSeen || save.slowIntro)) { dprCap = 1; layout(); } // een eerdere intro moest al naar resolutie 1: de film begint daar meteen
+  if (!save.filmSeen) { save.filmSeen = 1; persist(); }
+  SCR.film.classList.remove('sf-eind'); $('sfStippen').textContent = ''; $('sfStippen').classList.remove('aan');
+  for (const e of SF.punten) e.classList.remove('af'); for (const e of $('sfJaren').children) e.classList.remove('nu'); $('sfAf').style.transform = 'scaleX(0)';
+  const veil = $('introVeil'); veil.hidden = false; veil.style.transition = 'none'; veil.style.opacity = '1'; // zacht open uit het donker
+  show('film');
+  announce('De film: 180 jaar in één vlucht, van 1846 tot 2026. Tik of druk op een toets om over te slaan.');
+  SF.raf = requestAnimationFrame(sfFrame);
+  void veil.offsetWidth; veil.style.transition = 'opacity .5s cubic-bezier(.3,0,.2,1)'; veil.style.opacity = '0'; clearTimeout(SF.vt); SF.vt = setTimeout(() => { veil.hidden = true; }, 560);
+}
+function sfMaat() {
+  const w = app.clientWidth || innerWidth, h = app.clientHeight || innerHeight, d = V.dpr, cw = Math.max(1, Math.round(w * d)), ch = Math.max(1, Math.round(h * d));
+  if (iCv.width !== cw || iCv.height !== ch) { iCv.width = cw; iCv.height = ch; }
+  Object.assign(SF, { w, h, d, P: Math.round(h * (w > h ? 0.78 : SFILM.beeld)), dark: introDark() });
+  return [w, h, d, SF.dark].join('|');
+}
+// de env van één jaar (shot 1), gebouwd op de maat van de film
+function sfEnv(i) {
+  const J = JX[i], jy = IN.jy; let E; IN.jy = i; try { E = jxEnv(J); } finally { IN.jy = jy; }
+  Object.assign(E, { i, W: SF.w, H: SF.h, P: SF.P, hv: SF.h, dpr: SF.d, dark: SF.dark, lite: sfLite(), calm: reduced.matches, base: SF.dark ? ICOL.dark : ICOL.light, vorm: 'film', key: 'film|' + SF.vorm + '|' + i,
+    A: 0, t: 0, u: 0, shot: 0, dur: J.shots[0].dur, dive: 0, film: true }); // film: het jaar hoeft niets voor shot 2 klaar te zetten
+  try { if (J.build) J.build(E); } catch (e) { if (!J.err) { J.err = e; jxFail(J.year, e); } }
+  if (reduced.matches) jxWork(E, Infinity); // stilstaande beelden: de lucht meteen scherp
+  SF.gebouwd++; return E;
+}
+function sfVrij(E) { if (!E) return; clearTimeout(E.rt); jxFreeAll(E); E.cache = {}; if (E.titel) { E.titel.cv.width = E.titel.cv.height = 0; E.titel = null; } SF.vrij++; }
+// zoveel canvasgeheugen houden de jaren van de film nu vast (MB; meten)
+function sfGeheugen() {
+  let px = 0; const tel = c => { if (c && c.width) px += c.width * c.height; };
+  for (const E of [SF.E, SF.En]) if (E) { for (const c of E.made) tel(c.cv); for (const k of E.skies) tel(k._cv); if (E.keep) tel(E.keep.cv); for (const k in E.cache) { const v = E.cache[k]; if (v && v.cv && v.cv.getContext && !E.made.includes(v)) tel(v.cv); } }
+  tel(SF.xf); return px * 4 / 1048576;
+}
+// een nieuw jaar: het oude beeld bewaren voor de overvloeier, het oude jaar vrijgeven, het nieuwe (meestal al gebouwd) nemen
+function sfWissel(i) {
+  const oud = SF.E;
+  SF.xfAan = false;
+  if (oud && SF.i >= 0) {
+    try { const c = SF.xf || (SF.xf = ixCanvas(iCv.width, iCv.height)); if (c.width !== iCv.width || c.height !== iCv.height) { c.width = iCv.width; c.height = iCv.height; }
+      const q = c.getContext('2d'); q.setTransform(1, 0, 0, 1, 0, 0); q.globalAlpha = 1; q.globalCompositeOperation = 'copy'; q.drawImage(iCv, 0, 0); q.globalCompositeOperation = 'source-over'; SF.xfAan = true; } catch (e) { SF.xfAan = false; }
+  }
+  sfVrij(oud);
+  SF.E = SF.En && SF.En.i === i ? SF.En : sfEnv(i); SF.En = null; SF.i = i;
+  sfStippen(i); try { sfeerAan(JX[i].year); } catch (e) { /* geen geluid */ }
+  announce(String(JX[i].year));
+}
+// de ontdekte dingen van shot 1 van dit jaar: oranje stippen op hun plek in het eindbeeld (ze verschijnen als de camera er bijna is)
+function sfStippen(i) {
+  const box = $('sfStippen'), J = JX[i], P = JXP[J.year]; box.textContent = ''; box.classList.remove('aan'); SF.stip = 0;
+  if (!P) return;
+  for (const d of OX_DINGEN) {
+    if (d.year !== J.year || d.shot !== 0 || !save.ontdekt[d.key] || !OXP[d.key]) continue;
+    try { const a = OXP[d.key].at, q = P.proj(SF.E, 0, a[0], a[1], a[2] || 0); if (!q || !isFinite(q[0]) || !isFinite(q[1]) || q[0] < 8 || q[0] > SF.w - 8 || q[1] < 8 || q[1] > SF.h * 0.86) continue;
+      const e = document.createElement('i'); e.className = 'sf-stip'; e.style.left = q[0].toFixed(1) + 'px'; e.style.top = q[1].toFixed(1) + 'px'; e.style.setProperty('--i', String(SF.stip)); box.appendChild(e); SF.stip++; } catch (e) { /* dit ding zonder stip */ }
+  }
+}
+function sfFrame(ts) {
+  SF.raf = 0; if (!SF.on || S.screen !== 'film') return;
+  SF.raf = requestAnimationFrame(sfFrame);
+  if (offscreen || !$('rotate').hidden) { SF.last = ts; return; }
+  const raw = SF.last ? ts - SF.last : 0, dt = Math.min(raw / 1000, 0.05), t0 = performance.now(); SF.last = ts; SF.frames++;
+  if (raw > 0) frameSample(raw); // trage telefoon: de resolutie zakt (layout wist SF.vorm, dan bouwt het jaar opnieuw)
+  if (!SF.vorm) { sfVrij(SF.E); sfVrij(SF.En); SF.E = SF.En = null; SF.vorm = sfMaat(); SF.i = -1; SF.xfAan = false; }
+  SF.t += dt;
+  const n = LEVELS.length, stil = reduced.matches, i = Math.min(n - 1, Math.floor(SF.t / SFILM.seg)), lt = SF.t - i * SFILM.seg, eind = SF.t >= n * SFILM.seg;
+  if (i !== SF.i) sfWissel(i);
+  const J = JX[i], E = SF.E, dur = J.shots[0].dur, T = stil ? dur : dur - SFILM.move + Math.min(lt, SFILM.move), g = ig;
+  Object.assign(E, { A: stil ? 0 : SF.t, t: T, u: T / dur, shot: 0, dur, lite: sfLite(), dive: 0 });
+  g.setTransform(1, 0, 0, 1, 0, 0); g.globalAlpha = 1; g.globalCompositeOperation = 'source-over';
+  jxDrawYear(g, J, E, 0, T);
+  if (SF.xfAan && lt < SFILM.xf && SF.xf.width === iCv.width) { g.setTransform(1, 0, 0, 1, 0, 0); g.globalAlpha = 1 - ixEase(lt / SFILM.xf); g.drawImage(SF.xf, 0, 0); g.globalAlpha = 1; }
+  // het volgende jaar bouwen zodra de camera stilstaat, en de luchten in stapjes scherp
+  if (!SF.En && i < n - 1 && lt >= (stil ? 0.9 : SFILM.move + 0.04)) SF.En = sfEnv(i + 1);
+  jxWork(E, 3); if (SF.En) jxWork(SF.En, 5);
+  // jaartal, lijn en stippen (alleen transforms en klassen)
+  const e = i === 0 ? 1 : stil ? 1 : ixEase(lt / SFILM.tel), Y = i === 0 ? LEVELS[0].year : lerp(LEVELS[i - 1].year, LEVELS[i].year, e);
+  SF.rollen.forEach((r, k) => { const v = (telJaar(Y, k) % 10 + 10) % 10, tf = `translateY(${(-v / 30 * 100).toFixed(3)}%)`; if (r.style.transform !== tf) r.style.transform = tf; });
+  SF.jaar = String(Math.floor(Y + 1e-6));
+  const p = (i === 0 ? 0 : i - 1 + e) / (n - 1), nu = e >= 0.98 ? i : i - 1, af = `scaleX(${p.toFixed(4)})`; if ($('sfAf').style.transform !== af) $('sfAf').style.transform = af;
+  if (SF.nu !== nu) { SF.nu = nu; SF.punten.forEach((q, k) => q.classList.toggle('af', k <= nu)); [...$('sfJaren').children].forEach((q, k) => q.classList.toggle('nu', k === nu)); }
+  const toon = (stil ? lt > 0.7 : lt >= SFILM.move - 0.4) && (eind ? SF.t - n * SFILM.seg < 0.5 : lt < SFILM.seg - 0.2); if ($('sfStippen').classList.contains('aan') !== toon) $('sfStippen').classList.toggle('aan', toon);
+  if (eind && !SF.slot) { SF.slot = true; SCR.film.classList.add('sf-eind'); announce('180 jaar malen. Van één paard tot Molen B.'); }
+  const ms = performance.now() - t0; if (SF.ms.length < 4000) SF.ms.push(+ms.toFixed(2));
+  if (SF.frames % 20 === 0) SF.piek = Math.max(SF.piek, sfGeheugen());
+  if (SF.t >= n * SFILM.seg + SFILM.slot) sfKlaar(false);
+}
+// einde of overgeslagen: het laatste beeld blijft gedimd achter de slotkaart staan; alles van de film wordt vrijgegeven
+function sfKlaar(skip) {
+  if (!SF.on) return; SF.on = false; cancelAnimationFrame(SF.raf); SF.raf = 0;
+  const van = SF.van;
+  if (van !== 'boek' && SF.frames > 1) { // zoals tlSnap: het beeld van de film gedimd achter de slotkaart
+    const c = $('tlAchter'); try { if (c.width !== iCv.width || c.height !== iCv.height) { c.width = iCv.width; c.height = iCv.height; } const g = c.getContext('2d'); g.setTransform(1, 0, 0, 1, 0, 0); g.globalAlpha = 1; g.drawImage(iCv, 0, 0); g.fillStyle = 'rgba(16,12,8,.52)'; g.fillRect(0, 0, c.width, c.height); } catch (e) { c.width = c.height = 0; }
+  }
+  sfVrij(SF.E); sfVrij(SF.En); SF.E = SF.En = null; if (SF.xf) { SF.xf.width = SF.xf.height = 0; SF.xf = null; }
+  try { sfeerUit(); } catch (e) { /* geen geluid */ }
+  $('sfStippen').textContent = ''; clearTimeout(SF.vt); $('introVeil').hidden = true;
+  TA.key = TA.want = null; ixWarmed = false; still = false; // het canvas van de intro's is gebruikt: de akker achter het menu bouwt zich opnieuw op
+  SF.klaar = skip ? 'overgeslagen' : 'uit';
+  if (SF.cap0 && dprCap !== SF.cap0) { dprCap = SF.cap0; layout(); } // zoals introCap: een lagere resolutie voor de film geldt niet voor de rest
+  if (van === 'boek') { renderBook(); show('boek'); bookCard().scrollTop = SF.boekTop || 0; const b = $('bBookFilm'); if (b && acted && lastKey) try { b.focus({ preventScroll: true }); } catch (e) { b.focus(); } }
+  else tlSlot();
+}
+function sfState() {
+  const m = SF.ms.slice().sort((a, b) => a - b);
+  return { open: S.screen === 'film' && SF.on, van: SF.van, t: +SF.t.toFixed(2), jaar: SF.i >= 0 ? LEVELS[SF.i].year : null, tel: SF.jaar, duur: +(LEVELS.length * SFILM.seg + SFILM.slot).toFixed(1), slot: SF.slot, klaar: SF.klaar || '', frames: SF.frames,
+    stippen: $('sfStippen').children.length, stipAan: $('sfStippen').classList.contains('aan'), gebouwd: SF.gebouwd, vrij: SF.vrij, levend: (SF.E ? 1 : 0) + (SF.En ? 1 : 0), mb: +sfGeheugen().toFixed(1), piek: +SF.piek.toFixed(1),
+    teken: m.length ? { med: m[m.length >> 1], p90: m[Math.floor(m.length * 0.9)], max: m[m.length - 1] } : null, gezien: !!save.filmSeen };
 }
 // ------------------------------------------------------------------------------------------------------------------------------
 // INTERFACE VOOR DE JAARMAKERS (uitleg met voorbeelden: jaar/raamwerk.md; vorm en ritme: jaar/regie.md)
@@ -6572,6 +6925,8 @@ function tlSlot() {
 //                                 en schaalt minder), geeft de schaal terug; toScreen(cam, x, y, dz): [x, y] in css-px
 //   canvas(w, h)                  offscreen { cv, g, w, h } in css-px (g staat al goed); terugzetten: g.drawImage(c.cv, x, y, c.w, c.h)
 //   still(g, key, paint)          bewaard beeld: paint(q) één keer per key, daarna elk frame een kopie (bijvoorbeeld het eindbeeld)
+//   zx                            alleen tijdens een close-up (ronde 7, jxDrawZoom): { z, d, ox, oy, key }. env.dpr is dan z keer zo groot en het
+//                                 beeld is een venster; teken gewoon door. Maak dan geen plaatjes op de maat van het hele beeld (z keer zo groot).
 //   sky(o), drawSky(g, sky, y, drift)   lucht met verloop, gloed, zon of maan met sterren en stapelwolken; y: horizon in css-px
 //   cloud(t, seed, w, h, c, waas, zacht) één stapelwolk; haze(afstand), mixC(kleur, naar, t): luchtperspectief
 //   water(g, y0, y1, o)           water met weerspiegeling, rimpels en glinsteringen
@@ -7608,6 +7963,7 @@ function j46Swallows(g, c, K, A, a) {
 function j46Keep(g, env, slot, key, paint, box) { // box: [x, y, b, h] in css-px (alleen dat stuk bewaren); anders het hele beeld
   const bx = box ? [Math.max(0, Math.floor(box[0])), Math.max(0, Math.floor(box[1]))] : [0, 0], bw = box ? Math.min(env.W - bx[0], Math.ceil(box[2]) + 1) : env.W, bh = box ? Math.min(env.H - bx[1], Math.ceil(box[3]) + 1) : env.H;
   if (!(bw > 0 && bh > 0)) return;
+  if (env.zx) { env.still(g, key, q => paint(q, [0, 0]), slot); return; } // close-up (ronde 7): het venster op de schaal van de close-up, niet het hele beeld z keer zo groot
   const full = key + '|' + env.W + 'x' + env.H + 'x' + env.P + '|' + env.dpr + '|' + bx + '|' + bw + 'x' + bh; let k = env.cache[slot];
   if (!k || k.key !== full) {
     if (!k || k.d !== env.dpr || k.w !== bw || k.h !== bh) { if (k) k.cv.width = k.cv.height = 0; k = env.cache[slot] = env.canvas(bw, bh); k.d = env.dpr; }
@@ -9453,13 +9809,14 @@ function j76Bouw1(env, C) {
     : { cloudSeed: 1976, glow: 0.5, up: Math.ceil(S.Yh + 12), below: 24, sunX: W * 0.28, sunH: P * 0.44,
       c: { sky: ['#7FB2D3', '#B9D6E2', '#F3EAD3'], glow: 'rgba(255,238,206,', sun: '#FFF6DA', cTop: '#FFFDF6', cBody: '#F4F0E6', cShade: '#D9DEDD', cBase: '#C6CCCC' },
       clouds: [[0.3, 0.46, 0.5, 0.42, 0.42, 0.16, 0], [0.13, 0.2, 0.7, 0.7, 0.36, 0.38, 0], [0.04, 0.08, 0.9, 1.4, 0.3, 0.55, 0]] });
-  let r = reik(k * j76P.ver); ca.j76Ver = j76Ver(env, C, k * j76P.ver, r[0], r[1], S);
-  r = reik(k * j76P.mid); ca.j76Mid = j76Mid(env, C, k * j76P.mid, r[0], r[1], S);
-  r = reik(k); ca.j76Gevel = j76Gevel(env, C, k, r[0], r[1], S);
+  // maak: dezelfde laag nog eens tekenen, voor de close-up (j76Laag tekent hem dan als vectoren in het beeld zelf)
+  const laag = (f, s) => { const r = reik(s), L = f(env, C, s, r[0], r[1], S); L.maak = () => f(env, C, s, r[0], r[1], S); return L; };
+  let r; ca.j76Ver = laag(j76Ver, k * j76P.ver); ca.j76Mid = laag(j76Mid, k * j76P.mid);
+  r = reik(k); ca.j76Gevel = laag(j76Gevel, k);
   j76Kols(ca.j76Gevel, r[0], [[-1490, -1090, -112], [-1090, -796, -72], [-794, -556, -100], [-564, -352, -282], [-360, -324, -318], [-328, -156, -250], [-154, 4, -342],
     [4, 160, -258], [150, 456, -141], [450, 604, -70], [604, 742, -178], [740, 766, -438], [766, 845, -178], [845, 1116, -98], [1116, 1406, -132], [1406, 1830, -62], [-1500, 1830, -80]]);
   ca.j76Schip = j76Schip(env, C, k, S);
-  const so = k * j76P.oever; r = reik(so); ca.j76Oever = j76Oever(env, C, so, r[0], r[1], S);
+  const so = k * j76P.oever; ca.j76Oever = laag(j76Oever, so);
   ca.j76Paal = j76Paal(env, C, S);
   // de fietser: twaalf beelden van één omwenteling van de trappers, één keer voorgetekend (per frame één kopie)
   const fsc = P * 0.1 / 100, fw = Math.ceil(100 * fsc), fh = Math.ceil(112 * fsc), fs = ca.j76Fiets = env.canvas(fw * 12, fh);
@@ -9471,6 +9828,9 @@ function j76Laag(g, env, L, camX) {
   const d = env.dpr, sr = L.cv.width / L.w;
   const dx = Math.round((env.W / 2 + (L.x0 - camX) * L.s) * d) / d, a = Math.max(0, -dx), b = Math.min(L.w, env.W - dx);
   if (!(b > a)) return;
+  if (env.zx && L.maak) { // close-up (ronde 7): niet het plaatje opschalen maar de laag zelf tekenen, op zijn plek (j76Plaat geeft dan het beeld terug)
+    g.save(); env.css(g); env.j76Dir = { g, dx, y: L.y }; try { L.maak(); } finally { env.j76Dir = null; g.restore(); } return;
+  }
   if (!L.kols) { g.drawImage(L.cv, a * sr, 0, (b - a) * sr, L.cv.height, dx + a, L.y, b - a, L.h); return; }
   for (let i = Math.floor(a / 128); i * 128 < b; i++) {
     const x0 = Math.max(a, i * 128), x1 = Math.min(b, i * 128 + 128), y0 = Math.min(L.h, L.kols[i] || 0);
@@ -9486,9 +9846,13 @@ function j76Kols(L, xa, profiel) { // profiel: [[x0, x1, top], ...] in laag-eenh
   L.kols = kols;
 }
 function j76Plaat(env, s, xa, xb, yT, yB, yScherm) { // offscreen in laag-eenheden; yScherm: schermhoogte van laag-y 0
+  const D = env.j76Dir; // close-up: rechtstreeks in het beeld, geknipt op de maat van het plaatje
+  if (D) { const g = D.g; g.translate(D.dx, D.y); g.scale(s, s); g.translate(-xa, -yT); g.beginPath(); g.rect(xa, yT, xb - xa, yB - yT); g.clip(); return { g, cv: null, w: (xb - xa) * s, h: (yB - yT) * s, x0: xa, s, top: yT, y: D.y }; }
   const c = env.canvas((xb - xa) * s, (yB - yT) * s); c.g.scale(s, s); c.g.translate(-xa, -yT);
   return Object.assign(c, { x0: xa, s, top: yT, y: Math.round((yScherm + yT * s) * env.dpr) / env.dpr });
 }
+// close-up: een klein plaatje (schip, paal) opnieuw op de resolutie van de close-up; één per naam
+function j76Scherp(env, naam, maak) { const ca = env.cache; let Z = ca[naam]; if (!Z || Z.d !== env.dpr) { if (Z && Z.cv) Z.cv.width = Z.cv.height = 0; Z = ca[naam] = maak(); Z.d = env.dpr; } return Z; }
 function j76Ver(env, C, s, xa, xb, S) { // de stad ver weg, in de waas: lage huizen met zadeldaken, een paar flats, bomen
   const c = j76Plaat(env, s, xa, xb, -190, 14, S.Yh), q = c.g, rnd = env.rnd(1976), p = new Path2D(), pl = new Path2D();
   for (let x = xa; x < xb;) {
@@ -9783,7 +10147,7 @@ function j76Buiten(g, env, t) {
   const ca = env.cache, S = ca.j76S1, C = ca.j76C, { W, P } = env, A = env.A, k = S.k, d = env.dpr, dark = env.dark;
   const u = env.ease.soft(env.u), camX = env.lerp(j76X[0], j76X[1], u), sx = x => W / 2 + (x - camX) * k;
   if (!ca.j76Eerste) ca.j76Eerste = true; // het eerste beeld (bij de klik) zonder voorwerk, zodat het snel staat
-  else if (t <= 0 || t >= env.dur) j76Klus(env, false); // stilstaand beeld: tijd voor een stapje voorwerk
+  else if ((t <= 0 || t >= env.dur) && !env.zx && !env.film) j76Klus(env, false); // stilstaand beeld: tijd voor een stapje voorwerk (niet in een close-up: dan klopt de resolutie niet)
   const klok = ca.j76Klok; if (t < env.dur) klok.off = A - t; const T = env.calm ? env.dur : A - klok.off; // s sinds het begin van het shot, ook na de beweging
   // lucht (alleen boven de kade), stad, bomen en gevel; staat de camera stil, dan staat dat met de oever bewaard (env.still)
   const vast = t >= env.dur, achter = q => {
@@ -9807,7 +10171,7 @@ function j76Buiten(g, env, t) {
     g.fill();
   }
   // het schip deint licht; daaronder de donkere spiegeling van de romp
-  const bob = env.calm ? 0 : Math.sin(A * Math.PI * 2 * 0.2) * 0.8 * k, Sc = ca.j76Schip, xs0 = sx(-486), xs1 = sx(-140);
+  const bob = env.calm ? 0 : Math.sin(A * Math.PI * 2 * 0.2) * 0.8 * k, Sc = env.zx ? j76Scherp(env, 'j76SchipZ', () => j76Schip(env, C, k, S)) : ca.j76Schip, xs0 = sx(-486), xs1 = sx(-140);
   if (!env.lite) {
     g.fillStyle = C.rompSpiegel; g.beginPath();
     for (let j = 0; j < 6; j++) { const y = S.Yw + 4 + j * 4.2, sh = Math.sin(A * 1.3 + j * 1.7) * 3, q = 1 - j * 0.14; g.rect(xs0 + sh + (1 - q) * 20, y, (xs1 - xs0) * q, 2.4); }
@@ -9827,13 +10191,14 @@ function j76Buiten(g, env, t) {
   // 's avonds valt het licht van de natriumlamp aan deze kant ook op het water
   // de paal is de dichtste laag (2,5 x de gevel). Hij valt stil op 14% van de breedte, maar staand links van silogroep A (die begint
   // daar bijna aan de rand): dan staat hij half buiten beeld en snijdt hij de silo's niet door
-  const sp = k * j76P.oever, pl = ca.j76Paal, xl1 = Math.min(W * 0.14, W / 2 + (V.A.x - j76X[1]) * k - P * 0.014), xl = xl1 - (camX - j76X[1]) * 2.5 * k;
+  const sp = k * j76P.oever, pl = env.zx && !dark ? j76Scherp(env, 'j76PaalZ', () => j76Paal(env, C, S)) : ca.j76Paal, xl1 = Math.min(W * 0.14, W / 2 + (V.A.x - j76X[1]) * k - P * 0.014), xl = xl1 - (camX - j76X[1]) * 2.5 * k;
   if (dark && !env.lite) {
     const x = xl + (pl.lx - pl.ax); g.fillStyle = C.natWater; g.beginPath();
     for (let j = 0; j < 7; j++) { const y = S.Yn - 4 - j * 5, w = (16 - j * 1.6) * (P / 600), sh = Math.sin(A * 1.6 + j * 1.3) * 3; g.rect(x - w / 2 + sh, y, w, 1.6); }
     g.fill();
   }
   if (!vast) j76Laag(g, env, ca.j76Oever, camX);
+  else if (env.zx) env.still(g, 'j76rand', q => { const o = ca.j76Oever; q.save(); q.beginPath(); q.rect(0, o.y, W, S.Yn + 2 - o.y); q.clip(); j76Laag(q, env, o, camX); q.restore(); }, 'rand'); // close-up: de rand één keer als vectoren, in een eigen bewaard beeld
   else { const o = ca.j76Oever; g.save(); g.beginPath(); g.rect(0, o.y, W, S.Yn + 2 - o.y); g.clip(); j76Laag(g, env, o, camX); g.restore(); } // alleen de rand boven het water opnieuw
   // de fietser rijdt vanaf 3,8 s van links het beeld in, rustig naar rechts over het pad langs de kade (circa 6 s over de hele breedte)
   if (!env.lite) {
@@ -10467,6 +10832,19 @@ function j08Water1(g, env, c, k) {
     g.fillStyle = 'rgba(232,154,69,.55)'; g.fill(); g.restore();
   }
 }
+// ronde 7: in het stilstaande eindbeeld glijden er korrels de kuil in, naar de zuigmond (alleen aan de kant van de camera, dus voor de
+// buis langs). Zestien stipjes per frame (trage telefoon: zeven); elk verschijnt aan de rand, glijdt naar binnen en verdwijnt bij de mond.
+function j08Glij(g, env, c, k) {
+  const n = env.lite ? 7 : 16, rr = env.rnd(2008), A = env.A, W = env.W;
+  g.fillStyle = k.graanL; g.beginPath();
+  for (let i = 0; i < n; i++) {
+    const ang = Math.PI * (1.08 + 0.84 * rr()), v = 5 + rr() * 5, u = ((A * v + rr() * 22) % 22) / 22, r = 27 - 22 * u * u, x = 20 + Math.cos(ang) * r, z = -95 + Math.sin(ang) * r * 0.9;
+    const dd = z - c.z; if (dd < 4) continue; const s = c.F / dd, X = W / 2 + (x - c.x) * s, Y = c.Yh + (j08Kuil(r) - 0.6 - c.y) * s, a = Math.min(1, u * 5, (1 - u) * 6);
+    if (a <= 0.05) continue; const rad = Math.max(0.8, 0.52 * s) * (0.6 + 0.4 * a);
+    g.moveTo(X + rad, Y); g.arc(X, Y, rad, 0, j08TAU);
+  }
+  g.fill();
+}
 function j08Draw1(g, env, t) {
   const k = env.cache.k1, c = j08Cam1(env, env.u), eind = env.u >= 1;
   c.hoog = j08Y(c, -84, 0) > -4; // boven de laagste daken is iets van lucht of stad te zien
@@ -10475,6 +10853,7 @@ function j08Draw1(g, env, t) {
   if (eind) env.still(g, 'j08s1', q => j08Statisch1(q, env, c, k, t, 1));
   else { j08Statisch1(g, env, c, k, t, env.u); env.css(g); }
   env.css(g);
+  if (eind && !env.calm) j08Glij(g, env, c, k);
   if (!env.lite) env.gulls(g, [[env.W * 0.62, env.P * 0.05, 1, 0.3], [env.W * 0.8, env.P * 0.09, 0.8, 1.9]], { col: k.meeuw, size: Math.max(6, env.P * 0.013) });
   env.title(g, t, { x: env.W * 0.28, y: env.P * 0.27, donker: false }); // naast de buis op rustig graan; het graan onder de werklamp is ook 's avonds licht
 }
@@ -10616,10 +10995,10 @@ function j08Statisch2(g, env, cam, k) {
   g.fillStyle = k.grond; g.fillRect(-3000, 6, 6000, 400); g.fillStyle = k.grondL; g.fillRect(-3000, 6, 6000, 1.2);
   if (env.dark) { g.fillStyle = 'rgba(255,159,58,.12)'; g.fillRect(-3000, -30, 6000, 36); }
   j08Vul(g, G2.L, k);
-  const rb = env.cache.rib; if (rb) { const q = 3 / (12 * env.dpr); rb.setTransform(new DOMMatrix([q, 0, 0, q, 0, 0])); g.fillStyle = rb; g.fill(G2.L.m.ribVlak); }
+  const rb = env.cache.rib; if (rb) { const q = 3 / (12 * (env.zx ? env.zx.d : env.dpr)); rb.setTransform(new DOMMatrix([q, 0, 0, q, 0, 0])); g.fillStyle = rb; g.fill(G2.L.m.ribVlak); }
   g.strokeStyle = k.omtrek; g.globalAlpha = 0.55; g.lineWidth = 0.35; g.stroke(G2.L.omtrek); g.globalAlpha = 1;
   // de snijvlakken met arcering en een fijne omlijning, het dak met filterkast en afvoerpijpjes, peiltekens
-  g.fillStyle = k.snij; g.fill(G2.snij); const ar = env.cache.arc; if (ar) { const q = 3.2 / (16 * env.dpr); ar.setTransform(new DOMMatrix([q, 0, 0, q, 0, 0])); g.fillStyle = ar; g.fill(G2.snij); }
+  g.fillStyle = k.snij; g.fill(G2.snij); const ar = env.cache.arc; if (ar) { const q = 3.2 / (16 * (env.zx ? env.zx.d : env.dpr)); ar.setTransform(new DOMMatrix([q, 0, 0, q, 0, 0])); g.fillStyle = ar; g.fill(G2.snij); }
   g.strokeStyle = k.omtrek; g.lineWidth = 0.45; g.stroke(G2.snij);
   const top = -8 * j08FL; g.fillStyle = k.kast; g.fillRect(30, top - 22, 50, 22); g.fillStyle = k.kastS; g.fillRect(70, top - 22, 10, 22); g.fillRect(30, top - 22, 50, 1.4);
   g.fillStyle = k.rvs; for (const x of [180, 190, 200]) g.fillRect(x, top - 14, 3, 14);
@@ -11455,6 +11834,7 @@ addEventListener('keydown', e => {
   AU.ensure(); lastKey = true; acted = true; idleT0 = performance.now();
   const k = e.key;
   if (S.screen === 'sprong') { if (!/^(Shift|Control|Alt|AltGraph|Meta|Tab|CapsLock|Fn)$/.test(k)) { e.preventDefault(); if (!e.repeat) tlSprongKlaar(); } return; } // tijdsprong: een toets slaat over
+  if (S.screen === 'film') { if (!/^(Shift|Control|Alt|AltGraph|Meta|Tab|CapsLock|Fn)$/.test(k)) { e.preventDefault(); if (!e.repeat && performance.now() - SF.t0 > 600) sfKlaar(true); } return; } // de slotfilm: een toets slaat over
   if ((S.screen === 'play' || S.screen === 'intro') && SCROLL_KEYS.has(k) && !(k === ' ' && e.target && e.target.tagName === 'BUTTON')) e.preventDefault(); // spatie blijft voor de knop zelf
   // verhaalkaart: het indrukken telt (spatie klikt pas bij loslaten); een ingehouden toets (repeat) is geen nieuwe indruk
   if (S.screen === 'story' && (k === ' ' || k === 'Enter')) { if (e.repeat) storyArm = false; else armStory(); }
@@ -11554,7 +11934,7 @@ addEventListener('pointermove', e => { if (e.pointerType === 'mouse') idleT0 = p
 function frame(ts) {
   const fast = window.__kvFast || 1; // alleen voor de zelftest
   const raw = last ? ts - last : 0, dt = Math.min(raw / 1000, CONFIG.dtMax) * fast; last = ts;
-  if (run.mode === 'demo' && !['play', 'intro', 'story', 'done', 'sprong'].includes(S.screen)) { // menu: de akker uit de hoofdintro, het speelveld blijft weg
+  if (run.mode === 'demo' && !['play', 'intro', 'story', 'done', 'sprong', 'film'].includes(S.screen)) { // menu: de akker uit de hoofdintro, het speelveld blijft weg
     const ds = S.screen === 'title' && !titelStil() ? demoSpeed(dt) : 0; // alleen achter het titelscherm beweegt hij, en na CONFIG.demo.idle s niet meer
     if (!offscreen && (ds > 0 || !still)) { if (ds > 0) frameSample(raw); still = titelAchter(dt * ds) && ds === 0; }
     Wd.pcam = Wd.camY; G.px = G.x; acc = 0;
@@ -11569,7 +11949,7 @@ function frame(ts) {
     render(clamp(acc / CONFIG.step, 0, 1)); still = false;
   } else {
     Wd.pcam = Wd.camY; G.px = G.x; acc = 0;
-    if (!still) { if (S.screen !== 'intro' && !tlDekt()) render(1); still = true; } // achter de intro en achter het eindbeeld van het jaar (verhaal, tijdsprong, slot) ligt het veld verborgen
+    if (!still) { if (S.screen !== 'intro' && S.screen !== 'film' && !tlDekt()) render(1); still = true; } // achter de intro en achter het eindbeeld van het jaar (verhaal, tijdsprong, slot) ligt het veld verborgen
   }
   if (S.screen === 'story') { syncStoryBtn(); if (!reduced.matches) drawStoryArt((ts - storyT0) / 1000); } // knop na 0,6 s actief; paardje loopt rond, stoom stijgt op
   if (offscreen && still) { looping = false; return; } // uit beeld: geen frames meer tot het spel weer in beeld komt (loop())
@@ -11622,6 +12002,7 @@ window.__korrelval = { introAt: (i, t) => { IN.hold = i !== null; if (IN.hold) {
   // ontdekken (11d): ontdek() geeft de stand (dingen, plek in css-px, open, zoom), ontdekOpen(n) opent ding n van dit shot (-1: Terug), tijdlijn(i) begint bij jaar i
   plakboek: () => ({ fotos: Object.keys(PB.foto).length, rij: PB.rij.length, ms: PB.ms.slice(), mis: Object.keys(PB.mis), kader: PB.kader }), // ronde 4: de plaatjes van het Molenboek
   geluid: (naam, sec) => sfeerMeet(naam, sec || 10), sfeer: () => !!IN.sfeer, // ronde 4: sfeergeluid meten (piek, RMS, gelijkstroom)
+  film: () => sfState(), filmStart: van => sfStart(van || 'done'), // de slotfilm (ronde 7)
   ontdek: () => oxState(), ontdekOpen: n => (n < 0 ? oxDicht() : oxOpen(n)), tijdlijn: i => tlStart(i || 0), sprong: () => spState(), // tijdsprong tussen de jaren
   achter: () => ({ klaar: !!TA.key, warm: ixWarmed, uit: TA.uit, stil: titelStil(), t: +TA.t.toFixed(1) }), // de akker achter het menu (titelAchter)
   ontdekProj: (shot, x, y, z) => { const J = JXP[oxYear()]; try { return J && IN.env ? J.proj(IN.env, shot, x, y, z || 0) : null; } catch (e) { return null; } }, // alleen voor de plekken (check/plek.js)

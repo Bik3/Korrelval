@@ -76,8 +76,8 @@ doortelt. De ligging is schematisch. De teksten komen uit het onderzoek:
   dan z keer zo groot en elke setTransform krijgt de verschuiving erbij, dus het jaar hoeft er niets voor te weten en alles wat als
   vectoren getekend wordt is scherp. Het bewaarde eindbeeld (env.still) wordt één keer opnieuw gemaakt op die schaal. In OXP staat
   per ding cu: de halve maat van het kader (r), een ander midden (at, c) of een moment in het shot (t). 1976 buiten tekent in de
-  close-up zijn voorgetekende lagen opnieuw als vectoren. Alleen de wolkenlucht blijft een opgeschaald plaatje. Verminderde beweging:
-  geen vlucht, het beeld vloeit over. Trage telefoon: hooguit 2x.
+  close-up zijn voorgetekende lagen opnieuw als vectoren, en de wolkenlucht wordt in stapjes op een hogere resolutie bijgetekend
+  (hooguit 4 megapixel). Verminderde beweging: geen vlucht, het beeld vloeit over. Trage telefoon: hooguit 2x.
 - De slotfilm tekent op hetzelfde canvas met dezelfde jaren (JX[i].draw), elk met een eigen env. Er leeft één jaar tegelijk plus het
   volgende dat klaarstaat; het volgende wordt gebouwd als de camera stilstaat en wat voorbij is wordt vrijgegeven.
 - De kaarten zijn svg (KAARTEN, kaartSvg) en staan in de tijdsprong (#spKaart) en in het Molenboek (#bookPlekken).
@@ -95,5 +95,5 @@ CSS. De rest is bewust blijven staan.
 
 ## Testen
 
-game/tests/eindtest.js (113 controles): het pad van een nieuwe speler, herladen, 360x640, toetsenbord, verminderde beweging, de
-schermen van ronde 5 en de aantekeningen van ronde 6. Hij werkt ook op docs/index.html. Gebruik: NODE_PATH="$(npm root -g)" node game/tests/eindtest.js game/korrelval.html <uitmap>.
+game/tests/eindtest.js (138 controles): het pad van een nieuwe speler, herladen, 360x640, toetsenbord, verminderde beweging, de
+schermen van ronde 5, de aantekeningen van ronde 6 en van ronde 7 de close-ups (alle 28), de slotfilm en de twee kaarten. Hij werkt ook op docs/index.html. Gebruik: NODE_PATH="$(npm root -g)" node game/tests/eindtest.js game/korrelval.html <uitmap>.

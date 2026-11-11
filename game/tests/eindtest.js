@@ -1,15 +1,19 @@
 // =====================================================================================================
 // Eindtest Molenvlucht (ontdekken in de jaarintro's, met de minigame Korrelval aan het eind): het hele pad van een nieuwe speler, en de randen.
 //   A  400x800 touch (licht), lege opslag: titel > It giet oan! > hoofdintro (Verder, Terug in de tijd) > jaarintro 1846 shot 1 en 2 met
-//      ontdekken (tik op het ding, zoom, zin, Nieuw in je Molenboek, Terug, tik ernaast, knop in het paneel, Verder terwijl een ding open
-//      staat) > verhaal 1846 > Volgende molen: 1867 > tijdsprong (tik slaat over) > Overslaan > verhaal > Menu > Kies een molen (alle jaren) > 2026 > slot >
+//      ontdekken (tik op het ding, de camera vliegt erheen (close-up, ronde 7), zin, Nieuw in je Molenboek, Terug, tik ernaast, knop in het paneel, Verder terwijl een ding open
+//      staat) > verhaal 1846 > Volgende molen: 1867 > tijdsprong met de kaart Holwerd naar Leeuwarden (ronde 7; tik slaat over) > Overslaan > verhaal >
+//      1920 (tijdsprong met de lijn met stippen, geen kaart) > 1976 (de kaart Vliet naar Nieuwe Kanaal, uitgekeken) > Menu > Kies een molen (alle jaren) > 2026 > slot >
+//      de slotfilm (ronde 7: speelt, een tik slaat over, Bekijk de film opnieuw op de slotkaart en in het Molenboek) >
 //      Molenboek (plakboek per jaar: plaatjes, lege kaders, Ga naar <jaar>, ook daar ontdekken, Terug naar het Molenboek) > Korrelval (kaart vooraf, It giet oan!, game-over, Nog een korrel?)
 //   B  herladen: het ontdekte blijft (vinkjes, geen gloed, teller)
 //   C  360x640 touch: titel past, paneel past, de dingen staan boven het paneel, tikvlak minstens 44 px
 //   D  1280x800 toetsenbord: Enter, Esc, Tab, pijltjes langs de knoppen, Enter opent, Esc gaat terug, voorlezen (aria-live)
-//   E  verminderde beweging: geen zoom en geen pulseren, wel gloed en dimmen
+//   E  verminderde beweging: geen vlucht en geen pulseren; de close-up staat er meteen (overvloeier)
 //   F  ronde 5, 360x640 met alles ontdekt: slotkaart, Kies een molen, plakboek-kaders, Scores, Instellingen, weegbon of game-over van Korrelval
 //   G  ronde 6, 360x640, alle 12 shots: aantekeningen in plaats van ringen (stip, potloodlijntje, naamkaartje), een tik op het kaartje opent het ding
+//      ronde 7: van alle 28 dingen de close-up (de camera komt aan, het beeld is opnieuw getekend, vinkje, Terug vliegt uit)
+//   H  ronde 7, 400x800: de slotfilm helemaal uitgekeken (zes jaren op volgorde, stippen van wat je ontdekte, hooguit twee jaren in het geheugen, de slotregel, dan de slotkaart)
 // Overal: geen console-fouten, geen request naar buiten, nooit het valspel, de introband of de weegbon in de tijdlijn.
 // Gebruik: NODE_PATH="$(npm root -g)" node eindtest.js <korrelval.html> <uitmap>
 // =====================================================================================================
@@ -99,25 +103,32 @@ const stand = T => T.tot(async () => (await T.ox()).on, 9000);
   check(p1.past && await A.geenX(), 'paneel past (400x800)', p1);
   await A.shot('A02-1846-s1-gloed');
   // tik op het ding zelf
-  const d0 = o.list[0]; await A.tap(d0.box[0] + d0.box[2] / 2, d0.box[1] + d0.box[3] / 2); await sleep(700);
+  const d0 = o.list[0]; await A.tap(d0.box[0] + d0.box[2] / 2, d0.box[1] + d0.box[3] / 2); await sleep(120);
+  const oVlucht = await A.ox(); // onderweg: de camera vliegt (CSS-transform op het beeld)
+  const cuAan = await A.tot(async () => { const q = (await A.ox()).cu; return q && q.fase === 'aan'; }, 2500); await sleep(450);
   o = await A.ox();
   const tekst = await page.textContent('#introText'), sr = await page.textContent('#sr'), kop = (await page.textContent('#introKicker')).trim();
-  check(o.open === 0 && /scale\(/.test(o.zoom), 'tik op het ding: het gaat open en de camera zoomt naar het ding', { open: o.open, zoom: o.zoom });
-  const zoomK = +(/scale\(([\d.]+)\)/.exec(o.zoom) || [0, 0])[1];
-  check(zoomK > 1 && zoomK <= 1.4, 'zoom hooguit 1,4x', zoomK);
+  check(oVlucht.open === 0 && oVlucht.cu && oVlucht.cu.fase === 'in' && /scale\(/.test(oVlucht.zoom), 'tik op het ding: het gaat open en de camera vliegt erheen', { open: oVlucht.open, cu: oVlucht.cu, zoom: oVlucht.zoom });
+  const zoomK = o.cu ? o.cu.z : 0;
+  check(cuAan && o.cu && o.zoom === '' && o.cu.scherp && zoomK >= 1.5 && zoomK <= 3.2, 'close-up: de camera komt aan, het beeld is opnieuw getekend op 1,5x tot 3,2x (geen opgeschaald plaatje meer)', { cu: o.cu, zoom: o.zoom });
+  const cuBeeld = await page.evaluate(() => ({ P: window.__korrelval.jaarState().picH, W: innerWidth, kaart: getComputedStyle(document.querySelector('#oxLaag .ox-kaart')).opacity, stip: getComputedStyle(document.querySelector('#oxLaag .ox-spot')).opacity, vink: (e => e ? getComputedStyle(e).opacity : null)(document.querySelector('#introKicker .ox-vink.aan')) }));
+  check(o.cu && o.cu.midden && Math.abs(o.cu.midden[0] - cuBeeld.W / 2) < cuBeeld.W * 0.2 && Math.abs(o.cu.midden[1] - cuBeeld.P / 2) < cuBeeld.P * 0.2 && o.cu.vul >= 0.5, 'close-up: het ding staat midden in het beeld boven het paneel en vult er ruim de helft van', { midden: o.cu && o.cu.midden, vul: o.cu && o.cu.vul, P: cuBeeld.P });
+  check(cuBeeld.kaart === '0' && cuBeeld.stip === '0' && cuBeeld.vink === '1', 'close-up: geen aantekeningen in beeld; het vinkje staat naast de naam als de camera er is', cuBeeld);
   check(kop === d0.naam && !tekst.startsWith(d0.naam) && /Nieuw in je Molenboek/.test(tekst), 'paneel: de naam in handschrift op de plek van het jaartal, één zin en Nieuw in je Molenboek', { kop, tekst });
   check(sr.includes(d0.naam) && sr.length > 20, 'de zin wordt voorgelezen (aria-live)', sr.slice(0, 80));
-  check(await A.box('#oxTerug') && await page.evaluate(() => document.getElementById('oxLaag').classList.contains('open')), 'Terug staat er en de rest is gedimd');
+  check(await A.box('#oxTerug') && await page.evaluate(() => document.getElementById('oxLaag').classList.contains('open')), 'Terug staat er; een tik op het beeld is nu ook Terug');
   const p2 = await A.paneel(); check(p2.past && p2.top <= p1.top + 2, 'het paneel past nog en zakt niet als een ding open is (het mag naar boven groeien: de zin vervangt de ondertitel)', { voor: p1.top, na: p2.top });
   await A.shot('A03-1846-s1-open');
-  await A.tapSel('#oxTerug'); await sleep(750);
+  await A.tapSel('#oxTerug'); await sleep(150); const oUit = await A.ox();
+  const cuWeg = await A.tot(async () => !(await A.ox()).cu, 2500); await sleep(500);
   o = await A.ox();
-  check(o.open === -1 && o.zoom === '' && o.list[0].af && /^1 van 5 ontdekt$/.test(o.tel), 'Terug zoomt uit; vinkje en 1 van 5 ontdekt', { open: o.open, zoom: o.zoom, tel: o.tel });
+  check(oUit.open === -1 && oUit.cu && oUit.cu.fase === 'uit' && /scale\(/.test(oUit.zoom), 'Terug: de camera vliegt weer uit', { cu: oUit.cu, zoom: oUit.zoom });
+  check(cuWeg && o.open === -1 && o.zoom === '' && o.list[0].af && /^1 van 5 ontdekt$/.test(o.tel), 'na de terugvlucht: het gewone beeld, vinkje en 1 van 5 ontdekt', { open: o.open, zoom: o.zoom, tel: o.tel });
   check(await page.evaluate(() => getComputedStyle(document.querySelector('.ox-spot.af i')).opacity === '0'), 'een ontdekt ding heeft geen stip meer (wel een vinkje)');
   // de knop in het paneel, dan tik ernaast
   await A.tapSel('#oxKnoppen .ox-knop:nth-child(2)'); await sleep(650);
   o = await A.ox(); const open2 = o.open;
-  await A.tap(20, 60); await sleep(700); o = await A.ox();
+  await A.tap(20, 60); await sleep(1100); o = await A.ox();
   check(open2 === 1 && o.open === -1, 'de knop met de naam opent het ding; een tik ernaast is Terug', { open2, na: o.open });
   // tik op het beeld naast de dingen (niets open): geen Verder
   await A.tap(30, 40); await sleep(300); jv = await A.jaar();
@@ -147,16 +158,37 @@ const stand = T => T.tot(async () => (await T.ox()).on, 9000);
   await A.shot('A06-verhaal-1846');
   const bewaard = await page.evaluate(() => { try { return Object.keys(JSON.parse(localStorage.getItem('korrelval-b-v2')).ontdekt); } catch (e) { return null; } });
   check(bewaard && bewaard.length >= 3, 'het ontdekte staat in de opslag', bewaard);
-  // tijdsprong (ronde 3): na het verhaal een lijn met zes stippen, het jaartal telt in handschrift van 1846 naar 1867, de stip verspringt; een tik slaat over
-  await sleep(500); await A.tapSel('#bStory'); await sleep(420);
-  const sp1 = await page.evaluate(() => window.__korrelval.sprong()); await A.shot('A06b-tijdsprong');
+  // tijdsprong van 1846 naar 1867 (ronde 7): de eerste verhuizing, dus de kaart Holwerd naar Leeuwarden in plaats van de lijn met stippen.
+  // Het jaartal telt in handschrift door, de oranje stip reist over de gestippelde lijn; een tik slaat over
+  const kaartStand = () => page.evaluate(() => { const s = window.__korrelval.sprong(), k = document.getElementById('spKaart'), zicht = e => !!e && !e.hidden && getComputedStyle(e).display !== 'none' && e.getBoundingClientRect().width > 0;
+    const r = k.getBoundingClientRect(), g = document.getElementById('spRegel').getBoundingClientRect();
+    return { ...s, kaartZicht: zicht(k) && !!k.querySelector('svg.krt .krt-route') && !!k.querySelector('.krt-nu'), namen: [...k.querySelectorAll('text')].map(t => t.textContent), lijnZicht: zicht(document.getElementById('spLijn')), binnen: r.left >= 0 && r.right <= innerWidth && r.top >= 0 && g.bottom <= innerHeight, hand: s.hand }; });
+  await sleep(500); await A.tapSel('#bStory'); await sleep(1500);
+  const sp1 = await kaartStand(); await A.shot('A06b-tijdsprong-kaart');
   await A.tap(200, 300); await sleep(200);
   jv = await A.jaar();
-  check(sp1.open && sp1.van === '1846' && sp1.naar === '1867' && sp1.stippen === 6 && sp1.jaren.join() === '1846,1867,1920,1976,2008,2026' && sp1.hand && +sp1.jaar > 1846 && +sp1.jaar < 1867 && sp1.stip > 0 && sp1.stip < 1 && sp1.t < 1.5 && jv.open && jv.year === 1867,
-    'tijdsprong: zes stippen, het jaartal (handschrift) telt van 1846 naar 1867, de stip verspringt; een tik slaat over', { ...sp1, na: jv.year });
+  check(sp1.open && sp1.van === '1846' && sp1.naar === '1867' && sp1.hand && +sp1.jaar > 1846 && +sp1.jaar < 1867 && sp1.stip > 0 && sp1.stip < 1 && sp1.t < 3.8 && jv.open && jv.year === 1867,
+    'tijdsprong 1846 naar 1867: het jaartal (handschrift) telt door; een tik slaat over', { jaar: sp1.jaar, stip: sp1.stip, t: sp1.t, na: jv.year });
+  check(sp1.kaart === 'Van Holwerd naar Leeuwarden' && sp1.kaartZicht && !sp1.lijnZicht && sp1.binnen && ['Waddenzee', 'Holwerd', 'Leeuwarden'].every(n => sp1.namen.includes(n)) && /^translate\(/.test(sp1.kaartStip) && sp1.kaartStip !== 'translate(229.0 59.0)' && sp1.kaartStip !== 'translate(97.0 151.0)',
+    'de kaart bij 1846 naar 1867: Holwerd aan de Waddenzee en Leeuwarden, de stip is onderweg over de gestippelde lijn; geen lijn met zes stippen', { kaart: sp1.kaart, namen: sp1.namen, stip: sp1.kaartStip, lijn: sp1.lijnZicht, binnen: sp1.binnen });
+  check(sp1.regel === 'In Holwerd konden grote schepen niet komen, in Leeuwarden wel.', 'de kaart: één regel met de reden uit het onderzoek', sp1.regel);
   check(jv.open && jv.year === 1867 && jv.from === 'tijd', 'Volgende molen: de jaarintro van 1867 (elke keer, niet alleen de eerste keer)', { year: jv.year, from: jv.from });
   await sleep(300); await A.tapSel('#bIntroSkipTop'); await sleep(600);
   check(await A.scr() === 'story' && (await page.textContent('#bStory')) === 'Volgende molen: 1920', 'Overslaan: het verhaal van 1867, dan Volgende molen: 1920');
+  // van 1867 naar 1920 (geen verhuizing): de lijn met zes stippen zoals voorheen, geen kaart
+  await sleep(500); await A.tapSel('#bStory'); await sleep(420);
+  const sp2 = await kaartStand(); await A.shot('A06c-tijdsprong-lijn');
+  await A.tap(200, 300); await sleep(200); jv = await A.jaar();
+  check(sp2.open && !sp2.kaart && !sp2.kaartZicht && sp2.lijnZicht && sp2.regel === '' && sp2.van === '1867' && sp2.naar === '1920' && sp2.stippen === 6 && sp2.jaren.join() === '1846,1867,1920,1976,2008,2026' && +sp2.jaar > 1867 && +sp2.jaar < 1920 && sp2.stip > 1 && sp2.stip < 2 && sp2.t < 1.5 && jv.open && jv.year === 1920,
+    'tijdsprong 1867 naar 1920: geen kaart maar de lijn met zes stippen, het jaartal telt door, de stip verspringt; een tik slaat over', { kaart: sp2.kaart, lijn: sp2.lijnZicht, jaar: sp2.jaar, stip: sp2.stip, na: jv.year });
+  // van 1920 naar 1976: de tweede verhuizing, de kaart Vliet naar Nieuwe Kanaal; uitgekeken (circa 3,8 s)
+  await sleep(300); await A.tapSel('#bIntroSkipTop'); await sleep(600); await sleep(500); await A.tapSel('#bStory'); const kT0 = Date.now(); await sleep(2900);
+  const sp3 = await kaartStand(); await A.shot('A06d-tijdsprong-kaart2');
+  const k76 = await A.tot(async () => (await A.jaar()).open && (await A.jaar()).year === 1976, 4000), kDuur = (Date.now() - kT0) / 1000;
+  check(sp3.open && sp3.kaart === 'Van het Vliet naar het Nieuwe Kanaal' && sp3.kaartZicht && !sp3.lijnZicht && sp3.binnen && ['Leeuwarden', 'Noordvliet', 'Vliet', 'Nieuwe Kanaal', 'De Merodestraat'].every(n => sp3.namen.includes(n)) && sp3.kaartStip === 'translate(236.0 143.0)' && sp3.jaar === '1976',
+    'de kaart bij 1920 naar 1976: het Vliet en het Nieuwe Kanaal in Leeuwarden; de stip is aangekomen aan De Merodestraat', { kaart: sp3.kaart, namen: sp3.namen, stip: sp3.kaartStip, jaar: sp3.jaar });
+  check(sp3.regel === 'In 1976 staat de fabriek aan het Nieuwe Kanaal. Het oudste deel van de loskade daar stamde uit 1927.' && k76 && kDuur > 3.3 && kDuur < 6, 'de tweede kaart: alleen wat zeker is (geen reden verzonnen); na circa 3,8 s vanzelf door naar 1976', { regel: sp3.regel, duur: +kDuur.toFixed(1) });
+  await sleep(300); await A.tapSel('#bIntroSkipTop'); await sleep(600);
   await A.tapSel('#bStoryMenu'); await sleep(400);
   check(await A.scr() === 'title', 'Menu op de verhaalkaart: terug naar de titel');
   // Kies een molen
@@ -170,6 +202,14 @@ const stand = T => T.tot(async () => (await T.ox()).on, 9000);
   await sleep(300); await A.tapSel('#bIntroSkipTop'); await sleep(600);
   check((await page.textContent('#bStory')) === 'Verder', 'na 2026: de knop op het verhaal heet Verder');
   await sleep(400); await A.tapSel('#bStory'); await sleep(500);
+  // ronde 7: eerst de slotfilm; een tik slaat hem over
+  const fl1 = await page.evaluate(() => window.__korrelval.film());
+  check(await A.scr() === 'film' && fl1.open && fl1.van === 'slot' && fl1.jaar === 1846, 'na het verhaal van 2026: eerst de slotfilm, die bij 1846 begint', fl1);
+  await sleep(1500); const fl2 = await page.evaluate(() => window.__korrelval.film());
+  check(fl2.open && fl2.t > fl1.t + 0.8 && fl2.frames > fl1.frames + 20 && fl2.levend <= 2 && fl2.tel === '1846' && !!(await A.box('#bFilmSkip')), 'de film speelt: de tijd loopt, het jaartal staat erbij, Overslaan staat erbij', fl2);
+  await A.shot('A06c-slotfilm');
+  await A.tap(200, 300); await sleep(500);
+  check(await A.scr() === 'done' && (await page.evaluate(() => window.__korrelval.film())).klaar === 'overgeslagen', 'een tik slaat de film over: de slotkaart');
   const slot = await page.evaluate(() => ({ s: window.__korrelval.state().screen, note: document.getElementById('doneNote').textContent, knoppen: ['bDoneBook', 'bDoneNight', 'bDoneMenu'].map(i => !!document.getElementById(i).offsetWidth), bon: !!document.querySelector('#scrDone .bon'), kv: document.getElementById('bDoneNight').textContent, regel: document.querySelector('#scrDone .kv-regel').textContent }));
   check(slot.s === 'done' && /^Je ontdekte 3 van 28 dingen\.$/.test(slot.note) && slot.knoppen.every(Boolean) && !slot.bon && slot.kv === 'Speel Korrelval' && /Nu ben jij de korrel\./.test(slot.regel), 'slotkaart: Je ontdekte 3 van 28 dingen, met Speel Korrelval (en de regel ervoor), Molenboek en Menu (geen weegbon)', slot);
   const slotGa = await page.evaluate(() => [...document.querySelectorAll('#doneJaren .tl-ga')].map(b => { const r = b.getBoundingClientRect(), q = getComputedStyle(b, '::before'); return [b.dataset.jaar, Math.round(r.height - parseFloat(q.top) - parseFloat(q.bottom)), b.getAttribute('aria-label')]; }));
@@ -177,11 +217,19 @@ const stand = T => T.tot(async () => (await T.ox()).on, 9000);
   const slotPast = await page.evaluate(() => { const c = document.querySelector('#scrDone .card'); return c.scrollHeight <= c.clientHeight + 1; });
   check(slotPast, 'slotkaart past zonder scrollen', slotPast);
   await A.shot('A07-slot');
+  // Bekijk de film opnieuw (slotkaart); een toets slaat over
+  check(!!(await A.box('#bDoneFilm')) && (await page.textContent('#bDoneFilm')).trim() === 'Bekijk de film opnieuw', 'slotkaart: de knop Bekijk de film opnieuw');
+  await A.tapSel('#bDoneFilm'); await sleep(900); const fl3 = await page.evaluate(() => window.__korrelval.film());
+  await page.keyboard.press('Escape'); await sleep(500);
+  check(fl3.open && fl3.van === 'done' && await A.scr() === 'done', 'Bekijk de film opnieuw speelt de film; een toets slaat over, terug op de slotkaart', { open: fl3.open, van: fl3.van });
   // Molenboek
   await A.tapSel('#bDoneBook'); await sleep(500);
   const boek = await page.evaluate(() => ({ s: window.__korrelval.state().screen, jaar46: (document.querySelector('.pb-jaar[data-jaar="0"]') || { textContent: '' }).textContent, dingen: document.querySelectorAll('.pb-kaart.vol').length, kijk: [...document.querySelectorAll('.jx-kijk')].map(b => b.dataset.jaar), acts: [...document.querySelectorAll('#bookThings .act, #bookMachines .act')].map(p => p.textContent.split(':')[0]) }));
   check(boek.s === 'boek' && boek.dingen >= 3 && /1846.*3 van 5.*Rosmolen/.test(boek.jaar46), 'Molenboek: de ontdekte dingen staan erin, bij hun jaar (1846, 3 van 5)', { dingen: boek.dingen });
   check(boek.kijk.includes('0'), 'Molenboek: Ga naar 1846 op het blad van 1846', boek.kijk);
+  const plekken = await page.evaluate(() => [...document.querySelectorAll('#bookPlekken .pb-plek')].map(f => ({ leeg: f.classList.contains('leeg'), svg: !!f.querySelector('svg.krt .krt-route'), kop: (f.querySelector('figcaption b') || {}).textContent, tekst: (f.querySelector('figcaption span') || {}).textContent })));
+  check(plekken.length === 2 && plekken.every(q => !q.leeg && q.svg) && plekken[0].kop === 'Van Holwerd naar Leeuwarden' && plekken[1].kop === 'Van het Vliet naar het Nieuwe Kanaal' && /grote schepen/.test(plekken[0].tekst) && /1927/.test(plekken[1].tekst),
+    'Molenboek: het blad De plekken met de twee kaarten en hun regel', plekken.map(q => q.kop));
   // ronde 4: het plakboek. Elk ontdekt ding heeft een plaatje (uitsnede van het eindbeeld van zijn shot), de rest is een leeg kader met ? en het jaartal
   await A.tot(() => page.evaluate(() => !document.querySelector('#scrBoek canvas[data-wacht]')), 12000);
   const plak = await page.evaluate(() => {
@@ -212,7 +260,11 @@ const stand = T => T.tot(async () => (await T.ox()).on, 9000);
   check(jv.open && jv.year === 1867, 'Ga naar 1867 start dat jaar', { year: jv.year, from: jv.from });
   await A.tapSel('#bIntroSkipTop'); await sleep(700);
   check(await A.scr() === 'boek', 'en terug in het Molenboek');
-  await sleep(450); await A.tapSel('#bBookBack'); await sleep(400);
+  await page.evaluate(() => document.getElementById('bBookFilm').scrollIntoView({ block: 'center' })); await sleep(450);
+  const bf = !!(await A.box('#bBookFilm')); if (bf) { await A.tapSel('#bBookFilm'); await sleep(900); }
+  const fl4 = await page.evaluate(() => window.__korrelval.film()); if (fl4.open) { await A.tapSel('#bFilmSkip'); await sleep(500); }
+  check(bf && fl4.open && fl4.van === 'boek' && await A.scr() === 'boek', 'Molenboek: Bekijk de film opnieuw speelt de film; Overslaan brengt je terug in het Molenboek', { knop: bf, van: fl4.van });
+  await sleep(450); await page.evaluate(() => { document.querySelector('#scrBoek .card').scrollTop = 1e6; }); await sleep(200); await A.tapSel('#bBookBack'); await sleep(400);
   check(await A.scr() === 'done', 'Terug uit het Molenboek: weer de slotkaart');
   // Korrelval (de minigame)
   A.korrelval();
@@ -305,10 +357,15 @@ const stand = T => T.tot(async () => (await T.ox()).on, 9000);
   check(jv.open && o.on, 'E verminderde beweging: meteen het eindbeeld met de ontdekstand', { on: o.on });
   const anim = await E.page.evaluate(() => getComputedStyle(document.querySelector('.ox-spot i')).animationName);
   check(anim === 'none', 'E de stip ademt niet', anim);
-  await E.tapSel('#oxKnoppen .ox-knop:nth-child(1)'); await sleep(400); o = await E.ox();
-  const dim = await E.page.evaluate(() => getComputedStyle(document.getElementById('oxDim')).opacity);
-  check(o.open === 0 && o.zoom === '' && +dim > 0.9, 'E geen zoom, wel dimmen', { zoom: o.zoom, dim });
-  await E.shot('E01-reduced-open');
+  await E.tapSel('#oxKnoppen .ox-knop:nth-child(1)'); await sleep(60); o = await E.ox();
+  check(o.open === 0 && o.zoom === '' && o.cu && o.cu.fase === 'aan' && o.cu.z >= 1.5, 'E geen vlucht: de close-up staat er meteen (het beeld vloeit over)', { zoom: o.zoom, cu: o.cu });
+  await sleep(500); await E.shot('E01-reduced-open');
+  await E.tapSel('#oxTerug'); await sleep(60); o = await E.ox();
+  check(o.open === -1 && o.zoom === '' && !o.cu, 'E Terug: meteen het gewone beeld', { zoom: o.zoom, cu: o.cu });
+  await E.tapSel('#bIntroSkipTop'); await sleep(700); await E.tapSel('#bStory'); await sleep(500);
+  const spE = await E.page.evaluate(() => window.__korrelval.sprong());
+  check(spE.open && spE.kaart === 'Van Holwerd naar Leeuwarden' && spE.kaartStip === 'translate(97.0 151.0)' && spE.jaar === '1867', 'E de kaart staat stil: de stip staat al in Leeuwarden, het jaartal op 1867', { kaart: spE.kaart, stip: spE.kaartStip, jaar: spE.jaar });
+  await E.tot(async () => (await E.jaar()).open && (await E.jaar()).year === 1867, 5000);
   check(!E.fouten.length && !E.extern.length, 'E geen fouten, niets van buiten', E.fouten.slice(0, 3));
   E.stop(); await E.ctx.close();
 
@@ -325,7 +382,7 @@ const stand = T => T.tot(async () => (await T.ox()).on, 9000);
   await F.tapSel('#bPick'); await sleep(1600); // jxPrewarm meet na 0,4 s het paneel: de akker moet blijven staan
   const akker = await fp.evaluate(() => { const c = document.getElementById('introCv'); if (c.hidden) return 'weg'; const d = c.getContext('2d').getImageData(Math.floor(c.width / 2), 8, 1, 1).data; return d[3]; });
   check(akker === 255, 'F Kies een molen: de akker blijft erachter staan (het canvas is niet gewist)', akker);
-  await F.tapSel('#lvlChips .btn:nth-child(6)'); await sleep(500); await F.tapSel('#bIntroSkipTop'); await sleep(700); await F.tapSel('#bStory'); await sleep(600);
+  await F.tapSel('#lvlChips .btn:nth-child(6)'); await sleep(500); await F.tapSel('#bIntroSkipTop'); await sleep(700); await F.tapSel('#bStory'); await sleep(900); await F.tapSel('#bFilmSkip'); await sleep(500); // ronde 7: de slotfilm overslaan
   const slot5 = await fp.evaluate(() => { const c = document.querySelector('#scrDone .card'), r = c.getBoundingClientRect(); return { s: window.__korrelval.state().screen, past: c.scrollHeight <= c.clientHeight + 1, binnen: [...document.querySelectorAll('#doneJaren li')].every(li => { const q = li.getBoundingClientRect(); return q.left >= r.left && q.right <= r.right + 0.5 && li.scrollWidth <= li.clientWidth + 1; }), n: document.querySelectorAll('#doneJaren li.af').length }; });
   check(slot5.s === 'done' && slot5.past && slot5.binnen && slot5.n === 6, 'F slotkaart (360 breed, alles ontdekt): zes jaren met vinkje, niets afgeknipt, geen scrollen', slot5);
   await F.tapSel('#bDoneBook'); await sleep(500); await F.tot(() => fp.evaluate(() => !document.querySelector('#scrBoek canvas[data-wacht]')), 40000);
@@ -360,7 +417,7 @@ const stand = T => T.tot(async () => (await T.ox()).on, 9000);
   await gp.goto('file://' + wrapped); await sleep(600);
   await gp.evaluate(() => localStorage.setItem('korrelval-b-v2', JSON.stringify({ introSeen: true, oxUitleg: 1 }))); await gp.reload(); await sleep(1000);
   const raakt = (A, B) => Math.min(A[0] + A[2], B[0] + B[2]) > Math.max(A[0], B[0]) && Math.min(A[1] + A[3], B[1] + B[3]) > Math.max(A[1], B[1]);
-  const gMis = [], gRing = []; let gDingen = 0, gKaart = 0, gTik = null, gAf = null, gAdem = '', gVlug = 0;
+  const gMis = [], gRing = [], hMis = []; let gDingen = 0, gKaart = 0, gTik = null, gAf = null, gAdem = '', gVlug = 0, hGoed = 0, hTijd = 0;
   for (let j = 0; j < 6; j++) {
     await gp.evaluate(i => window.__korrelval.jaar(i, 'tijd'), j); await sleep(450);
     for (const sh of [0, 1]) {
@@ -378,13 +435,30 @@ const stand = T => T.tot(async () => (await T.ox()).on, 9000);
         if (raakt(c, g.skip)) gMis.push(`${naam} ${d.id}: over Overslaan`);
         for (const q of g.list) if (q !== d) { if (q.kaart && raakt(c, q.kaart)) gMis.push(`${naam} ${d.id}: over het kaartje van ${q.id}`); if (q.a && !/paard/.test(q.id) && raakt(c, [q.a[0] - 9, q.a[1] - 9, 18, 18])) gMis.push(`${naam} ${d.id}: over de stip van ${q.id}`); } }
       if (!j && !sh) { // een tik op het kaartje opent het ding; daarna houdt het een vinkje en een onderstreept kaartje
-        const c = g.list[0].kaart, a0 = (await G.ox()).amb, t0 = Date.now(); await G.tap(c[0] + c[2] / 2, c[1] + c[3] / 2); await sleep(1000); const o1 = await G.ox(); gTik = o1.open;
+        const c = g.list[0].kaart, a0 = (await G.ox()).amb, t0 = Date.now(); await G.tap(c[0] + c[2] / 2, c[1] + c[3] / 2); await sleep(1800); const o1 = await G.ox(); gTik = o1.open; // de eigen reactie begint als de camera aankomt (0,7 s) en duurt 0,9 s
         gVlug = +(o1.amb - a0 - (Date.now() - t0) / 1000).toFixed(2); // zoveel seconden liep het beeld extra door
-        await G.tapSel('#oxTerug'); await sleep(700);
+        await G.tapSel('#oxTerug'); await sleep(1500);
         gAf = await gp.evaluate(() => { const k = document.querySelectorAll('#oxLaag .ox-kaart')[0], s = document.querySelectorAll('#oxLaag .ox-spot')[0]; return { af: k.classList.contains('af'), streep: +(getComputedStyle(k.querySelector('b'), '::after').transform.match(/matrix\(([-\d.]+)/) || [0, 0])[1], vink: getComputedStyle(s, '::before').opacity, stip: getComputedStyle(s.querySelector('i')).opacity }; });
+      }
+      // ronde 7: de close-up van elk ding (knop in het paneel): de camera komt aan, het beeld is opnieuw getekend, vinkje; Terug vliegt uit
+      for (let n = 0; n < g.list.length; n++) {
+        const id = g.list[n].id; await G.tapSel(`#oxKnoppen .ox-knop:nth-child(${n + 1})`);
+        const aan = await G.tot(async () => { const q = (await G.ox()).cu; return q && q.fase === 'aan'; }, 3000); await sleep(350);
+        const h = await gp.evaluate(() => { const o = window.__korrelval.ontdek(); return { cu: o.cu, zoom: o.zoom, open: o.open, kaart: getComputedStyle(document.querySelector('#oxLaag .ox-kaart')).opacity, vink: (e => e ? getComputedStyle(e).opacity : null)(document.querySelector('#introKicker .ox-vink.aan')) }; });
+        const inTijd = h.cu && h.cu.t1 !== undefined; if (inTijd) hTijd++;
+        if (!aan || !h.cu || h.open !== n || h.zoom !== '') hMis.push(`${id}: de camera komt niet aan ${JSON.stringify(h.cu)} ${h.zoom}`);
+        else if (!inTijd && !(h.cu.z >= 1.5 && h.cu.z <= 3.2 && h.cu.scherp)) hMis.push(`${id}: niet opnieuw getekend of buiten 1,5x tot 3,2x ${JSON.stringify(h.cu)}`);
+        else if (!inTijd && !(h.cu.midden[0] > 360 * 0.1 && h.cu.midden[0] < 360 * 0.9 && h.cu.midden[1] > 0 && h.cu.midden[1] < g.P)) hMis.push(`${id}: het ding staat niet in beeld ${JSON.stringify(h.cu.midden)}`);
+        else if (h.kaart !== '0' || h.vink !== '1') hMis.push(`${id}: aantekeningen nog in beeld of geen vinkje ${h.kaart} ${h.vink}`);
+        else hGoed++;
+        await G.tapSel('#oxTerug'); const weg = await G.tot(async () => !(await G.ox()).cu, 3000); await sleep(320);
+        const na = await gp.evaluate(() => ({ zoom: window.__korrelval.ontdek().zoom, kaart: getComputedStyle(document.querySelector('#oxLaag .ox-kaart')).opacity }));
+        if (!weg || na.zoom !== '' || +na.kaart < 0.7) hMis.push(`${id}: Terug vliegt niet uit ${JSON.stringify(na)}`);
       }
     }
   }
+  check(hGoed === 28 && !hMis.length, 'G ronde 7: alle 28 close-ups: de camera komt aan, het beeld is opnieuw getekend (1,5x tot 3,2x), geen aantekeningen, vinkje naast de naam; Terug vliegt uit', { goed: hGoed, mis: hMis.slice(0, 5) });
+  check(hTijd === 1, 'G ronde 7: de plansichter van 1920 is een close-up in de tijd (de camera vliegt terug omhoog in het shot)', hTijd);
   check(!gRing.length && !/oxPuls|--gw/.test(html), 'G geen ring-element meer: het tikvlak is leeg, de stip is 14 px, geen verloop om het ding', gRing);
   check(gDingen === 28 && gKaart === 28 && !gMis.some(m => /kaartjes en|geen kaartje/.test(m)), 'G per shot evenveel kaartjes en lijntjes als dingen, met de naam erop (12 shots, 28 dingen)', { dingen: gDingen, kaartjes: gKaart });
   check(!gMis.length, 'G 360x640: elk kaartje binnen beeld, boven het paneel, niet over een ander kaartje, een stip of Overslaan', gMis.slice(0, 6));
@@ -394,6 +468,22 @@ const stand = T => T.tot(async () => (await T.ox()).on, 9000);
   check(gAdem === 'oxStip, oxAdem', 'G de stip verschijnt en ademt daarna (alleen transform en opacity)', gAdem);
   check(!G.fouten.length && !G.extern.length && G.verboden.size === 0, 'G geen fouten, niets van buiten', G.fouten.slice(0, 3));
   G.stop(); await G.ctx.close();
+
+  // ============================== H: de slotfilm helemaal (ronde 7) ==============================
+  const H = await maak(browser, { vp: { width: 400, height: 800 }, touch: true, dpr: 2 }); const hp = H.page;
+  await hp.addInitScript(k => { try { if (!localStorage.getItem(k)) localStorage.setItem(k, JSON.stringify({ introSeen: true, oxUitleg: 1, ontdekt: { 'o46-rosmolen': 1, 'o67-schoorsteen': 1, 'o20-zeilschip': 1, 'o76-silos': 1, 'o08-schip': 1, 'o26-walsenstoel': 1, 'o26-walsen': 1 } })); } catch (e) { /* zonder opslag */ } }, /SAVE_KEY = '([^']+)'/.exec(html)[1]);
+  await hp.goto('file://' + wrapped); await sleep(1300);
+  await hp.evaluate(() => window.__korrelval.filmStart('done')); const hT0 = Date.now(), hSt = [];
+  while (Date.now() - hT0 < 32000) { const f = await hp.evaluate(() => ({ f: window.__korrelval.film(), regel: getComputedStyle(document.getElementById('sfSlot')).opacity })); if (!f.f.open) break; hSt.push(f); if (hSt.length === 9) await H.shot('H01-slotfilm'); await sleep(300); }
+  const hEind = await hp.evaluate(() => ({ f: window.__korrelval.film(), s: window.__korrelval.state().screen })), hDuur = (Date.now() - hT0) / 1000;
+  const hJaren = [...new Set(hSt.map(q => q.f.jaar).filter(Boolean))], hStip = hSt.filter(q => q.f.stipAan && q.f.stippen > 0).map(q => q.f.jaar), hLaatste = hSt[hSt.length - 1] || { f: {}, regel: '0' };
+  check(hJaren.join(' ') === '1846 1867 1920 1976 2008 2026' && hDuur > 17 && hDuur < 27, 'H de slotfilm speelt de zes jaren op volgorde in circa 20 s', { jaren: hJaren, duur: +hDuur.toFixed(1) });
+  check(new Set(hStip).size >= 5, 'H wat je buiten ontdekte, licht op als oranje stip (in elk jaar waar je iets vond)', [...new Set(hStip)]);
+  check(hSt.every(q => q.f.levend <= 2) && hEind.f.gebouwd === 6 && hEind.f.vrij === 6 && hEind.f.piek > 0 && hEind.f.piek < 150, 'H hooguit twee jaren tegelijk in het geheugen; alle zes na afloop vrijgegeven', { piekMB: hEind.f.piek, gebouwd: hEind.f.gebouwd, vrij: hEind.f.vrij });
+  check(hLaatste.f.slot && +hLaatste.regel > 0.9 && /180 jaar malen\./.test(await hp.textContent('#sfSlot')) && /Van één paard tot Molen B\./.test(await hp.textContent('#sfSlot')), 'H het eindigt op 2026 met de regel 180 jaar malen. Van één paard tot Molen B.', { slot: hLaatste.f.slot, regel: hLaatste.regel });
+  check(hEind.s === 'done' && hEind.f.klaar === 'uit' && hEind.f.gezien, 'H daarna de slotkaart', hEind.s);
+  check(!H.fouten.length && !H.extern.length, 'H geen fouten, niets van buiten', H.fouten.slice(0, 3));
+  H.stop(); await H.ctx.close();
 
   await browser.close();
   const fout = checks.filter(c => !c.ok).length;
