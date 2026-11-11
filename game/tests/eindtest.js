@@ -9,6 +9,7 @@
 //   D  1280x800 toetsenbord: Enter, Esc, Tab, pijltjes langs de knoppen, Enter opent, Esc gaat terug, voorlezen (aria-live)
 //   E  verminderde beweging: geen zoom en geen pulseren, wel gloed en dimmen
 //   F  ronde 5, 360x640 met alles ontdekt: slotkaart, Kies een molen, plakboek-kaders, Scores, Instellingen, weegbon of game-over van Korrelval
+//   G  ronde 6, 360x640, alle 12 shots: aantekeningen in plaats van ringen (stip, potloodlijntje, naamkaartje), een tik op het kaartje opent het ding
 // Overal: geen console-fouten, geen request naar buiten, nooit het valspel, de introband of de weegbon in de tijdlijn.
 // Gebruik: NODE_PATH="$(npm root -g)" node eindtest.js <korrelval.html> <uitmap>
 // =====================================================================================================
@@ -16,9 +17,12 @@ const fs = require('fs'), path = require('path');
 const { chromium } = require('playwright');
 const game = path.resolve(process.argv[2]), out = path.resolve(process.argv[3] || path.join(__dirname, '..', 'uit', 'eindtest'));
 fs.mkdirSync(out, { recursive: true });
-const html = fs.readFileSync(game, 'utf8');
+// Het bestand is het spel zelf (game/korrelval.html, begint met <title>) of de gepubliceerde pagina (docs/index.html uit build-pages.sh:
+// het spel met een kop eromheen en zonder commentaarregels in het script). De pagina gaat zoals hij is de browser in.
+const ruw = fs.readFileSync(game, 'utf8'), pagina = /^\s*<!doctype html>/i.test(ruw);
+const html = pagina ? ruw.slice(ruw.indexOf('<body>') + 6, ruw.lastIndexOf('</body>')).trim() : ruw;
 const wrapped = path.join(out, 'pagina.html');
-fs.writeFileSync(wrapped, '<!doctype html><html lang="nl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">' +
+fs.writeFileSync(wrapped, pagina ? ruw : '<!doctype html><html lang="nl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">' +
   '<style>body{margin:0}[hidden]{display:none!important}</style></head><body>' + html + '</body></html>');
 const checks = [];
 const check = (ok, wat, detail) => { checks.push({ ok: !!ok, wat }); console.log(`${ok ? 'GOED' : 'FOUT'}  ${wat}${detail !== undefined ? '  (' + (typeof detail === 'string' ? detail : JSON.stringify(detail)) + ')' : ''}`); };
@@ -76,7 +80,11 @@ const stand = T => T.tot(async () => (await T.ox()).on, 9000);
   for (let k = 0; k < 3; k++) { await A.tapSel('#bIntroNext'); await sleep(420); if (k < 2) { await A.tapSel('#bIntroNext'); await sleep(420); } }
   const laatste = (await page.textContent('#bIntroNext')).trim();
   check(laatste === 'Terug in de tijd', 'hoofdintro: laatste knop Terug in de tijd', laatste);
-  await A.tapSel('#bIntroNext'); await sleep(1400);
+  // ronde 6: na Terug in de tijd eerst de tijdsprong terug (het jaartal rolt van 2026 naar 1846), dan de jaarintro van 1846
+  await A.tapSel('#bIntroNext');
+  const terug = await A.tot(async () => await A.scr() === 'sprong', 3000), spT = await page.evaluate(() => window.__korrelval.sprong());
+  check(terug && spT.van === '2026' && spT.naar === '1846' && spT.stippen === 6, 'Terug in de tijd: de tijdsprong rolt terug van 2026 naar 1846', { van: spT.van, naar: spT.naar });
+  await A.tot(async () => (await A.jaar()).open, 4000);
   // jaarintro 1846, shot 1
   let jv = await A.jaar();
   check(jv.open && jv.year === 1846 && jv.shot === 0 && jv.from === 'tijd', 'daarna de jaarintro van 1846 in de tijdlijn', { open: jv.open, year: jv.year, shot: jv.shot, from: jv.from });
@@ -87,7 +95,7 @@ const stand = T => T.tot(async () => (await T.ox()).on, 9000);
   const p1 = await A.paneel(), picH = (await A.jaar()).picH;
   const plekOk = o.list.every(d => d.box && d.box[2] >= 44 && d.box[3] >= 44 && d.a[1] > 0 && d.a[1] < picH && d.a[0] > 0 && d.a[0] < 400);
   check(plekOk, 'shot 1: elk ding staat in beeld boven het paneel, tikvlak minstens 44 x 44 css-px', o.list.map(d => [d.id, d.a, d.box]));
-  check(o.tel === 'Tik op wat oplicht', 'eerste keer: Tik op wat oplicht', o.tel);
+  check(o.tel === 'Tik op een kaartje', 'eerste keer: Tik op een kaartje', o.tel);
   check(p1.past && await A.geenX(), 'paneel past (400x800)', p1);
   await A.shot('A02-1846-s1-gloed');
   // tik op het ding zelf
@@ -105,7 +113,7 @@ const stand = T => T.tot(async () => (await T.ox()).on, 9000);
   await A.tapSel('#oxTerug'); await sleep(750);
   o = await A.ox();
   check(o.open === -1 && o.zoom === '' && o.list[0].af && /^1 van 5 ontdekt$/.test(o.tel), 'Terug zoomt uit; vinkje en 1 van 5 ontdekt', { open: o.open, zoom: o.zoom, tel: o.tel });
-  check(await page.evaluate(() => getComputedStyle(document.querySelector('.ox-spot.af i')).opacity === '0'), 'een ontdekt ding licht niet meer op');
+  check(await page.evaluate(() => getComputedStyle(document.querySelector('.ox-spot.af i')).opacity === '0'), 'een ontdekt ding heeft geen stip meer (wel een vinkje)');
   // de knop in het paneel, dan tik ernaast
   await A.tapSel('#oxKnoppen .ox-knop:nth-child(2)'); await sleep(650);
   o = await A.ox(); const open2 = o.open;
@@ -164,6 +172,8 @@ const stand = T => T.tot(async () => (await T.ox()).on, 9000);
   await sleep(400); await A.tapSel('#bStory'); await sleep(500);
   const slot = await page.evaluate(() => ({ s: window.__korrelval.state().screen, note: document.getElementById('doneNote').textContent, knoppen: ['bDoneBook', 'bDoneNight', 'bDoneMenu'].map(i => !!document.getElementById(i).offsetWidth), bon: !!document.querySelector('#scrDone .bon'), kv: document.getElementById('bDoneNight').textContent, regel: document.querySelector('#scrDone .kv-regel').textContent }));
   check(slot.s === 'done' && /^Je ontdekte 3 van 28 dingen\.$/.test(slot.note) && slot.knoppen.every(Boolean) && !slot.bon && slot.kv === 'Speel Korrelval' && /Nu ben jij de korrel\./.test(slot.regel), 'slotkaart: Je ontdekte 3 van 28 dingen, met Speel Korrelval (en de regel ervoor), Molenboek en Menu (geen weegbon)', slot);
+  const slotGa = await page.evaluate(() => [...document.querySelectorAll('#doneJaren .tl-ga')].map(b => { const r = b.getBoundingClientRect(), q = getComputedStyle(b, '::before'); return [b.dataset.jaar, Math.round(r.height - parseFloat(q.top) - parseFloat(q.bottom)), b.getAttribute('aria-label')]; }));
+  check(slotGa.length === 6 && slotGa.every(g => g[1] >= 44 && /^Ga naar \d{4}: nog \d te ontdekken$/.test(g[2])) && await page.evaluate(() => parseFloat(getComputedStyle(document.querySelector('#doneNote b')).fontSize) >= 28), 'slotkaart: het getal groot in handschrift; elk jaar waar nog iets ligt is een knop naar dat jaar (tikvlak 44+)', slotGa.slice(0, 2));
   const slotPast = await page.evaluate(() => { const c = document.querySelector('#scrDone .card'); return c.scrollHeight <= c.clientHeight + 1; });
   check(slotPast, 'slotkaart past zonder scrollen', slotPast);
   await A.shot('A07-slot');
@@ -227,7 +237,7 @@ const stand = T => T.tot(async () => (await T.ox()).on, 9000);
   o = await A.ox();
   check(o.list.every(d => d.af) && /^4 van 5 ontdekt$/.test(o.tel), 'B herladen: het ontdekte blijft (vinkjes, 4 van 5)', o.tel);
   const pulsUit = await page.evaluate(() => [...document.querySelectorAll('.ox-spot')].every(e => getComputedStyle(e.querySelector('i')).opacity === '0'));
-  check(pulsUit, 'B herladen: ontdekte dingen lichten niet meer op');
+  check(pulsUit, 'B herladen: ontdekte dingen hebben geen stip meer');
   check(A.verboden.size === 0, 'in de tijdlijn nooit het valspel, de introband, de weegbon of de pauze', [...A.verboden]);
   check(!A.fouten.length, 'A/B geen console-fouten', A.fouten.slice(0, 5));
   check(!A.extern.length, 'A/B niets van buiten', A.extern.slice(0, 5));
@@ -294,7 +304,7 @@ const stand = T => T.tot(async () => (await T.ox()).on, 9000);
   o = await E.ox(); jv = await E.jaar();
   check(jv.open && o.on, 'E verminderde beweging: meteen het eindbeeld met de ontdekstand', { on: o.on });
   const anim = await E.page.evaluate(() => getComputedStyle(document.querySelector('.ox-spot i')).animationName);
-  check(anim === 'none', 'E geen pulseren', anim);
+  check(anim === 'none', 'E de stip ademt niet', anim);
   await E.tapSel('#oxKnoppen .ox-knop:nth-child(1)'); await sleep(400); o = await E.ox();
   const dim = await E.page.evaluate(() => getComputedStyle(document.getElementById('oxDim')).opacity);
   check(o.open === 0 && o.zoom === '' && +dim > 0.9, 'E geen zoom, wel dimmen', { zoom: o.zoom, dim });
@@ -322,6 +332,9 @@ const stand = T => T.tot(async () => (await T.ox()).on, 9000);
   const kaders = (await fp.evaluate(() => window.__korrelval.plakboek())).kader || {};
   const kOk = sleutels.every(k => { const q = kaders[k]; return q && q[0] >= 0 && q[1] >= 0 && q[0] + q[2] <= 721 && q[1] + q[3] <= 451 && q[2] >= 143; });
   check(kOk && kaders['o46-kamwiel'][2] >= 300, 'F plakboek: 28 kaders binnen het beeld; het kamwiel heeft een breed kader (het wiel, niet de wand)', kaders['o46-kamwiel']);
+  check(kaders['o20-plansichter'] && kaders['o20-plansichter'][1] >= 20, 'F plakboek: de plansichter van 1920 staat midden in zijn plaatje (uit het begin van het shot, niet tegen de bovenrand)', kaders['o20-plansichter']);
+  const weet = await fp.evaluate(() => { const c = document.querySelector('#scrBoek .card').getBoundingClientRect(), L = [...document.querySelectorAll('#bookFacts li')]; return { n: L.length, kop: (document.querySelector('.pb-weet .sect-h') || {}).textContent, binnen: L.every(li => { const r = li.getBoundingClientRect(); return r.left >= c.left && r.right <= c.right + 0.5 && r.width >= 120; }), tekst: L.every(li => li.textContent.length > 30 && !/!/.test(li.textContent)) }; });
+  check(weet.n === 10 && weet.kop === 'Wist je dat' && weet.binnen && weet.tekst, 'F Molenboek: achterin het blad Wist je dat met de tien weetjes als kaartjes', weet);
   await F.tapSel('#bBookBack'); await sleep(400); await F.tapSel('#bDoneMenu'); await sleep(500);
   await F.tapSel('#bScores'); await sleep(400);
   const sc5 = await fp.evaluate(() => ({ t: document.querySelector('#scrScores .card').textContent, badges: document.querySelectorAll('#allBadges .badge').length, past: document.querySelector('#scrScores .card').scrollHeight <= document.querySelector('#scrScores .card').clientHeight + 1 }));
@@ -339,6 +352,48 @@ const stand = T => T.tot(async () => (await T.ox()).on, 9000);
   await F.shot('F01-korrelval-eind');
   check(!F.fouten.length && !F.extern.length, 'F geen fouten, niets van buiten', F.fouten.slice(0, 3));
   F.stop(); await F.ctx.close();
+
+  // ============================== G: ronde 6 (aantekeningen in plaats van ringen) ==============================
+  // Om elk ding stond een gouden ring. Nu: een kleine oranje stip op het ding, een potloodlijntje en een naamkaartje in handschrift.
+  const G = await maak(browser, { vp: { width: 360, height: 640 }, touch: true });
+  const gp = G.page;
+  await gp.goto('file://' + wrapped); await sleep(600);
+  await gp.evaluate(() => localStorage.setItem('korrelval-b-v2', JSON.stringify({ introSeen: true, oxUitleg: 1 }))); await gp.reload(); await sleep(1000);
+  const raakt = (A, B) => Math.min(A[0] + A[2], B[0] + B[2]) > Math.max(A[0], B[0]) && Math.min(A[1] + A[3], B[1] + B[3]) > Math.max(A[1], B[1]);
+  const gMis = [], gRing = []; let gDingen = 0, gKaart = 0, gTik = null, gAf = null, gAdem = '', gVlug = 0;
+  for (let j = 0; j < 6; j++) {
+    await gp.evaluate(i => window.__korrelval.jaar(i, 'tijd'), j); await sleep(450);
+    for (const sh of [0, 1]) {
+      await G.tapSel('#bIntroNext'); await sleep(sh ? 450 : 300); if (sh) { await G.tapSel('#bIntroNext'); await sleep(300); }
+      await stand(G); await sleep(900);
+      const g = await gp.evaluate(() => { const o = window.__korrelval.ontdek(), L = document.getElementById('oxLaag'), r = e => { const q = e.getBoundingClientRect(); return [q.left, q.top, q.width, q.height].map(Math.round); };
+        return { list: o.list, P: window.__korrelval.jaarState().picH, skip: r(document.getElementById('bIntroSkipTop')), namen: [...L.querySelectorAll('.ox-kaart')].map(e => e.textContent), lijnen: [...L.querySelectorAll('.ox-lijn path.p')].filter(e => (e.getAttribute('d') || '').length > 10).length,
+          adem: getComputedStyle(L.querySelector('.ox-spot i')).animationName,
+          ring: [...L.querySelectorAll('.ox-spot, .ox-spot i')].filter(e => { const c = getComputedStyle(e); return c.backgroundImage !== 'none' || (e.tagName === 'I' && parseFloat(c.width) > 16); }).length + L.querySelectorAll('.ox-ring, .ox-gloed').length }; });
+      const naam = `${1846 + [0, 21, 74, 130, 162, 180][j]} shot ${sh + 1}`; gDingen += g.list.length; gAdem = gAdem || g.adem;
+      if (g.ring) gRing.push(naam);
+      if (g.namen.length !== g.list.length || g.namen.join('|') !== g.list.map(d => d.naam).join('|') || g.lijnen !== g.list.length) gMis.push(`${naam}: ${g.namen.length} kaartjes en ${g.lijnen} lijntjes voor ${g.list.length} dingen`);
+      for (const d of g.list) { const c = d.kaart; if (!c) { gMis.push(`${naam} ${d.id}: geen kaartje`); continue; } gKaart++;
+        if (c[0] < 2 || c[1] < 2 || c[0] + c[2] > 358 || c[1] + c[3] > g.P - 2) gMis.push(`${naam} ${d.id}: buiten beeld of over het paneel ${JSON.stringify(c)}`);
+        if (raakt(c, g.skip)) gMis.push(`${naam} ${d.id}: over Overslaan`);
+        for (const q of g.list) if (q !== d) { if (q.kaart && raakt(c, q.kaart)) gMis.push(`${naam} ${d.id}: over het kaartje van ${q.id}`); if (q.a && !/paard/.test(q.id) && raakt(c, [q.a[0] - 9, q.a[1] - 9, 18, 18])) gMis.push(`${naam} ${d.id}: over de stip van ${q.id}`); } }
+      if (!j && !sh) { // een tik op het kaartje opent het ding; daarna houdt het een vinkje en een onderstreept kaartje
+        const c = g.list[0].kaart, a0 = (await G.ox()).amb, t0 = Date.now(); await G.tap(c[0] + c[2] / 2, c[1] + c[3] / 2); await sleep(1000); const o1 = await G.ox(); gTik = o1.open;
+        gVlug = +(o1.amb - a0 - (Date.now() - t0) / 1000).toFixed(2); // zoveel seconden liep het beeld extra door
+        await G.tapSel('#oxTerug'); await sleep(700);
+        gAf = await gp.evaluate(() => { const k = document.querySelectorAll('#oxLaag .ox-kaart')[0], s = document.querySelectorAll('#oxLaag .ox-spot')[0]; return { af: k.classList.contains('af'), streep: +(getComputedStyle(k.querySelector('b'), '::after').transform.match(/matrix\(([-\d.]+)/) || [0, 0])[1], vink: getComputedStyle(s, '::before').opacity, stip: getComputedStyle(s.querySelector('i')).opacity }; });
+      }
+    }
+  }
+  check(!gRing.length && !/oxPuls|--gw/.test(html), 'G geen ring-element meer: het tikvlak is leeg, de stip is 14 px, geen verloop om het ding', gRing);
+  check(gDingen === 28 && gKaart === 28 && !gMis.some(m => /kaartjes en|geen kaartje/.test(m)), 'G per shot evenveel kaartjes en lijntjes als dingen, met de naam erop (12 shots, 28 dingen)', { dingen: gDingen, kaartjes: gKaart });
+  check(!gMis.length, 'G 360x640: elk kaartje binnen beeld, boven het paneel, niet over een ander kaartje, een stip of Overslaan', gMis.slice(0, 6));
+  check(gTik === 0, 'G een tik op het kaartje opent het ding', gTik);
+  check(gVlug > 0.4, 'G het ding reageert zelf: na de tik loopt wat beweegt even sneller (de rosmolen: het paard stapt door)', gVlug);
+  check(gAf && gAf.af && gAf.streep > 0.9 && gAf.vink === '1' && gAf.stip === '0', 'G ontdekt: een vinkje op het ding en een potloodstreep onder het kaartje', gAf);
+  check(gAdem === 'oxStip, oxAdem', 'G de stip verschijnt en ademt daarna (alleen transform en opacity)', gAdem);
+  check(!G.fouten.length && !G.extern.length && G.verboden.size === 0, 'G geen fouten, niets van buiten', G.fouten.slice(0, 3));
+  G.stop(); await G.ctx.close();
 
   await browser.close();
   const fout = checks.filter(c => !c.ok).length;
